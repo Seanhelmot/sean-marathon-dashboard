@@ -167,6 +167,12 @@
   <!-- THIS WEEK -->
   <section class="panel active" id="panel-week">
 
+    <!-- DAILY MOTIVATION -->
+    <div class="card" style="margin-bottom:18px;" id="motivation-card">
+      <h2>Today's Motivation</h2>
+      <div id="motivation-body"></div>
+    </div>
+
     <!-- DAILY READINESS -->
     <div class="card" style="margin-bottom:18px;" id="readiness-card">
       <h2>Daily Readiness <span class="accent" id="readiness-date-label"></span></h2>
@@ -640,6 +646,64 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
+/* ── Daily Motivation ────────────────────────────────────────────── */
+const QUOTES = [
+  { text: "The miracle isn't that I finished. The miracle is that I had the courage to start.", author: "John Bingham", tag: "running" },
+  { text: "Run when you can, walk if you have to, crawl if you must; just never give up.", author: "Dean Karnazes", tag: "running" },
+  { text: "Your body will argue that there is no justifiable reason to continue. Your only recourse is to call on your spirit, which fortunately functions independently of logic.", author: "Tim Noakes", tag: "running" },
+  { text: "It's supposed to be hard. If it were easy, everybody would do it.", author: "A League of Their Own", tag: "life" },
+  { text: "Pain is inevitable. Suffering is optional.", author: "Haruki Murakami", tag: "running" },
+  { text: "Some days it's hard to find motivation, so find determination instead.", author: "Kelvin Trautman", tag: "running" },
+  { text: "The long run is what puts the tiger in the cat.", author: "Bill Squires", tag: "running" },
+  { text: "The obsession with running is really an obsession with the potential for more and more life.", author: "George Sheehan", tag: "running" },
+  { text: "Champions are made from something they have deep inside them — a desire, a dream, a vision.", author: "Muhammad Ali", tag: "life" },
+  { text: "It always seems impossible until it's done.", author: "Nelson Mandela", tag: "life" },
+  { text: "You don't have to be great to start, but you have to start to be great.", author: "Zig Ziglar", tag: "life" },
+  { text: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb", tag: "life" },
+  { text: "Hard days are the best because that's when champions are made.", author: "Gabby Douglas", tag: "life" },
+  { text: "A father is someone who carries pictures where his money used to be — and doesn't mind one bit.", author: "Unknown", tag: "dad" },
+  { text: "Any man can be a father, but it takes someone special to be a dad.", author: "Anne Geddes", tag: "dad" },
+  { text: "The greatest mark of a father is how he treats his children when no one is looking.", author: "Dan Pearce", tag: "dad" },
+  { text: "To the world you are a dad. To your family you are the world.", author: "Unknown", tag: "dad" },
+  { text: "One of the greatest gifts I've ever gotten is my family watching me cross a finish line.", author: "Unknown", tag: "dad" },
+  { text: "What you do every day matters more than what you do once in a while.", author: "Gretchen Rubin", tag: "life" },
+  { text: "Suffer the pain of discipline or suffer the pain of regret.", author: "Unknown", tag: "running" },
+  { text: "Every mile is two in winter.", author: "George Herbert", tag: "running" },
+  { text: "Running is alone time that lets my brain unspool the tangles that build up over days.", author: "Rob Haneisen", tag: "running" },
+  { text: "There will be a day when you can no longer do this. Today is not that day.", author: "Unknown", tag: "running" },
+  { text: "First you feel like dying. Then you feel reborn.", author: "Unknown", tag: "running" },
+  { text: "The voice inside your head that says you can't do this is a liar.", author: "Unknown", tag: "running" },
+  { text: "Being a great father is like shaving — no matter how good you shaved today, you have to do it again tomorrow.", author: "Reed Markham", tag: "dad" },
+  { text: "Dad: a son's first hero, a daughter's first love.", author: "Unknown", tag: "dad" },
+  { text: "We are what we repeatedly do. Excellence, then, is not an act but a habit.", author: "Aristotle", tag: "life" },
+  { text: "Do not go where the path may lead; go instead where there is no path and leave a trail.", author: "Ralph Waldo Emerson", tag: "life" },
+  { text: "Eighty percent of success is showing up.", author: "Woody Allen", tag: "life" },
+  { text: "The body achieves what the mind believes.", author: "Unknown", tag: "running" },
+  { text: "Run fast enough to get there, but slow enough to see.", author: "Jimmy Buffett", tag: "running" },
+  { text: "A year from now you'll wish you had started today.", author: "Karen Lamb", tag: "life" },
+  { text: "You are braver than you believe, stronger than you seem, and smarter than you think.", author: "A.A. Milne", tag: "life" },
+  { text: "The finish line is just the beginning of a whole new race.", author: "Unknown", tag: "running" },
+];
+
+const TAG_COLOR = { running: 'var(--signal)', dad: 'var(--z2)', life: 'var(--z1)' };
+
+function renderMotivation() {
+  const dayIndex = Math.floor(Date.now() / 86400000);
+  const q = QUOTES[dayIndex % QUOTES.length];
+  document.getElementById('motivation-body').innerHTML = `
+    <div style="display:flex;align-items:flex-start;gap:14px;">
+      <div style="font-size:48px;line-height:1;color:var(--signal);font-family:'Big Shoulders Display',sans-serif;opacity:0.4;margin-top:-6px;">"</div>
+      <div>
+        <div style="font-size:15px;line-height:1.65;color:var(--paper);font-style:italic;margin-bottom:10px;">${q.text}</div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate);">— ${q.author}</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;padding:2px 8px;border-radius:20px;border:1px solid ${TAG_COLOR[q.tag]};color:${TAG_COLOR[q.tag]};text-transform:uppercase;letter-spacing:.08em;">${q.tag}</span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 /* ── Daily Readiness ─────────────────────────────────────────────── */
 function renderReadiness(live) {
   const t = live.today;
@@ -811,6 +875,7 @@ async function init() {
 
   renderCountdowns(plan);
   renderHeaderSub(plan, live);
+  renderMotivation();
   renderReadiness(live);
   renderWeekStrip(live, plan);
   renderTodayTiles(live);
