@@ -113,15 +113,6 @@
   .phase-legend span{display:inline-flex;align-items:center;gap:6px;}
   .phase-legend i{width:14px;height:5px;border-radius:2px;display:inline-block;}
 
-  /* WEEKLY VOLUME SUMMARY */
-  .vol-strip{display:flex;align-items:center;gap:0;flex-wrap:wrap;}
-  .vol-stat{display:flex;align-items:baseline;gap:6px;padding:8px 18px;border-right:1px solid var(--line);}
-  .vol-stat:last-of-type{border-right:none;}
-  .vol-stat .vs-v{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;color:var(--paper);}
-  .vol-stat .vs-l{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--slate);}
-  .vol-stat .vs-sub{font-size:10px;color:var(--slate-dim);margin-left:4px;}
-  .vol-progress-track{flex:1;height:5px;background:var(--panel-raised);border-radius:3px;overflow:hidden;min-width:80px;margin:0 16px;}
-  .vol-progress-fill{height:100%;border-radius:3px;}
 
   /* READINESS CARD */
   .readiness-status{display:inline-flex;align-items:center;gap:10px;margin-bottom:14px;}
@@ -163,6 +154,17 @@
           <div class="lbl">Days to Melbourne</div>
           <div class="date">A-race · Sun 11 Oct</div>
         </div>
+        <div class="cd-card" id="vol-cd-card">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;">
+            <span class="num mono" id="vol-actual" style="font-size:22px;color:var(--signal);">—</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--slate-dim);">/ <span id="vol-planned">—</span>km</span>
+          </div>
+          <div id="vol-bar-track" style="height:4px;background:var(--line);border-radius:2px;margin-bottom:5px;overflow:hidden;">
+            <div id="vol-bar-fill" style="height:100%;border-radius:2px;width:0%;background:var(--signal);"></div>
+          </div>
+          <div class="lbl">Week km</div>
+          <div class="date" id="vol-forecast-label"></div>
+        </div>
       </div>
       <div class="freshness" id="freshness-note"></div>
     </div>
@@ -177,12 +179,6 @@
 
   <!-- THIS WEEK -->
   <section class="panel active" id="panel-week">
-
-    <!-- WEEKLY VOLUME SUMMARY -->
-    <div class="card" style="margin-bottom:18px;" id="weekly-volume-card">
-      <h2>This Week's Volume <span class="accent" id="weekly-vol-subtitle"></span></h2>
-      <div id="weekly-vol-body"></div>
-    </div>
 
     <!-- DAILY MOTIVATION -->
     <div class="card" style="margin-bottom:18px;" id="motivation-card">
@@ -251,11 +247,8 @@
   <section class="panel" id="panel-activity">
     <div class="card" style="margin-bottom:18px;">
       <h2>Most Recent Run <span class="accent" id="activity-date-label"></span></h2>
+      <div id="activity-observation" style="font-size:13.5px;line-height:1.7;color:var(--paper);margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--line);"></div>
       <div id="activity-body"><div class="loading">Loading…</div></div>
-    </div>
-    <div class="card">
-      <h2>Observation <span class="accent">· auto-generated from activity data</span></h2>
-      <div id="activity-observation" style="font-size:13.5px;line-height:1.7;color:var(--paper);"></div>
     </div>
   </section>
 
@@ -708,7 +701,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
-/* ── Weekly Volume Summary ───────────────────────────────────────── */
+/* ── Weekly Volume (header card) ─────────────────────────────────── */
 function renderWeeklyVolume(live, plan) {
   const wkNum   = live.current_week;
   const planWk  = plan.weeks.find(w => w.wk === wkNum) || {};
@@ -716,50 +709,23 @@ function renderWeeklyVolume(live, plan) {
   const planned = planWk.plan_km || 0;
   const actual  = liveWk.actual_km || 0;
 
-  document.getElementById('weekly-vol-subtitle').textContent =
-    `· Week ${wkNum} · ${planWk.phase || ''}`;
+  const days       = live.this_week_days || [];
+  const runDone    = days.filter(d => d.zone && d.status === 'done').length;
+  const runLeft    = days.filter(d => d.zone && d.status === 'upcoming').length;
+  const avgPerRun  = runDone > 0 ? actual / runDone : 0;
+  const forecast   = runLeft > 0 ? Math.round((actual + avgPerRun * runLeft) * 10) / 10 : actual;
 
-  // Forecast: use this_week_days to count done vs upcoming running sessions
-  const days = live.this_week_days || [];
-  const runDone      = days.filter(d => d.zone && d.status === 'done').length;
-  const runUpcoming  = days.filter(d => d.zone && d.status === 'upcoming').length;
-  const avgPerRun    = runDone > 0 ? actual / runDone : 0;
-  const forecast     = runUpcoming > 0 ? Math.round((actual + avgPerRun * runUpcoming) * 10) / 10 : null;
-
-  // Progress colour
-  const pct = planned > 0 ? actual / planned : 0;
+  const pct      = planned > 0 ? Math.min(actual / planned, 1) : 0;
   const barColor = pct >= 1 ? 'var(--good)' : pct >= 0.6 ? 'var(--signal)' : 'var(--warn)';
-  const barWidth = Math.min(pct * 100, 100).toFixed(1);
+  const delta    = forecast - planned;
+  const deltaStr = (delta >= 0 ? '+' : '') + delta.toFixed(1) + 'km';
 
-  // Forecast vs planned label
-  const forecastDelta = forecast != null ? forecast - planned : null;
-  const deltaStr = forecastDelta != null
-    ? (forecastDelta >= 0 ? `+${forecastDelta.toFixed(1)}km vs plan` : `${forecastDelta.toFixed(1)}km vs plan`)
-    : 'week complete';
-  const deltaColor = forecastDelta == null ? 'var(--slate)' : forecastDelta >= -3 ? 'var(--good)' : 'var(--warn)';
-
-  document.getElementById('weekly-vol-body').innerHTML = `
-    <div class="vol-strip">
-      <div class="vol-stat">
-        <span class="vs-v" style="color:var(--slate);">${planned}km</span>
-        <span class="vs-l">Planned</span>
-        <span class="vs-sub">${planWk.long_run_km ? '· LR ' + planWk.long_run_km + 'km' : ''}</span>
-      </div>
-      <div class="vol-stat">
-        <span class="vs-v" style="color:var(--signal);">${actual}km</span>
-        <span class="vs-l">Actual</span>
-        <span class="vs-sub">· ${(pct*100).toFixed(0)}%</span>
-      </div>
-      <div class="vol-progress-track">
-        <div class="vol-progress-fill" style="width:${barWidth}%;background:${barColor};"></div>
-      </div>
-      <div class="vol-stat">
-        <span class="vs-v" style="color:var(--good);">${forecast != null ? forecast : actual}km</span>
-        <span class="vs-l">Forecast</span>
-        <span class="vs-sub" style="color:${deltaColor}">· ${deltaStr}</span>
-      </div>
-    </div>
-  `;
+  document.getElementById('vol-actual').textContent  = actual + 'km';
+  document.getElementById('vol-planned').textContent = planned;
+  document.getElementById('vol-bar-fill').style.width      = (pct * 100).toFixed(1) + '%';
+  document.getElementById('vol-bar-fill').style.background = barColor;
+  document.getElementById('vol-forecast-label').textContent =
+    `↗ ${forecast}km forecast · ${deltaStr}`;
 }
 
 /* ── Daily Motivation ────────────────────────────────────────────── */
