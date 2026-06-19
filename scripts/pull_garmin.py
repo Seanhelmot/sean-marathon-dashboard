@@ -60,9 +60,7 @@ def pull_data(client):
     today = datetime.now(timezone.utc).date()
     plan  = json.loads(PLAN_JSON.read_text())
 
-    race_date        = datetime.strptime(plan["race_date"], "%Y-%m-%d").date()
-    build_start      = race_date - timedelta(weeks=plan["build_weeks"])
-    build_start_mon  = build_start - timedelta(days=build_start.weekday())
+    build_start_mon  = datetime.strptime(plan["build_start_date"], "%Y-%m-%d").date()
     current_week     = max(1, (today - build_start_mon).days // 7 + 1)
 
     # ── Activities ──────────────────────────────────────────────────────────
