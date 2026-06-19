@@ -64,8 +64,10 @@ def pull_data(client):
     current_week     = max(1, (today - build_start_mon).days // 7 + 1)
 
     # ── Activities ──────────────────────────────────────────────────────────
+    # Query one day ahead to capture same-day runs when UTC date lags local (e.g. AEST = UTC+10)
     start_date = today - timedelta(weeks=WEEKS_BACK)
-    activities = client.get_activities_by_date(iso(start_date), iso(today), "running")
+    end_date   = today + timedelta(days=1)
+    activities = client.get_activities_by_date(iso(start_date), iso(end_date), "running")
 
     week_buckets: dict[int, dict] = {}
     recent_activities = []
@@ -93,13 +95,26 @@ def pull_data(client):
 
         bucket = week_buckets.setdefault(wk_num, {"actual_km": 0.0, "quality": None, "days": {}})
         bucket["actual_km"] += dist_km
-        bucket["days"][iso(act_date)] = {
-            "dist_km":  round(dist_km, 1),
-            "avg_hr":   int(avg_hr) if avg_hr else None,
-            "pace":     pace_from_speed(speed),
-            "feel":     int(feel) if feel is not None else None,
-            "effort":   round(float(effort), 1) if effort is not None else None,
-        }
+        # Accumulate per day (multiple Garmin entries on same day e.g. warm-up + main run)
+        day_key = iso(act_date)
+        existing_day = bucket["days"].get(day_key)
+        if existing_day:
+            existing_day["dist_km"] = round(existing_day["dist_km"] + dist_km, 1)
+            if avg_hr and (existing_day["avg_hr"] is None or dist_km > existing_day.get("_main_dist", 0)):
+                existing_day["avg_hr"]  = int(avg_hr)
+                existing_day["pace"]    = pace_from_speed(speed)
+                existing_day["_main_dist"] = dist_km
+            if feel   is not None: existing_day["feel"]   = int(feel)
+            if effort is not None: existing_day["effort"] = round(float(effort), 1)
+        else:
+            bucket["days"][day_key] = {
+                "dist_km":    round(dist_km, 1),
+                "avg_hr":     int(avg_hr) if avg_hr else None,
+                "pace":       pace_from_speed(speed),
+                "feel":       int(feel) if feel is not None else None,
+                "effort":     round(float(effort), 1) if effort is not None else None,
+                "_main_dist": dist_km,
+            }
 
         workout_name = (act.get("activityName") or "").lower()
         is_quality   = avg_hr >= 150 or any(
