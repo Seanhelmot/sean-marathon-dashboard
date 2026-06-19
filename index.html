@@ -161,6 +161,7 @@
   <nav class="tabs">
     <button class="tab-btn active" data-tab="week">This Week</button>
     <button class="tab-btn" data-tab="season">Season Overview</button>
+    <button class="tab-btn" data-tab="activity">Last Activity</button>
     <button class="tab-btn" data-tab="diet">Diet</button>
   </nav>
 
@@ -227,6 +228,18 @@
         </div>
         <div class="chart-foot">HRV dips after hard sessions are normal single-night noise. Watch the 7-day rolling average, not individual nights.</div>
       </div>
+    </div>
+  </section>
+
+  <!-- LAST ACTIVITY -->
+  <section class="panel" id="panel-activity">
+    <div class="card" style="margin-bottom:18px;">
+      <h2>Most Recent Run <span class="accent" id="activity-date-label"></span></h2>
+      <div id="activity-body"><div class="loading">Loading…</div></div>
+    </div>
+    <div class="card">
+      <h2>Observation <span class="accent">· auto-generated from activity data</span></h2>
+      <div id="activity-observation" style="font-size:13.5px;line-height:1.7;color:var(--paper);"></div>
     </div>
   </section>
 
@@ -374,15 +387,40 @@ function renderWeekStrip(live, plan) {
     return;
   }
 
+  // Build a lookup of Garmin day data by date string (e.g. "20 Jun")
+  const currentWkData = (live.weeks || []).find(w => w.wk === wkNum);
+  const garminDays = {};
+  if (currentWkData && currentWkData.days) {
+    Object.entries(currentWkData.days).forEach(([isoDate, data]) => {
+      const d = new Date(isoDate + 'T00:00:00');
+      const label = d.getDate() + ' ' + d.toLocaleDateString('en-AU', {month:'short'});
+      garminDays[label] = data;
+    });
+  }
+
+  // Determine today's date label for dynamic highlight
+  const nowLabel = (() => {
+    const n = new Date();
+    return n.getDate() + ' ' + n.toLocaleDateString('en-AU', {month:'short'});
+  })();
+
   days.forEach(d => {
+    const isToday = d.date === nowLabel;
+    const isDone  = !isToday && d.status === 'done';
     const row = document.createElement('div');
-    row.className = 'day-row' + (d.status==='done'?' done':'') + (d.status==='today'?' today':'');
-    const dotColor = d.status==='today' ? 'var(--signal)' : d.status==='done' ? 'var(--good)' : 'var(--slate-dim)';
+    row.className = 'day-row' + (isDone?' done':'') + (isToday?' today':'');
+    const dotColor = isToday ? 'var(--signal)' : isDone ? 'var(--good)' : 'var(--slate-dim)';
+
+    const gd = garminDays[d.date];
+    const feelLabel  = ['','😩 Terrible','😕 Bad','😐 Okay','🙂 Good','😄 Great'];
+    const feelChip   = (gd && gd.feel != null)   ? `<span style="font-size:10.5px;color:var(--slate);margin-left:8px;">Feel: ${feelLabel[gd.feel] || gd.feel}</span>` : '';
+    const effortChip = (gd && gd.effort != null) ? `<span style="font-size:10.5px;color:var(--slate);margin-left:8px;">RPE: ${gd.effort}/10</span>` : '';
+
     row.innerHTML = `
       <div class="day-date">${d.date}<span class="dow">${d.dow}</span></div>
       <div>
         <div class="day-name"><span class="status-dot" style="background:${dotColor}"></span>${d.name}</div>
-        <div class="day-meta">${d.meta}</div>
+        <div class="day-meta">${d.meta}${feelChip}${effortChip}</div>
       </div>
       <div>${d.zone ? `<span class="zone-chip" style="background:${ZONE_COLOR[d.zone]}">${ZONE_LABEL[d.zone]}</span>` : ''}</div>
     `;
@@ -820,6 +858,93 @@ function renderReadiness(live) {
   `;
 }
 
+/* ── Last Activity ───────────────────────────────────────────────── */
+function fmtDuration(secs) {
+  if (!secs) return '—';
+  const h = Math.floor(secs / 3600);
+  const m = Math.floor((secs % 3600) / 60);
+  const s = secs % 60;
+  return h > 0 ? `${h}h ${m}m` : `${m}m ${String(s).padStart(2,'0')}s`;
+}
+
+function renderActivity(live) {
+  const acts = live.recent_activities;
+  if (!acts || !acts.length) {
+    document.getElementById('activity-body').innerHTML = '<div class="loading">No recent activities in live data — trigger a Garmin refresh.</div>';
+    document.getElementById('activity-observation').textContent = '';
+    return;
+  }
+
+  const a = acts[0];
+  const date = new Date(a.date + 'T00:00:00');
+  const dateStr = date.toLocaleDateString('en-AU', {weekday:'long', day:'numeric', month:'long'});
+  document.getElementById('activity-date-label').textContent = `· ${dateStr}`;
+
+  const feelLabel = ['','😩 Terrible','😕 Bad','😐 Okay','🙂 Good','😄 Great'];
+
+  const stats = [
+    { v: a.dist_km != null ? a.dist_km.toFixed(1)+'km' : '—',         l: 'Distance' },
+    { v: fmtDuration(a.duration_s),                                      l: 'Duration' },
+    { v: a.pace    != null ? fmtPace(a.pace) : '—',                     l: 'Avg Pace' },
+    { v: a.avg_hr  != null ? a.avg_hr+'bpm' : '—',                      l: 'Avg HR' },
+    { v: a.max_hr  != null ? a.max_hr+'bpm' : '—',                      l: 'Max HR' },
+    { v: a.elevation_gain != null ? Math.round(a.elevation_gain)+'m' : '—', l: 'Elevation' },
+    { v: a.avg_cadence != null ? Math.round(a.avg_cadence)+'spm' : '—', l: 'Cadence' },
+    { v: a.feel   != null ? feelLabel[a.feel] || a.feel : '—',          l: 'Feel' },
+    { v: a.effort != null ? a.effort+'/10' : '—',                       l: 'Effort (RPE)' },
+  ];
+
+  document.getElementById('activity-body').innerHTML = `
+    <div style="font-family:'Big Shoulders Display',sans-serif;font-size:22px;font-weight:700;margin-bottom:14px;">${a.name}</div>
+    <div class="metric-tiles" style="grid-template-columns:repeat(3,1fr);">
+      ${stats.map(s => `
+        <div class="mtile">
+          <div class="v" style="font-size:20px;">${s.v}</div>
+          <div class="l">${s.l}</div>
+        </div>`).join('')}
+    </div>
+  `;
+
+  // Auto-generated observation
+  const obs = [];
+
+  if (a.dist_km != null) {
+    if (a.dist_km >= 25) obs.push(`Solid long run at ${a.dist_km.toFixed(1)}km.`);
+    else if (a.dist_km >= 15) obs.push(`Good medium-long effort at ${a.dist_km.toFixed(1)}km.`);
+    else obs.push(`${a.dist_km.toFixed(1)}km session.`);
+  }
+
+  if (a.avg_hr && a.pace) {
+    const paceStr = fmtPace(a.pace);
+    if (a.avg_hr < 145) obs.push(`Aerobic work — ${paceStr} at ${a.avg_hr}bpm, well within Z2.`);
+    else if (a.avg_hr < 158) obs.push(`Marathon-pace range — ${paceStr} at ${a.avg_hr}bpm.`);
+    else if (a.avg_hr < 166) obs.push(`Threshold effort — ${paceStr} at ${a.avg_hr}bpm, right in Z4.`);
+    else obs.push(`High-intensity work — ${paceStr} at ${a.avg_hr}bpm.`);
+  }
+
+  if (a.feel != null && a.effort != null) {
+    const feelText = ['','terrible','bad','okay','good','great'][a.feel] || a.feel;
+    const effortText = a.effort >= 8 ? 'hard' : a.effort >= 6 ? 'moderate-hard' : a.effort >= 4 ? 'moderate' : 'easy';
+    if (a.feel >= 4 && a.effort <= 7) obs.push(`Felt ${feelText} at a ${effortText} effort — efficiency signal worth tracking.`);
+    else if (a.feel <= 2 && a.effort >= 7) obs.push(`Tough session — felt ${feelText} at a ${effortText} effort. Factor recovery into the next 24 hours.`);
+    else obs.push(`Felt ${feelText}, effort rated ${a.effort}/10.`);
+  } else if (a.feel != null) {
+    const feelText = ['','terrible','bad','okay','good','great'][a.feel] || a.feel;
+    obs.push(`Felt ${feelText} on this one.`);
+  }
+
+  if (a.elevation_gain != null && a.elevation_gain > 150) {
+    obs.push(`${Math.round(a.elevation_gain)}m of elevation — legs will know about it.`);
+  }
+
+  if (a.avg_cadence != null) {
+    if (a.avg_cadence < 170) obs.push(`Cadence at ${Math.round(a.avg_cadence)}spm — worth nudging toward 175–180 on easy runs.`);
+    else if (a.avg_cadence >= 178) obs.push(`Cadence strong at ${Math.round(a.avg_cadence)}spm.`);
+  }
+
+  document.getElementById('activity-observation').textContent = obs.join(' ') || 'No observation — limited data returned from Garmin.';
+}
+
 /* ── Diet tab ────────────────────────────────────────────────────── */
 function todayKey() {
   return 'diet-' + new Date().toISOString().slice(0, 10);
@@ -902,6 +1027,7 @@ async function init() {
   renderSeasonTimeline(plan, live);
   renderTargets(plan);
   renderZones(plan);
+  renderActivity(live);
   renderDiet();
 }
 

@@ -68,6 +68,8 @@ def pull_data(client):
     activities = client.get_activities_by_date(iso(start_date), iso(today), "running")
 
     week_buckets: dict[int, dict] = {}
+    recent_activities = []
+
     for act in activities:
         act_date   = datetime.strptime(act["startTimeLocal"][:10], "%Y-%m-%d").date()
         act_monday = act_date - timedelta(days=act_date.weekday())
@@ -75,20 +77,51 @@ def pull_data(client):
         if wk_num < 1:
             continue
 
-        dist_km = (act.get("distance") or 0) / 1000
-        bucket  = week_buckets.setdefault(wk_num, {"actual_km": 0.0, "quality": None})
-        bucket["actual_km"] += dist_km
+        dist_km  = (act.get("distance") or 0) / 1000
+        avg_hr   = act.get("averageHR") or 0
+        max_hr   = act.get("maxHR") or 0
+        duration_s = act.get("duration") or 0
+        speed    = act.get("averageSpeed") or 0
+        feel     = act.get("feelingAfter")        # 1–5 Garmin feel score
+        effort   = act.get("userPerceivedEffort") # 0–10 RPE
 
-        avg_hr        = act.get("averageHR") or 0
-        workout_name  = (act.get("activityName") or "").lower()
-        is_quality    = avg_hr >= 150 or any(
+        bucket = week_buckets.setdefault(wk_num, {"actual_km": 0.0, "quality": None, "days": {}})
+        bucket["actual_km"] += dist_km
+        bucket["days"][iso(act_date)] = {
+            "dist_km":  round(dist_km, 1),
+            "avg_hr":   int(avg_hr) if avg_hr else None,
+            "pace":     pace_from_speed(speed),
+            "feel":     int(feel) if feel is not None else None,
+            "effort":   round(float(effort), 1) if effort is not None else None,
+        }
+
+        workout_name = (act.get("activityName") or "").lower()
+        is_quality   = avg_hr >= 150 or any(
             kw in workout_name for kw in ("threshold", "interval", "tempo", "track", "repeat")
         )
         if is_quality and bucket["quality"] is None:
             bucket["quality"] = {
-                "pace_min_per_km": pace_from_speed(act.get("averageSpeed") or 0),
+                "pace_min_per_km": pace_from_speed(speed),
                 "avg_hr": int(avg_hr),
             }
+
+        # Build recent activities list (last 14 days)
+        if act_date >= today - timedelta(days=14):
+            recent_activities.append({
+                "date":       iso(act_date),
+                "name":       act.get("activityName") or "Run",
+                "dist_km":    round(dist_km, 2),
+                "duration_s": int(duration_s),
+                "avg_hr":     int(avg_hr) if avg_hr else None,
+                "max_hr":     int(max_hr) if max_hr else None,
+                "pace":       pace_from_speed(speed),
+                "feel":       int(feel) if feel is not None else None,
+                "effort":     round(float(effort), 1) if effort is not None else None,
+                "elevation_gain": act.get("elevationGain"),
+                "avg_cadence":    act.get("averageRunningCadenceInStepsPerMinute"),
+            })
+
+    recent_activities.sort(key=lambda x: x["date"], reverse=True)
 
     weeks_out = []
     for pw in plan["weeks"]:
@@ -103,6 +136,7 @@ def pull_data(client):
             "actual_km": round(bucket["actual_km"], 1),
             "partial":   partial,
             "quality":   bucket["quality"],
+            "days":      bucket.get("days", {}),
         })
 
     # ── Today stats ─────────────────────────────────────────────────────────
@@ -200,8 +234,9 @@ def pull_data(client):
             "vo2max_note":  "lab-tested 58.4 (2022)",
         },
         "this_week_days":  this_week_days,
-        "weeks":           weeks_out,
-        "sleep_hrv_14d":   sleep_hrv_14d,
+        "weeks":              weeks_out,
+        "sleep_hrv_14d":      sleep_hrv_14d,
+        "recent_activities":  recent_activities,
     }
 
 
