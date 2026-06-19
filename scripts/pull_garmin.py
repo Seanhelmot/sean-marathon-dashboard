@@ -56,6 +56,36 @@ def pace_from_speed(speed_m_s: float):
     return round(mins + secs / 100, 2)
 
 
+def _work_interval_stats(client, activity_id):
+    """
+    Fetch lap splits for a quality session and return (pace_min_per_km, avg_hr)
+    computed from work laps only (HR >= 150bpm), weighted by distance.
+    Returns (None, None) if splits unavailable or no work laps found.
+    """
+    WORK_HR_FLOOR = 150  # laps below this are warm-up / recovery
+    try:
+        splits = client.get_activity_splits(activity_id)
+        laps = splits.get("lapDTOs") or splits.get("activityLapDTOs") or []
+        if not laps:
+            return None, None
+
+        work_laps = [
+            lap for lap in laps
+            if (lap.get("averageHR") or 0) >= WORK_HR_FLOOR
+            and (lap.get("distance") or 0) > 200  # ignore sub-200m laps (standing rest)
+        ]
+        if not work_laps:
+            return None, None
+
+        total_dist  = sum(lap["distance"] for lap in work_laps)
+        weighted_hr = sum(lap["averageHR"] * lap["distance"] for lap in work_laps) / total_dist
+        avg_speed   = total_dist / sum(lap.get("duration", lap.get("elapsedDuration", 0)) for lap in work_laps)
+
+        return pace_from_speed(avg_speed), round(weighted_hr)
+    except Exception:
+        return None, None
+
+
 def pull_data(client):
     from zoneinfo import ZoneInfo
     today = datetime.now(ZoneInfo("Australia/Melbourne")).date()
@@ -120,9 +150,12 @@ def pull_data(client):
             kw in workout_name for kw in ("threshold", "interval", "tempo", "track", "repeat")
         )
         if is_quality and bucket["quality"] is None:
+            # Try to get work-interval-only pace/HR from lap splits
+            work_pace, work_hr = _work_interval_stats(client, act["activityId"])
             bucket["quality"] = {
-                "pace_min_per_km": pace_from_speed(speed),
-                "avg_hr": int(avg_hr),
+                "pace_min_per_km": work_pace if work_pace else pace_from_speed(speed),
+                "avg_hr":          work_hr   if work_hr   else int(avg_hr),
+                "work_intervals_only": work_pace is not None,
             }
 
         # Build recent activities list (last 14 days)
