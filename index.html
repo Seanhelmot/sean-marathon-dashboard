@@ -154,16 +154,17 @@
           <div class="lbl">Days to Melbourne</div>
           <div class="date">A-race · Sun 11 Oct</div>
         </div>
-        <div class="cd-card" id="vol-cd-card">
-          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px;">
-            <span class="num mono" id="vol-actual" style="font-size:22px;color:var(--signal);">—</span>
-            <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--slate-dim);">/ <span id="vol-planned">—</span>km</span>
+        <div class="cd-card" id="vol-cd-card" style="min-width:160px;">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
+            <span class="mono" style="font-size:13px;color:var(--slate);">Actual</span>
+            <span class="mono" style="font-size:13px;color:var(--slate-dim);">/ <span id="vol-planned">—</span>km plan</span>
           </div>
-          <div id="vol-bar-track" style="height:4px;background:var(--line);border-radius:2px;margin-bottom:5px;overflow:hidden;">
+          <div class="num mono" id="vol-actual" style="font-size:26px;color:var(--signal);line-height:1;margin-bottom:5px;">—</div>
+          <div id="vol-bar-track" style="height:4px;background:var(--line);border-radius:2px;margin-bottom:6px;overflow:hidden;">
             <div id="vol-bar-fill" style="height:100%;border-radius:2px;width:0%;background:var(--signal);"></div>
           </div>
-          <div class="lbl">Week km</div>
-          <div class="date" id="vol-forecast-label"></div>
+          <div class="num mono" id="vol-forecast-label" style="font-size:13px;line-height:1.3;"></div>
+          <div class="lbl" style="margin-top:3px;">Forecast</div>
         </div>
       </div>
       <div class="freshness" id="freshness-note"></div>
@@ -709,23 +710,47 @@ function renderWeeklyVolume(live, plan) {
   const planned = planWk.plan_km || 0;
   const actual  = liveWk.actual_km || 0;
 
-  const days       = live.this_week_days || [];
-  const runDone    = days.filter(d => d.zone && d.status === 'done').length;
-  const runLeft    = days.filter(d => d.zone && d.status === 'upcoming').length;
-  const avgPerRun  = runDone > 0 ? actual / runDone : 0;
-  const forecast   = runLeft > 0 ? Math.round((actual + avgPerRun * runLeft) * 10) / 10 : actual;
+  // Use date comparison — not JSON status — to find remaining running days
+  const todayStr = (() => {
+    const n = new Date();
+    return n.getDate() + ' ' + n.toLocaleDateString('en-AU', {month:'short'});
+  })();
+  const days = live.this_week_days || [];
+
+  const isDone = d => d.zone && (d.status === 'done' || d.date === todayStr || (d.status !== 'upcoming' && d.date !== todayStr));
+  const isLeft = d => d.zone && !isDone(d);
+
+  const doneDays = days.filter(isDone);
+  const leftDays = days.filter(isLeft);
+
+  // Forecast: use long_run_km from plan for Sunday, proportional average for other remaining days
+  const longRunKm     = planWk.long_run_km || 0;
+  const totalRunDays  = days.filter(d => d.zone).length;
+  const nonLRRunDays  = Math.max(totalRunDays - 1, 1);
+  const avgNonLRKm    = (planned - longRunKm) / nonLRRunDays;
+
+  const remainingKm = leftDays.reduce((sum, d) => {
+    const isSunday = new Date().getDay() !== 0 && d.dow === 'Sun';
+    return sum + (isSunday ? longRunKm : avgNonLRKm);
+  }, 0);
+
+  const forecast = leftDays.length > 0
+    ? Math.round((actual + remainingKm) * 10) / 10
+    : actual;
 
   const pct      = planned > 0 ? Math.min(actual / planned, 1) : 0;
   const barColor = pct >= 1 ? 'var(--good)' : pct >= 0.6 ? 'var(--signal)' : 'var(--warn)';
   const delta    = forecast - planned;
   const deltaStr = (delta >= 0 ? '+' : '') + delta.toFixed(1) + 'km';
+  const deltaColor = delta >= -3 ? 'var(--good)' : 'var(--warn)';
 
   document.getElementById('vol-actual').textContent  = actual + 'km';
   document.getElementById('vol-planned').textContent = planned;
   document.getElementById('vol-bar-fill').style.width      = (pct * 100).toFixed(1) + '%';
   document.getElementById('vol-bar-fill').style.background = barColor;
+  document.getElementById('vol-forecast-label').style.color = deltaColor;
   document.getElementById('vol-forecast-label').textContent =
-    `↗ ${forecast}km forecast · ${deltaStr}`;
+    `↗ ${forecast}km · ${deltaStr} vs plan`;
 }
 
 /* ── Daily Motivation ────────────────────────────────────────────── */
