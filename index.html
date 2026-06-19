@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sean Helmot — Melbourne Marathon 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14171A;
+    --panel:#1C2024;
+    --panel-raised:#22262B;
+    --line:#2A2F35;
+    --paper:#ECEEEF;
+    --slate:#8B939B;
+    --slate-dim:#5E656C;
+    --signal:#E0703A;
+    --z1:#4A6FA5;
+    --z2:#4F9D6E;
+    --z3:#D9A441;
+    --z4:#E0703A;
+    --z5:#D14545;
+    --z6:#8B2E2E;
+    --good:#4F9D6E;
+    --warn:#D9A441;
+    --bad:#D14545;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--ink);color:var(--paper);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .display{font-family:'Big Shoulders Display',sans-serif;}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* HEADER */
+  header.top{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:flex-end;border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:26px;}
+  .id-block .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--signal);margin-bottom:6px;}
+  .id-block h1{font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:42px;line-height:.95;margin:0;letter-spacing:-.01em;}
+  .id-block .sub{color:var(--slate);font-size:13.5px;margin-top:6px;}
+  .countdowns{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end;}
+  .cd-card{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:10px 18px;min-width:128px;text-align:center;}
+  .cd-card .num{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:30px;line-height:1;color:var(--paper);}
+  .cd-card.lakeside .num{color:var(--z5);}
+  .cd-card.melbourne .num{color:var(--signal);}
+  .cd-card .lbl{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-top:4px;}
+  .cd-card .date{font-size:10px;color:var(--slate-dim);margin-top:2px;}
+  .freshness{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--slate-dim);text-align:right;}
+
+  /* TABS */
+  .tabs{display:flex;gap:2px;margin-bottom:24px;border-bottom:1px solid var(--line);}
+  .tab-btn{background:none;border:none;color:var(--slate);font-family:'Inter',sans-serif;font-weight:600;font-size:14px;padding:10px 4px;margin-right:24px;cursor:pointer;letter-spacing:.01em;border-bottom:2px solid transparent;}
+  .tab-btn.active{color:var(--paper);border-bottom-color:var(--signal);}
+  .panel{display:none;}
+  .panel.active{display:block;}
+
+  /* GRID / CARDS */
+  .grid{display:grid;gap:18px;}
+  .grid-2{grid-template-columns:1.55fr 1fr;}
+  .grid-3{grid-template-columns:repeat(3,1fr);}
+  @media(max-width:900px){.grid-2,.grid-3{grid-template-columns:1fr;}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:18px 20px;}
+  .card h2{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin:0 0 14px;font-weight:500;}
+  .card h2 .accent{color:var(--signal);}
+
+  /* WEEK STRIP */
+  .week-strip{display:flex;flex-direction:column;gap:8px;}
+  .day-row{display:grid;grid-template-columns:54px 1fr auto;gap:14px;align-items:center;padding:10px 12px;border-radius:3px;background:var(--panel-raised);border:1px solid var(--line);}
+  .day-row.done{opacity:.55;}
+  .day-row.today{border-color:var(--signal);}
+  .day-date{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--slate);text-align:center;line-height:1.3;}
+  .day-date .dow{display:block;font-size:10px;letter-spacing:.08em;color:var(--slate-dim);text-transform:uppercase;}
+  .day-name{font-size:13.5px;font-weight:600;}
+  .day-meta{font-size:11.5px;color:var(--slate);margin-top:2px;}
+  .zone-chip{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:20px;color:var(--ink);white-space:nowrap;}
+  .status-dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:6px;}
+
+  /* METRIC TILES */
+  .metric-tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+  .mtile{background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;padding:12px 14px;}
+  .mtile .v{font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:600;line-height:1;}
+  .mtile .l{font-size:10.5px;color:var(--slate);text-transform:uppercase;letter-spacing:.08em;margin-top:5px;}
+  .mtile .d{font-size:10.5px;margin-top:3px;}
+  .up{color:var(--good);} .down{color:var(--bad);} .flat{color:var(--slate);}
+
+  /* CHARTS */
+  .chart-foot{font-size:10.5px;color:var(--slate-dim);margin-top:8px;line-height:1.5;}
+  .legend-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:11px;color:var(--slate);}
+  .legend-row span{display:inline-flex;align-items:center;gap:6px;}
+  .legend-row i{width:9px;height:9px;border-radius:2px;display:inline-block;}
+
+  /* INJURY */
+  .injury-row{display:flex;align-items:center;gap:14px;padding:9px 0;border-bottom:1px solid var(--line);}
+  .injury-row:last-child{border-bottom:none;}
+  .injury-name{width:120px;font-size:12.5px;font-weight:600;flex-shrink:0;}
+  .injury-bar{flex:1;height:6px;background:var(--panel-raised);border-radius:3px;position:relative;overflow:hidden;}
+  .injury-fill{height:100%;border-radius:3px;}
+  .injury-score{width:88px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--slate);flex-shrink:0;}
+
+  /* SEASON TIMELINE */
+  .season-scroll{overflow-x:auto;padding-bottom:6px;}
+  .season-row{display:flex;gap:3px;min-width:1320px;}
+  .wk-col{flex:1;min-width:56px;}
+  .wk-head{font-family:'IBM Plex Mono',monospace;font-size:9.5px;text-align:center;color:var(--slate);padding-bottom:6px;border-bottom:1px solid var(--line);margin-bottom:6px;}
+  .wk-phase{height:5px;border-radius:2px;margin-bottom:6px;}
+  .wk-vol-track{height:64px;background:var(--panel-raised);border-radius:2px;position:relative;display:flex;align-items:flex-end;overflow:hidden;}
+  .wk-vol-bar{width:100%;border-radius:2px 2px 0 0;}
+  .wk-lr{font-family:'IBM Plex Mono',monospace;font-size:9px;text-align:center;color:var(--slate);margin-top:5px;}
+  .wk-tag{font-size:8.5px;text-align:center;color:var(--signal);margin-top:2px;letter-spacing:.03em;text-transform:uppercase;}
+  .wk-tag.rec{color:var(--z2);}
+  .wk-tag.race{color:var(--z5);}
+  .phase-legend{display:flex;flex-wrap:wrap;gap:14px;margin:14px 0 4px;font-size:11px;color:var(--slate);}
+  .phase-legend span{display:inline-flex;align-items:center;gap:6px;}
+  .phase-legend i{width:14px;height:5px;border-radius:2px;display:inline-block;}
+
+  /* LOADING STATE */
+  .loading{color:var(--slate-dim);font-family:'IBM Plex Mono',monospace;font-size:12px;padding:24px 0;}
+
+  footer.note{margin-top:34px;font-size:11px;color:var(--slate-dim);line-height:1.7;border-top:1px solid var(--line);padding-top:16px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="id-block">
+      <div class="eyebrow">22-Week Build · Brighton VIC</div>
+      <h1>SEAN HELMOT</h1>
+      <div class="sub" id="header-sub">Melbourne Marathon 2026 — loading…</div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
+      <div class="countdowns">
+        <div class="cd-card lakeside">
+          <div class="num mono" id="cd-lakeside">—</div>
+          <div class="lbl">Days to Lakeside</div>
+          <div class="date">10k · Sun 26 Jul</div>
+        </div>
+        <div class="cd-card melbourne">
+          <div class="num mono" id="cd-melbourne">—</div>
+          <div class="lbl">Days to Melbourne</div>
+          <div class="date">A-race · Sun 11 Oct</div>
+        </div>
+      </div>
+      <div class="freshness" id="freshness-note"></div>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="week">This Week</button>
+    <button class="tab-btn" data-tab="season">Season Overview</button>
+  </nav>
+
+  <!-- THIS WEEK -->
+  <section class="panel active" id="panel-week">
+    <div class="grid grid-2" style="margin-bottom:18px;">
+      <div class="card">
+        <h2 id="week-card-title">Week — · — · loading</h2>
+        <div class="week-strip" id="week-strip"><div class="loading">Loading week data…</div></div>
+      </div>
+      <div class="card">
+        <h2>Today <span class="accent" id="today-date-label"></span></h2>
+        <div class="metric-tiles" id="today-tiles"><div class="loading">Loading…</div></div>
+        <div class="chart-foot" id="today-foot"></div>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-bottom:18px;">
+      <div class="card">
+        <h2>Quality Session Trend <span class="accent">· Wed threshold, recent weeks</span></h2>
+        <div id="quality-chart"></div>
+        <div class="legend-row">
+          <span><i style="background:var(--signal)"></i>Pace (min/km)</span>
+          <span><i style="background:var(--z5)"></i>Avg HR (bpm)</span>
+        </div>
+        <div class="chart-foot">Pace and cardiac cost of quality (threshold/interval) sessions over the build. Improving pace at steady HR = aerobic adaptation on track.</div>
+      </div>
+      <div class="card">
+        <h2>Volume <span class="accent">· planned vs actual, weekly km</span></h2>
+        <div id="volume-chart"></div>
+        <div class="legend-row">
+          <span><i style="background:var(--line)"></i>Planned</span>
+          <span><i style="background:var(--signal)"></i>Actual</span>
+        </div>
+        <div class="chart-foot" id="volume-foot">Current week marked partial if Sat/Sun still to come.</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <h2>Injury Status <span class="accent">· manually tracked, not Garmin-sourced</span></h2>
+        <div id="injury-list"></div>
+        <div class="chart-foot">Physio assessment booked with Mohsin Raza (Richmond Medical Practice). Trialling meloxicam for knee from ~18 Jun.</div>
+      </div>
+      <div class="card">
+        <h2>Sleep &amp; HRV <span class="accent">· recent nights</span></h2>
+        <div id="sleep-chart"></div>
+        <div class="legend-row">
+          <span><i style="background:var(--signal)"></i>Sleep score</span>
+          <span><i style="background:var(--z1)"></i>Overnight HRV (ms)</span>
+        </div>
+        <div class="chart-foot">HRV dips after hard sessions are normal single-night noise. Watch the 7-day rolling average, not individual nights.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEASON -->
+  <section class="panel" id="panel-season">
+    <div class="card" style="margin-bottom:18px;">
+      <h2>22-Week Build <span class="accent">· phase, long run progression, weekly volume</span></h2>
+      <div class="phase-legend">
+        <span><i style="background:var(--z2)"></i>Base rebuild</span>
+        <span><i style="background:var(--z3)"></i>Aerobic build</span>
+        <span><i style="background:var(--z5)"></i>Lakeside sharpening</span>
+        <span><i style="background:var(--slate-dim)"></i>Reset / Recovery</span>
+        <span><i style="background:var(--signal)"></i>Marathon base</span>
+        <span><i style="background:var(--z6)"></i>Marathon specific</span>
+        <span><i style="background:var(--z1)"></i>Taper</span>
+      </div>
+      <div class="season-scroll">
+        <div class="season-row" id="season-row"><div class="loading">Loading…</div></div>
+      </div>
+      <div class="chart-foot" style="margin-top:14px;">
+        Bar height = planned weekly volume (max 95km, W18 peak). Number beneath = long run distance. Solid orange = completed/actual; outline = planned. Current week partial if in-progress.
+      </div>
+    </div>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <h2>Peak Numbers</h2>
+        <div class="metric-tiles" style="grid-template-columns:1fr;">
+          <div class="mtile"><div class="v">95km</div><div class="l">Peak week — W18</div></div>
+          <div class="mtile"><div class="v">36km</div><div class="l">Peak long run — W18 race sim</div></div>
+          <div class="mtile"><div class="v">3</div><div class="l">Recovery weeks (7 / 16 / 19)</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Targets</h2>
+        <div class="metric-tiles" style="grid-template-columns:1fr;" id="targets-tiles"></div>
+      </div>
+      <div class="card">
+        <h2>HR Zones <span class="accent">· lab-calibrated</span></h2>
+        <div id="zone-ref"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="note" id="footer-note">
+    Data sources: weekly volume and quality-session pace/HR pulled live from Garmin Connect. Injury status, targets, and the 22-week structure are hand-authored in <code>data/plan.json</code>. Refreshes every 6 hours via GitHub Actions.
+  </footer>
+</div>
+
+<script>
+/* ── SVG helpers ──────────────────────────────────────────────── */
+function svgEl(tag, attrs) {
+  const e = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  return e;
+}
+
+const ZONE_COLOR = { z1:'var(--z1)',z2:'var(--z2)',z3:'var(--z3)',z4:'var(--z4)',z5:'var(--z5)',z6:'var(--z6)' };
+const ZONE_LABEL = { z1:'Z1',z2:'Z2',z3:'Z3',z4:'Z4',z5:'Z5',z6:'Z6' };
+
+const PHASE_COLOR = {
+  'Base rebuild':      'var(--z2)',
+  'Aerobic build':     'var(--z3)',
+  'Lakeside sharp':    'var(--z5)',
+  'Reset':             'var(--slate-dim)',
+  'Marathon base':     'var(--signal)',
+  'Marathon specific': 'var(--z6)',
+  'Recovery':          'var(--slate-dim)',
+  'Taper':             'var(--z1)',
+};
+
+function fmtPace(dec) {
+  if (dec == null) return '—';
+  const mins = Math.floor(dec);
+  const secs = String(Math.round((dec % 1) * 100)).padStart(2, '0');
+  return `${mins}:${secs}/km`;
+}
+
+function daysBetween(a, b) {
+  return Math.round((b - a) / 86400000);
+}
+
+/* ── Countdown ──────────────────────────────────────────────────── */
+function renderCountdowns(plan) {
+  const today = new Date();
+  const lakeside   = new Date(plan.lakeside_date);
+  const melbourne  = new Date(plan.race_date);
+  document.getElementById('cd-lakeside').textContent  = daysBetween(today, lakeside);
+  document.getElementById('cd-melbourne').textContent = daysBetween(today, melbourne);
+}
+
+/* ── Header sub line ─────────────────────────────────────────────── */
+function renderHeaderSub(plan, live) {
+  const today = new Date();
+  const dateStr = today.toLocaleDateString('en-AU', { weekday:'short', day:'numeric', month:'short', year:'numeric' });
+  document.getElementById('header-sub').textContent =
+    `${plan.race} — Week ${live.current_week} of ${plan.build_weeks} · ${dateStr}`;
+
+  if (live.generated_at) {
+    const gen = new Date(live.generated_at);
+    const ago = Math.round((Date.now() - gen) / 60000);
+    document.getElementById('freshness-note').textContent =
+      `Data refreshed ${ago < 60 ? ago + 'm ago' : Math.round(ago/60) + 'h ago'} · ${gen.toUTCString().replace(':00 GMT','Z')}`;
+  }
+}
+
+/* ── This Week strip ─────────────────────────────────────────────── */
+function renderWeekStrip(live, plan) {
+  const wkNum = live.current_week;
+  const planWk = plan.weeks.find(w => w.wk === wkNum) || {};
+  const title = document.getElementById('week-card-title');
+  title.innerHTML = `Week ${wkNum} <span class="accent">· ${planWk.phase || ''} · ${planWk.plan_km || '—'}km planned</span>`;
+
+  const strip = document.getElementById('week-strip');
+  strip.innerHTML = '';
+
+  const days = live.this_week_days;
+  if (!days || !days.length) {
+    strip.innerHTML = '<div class="loading">Week schedule not available in live data — update <code>this_week_days</code> in live.json.</div>';
+    return;
+  }
+
+  days.forEach(d => {
+    const row = document.createElement('div');
+    row.className = 'day-row' + (d.status==='done'?' done':'') + (d.status==='today'?' today':'');
+    const dotColor = d.status==='today' ? 'var(--signal)' : d.status==='done' ? 'var(--good)' : 'var(--slate-dim)';
+    row.innerHTML = `
+      <div class="day-date">${d.date}<span class="dow">${d.dow}</span></div>
+      <div>
+        <div class="day-name"><span class="status-dot" style="background:${dotColor}"></span>${d.name}</div>
+        <div class="day-meta">${d.meta}</div>
+      </div>
+      <div>${d.zone ? `<span class="zone-chip" style="background:${ZONE_COLOR[d.zone]}">${ZONE_LABEL[d.zone]}</span>` : ''}</div>
+    `;
+    strip.appendChild(row);
+  });
+}
+
+/* ── Today tiles ─────────────────────────────────────────────────── */
+function renderTodayTiles(live) {
+  const t = live.today;
+  const today = new Date();
+  const yesterday = new Date(today); yesterday.setDate(today.getDate()-1);
+  const yStr = yesterday.toLocaleDateString('en-AU',{day:'numeric',month:'short'});
+
+  document.getElementById('today-date-label').textContent = `· ${today.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short'})}`;
+
+  const tiles = [
+    { v: t.hrv_7d_avg != null ? t.hrv_7d_avg+'ms' : '—', l:'HRV 7-day avg', d: t.hrv_status || '—' },
+    { v: t.rhr != null ? t.rhr+'bpm' : '—',             l:'Resting HR',      d:'current' },
+    { v: t.sleep_score != null ? String(t.sleep_score) : '—', l:`Sleep score (${yStr})`, d: t.sleep_hrs != null ? t.sleep_hrs+'hrs' : '' },
+    { v: t.vo2max_garmin != null ? String(t.vo2max_garmin) : '—', l:"Garmin VO2max est.", d: t.vo2max_note || '' },
+  ];
+
+  const container = document.getElementById('today-tiles');
+  container.innerHTML = '';
+  tiles.forEach(ti => {
+    const el = document.createElement('div');
+    el.className = 'mtile';
+    el.innerHTML = `<div class="v">${ti.v}</div><div class="l">${ti.l}</div><div class="d flat">${ti.d}</div>`;
+    container.appendChild(el);
+  });
+
+  const foot = document.getElementById('today-foot');
+  const parts = [];
+  if (t.rhr != null)          parts.push(`RHR ${t.rhr}bpm`);
+  if (t.hrv_status)           parts.push(`HRV ${t.hrv_status.toLowerCase()}`);
+  if (t.body_battery != null) parts.push(`Body battery ${t.body_battery}`);
+  foot.textContent = parts.join(' · ');
+}
+
+/* ── Quality session chart ───────────────────────────────────────── */
+function renderQualityChart(live) {
+  const data = live.weeks.filter(w => w.quality && w.quality.pace_min_per_km);
+  if (!data.length) {
+    document.getElementById('quality-chart').innerHTML = '<div class="loading">No quality session data yet.</div>';
+    return;
+  }
+
+  const W=520, H=170, padL=38, padR=38, padT=14, padB=26;
+  const paceMin=4.2, paceMax=5.5, hrMin=135, hrMax=170;
+  const svg = svgEl('svg', {width:'100%', viewBox:`0 0 ${W} ${H}`});
+
+  const x     = i => padL + i*((W-padL-padR)/(data.length-1||1));
+  const yPace = p => padT + (paceMax-p)/(paceMax-paceMin) * (H-padT-padB);
+  const yHr   = h => padT + (hrMax-h)/(hrMax-hrMin) * (H-padT-padB);
+
+  for (let i=0; i<=2; i++) {
+    const yy = padT + i*(H-padT-padB)/2;
+    svg.appendChild(svgEl('line', {x1:padL,x2:W-padR,y1:yy,y2:yy,stroke:'var(--line)','stroke-width':1}));
+  }
+
+  if (data.length > 1) {
+    svg.appendChild(svgEl('polyline', {
+      points: data.map((d,i)=>`${x(i)},${yPace(d.quality.pace_min_per_km)}`).join(' '),
+      fill:'none', stroke:'var(--signal)', 'stroke-width':2
+    }));
+    svg.appendChild(svgEl('polyline', {
+      points: data.map((d,i)=>`${x(i)},${yHr(d.quality.avg_hr)}`).join(' '),
+      fill:'none', stroke:'var(--z5)', 'stroke-width':2, 'stroke-dasharray':'4 3'
+    }));
+  }
+
+  data.forEach((d, i) => {
+    svg.appendChild(svgEl('circle', {cx:x(i), cy:yPace(d.quality.pace_min_per_km), r:3.4, fill:'var(--signal)'}));
+    svg.appendChild(svgEl('circle', {cx:x(i), cy:yHr(d.quality.avg_hr), r:3.4, fill:'var(--z5)'}));
+
+    const lbl = svgEl('text', {x:x(i),y:H-8,'text-anchor':'middle','font-size':10,fill:'var(--slate)','font-family':'IBM Plex Mono, monospace'});
+    lbl.textContent = `W${d.wk}`;
+    svg.appendChild(lbl);
+
+    const pl = svgEl('text', {x:x(i),y:yPace(d.quality.pace_min_per_km)-8,'text-anchor':'middle','font-size':9.5,fill:'var(--signal)','font-family':'IBM Plex Mono, monospace'});
+    pl.textContent = fmtPace(d.quality.pace_min_per_km);
+    svg.appendChild(pl);
+  });
+
+  document.getElementById('quality-chart').innerHTML = '';
+  document.getElementById('quality-chart').appendChild(svg);
+}
+
+/* ── Volume chart ────────────────────────────────────────────────── */
+function renderVolumeChart(live, plan) {
+  const actuals = Object.fromEntries(live.weeks.map(w => [w.wk, w]));
+  const data = plan.weeks.slice(0, live.current_week).map(pw => ({
+    wk: `W${pw.wk}`,
+    plan: pw.plan_km,
+    actual: actuals[pw.wk]?.actual_km ?? null,
+    partial: actuals[pw.wk]?.partial ?? false,
+  }));
+
+  const W=520, H=170, padL=10, padR=10, padT=14, padB=26;
+  const max = 100;
+  const bw = (W-padL-padR)/data.length;
+  const svg = svgEl('svg', {width:'100%', viewBox:`0 0 ${W} ${H}`});
+
+  data.forEach((d, i) => {
+    const cx = padL + i*bw;
+    const planH = (d.plan/max)*(H-padT-padB);
+    svg.appendChild(svgEl('rect', {x:cx+6, y:H-padB-planH, width:bw-22, height:planH, fill:'none', stroke:'var(--line)', 'stroke-width':1.4, rx:2}));
+
+    if (d.actual != null) {
+      const actH = (d.actual/max)*(H-padT-padB);
+      svg.appendChild(svgEl('rect', {x:cx+12, y:H-padB-actH, width:(bw-22)*0.55, height:actH, fill:'var(--signal)', opacity:d.partial?0.55:1, rx:2}));
+      const val = svgEl('text', {x:cx+bw/2-3,y:H-padB-actH-6,'text-anchor':'middle','font-size':9.5,fill:'var(--paper)','font-family':'IBM Plex Mono, monospace'});
+      val.textContent = d.actual;
+      svg.appendChild(val);
+    }
+
+    const lbl = svgEl('text', {x:cx+bw/2-3,y:H-8,'text-anchor':'middle','font-size':10,fill:'var(--slate)','font-family':'IBM Plex Mono, monospace'});
+    lbl.textContent = d.wk;
+    svg.appendChild(lbl);
+  });
+
+  document.getElementById('volume-chart').innerHTML = '';
+  document.getElementById('volume-chart').appendChild(svg);
+}
+
+/* ── Sleep / HRV chart ───────────────────────────────────────────── */
+function renderSleepChart(live) {
+  const raw = live.sleep_hrv_14d || [];
+  const data = raw.slice(-6);  // show last 6 nights
+  if (!data.length) {
+    document.getElementById('sleep-chart').innerHTML = '<div class="loading">No sleep data.</div>';
+    return;
+  }
+
+  const W=520, H=170, padL=34, padR=34, padT=14, padB=26;
+  const scMin=50, scMax=100, hrvMin=55, hrvMax=95;
+  const svg = svgEl('svg', {width:'100%', viewBox:`0 0 ${W} ${H}`});
+
+  const x  = i => padL + i*((W-padL-padR)/(data.length-1||1));
+  const yS = s => padT + (scMax-s)/(scMax-scMin) * (H-padT-padB);
+  const yH = h => padT + (hrvMax-h)/(hrvMax-hrvMin) * (H-padT-padB);
+
+  for (let i=0; i<=2; i++) {
+    const yy = padT + i*(H-padT-padB)/2;
+    svg.appendChild(svgEl('line', {x1:padL,x2:W-padR,y1:yy,y2:yy,stroke:'var(--line)','stroke-width':1}));
+  }
+
+  const scoreData = data.filter(d => d.score != null);
+  const hrvData   = data.filter(d => d.hrv != null);
+
+  if (scoreData.length > 1) {
+    svg.appendChild(svgEl('polyline', {
+      points: data.map((d,i) => d.score != null ? `${x(i)},${yS(d.score)}` : '').filter(Boolean).join(' '),
+      fill:'none', stroke:'var(--signal)', 'stroke-width':2
+    }));
+  }
+  if (hrvData.length > 1) {
+    svg.appendChild(svgEl('polyline', {
+      points: data.map((d,i) => d.hrv != null ? `${x(i)},${yH(d.hrv)}` : '').filter(Boolean).join(' '),
+      fill:'none', stroke:'var(--z1)', 'stroke-width':2, 'stroke-dasharray':'4 3'
+    }));
+  }
+
+  data.forEach((d, i) => {
+    if (d.score != null) svg.appendChild(svgEl('circle', {cx:x(i), cy:yS(d.score), r:3.4, fill:'var(--signal)'}));
+    if (d.hrv   != null) svg.appendChild(svgEl('circle', {cx:x(i), cy:yH(d.hrv),   r:3.4, fill:'var(--z1)'}));
+
+    const datePart = d.date.slice(5);  // MM-DD
+    const [m, day] = datePart.split('-');
+    const months = ['','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const lbl = svgEl('text', {x:x(i),y:H-8,'text-anchor':'middle','font-size':10,fill:'var(--slate)','font-family':'IBM Plex Mono, monospace'});
+    lbl.textContent = `${months[+m]} ${+day}`;
+    svg.appendChild(lbl);
+  });
+
+  document.getElementById('sleep-chart').innerHTML = '';
+  document.getElementById('sleep-chart').appendChild(svg);
+}
+
+/* ── Injury list ─────────────────────────────────────────────────── */
+function renderInjuryList(plan) {
+  const injBarColor = s => s===0 ? 'var(--good)' : s<=2 ? 'var(--warn)' : 'var(--bad)';
+  const container = document.getElementById('injury-list');
+  container.innerHTML = '';
+  (plan.injuries || []).forEach(inj => {
+    const row = document.createElement('div');
+    row.className = 'injury-row';
+    row.innerHTML = `
+      <div class="injury-name">${inj.name}</div>
+      <div class="injury-bar"><div class="injury-fill" style="width:${inj.score/inj.max*100}%;background:${injBarColor(inj.score)}"></div></div>
+      <div class="injury-score">${inj.note}</div>
+    `;
+    container.appendChild(row);
+  });
+}
+
+/* ── Season timeline ─────────────────────────────────────────────── */
+function renderSeasonTimeline(plan, live) {
+  const actuals = Object.fromEntries((live.weeks || []).map(w => [w.wk, w]));
+  const maxVol = 95;
+  const container = document.getElementById('season-row');
+  container.innerHTML = '';
+
+  plan.weeks.forEach(pw => {
+    const actual = actuals[pw.wk];
+    const hasActual = actual && actual.actual_km != null;
+    const partial   = actual?.partial ?? false;
+    const barH = Math.round((pw.plan_km / maxVol) * 64);
+    const isCurrent = pw.wk === live.current_week;
+
+    const col = document.createElement('div');
+    col.className = 'wk-col';
+    const tagClass = pw.tag==='Recovery' ? ' rec' : (pw.tag==='Lakeside'||pw.tag==='Melbourne') ? ' race' : '';
+
+    col.innerHTML = `
+      <div class="wk-head" style="${isCurrent ? 'color:var(--signal)' : ''}">W${pw.wk}</div>
+      <div class="wk-phase" style="background:${PHASE_COLOR[pw.phase] || 'var(--slate-dim)'}"></div>
+      <div class="wk-vol-track">
+        <div class="wk-vol-bar" style="height:${barH}px;background:${hasActual?'var(--signal)':'transparent'};border:1px solid ${hasActual?'var(--signal)':'var(--line)'};opacity:${partial?0.55:1}"></div>
+      </div>
+      <div class="wk-lr">${pw.long_run_km}${typeof pw.long_run_km==='number'?'km':''}</div>
+      <div class="wk-tag${tagClass}">${pw.tag||''}</div>
+    `;
+    container.appendChild(col);
+  });
+}
+
+/* ── Targets ─────────────────────────────────────────────────────── */
+function renderTargets(plan) {
+  const t = plan.targets || {};
+  const tiles = [
+    { v: t.lakeside_10k || '—',          l: 'Lakeside 10k' },
+    { v: t.melbourne_marathon || '—',     l: 'Melbourne, realistic' },
+    { v: t.pb || '—',                    l: 'PB — Gold Coast 2018' },
+  ];
+  const container = document.getElementById('targets-tiles');
+  container.innerHTML = '';
+  tiles.forEach(ti => {
+    const el = document.createElement('div');
+    el.className = 'mtile';
+    el.innerHTML = `<div class="v" style="font-size:18px">${ti.v}</div><div class="l">${ti.l}</div>`;
+    container.appendChild(el);
+  });
+}
+
+/* ── HR Zones ────────────────────────────────────────────────────── */
+function renderZones(plan) {
+  const container = document.getElementById('zone-ref');
+  container.innerHTML = '';
+  (plan.hr_zones || []).forEach(z => {
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:9px;padding:5px 0;font-size:11.5px;';
+    row.innerHTML = `<i style="width:9px;height:9px;border-radius:2px;background:var(${z.color_var});flex-shrink:0;"></i>
+      <span style="width:96px;color:var(--paper);font-weight:600;">${z.zone}</span>
+      <span class="mono" style="width:76px;color:var(--slate);">${z.hr}</span>
+      <span class="mono" style="color:var(--slate);">${z.pace}</span>`;
+    container.appendChild(row);
+  });
+}
+
+/* ── Tabs ────────────────────────────────────────────────────────── */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+/* ── Bootstrap ───────────────────────────────────────────────────── */
+async function init() {
+  const [plan, live] = await Promise.all([
+    fetch('./data/plan.json').then(r => r.json()),
+    fetch('./data/live.json').then(r => r.json()),
+  ]);
+
+  renderCountdowns(plan);
+  renderHeaderSub(plan, live);
+  renderWeekStrip(live, plan);
+  renderTodayTiles(live);
+  renderQualityChart(live);
+  renderVolumeChart(live, plan);
+  renderSleepChart(live);
+  renderInjuryList(plan);
+  renderSeasonTimeline(plan, live);
+  renderTargets(plan);
+  renderZones(plan);
+}
+
+init().catch(err => {
+  console.error('Dashboard load failed:', err);
+  document.querySelector('.wrap').insertAdjacentHTML('afterbegin',
+    `<div style="color:var(--bad);font-family:monospace;padding:12px;background:var(--panel);border:1px solid var(--bad);border-radius:4px;margin-bottom:18px;">
+      Failed to load data: ${err.message}.<br>
+      If running locally, serve with a local HTTP server (e.g. <code>python -m http.server</code>) — browsers block fetch() from file:// URLs.
+    </div>`
+  );
+});
+</script>
+</body>
+</html>

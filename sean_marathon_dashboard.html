@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sean Helmot — Melbourne Marathon 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14171A;
+    --panel:#1C2024;
+    --panel-raised:#22262B;
+    --line:#2A2F35;
+    --paper:#ECEEEF;
+    --slate:#8B939B;
+    --slate-dim:#5E656C;
+    --signal:#E0703A;
+
+    --z1:#4A6FA5;
+    --z2:#4F9D6E;
+    --z3:#D9A441;
+    --z4:#E0703A;
+    --z5:#D14545;
+    --z6:#8B2E2E;
+
+    --good:#4F9D6E;
+    --warn:#D9A441;
+    --bad:#D14545;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .display{font-family:'Big Shoulders Display',sans-serif;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* ===== HEADER ===== */
+  header.top{
+    display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between;align-items:flex-end;
+    border-bottom:1px solid var(--line);
+    padding-bottom:22px;margin-bottom:26px;
+  }
+  .id-block .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--signal);margin-bottom:6px;
+  }
+  .id-block h1{
+    font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:42px;line-height:.95;
+    margin:0;letter-spacing:-.01em;
+  }
+  .id-block .sub{color:var(--slate);font-size:13.5px;margin-top:6px;}
+
+  .countdowns{display:flex;gap:18px;flex-wrap:wrap;}
+  .cd-card{
+    background:var(--panel);border:1px solid var(--line);border-radius:3px;
+    padding:10px 18px;min-width:128px;text-align:center;
+  }
+  .cd-card .num{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:30px;line-height:1;color:var(--paper);}
+  .cd-card.lakeside .num{color:var(--z5);}
+  .cd-card.melbourne .num{color:var(--signal);}
+  .cd-card .lbl{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-top:4px;}
+  .cd-card .date{font-size:10px;color:var(--slate-dim);margin-top:2px;}
+
+  /* ===== TABS ===== */
+  .tabs{display:flex;gap:2px;margin-bottom:24px;border-bottom:1px solid var(--line);}
+  .tab-btn{
+    background:none;border:none;color:var(--slate);font-family:'Inter',sans-serif;font-weight:600;
+    font-size:14px;padding:10px 4px;margin-right:24px;cursor:pointer;letter-spacing:.01em;
+    border-bottom:2px solid transparent;
+  }
+  .tab-btn.active{color:var(--paper);border-bottom-color:var(--signal);}
+  .panel{display:none;}
+  .panel.active{display:block;}
+
+  /* ===== GRID / CARDS ===== */
+  .grid{display:grid;gap:18px;}
+  .grid-2{grid-template-columns:1.55fr 1fr;}
+  .grid-3{grid-template-columns:repeat(3,1fr);}
+  @media(max-width:900px){.grid-2,.grid-3{grid-template-columns:1fr;}}
+
+  .card{
+    background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:18px 20px;
+  }
+  .card h2{
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--slate);margin:0 0 14px;font-weight:500;
+  }
+  .card h2 .accent{color:var(--signal);}
+
+  /* ===== WEEK STRIP ===== */
+  .week-strip{display:flex;flex-direction:column;gap:8px;}
+  .day-row{
+    display:grid;grid-template-columns:54px 1fr auto;gap:14px;align-items:center;
+    padding:10px 12px;border-radius:3px;background:var(--panel-raised);border:1px solid var(--line);
+  }
+  .day-row.done{opacity:.55;}
+  .day-row.today{border-color:var(--signal);}
+  .day-date{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--slate);text-align:center;line-height:1.3;}
+  .day-date .dow{display:block;font-size:10px;letter-spacing:.08em;color:var(--slate-dim);text-transform:uppercase;}
+  .day-name{font-size:13.5px;font-weight:600;}
+  .day-meta{font-size:11.5px;color:var(--slate);margin-top:2px;}
+  .zone-chip{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;padding:3px 9px;border-radius:20px;
+    color:var(--ink);white-space:nowrap;
+  }
+  .status-dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:6px;}
+
+  /* ===== METRIC TILES ===== */
+  .metric-tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+  .mtile{background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;padding:12px 14px;}
+  .mtile .v{font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:600;line-height:1;}
+  .mtile .l{font-size:10.5px;color:var(--slate);text-transform:uppercase;letter-spacing:.08em;margin-top:5px;}
+  .mtile .d{font-size:10.5px;margin-top:3px;}
+  .up{color:var(--good);} .down{color:var(--bad);} .flat{color:var(--slate);}
+
+  /* ===== CHARTS ===== */
+  .chart-foot{font-size:10.5px;color:var(--slate-dim);margin-top:8px;line-height:1.5;}
+  .legend-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:11px;color:var(--slate);}
+  .legend-row span{display:inline-flex;align-items:center;gap:6px;}
+  .legend-row i{width:9px;height:9px;border-radius:2px;display:inline-block;}
+
+  /* ===== INJURY TIMELINE ===== */
+  .injury-row{display:flex;align-items:center;gap:14px;padding:9px 0;border-bottom:1px solid var(--line);}
+  .injury-row:last-child{border-bottom:none;}
+  .injury-name{width:120px;font-size:12.5px;font-weight:600;flex-shrink:0;}
+  .injury-bar{flex:1;height:6px;background:var(--panel-raised);border-radius:3px;position:relative;overflow:hidden;}
+  .injury-fill{height:100%;border-radius:3px;}
+  .injury-score{width:88px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--slate);flex-shrink:0;}
+
+  /* ===== SEASON TIMELINE ===== */
+  .season-scroll{overflow-x:auto;padding-bottom:6px;}
+  .season-row{display:flex;gap:3px;min-width:1320px;}
+  .wk-col{flex:1;min-width:56px;}
+  .wk-head{
+    font-family:'IBM Plex Mono',monospace;font-size:9.5px;text-align:center;color:var(--slate);
+    padding-bottom:6px;border-bottom:1px solid var(--line);margin-bottom:6px;
+  }
+  .wk-phase{height:5px;border-radius:2px;margin-bottom:6px;}
+  .wk-vol-track{height:64px;background:var(--panel-raised);border-radius:2px;position:relative;display:flex;align-items:flex-end;overflow:hidden;}
+  .wk-vol-bar{width:100%;border-radius:2px 2px 0 0;}
+  .wk-lr{font-family:'IBM Plex Mono',monospace;font-size:9px;text-align:center;color:var(--slate);margin-top:5px;}
+  .wk-tag{font-size:8.5px;text-align:center;color:var(--signal);margin-top:2px;letter-spacing:.03em;text-transform:uppercase;}
+  .wk-tag.rec{color:var(--z2);}
+  .wk-tag.race{color:var(--z5);}
+
+  .phase-legend{display:flex;flex-wrap:wrap;gap:14px;margin:14px 0 4px;font-size:11px;color:var(--slate);}
+  .phase-legend span{display:inline-flex;align-items:center;gap:6px;}
+  .phase-legend i{width:14px;height:5px;border-radius:2px;display:inline-block;}
+
+  footer.note{margin-top:34px;font-size:11px;color:var(--slate-dim);line-height:1.7;border-top:1px solid var(--line);padding-top:16px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="id-block">
+      <div class="eyebrow">22-Week Build · Brighton VIC</div>
+      <h1>SEAN HELMOT</h1>
+      <div class="sub">Melbourne Marathon 2026 — Week 6 of 22 · Snapshot: Fri 19 Jun 2026</div>
+    </div>
+    <div class="countdowns">
+      <div class="cd-card lakeside">
+        <div class="num mono" id="cd-lakeside">—</div>
+        <div class="lbl">Days to Lakeside</div>
+        <div class="date">10k · Sun 26 Jul</div>
+      </div>
+      <div class="cd-card melbourne">
+        <div class="num mono" id="cd-melbourne">—</div>
+        <div class="lbl">Days to Melbourne</div>
+        <div class="date">A-race · Sun 11 Oct</div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="week">This Week</button>
+    <button class="tab-btn" data-tab="season">Season Overview</button>
+  </nav>
+
+  <!-- ============ THIS WEEK ============ -->
+  <section class="panel active" id="panel-week">
+    <div class="grid grid-2" style="margin-bottom:18px;">
+
+      <div class="card">
+        <h2>Week 6 <span class="accent">· 15–21 Jun</span> · Aerobic Build, 80km planned</h2>
+        <div class="week-strip" id="week-strip"></div>
+      </div>
+
+      <div class="card">
+        <h2>Today <span class="accent">· Fri 19 Jun</span></h2>
+        <div class="metric-tiles" id="today-tiles"></div>
+        <div class="chart-foot" style="margin-top:12px;">RHR 7-day avg 40bpm · Body battery drained to 39 after AM hill session · Stress: balanced.</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-bottom:18px;">
+      <div class="card">
+        <h2>Quality Session Trend <span class="accent">· Wed threshold, last 5 weeks</span></h2>
+        <div id="quality-chart"></div>
+        <div class="legend-row">
+          <span><i style="background:var(--signal)"></i>Pace (min/km)</span>
+          <span><i style="background:var(--z5)"></i>Avg HR (bpm)</span>
+        </div>
+        <div class="chart-foot">Pace has tightened from 4:46/km (W3–4) to 4:30–4:35/km (W5–6) at a steady 156–158bpm avg — the adaptation signal the plan is built to detect: faster at the same effort, not pushing harder. W2 figure includes warm-up/cooldown so isn't directly comparable.</div>
+      </div>
+
+      <div class="card">
+        <h2>Volume <span class="accent">· planned vs actual, weekly km</span></h2>
+        <div id="volume-chart"></div>
+        <div class="legend-row">
+          <span><i style="background:var(--line)"></i>Planned</span>
+          <span><i style="background:var(--signal)"></i>Actual</span>
+        </div>
+        <div class="chart-foot">Running consistently slightly ahead of plan most weeks (W3–W5). W6 actual is partial — Sat/Sun still to come, currently tracking ~87km projected vs 80km planned.</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <h2>Injury Status <span class="accent">· manually tracked, not Garmin-sourced</span></h2>
+        <div id="injury-list"></div>
+        <div class="chart-foot">Physio assessment booked with Mohsin Raza (Richmond Medical Practice) — full briefing prepared covering knee, glute med asymmetry, back history, foot, shoulder. Trialling 1-week meloxicam course for knee from ~18 Jun.</div>
+      </div>
+
+      <div class="card">
+        <h2>Sleep &amp; HRV <span class="accent">· last 6 nights</span></h2>
+        <div id="sleep-chart"></div>
+        <div class="legend-row">
+          <span><i style="background:var(--signal)"></i>Sleep score</span>
+          <span><i style="background:var(--z1)"></i>Overnight HRV (ms)</span>
+        </div>
+        <div class="chart-foot">17 Jun HRV dip (63ms) the morning after the 4×3km threshold session — single-night noise, not a trend; weekly rolling avg held at 79ms and has since recovered to 77–83ms (BALANCED) through the build.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SEASON ============ -->
+  <section class="panel" id="panel-season">
+    <div class="card" style="margin-bottom:18px;">
+      <h2>22-Week Build <span class="accent">· phase, long run progression, weekly volume</span></h2>
+      <div class="phase-legend">
+        <span><i style="background:var(--z2)"></i>Base rebuild</span>
+        <span><i style="background:var(--z3)"></i>Aerobic build</span>
+        <span><i style="background:var(--z5)"></i>Lakeside sharpening</span>
+        <span><i style="background:var(--slate-dim)"></i>Reset / Recovery</span>
+        <span><i style="background:var(--signal)"></i>Marathon base</span>
+        <span><i style="background:var(--z6)"></i>Marathon specific</span>
+        <span><i style="background:var(--z1)"></i>Taper</span>
+      </div>
+      <div class="season-scroll">
+        <div class="season-row" id="season-row"></div>
+      </div>
+      <div class="chart-foot" style="margin-top:14px;">
+        Bar height = planned weekly volume (max 95km, W18 peak). Number beneath each bar = long run distance. Solid orange fill = completed/actual weeks (1–6, from Garmin); outline-only = planned, not yet run.
+        Recovery weeks W7, W16, W19 and the Lakeside/Melbourne race weeks are flagged below each column.
+      </div>
+    </div>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <h2>Peak Numbers</h2>
+        <div class="metric-tiles" style="grid-template-columns:1fr;">
+          <div class="mtile"><div class="v">95km</div><div class="l">Peak week — W18</div></div>
+          <div class="mtile"><div class="v">36km</div><div class="l">Peak long run — W18 race sim</div></div>
+          <div class="mtile"><div class="v">3</div><div class="l">Recovery weeks (7 / 16 / 19)</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Targets</h2>
+        <div class="metric-tiles" style="grid-template-columns:1fr;">
+          <div class="mtile"><div class="v">40–43min</div><div class="l">Lakeside 10k, honest estimate</div></div>
+          <div class="mtile"><div class="v">3:22–3:35</div><div class="l">Melbourne, realistic (pre-Lakeside)</div></div>
+          <div class="mtile"><div class="v">2:46:57</div><div class="l">PB — Gold Coast 2018</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>HR Zones <span class="accent">· lab-calibrated</span></h2>
+        <div id="zone-ref"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="note">
+    Data sources: weekly volume and quality-session pace/HR pulled live from Garmin Connect (weeks 1–6). Injury status, targets, and the 22-week structure are from Sean_Melbourne_Marathon_2026_FINAL_v8. This is a static snapshot — ask Claude to refresh it with current data rather than treating it as live.
+  </footer>
+
+</div>
+
+<script>
+/* ================= DATA ================= */
+const TODAY = new Date('2026-06-19');
+const LAKESIDE = new Date('2026-07-26');
+const MELBOURNE = new Date('2026-10-11');
+
+const daysBetween = (a,b)=>Math.round((b-a)/86400000);
+document.getElementById('cd-lakeside').textContent = daysBetween(TODAY,LAKESIDE);
+document.getElementById('cd-melbourne').textContent = daysBetween(TODAY,MELBOURNE);
+
+// This week (Week 6, 15-21 Jun)
+const weekDays = [
+  {dow:'Mon',date:'15 Jun',name:'Gym Upper',meta:'Priority 1+2, ~40min',zone:null,status:'done'},
+  {dow:'Tue',date:'16 Jun',name:'Easy + drills + strides',meta:'12.2km · avg HR 121',zone:'z2',status:'done'},
+  {dow:'Wed',date:'17 Jun',name:'4×3km Threshold',meta:'13.3km reps · avg HR 156, max 166 · 4:35/km',zone:'z4',status:'done'},
+  {dow:'Thu',date:'18 Jun',name:'Easy + drills + gym legs',meta:'8.8km · avg HR 119',zone:'z2',status:'done'},
+  {dow:'Fri',date:'19 Jun',name:'Easy + hill sprints',meta:'9.5km · avg HR 120, max 131',zone:'z2',status:'today'},
+  {dow:'Sat',date:'20 Jun',name:'Easy, pre-run activation',meta:'~8km planned · cap 148bpm',zone:'z2',status:'upcoming'},
+  {dow:'Sun',date:'21 Jun',name:'Capital City Trail LR',meta:'30km planned · rolling hills, cap 158bpm',zone:'z3',status:'upcoming'},
+];
+const zoneColor = {z1:'var(--z1)',z2:'var(--z2)',z3:'var(--z3)',z4:'var(--z4)',z5:'var(--z5)',z6:'var(--z6)'};
+const zoneLabel = {z1:'Z1',z2:'Z2',z3:'Z3',z4:'Z4',z5:'Z5',z6:'Z6'};
+
+const strip = document.getElementById('week-strip');
+weekDays.forEach(d=>{
+  const row = document.createElement('div');
+  row.className = 'day-row' + (d.status==='done'?' done':'') + (d.status==='today'?' today':'');
+  const dotColor = d.status==='today' ? 'var(--signal)' : (d.status==='done' ? 'var(--good)' : 'var(--slate-dim)');
+  row.innerHTML = `
+    <div class="day-date">${d.date}<span class="dow">${d.dow}</span></div>
+    <div>
+      <div class="day-name"><span class="status-dot" style="background:${dotColor}"></span>${d.name}</div>
+      <div class="day-meta">${d.meta}</div>
+    </div>
+    <div>${d.zone ? `<span class="zone-chip" style="background:${zoneColor[d.zone]}">${zoneLabel[d.zone]}</span>` : ''}</div>
+  `;
+  strip.appendChild(row);
+});
+
+// Today tiles
+const tiles = [
+  {v:'77ms',l:'HRV 7-day avg',d:'BALANCED',cls:'flat'},
+  {v:'41bpm',l:'Resting HR',d:'7d avg 40bpm',cls:'flat'},
+  {v:'76',l:'Sleep score (18 Jun)',d:'FAIR · 8.3hrs',cls:'flat'},
+  {v:'52',l:"Garmin VO2max est.",d:'lab-tested 58.4 (2022)',cls:'flat'},
+];
+const tt = document.getElementById('today-tiles');
+tiles.forEach(t=>{
+  const el = document.createElement('div');
+  el.className = 'mtile';
+  el.innerHTML = `<div class="v">${t.v}</div><div class="l">${t.l}</div><div class="d ${t.cls}">${t.d}</div>`;
+  tt.appendChild(el);
+});
+
+/* ================= SVG CHART HELPERS ================= */
+function svgEl(tag,attrs){
+  const e = document.createElementNS('http://www.w3.org/2000/svg',tag);
+  for(const k in attrs) e.setAttribute(k,attrs[k]);
+  return e;
+}
+
+// Quality session dual-axis line chart
+function qualityChart(){
+  const data = [
+    {wk:'W2',pace:5.27,hr:142},
+    {wk:'W3',pace:4.77,hr:158},
+    {wk:'W4',pace:4.77,hr:156},
+    {wk:'W5',pace:4.50,hr:157},
+    {wk:'W6',pace:4.58,hr:156},
+  ];
+  const W=520,H=170,padL=38,padR=38,padT=14,padB=26;
+  const svg = svgEl('svg',{width:'100%',viewBox:`0 0 ${W} ${H}`});
+  const paceMin=4.3,paceMax=5.4, hrMin=135,hrMax=165;
+  const x = i => padL + i*((W-padL-padR)/(data.length-1));
+  const yPace = p => padT + (paceMax-p)/(paceMax-paceMin) * (H-padT-padB);
+  const yHr = h => padT + (hrMax-h)/(hrMax-hrMin) * (H-padT-padB);
+
+  // gridlines
+  for(let i=0;i<=2;i++){
+    const yy = padT + i*(H-padT-padB)/2;
+    svg.appendChild(svgEl('line',{x1:padL,x2:W-padR,y1:yy,y2:yy,stroke:'var(--line)','stroke-width':1}));
+  }
+  // pace line
+  let pacePts = data.map((d,i)=>`${x(i)},${yPace(d.pace)}`).join(' ');
+  svg.appendChild(svgEl('polyline',{points:pacePts,fill:'none',stroke:'var(--signal)','stroke-width':2}));
+  // hr line
+  let hrPts = data.map((d,i)=>`${x(i)},${yHr(d.hr)}`).join(' ');
+  svg.appendChild(svgEl('polyline',{points:hrPts,fill:'none',stroke:'var(--z5)','stroke-width':2,'stroke-dasharray':'4 3'}));
+
+  data.forEach((d,i)=>{
+    svg.appendChild(svgEl('circle',{cx:x(i),cy:yPace(d.pace),r:3.4,fill:'var(--signal)'}));
+    svg.appendChild(svgEl('circle',{cx:x(i),cy:yHr(d.hr),r:3.4,fill:'var(--z5)'}));
+    const lbl = svgEl('text',{x:x(i),y:H-8,'text-anchor':'middle','font-size':10,fill:'var(--slate)','font-family':'IBM Plex Mono, monospace'});
+    lbl.textContent = d.wk; svg.appendChild(lbl);
+    const pl = svgEl('text',{x:x(i),y:yPace(d.pace)-8,'text-anchor':'middle','font-size':9.5,fill:'var(--signal)','font-family':'IBM Plex Mono, monospace'});
+    pl.textContent = Math.floor(d.pace)+':'+String(Math.round((d.pace%1)*60)).padStart(2,'0'); svg.appendChild(pl);
+  });
+  document.getElementById('quality-chart').appendChild(svg);
+}
+qualityChart();
+
+// Volume planned vs actual bar chart
+function volumeChart(){
+  const data = [
+    {wk:'W1',plan:59,actual:58.6},
+    {wk:'W2',plan:68,actual:55.5},
+    {wk:'W3',plan:70,actual:73.8},
+    {wk:'W4',plan:75,actual:78.4},
+    {wk:'W5',plan:78,actual:82.7},
+    {wk:'W6',plan:80,actual:49.2,partial:true},
+  ];
+  const W=520,H=170,padL=10,padR=10,padT=14,padB=26;
+  const max=90;
+  const bw = (W-padL-padR)/data.length;
+  const svg = svgEl('svg',{width:'100%',viewBox:`0 0 ${W} ${H}`});
+  data.forEach((d,i)=>{
+    const cx = padL + i*bw;
+    const planH = (d.plan/max)*(H-padT-padB);
+    const actH = (d.actual/max)*(H-padT-padB);
+    // planned ghost bar
+    svg.appendChild(svgEl('rect',{x:cx+6,y:H-padB-planH,width:bw-22,height:planH,fill:'none',stroke:'var(--line)','stroke-width':1.4,rx:2}));
+    // actual bar
+    svg.appendChild(svgEl('rect',{x:cx+12,y:H-padB-actH,width:(bw-22)*0.55,height:actH,fill:'var(--signal)',opacity:d.partial?0.55:1,rx:2}));
+    const lbl = svgEl('text',{x:cx+bw/2-3,y:H-8,'text-anchor':'middle','font-size':10,fill:'var(--slate)','font-family':'IBM Plex Mono, monospace'});
+    lbl.textContent = d.wk; svg.appendChild(lbl);
+    const val = svgEl('text',{x:cx+bw/2-3,y:H-padB-actH-6,'text-anchor':'middle','font-size':9.5,fill:'var(--paper)','font-family':'IBM Plex Mono, monospace'});
+    val.textContent = d.actual; svg.appendChild(val);
+  });
+  document.getElementById('volume-chart').appendChild(svg);
+}
+volumeChart();
+
+// Sleep / HRV chart
+function sleepChart(){
+  const data = [
+    {d:'13',score:62,hrv:80},
+    {d:'14',score:81,hrv:87},
+    {d:'15',score:85,hrv:82},
+    {d:'16',score:92,hrv:78},
+    {d:'17',score:83,hrv:63},
+    {d:'18',score:76,hrv:79},
+  ];
+  const W=520,H=170,padL=34,padR=34,padT=14,padB=26;
+  const scMin=50,scMax=100, hrvMin=55,hrvMax=95;
+  const x = i => padL + i*((W-padL-padR)/(data.length-1));
+  const yS = s => padT + (scMax-s)/(scMax-scMin) * (H-padT-padB);
+  const yH = h => padT + (hrvMax-h)/(hrvMax-hrvMin) * (H-padT-padB);
+  const svg = svgEl('svg',{width:'100%',viewBox:`0 0 ${W} ${H}`});
+  for(let i=0;i<=2;i++){
+    const yy = padT + i*(H-padT-padB)/2;
+    svg.appendChild(svgEl('line',{x1:padL,x2:W-padR,y1:yy,y2:yy,stroke:'var(--line)','stroke-width':1}));
+  }
+  let sPts = data.map((d,i)=>`${x(i)},${yS(d.score)}`).join(' ');
+  svg.appendChild(svgEl('polyline',{points:sPts,fill:'none',stroke:'var(--signal)','stroke-width':2}));
+  let hPts = data.map((d,i)=>`${x(i)},${yH(d.hrv)}`).join(' ');
+  svg.appendChild(svgEl('polyline',{points:hPts,fill:'none',stroke:'var(--z1)','stroke-width':2,'stroke-dasharray':'4 3'}));
+  data.forEach((d,i)=>{
+    svg.appendChild(svgEl('circle',{cx:x(i),cy:yS(d.score),r:3.4,fill:'var(--signal)'}));
+    svg.appendChild(svgEl('circle',{cx:x(i),cy:yH(d.hrv),r:3.4,fill:'var(--z1)'}));
+    const lbl = svgEl('text',{x:x(i),y:H-8,'text-anchor':'middle','font-size':10,fill:'var(--slate)','font-family':'IBM Plex Mono, monospace'});
+    lbl.textContent = 'Jun '+d.d; svg.appendChild(lbl);
+  });
+  document.getElementById('sleep-chart').appendChild(svg);
+}
+sleepChart();
+
+// Injury list
+const injuries = [
+  {name:'Lower back',score:0,max:10,note:'0/10 — resolved, advise by exception only'},
+  {name:'Right knee (run)',score:1,max:10,note:'1/10 stable — suprapatellar bursitis, scan-confirmed'},
+  {name:'Right knee (sit/kneel)',score:2.5,max:10,note:'2–3/10 — bilateral patellofemoral awareness'},
+  {name:'Achilles',score:0,max:10,note:'0/10 — resolved, advise by exception only'},
+];
+const injBarColor = s => s===0 ? 'var(--good)' : s<=2 ? 'var(--warn)' : 'var(--bad)';
+const il = document.getElementById('injury-list');
+injuries.forEach(inj=>{
+  const row = document.createElement('div');
+  row.className='injury-row';
+  row.innerHTML = `
+    <div class="injury-name">${inj.name}</div>
+    <div class="injury-bar"><div class="injury-fill" style="width:${inj.score/inj.max*100}%;background:${injBarColor(inj.score)}"></div></div>
+    <div class="injury-score">${inj.note}</div>
+  `;
+  il.appendChild(row);
+});
+
+/* ================= SEASON TIMELINE ================= */
+const phaseColor = {
+  'Base rebuild':'var(--z2)',
+  'Aerobic build':'var(--z3)',
+  'Lakeside sharp':'var(--z5)',
+  'Reset':'var(--slate-dim)',
+  'Marathon base':'var(--signal)',
+  'Marathon specific':'var(--z6)',
+  'Recovery':'var(--slate-dim)',
+  'Taper':'var(--z1)',
+};
+const season = [
+  {wk:1,phase:'Base rebuild',plan:59,actual:58.6,lr:18,tag:null},
+  {wk:2,phase:'Base rebuild',plan:68,actual:55.5,lr:20,tag:null},
+  {wk:3,phase:'Base rebuild',plan:70,actual:73.8,lr:22,tag:null},
+  {wk:4,phase:'Aerobic build',plan:75,actual:78.4,lr:25.7,tag:null},
+  {wk:5,phase:'Aerobic build',plan:78,actual:82.7,lr:28,tag:null},
+  {wk:6,phase:'Aerobic build',plan:80,actual:49.2,lr:30,tag:null,partial:true},
+  {wk:7,phase:'Recovery',plan:72,lr:24,tag:'Recovery'},
+  {wk:8,phase:'Lakeside sharp',plan:75,lr:30,tag:null},
+  {wk:9,phase:'Lakeside sharp',plan:72,lr:26,tag:null},
+  {wk:10,phase:'Lakeside sharp',plan:55,lr:16,tag:null},
+  {wk:11,phase:'Lakeside sharp',plan:20,lr:'10k',tag:'Lakeside'},
+  {wk:12,phase:'Reset',plan:60,lr:20,tag:null},
+  {wk:13,phase:'Marathon base',plan:75,lr:26,tag:null},
+  {wk:14,phase:'Marathon base',plan:80,lr:28,tag:null},
+  {wk:15,phase:'Marathon base',plan:85,lr:30,tag:null},
+  {wk:16,phase:'Recovery',plan:70,lr:24,tag:'Recovery'},
+  {wk:17,phase:'Marathon specific',plan:90,lr:32,tag:null},
+  {wk:18,phase:'Marathon specific',plan:95,lr:36,tag:'Peak'},
+  {wk:19,phase:'Recovery',plan:75,lr:28,tag:'Recovery'},
+  {wk:20,phase:'Taper',plan:65,lr:22,tag:null},
+  {wk:21,phase:'Taper',plan:48,lr:16,tag:null},
+  {wk:22,phase:'Taper',plan:18,lr:'42.2k',tag:'Melbourne'},
+];
+const seasonRow = document.getElementById('season-row');
+const maxVol = 95;
+season.forEach(w=>{
+  const col = document.createElement('div');
+  col.className='wk-col';
+  const barH = Math.round((w.plan/maxVol)*64);
+  const hasActual = w.actual !== undefined;
+  col.innerHTML = `
+    <div class="wk-head">W${w.wk}</div>
+    <div class="wk-phase" style="background:${phaseColor[w.phase]}"></div>
+    <div class="wk-vol-track">
+      <div class="wk-vol-bar" style="height:${barH}px;background:${hasActual? 'var(--signal)' : 'transparent'};border:1px solid ${hasActual?'var(--signal)':'var(--line)'};opacity:${w.partial?0.55:1}"></div>
+    </div>
+    <div class="wk-lr">${w.lr}${typeof w.lr === 'number' ? 'km':''}</div>
+    <div class="wk-tag${w.tag==='Recovery'?' rec':''}${w.tag==='Lakeside'||w.tag==='Melbourne'?' race':''}">${w.tag?w.tag:''}</div>
+  `;
+  seasonRow.appendChild(col);
+});
+
+// HR zone reference
+const zones = [
+  {z:'Z1 Recovery','hr':'<130','pace':'6:00+/km',c:'var(--z1)'},
+  {z:'Z2 Aerobic','hr':'130–150','pace':'5:10–5:35/km',c:'var(--z2)'},
+  {z:'Z3 Marathon','hr':'150–158','pace':'4:50–5:10/km',c:'var(--z3)'},
+  {z:'Z4 Threshold','hr':'158–165','pace':'4:25–4:45/km',c:'var(--z4)'},
+  {z:'Z5 VO2max','hr':'165–173','pace':'4:05–4:25/km',c:'var(--z5)'},
+  {z:'Z6 Anaerobic','hr':'174–176','pace':'sub 4:05/km',c:'var(--z6)'},
+];
+const zr = document.getElementById('zone-ref');
+zones.forEach(z=>{
+  const row = document.createElement('div');
+  row.style.cssText='display:flex;align-items:center;gap:9px;padding:5px 0;font-size:11.5px;';
+  row.innerHTML = `<i style="width:9px;height:9px;border-radius:2px;background:${z.c};flex-shrink:0;"></i>
+    <span style="width:96px;color:var(--paper);font-weight:600;">${z.z}</span>
+    <span class="mono" style="width:76px;color:var(--slate);">${z.hr}</span>
+    <span class="mono" style="color:var(--slate);">${z.pace}</span>`;
+  zr.appendChild(row);
+});
+
+/* ================= TABS ================= */
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

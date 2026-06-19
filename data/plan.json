@@ -1,0 +1,50 @@
+{
+  "athlete": "Sean Helmot",
+  "race": "Melbourne Marathon 2026",
+  "race_date": "2026-10-11",
+  "build_weeks": 22,
+  "lakeside_date": "2026-07-26",
+  "targets": {
+    "lakeside_10k": "40–43min",
+    "melbourne_marathon": "3:22–3:35",
+    "pb": "2:46:57"
+  },
+  "hr_zones": [
+    { "zone": "Z1 Recovery",   "hr": "<130",    "pace": "6:00+/km",     "color_var": "--z1" },
+    { "zone": "Z2 Aerobic",    "hr": "130–150",  "pace": "5:10–5:35/km", "color_var": "--z2" },
+    { "zone": "Z3 Marathon",   "hr": "150–158",  "pace": "4:50–5:10/km", "color_var": "--z3" },
+    { "zone": "Z4 Threshold",  "hr": "158–165",  "pace": "4:25–4:45/km", "color_var": "--z4" },
+    { "zone": "Z5 VO2max",     "hr": "165–173",  "pace": "4:05–4:25/km", "color_var": "--z5" },
+    { "zone": "Z6 Anaerobic",  "hr": "174–176",  "pace": "sub 4:05/km",  "color_var": "--z6" }
+  ],
+  "weeks": [
+    { "wk": 1,  "phase": "Base rebuild",      "plan_km": 59, "long_run_km": 18,    "tag": null },
+    { "wk": 2,  "phase": "Base rebuild",      "plan_km": 68, "long_run_km": 20,    "tag": null },
+    { "wk": 3,  "phase": "Base rebuild",      "plan_km": 70, "long_run_km": 22,    "tag": null },
+    { "wk": 4,  "phase": "Aerobic build",     "plan_km": 75, "long_run_km": 25.7,  "tag": null },
+    { "wk": 5,  "phase": "Aerobic build",     "plan_km": 78, "long_run_km": 28,    "tag": null },
+    { "wk": 6,  "phase": "Aerobic build",     "plan_km": 80, "long_run_km": 30,    "tag": null },
+    { "wk": 7,  "phase": "Recovery",          "plan_km": 72, "long_run_km": 24,    "tag": "Recovery" },
+    { "wk": 8,  "phase": "Lakeside sharp",    "plan_km": 75, "long_run_km": 30,    "tag": null },
+    { "wk": 9,  "phase": "Lakeside sharp",    "plan_km": 72, "long_run_km": 26,    "tag": null },
+    { "wk": 10, "phase": "Lakeside sharp",    "plan_km": 55, "long_run_km": 16,    "tag": null },
+    { "wk": 11, "phase": "Lakeside sharp",    "plan_km": 20, "long_run_km": "10k", "tag": "Lakeside" },
+    { "wk": 12, "phase": "Reset",             "plan_km": 60, "long_run_km": 20,    "tag": null },
+    { "wk": 13, "phase": "Marathon base",     "plan_km": 75, "long_run_km": 26,    "tag": null },
+    { "wk": 14, "phase": "Marathon base",     "plan_km": 80, "long_run_km": 28,    "tag": null },
+    { "wk": 15, "phase": "Marathon base",     "plan_km": 85, "long_run_km": 30,    "tag": null },
+    { "wk": 16, "phase": "Recovery",          "plan_km": 70, "long_run_km": 24,    "tag": "Recovery" },
+    { "wk": 17, "phase": "Marathon specific", "plan_km": 90, "long_run_km": 32,    "tag": null },
+    { "wk": 18, "phase": "Marathon specific", "plan_km": 95, "long_run_km": 36,    "tag": "Peak" },
+    { "wk": 19, "phase": "Recovery",          "plan_km": 75, "long_run_km": 28,    "tag": "Recovery" },
+    { "wk": 20, "phase": "Taper",             "plan_km": 65, "long_run_km": 22,    "tag": null },
+    { "wk": 21, "phase": "Taper",             "plan_km": 48, "long_run_km": 16,    "tag": null },
+    { "wk": 22, "phase": "Taper",             "plan_km": 18, "long_run_km": "42.2k","tag": "Melbourne" }
+  ],
+  "injuries": [
+    { "name": "Lower back",          "score": 0,   "max": 10, "note": "0/10 — resolved, advise by exception only" },
+    { "name": "Right knee (run)",    "score": 1,   "max": 10, "note": "1/10 stable — suprapatellar bursitis, scan-confirmed" },
+    { "name": "Right knee (sit/kneel)", "score": 2.5, "max": 10, "note": "2–3/10 — bilateral patellofemoral awareness" },
+    { "name": "Achilles",            "score": 0,   "max": 10, "note": "0/10 — resolved, advise by exception only" }
+  ]
+}
