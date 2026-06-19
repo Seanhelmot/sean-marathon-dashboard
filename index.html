@@ -328,11 +328,19 @@ function daysBetween(a, b) {
 
 /* ── Countdown ──────────────────────────────────────────────────── */
 function renderCountdowns(plan) {
-  const today = new Date();
-  const lakeside   = new Date(plan.lakeside_date);
-  const melbourne  = new Date(plan.race_date);
-  document.getElementById('cd-lakeside').textContent  = daysBetween(today, lakeside);
-  document.getElementById('cd-melbourne').textContent = daysBetween(today, melbourne);
+  const today    = new Date();
+  const lakeside  = new Date(plan.lakeside_date);
+  const melbourne = new Date(plan.race_date);
+
+  function weeksAndDays(a, b) {
+    const total = daysBetween(a, b);
+    const weeks = Math.floor(total / 7);
+    const days  = total % 7;
+    return weeks > 0 ? `${weeks}w ${days}d` : `${days}d`;
+  }
+
+  document.getElementById('cd-lakeside').textContent  = weeksAndDays(today, lakeside);
+  document.getElementById('cd-melbourne').textContent = weeksAndDays(today, melbourne);
 }
 
 /* ── Header sub line ─────────────────────────────────────────────── */
