@@ -113,6 +113,18 @@
   .phase-legend span{display:inline-flex;align-items:center;gap:6px;}
   .phase-legend i{width:14px;height:5px;border-radius:2px;display:inline-block;}
 
+  /* WEEKLY VOLUME SUMMARY */
+  .vol-summary{display:flex;gap:0;margin-bottom:16px;}
+  .vol-stat{flex:1;padding:14px 18px;background:var(--panel-raised);border:1px solid var(--line);}
+  .vol-stat:first-child{border-radius:3px 0 0 3px;}
+  .vol-stat:last-child{border-radius:0 3px 3px 0;}
+  .vol-stat+.vol-stat{border-left:none;}
+  .vol-stat .vs-v{font-family:'IBM Plex Mono',monospace;font-size:30px;font-weight:600;line-height:1;}
+  .vol-stat .vs-l{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--slate);margin-top:5px;}
+  .vol-stat .vs-sub{font-size:11px;color:var(--slate-dim);margin-top:3px;}
+  .vol-progress-track{height:8px;background:var(--panel-raised);border-radius:4px;overflow:hidden;border:1px solid var(--line);}
+  .vol-progress-fill{height:100%;border-radius:4px;transition:width .4s ease;}
+
   /* READINESS CARD */
   .readiness-status{display:inline-flex;align-items:center;gap:10px;margin-bottom:14px;}
   .readiness-badge{font-family:'Big Shoulders Display',sans-serif;font-size:22px;font-weight:700;letter-spacing:.04em;padding:4px 14px;border-radius:3px;}
@@ -167,6 +179,12 @@
 
   <!-- THIS WEEK -->
   <section class="panel active" id="panel-week">
+
+    <!-- WEEKLY VOLUME SUMMARY -->
+    <div class="card" style="margin-bottom:18px;" id="weekly-volume-card">
+      <h2>This Week's Volume <span class="accent" id="weekly-vol-subtitle"></span></h2>
+      <div id="weekly-vol-body"></div>
+    </div>
 
     <!-- DAILY MOTIVATION -->
     <div class="card" style="margin-bottom:18px;" id="motivation-card">
@@ -692,6 +710,64 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
+/* ── Weekly Volume Summary ───────────────────────────────────────── */
+function renderWeeklyVolume(live, plan) {
+  const wkNum   = live.current_week;
+  const planWk  = plan.weeks.find(w => w.wk === wkNum) || {};
+  const liveWk  = (live.weeks || []).find(w => w.wk === wkNum) || {};
+  const planned = planWk.plan_km || 0;
+  const actual  = liveWk.actual_km || 0;
+
+  document.getElementById('weekly-vol-subtitle').textContent =
+    `· Week ${wkNum} · ${planWk.phase || ''}`;
+
+  // Forecast: use this_week_days to count done vs upcoming running sessions
+  const days = live.this_week_days || [];
+  const runDone      = days.filter(d => d.zone && d.status === 'done').length;
+  const runUpcoming  = days.filter(d => d.zone && d.status === 'upcoming').length;
+  const avgPerRun    = runDone > 0 ? actual / runDone : 0;
+  const forecast     = runUpcoming > 0 ? Math.round((actual + avgPerRun * runUpcoming) * 10) / 10 : null;
+
+  // Progress colour
+  const pct = planned > 0 ? actual / planned : 0;
+  const barColor = pct >= 1 ? 'var(--good)' : pct >= 0.6 ? 'var(--signal)' : 'var(--warn)';
+  const barWidth = Math.min(pct * 100, 100).toFixed(1);
+
+  // Forecast vs planned label
+  const forecastDelta = forecast != null ? forecast - planned : null;
+  const deltaStr = forecastDelta != null
+    ? (forecastDelta >= 0 ? `+${forecastDelta.toFixed(1)}km vs plan` : `${forecastDelta.toFixed(1)}km vs plan`)
+    : 'week complete';
+  const deltaColor = forecastDelta == null ? 'var(--slate)' : forecastDelta >= -3 ? 'var(--good)' : 'var(--warn)';
+
+  document.getElementById('weekly-vol-body').innerHTML = `
+    <div class="vol-summary">
+      <div class="vol-stat">
+        <div class="vs-v" style="color:var(--slate);">${planned}<span style="font-size:16px;"> km</span></div>
+        <div class="vs-l">Planned</div>
+        <div class="vs-sub">${planWk.long_run_km ? 'LR ' + planWk.long_run_km + 'km' : ''}</div>
+      </div>
+      <div class="vol-stat">
+        <div class="vs-v" style="color:var(--signal);">${actual}<span style="font-size:16px;"> km</span></div>
+        <div class="vs-l">Actual so far</div>
+        <div class="vs-sub">${(pct*100).toFixed(0)}% of plan</div>
+      </div>
+      <div class="vol-stat">
+        <div class="vs-v" style="color:var(--good);">${forecast != null ? forecast : actual}<span style="font-size:16px;"> km</span></div>
+        <div class="vs-l">Forecast</div>
+        <div class="vs-sub" style="color:${deltaColor}">${deltaStr}</div>
+      </div>
+    </div>
+    <div class="vol-progress-track">
+      <div class="vol-progress-fill" style="width:${barWidth}%;background:${barColor};"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--slate-dim);margin-top:5px;">
+      <span>0 km</span>
+      <span>${planned} km planned</span>
+    </div>
+  `;
+}
+
 /* ── Daily Motivation ────────────────────────────────────────────── */
 const QUOTES = [
   // running
@@ -1016,6 +1092,7 @@ async function init() {
 
   renderCountdowns(plan);
   renderHeaderSub(plan, live);
+  renderWeeklyVolume(live, plan);
   renderMotivation();
   renderReadiness(live);
   renderWeekStrip(live, plan);
