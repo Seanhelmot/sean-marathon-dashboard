@@ -111,14 +111,14 @@ def pull_data(client):
     stats = client.get_user_summary(iso(today))
     rhr   = stats.get("restingHeartRate")
 
-    # Body battery
+    # Body battery — use the day's peak (first reading after waking) not current value
     body_battery = None
     try:
         bb = client.get_body_battery(iso(today), iso(today))
         if bb and isinstance(bb, list):
             entries = bb[0].get("bodyBatteryValuesArray") or []
             if entries:
-                body_battery = entries[-1][1]  # [timestamp_ms, value]
+                body_battery = max(v[1] for v in entries if v[1] is not None)
     except Exception:
         pass
 

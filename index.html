@@ -700,7 +700,7 @@ function renderReadiness(live) {
   const metrics = [
     { v: hrv  != null ? hrv+'ms'  : '—', l: 'HRV 7d avg',    s: hrvScore },
     { v: sleep != null ? String(sleep) : '—', l: 'Sleep score', s: sleepScore },
-    { v: bb   != null ? String(bb)    : '—', l: 'Body battery', s: bbScore },
+    { v: bb   != null ? String(bb)    : '—', l: 'Body battery (peak)', s: bbScore },
     { v: rhr  != null ? rhr+'bpm'  : '—', l: 'RHR',           s: rhrScore },
   ];
   const sigColor = s => s === 2 ? 'var(--good)' : s === 1 ? 'var(--warn)' : 'var(--bad)';
