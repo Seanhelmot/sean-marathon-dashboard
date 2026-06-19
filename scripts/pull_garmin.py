@@ -57,17 +57,16 @@ def pace_from_speed(speed_m_s: float):
 
 
 def pull_data(client):
-    today = datetime.now(timezone.utc).date()
+    from zoneinfo import ZoneInfo
+    today = datetime.now(ZoneInfo("Australia/Melbourne")).date()
     plan  = json.loads(PLAN_JSON.read_text())
 
     build_start_mon  = datetime.strptime(plan["build_start_date"], "%Y-%m-%d").date()
     current_week     = max(1, (today - build_start_mon).days // 7 + 1)
 
     # ── Activities ──────────────────────────────────────────────────────────
-    # Query one day ahead to capture same-day runs when UTC date lags local (e.g. AEST = UTC+10)
     start_date = today - timedelta(weeks=WEEKS_BACK)
-    end_date   = today + timedelta(days=1)
-    activities = client.get_activities_by_date(iso(start_date), iso(end_date), "running")
+    activities = client.get_activities_by_date(iso(start_date), iso(today), "running")
 
     week_buckets: dict[int, dict] = {}
     recent_activities = []
@@ -242,7 +241,7 @@ def pull_data(client):
         pass
 
     return {
-        "generated_at":    datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "generated_at":    datetime.now(ZoneInfo("Australia/Melbourne")).strftime("%Y-%m-%dT%H:%M:%S+10:00"),
         "current_week":    current_week,
         "today": {
             "rhr":          rhr,
