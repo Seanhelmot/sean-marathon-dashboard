@@ -113,6 +113,19 @@
   .phase-legend span{display:inline-flex;align-items:center;gap:6px;}
   .phase-legend i{width:14px;height:5px;border-radius:2px;display:inline-block;}
 
+  /* READINESS CARD */
+  .readiness-status{display:inline-flex;align-items:center;gap:10px;margin-bottom:14px;}
+  .readiness-badge{font-family:'Big Shoulders Display',sans-serif;font-size:22px;font-weight:700;letter-spacing:.04em;padding:4px 14px;border-radius:3px;}
+  .readiness-badge.ready{background:var(--good);color:var(--ink);}
+  .readiness-badge.moderate{background:var(--warn);color:var(--ink);}
+  .readiness-badge.recover{background:var(--bad);color:var(--paper);}
+  .readiness-summary{font-size:13.5px;line-height:1.65;color:var(--paper);margin-bottom:14px;}
+  .readiness-metrics{display:flex;flex-wrap:wrap;gap:10px;}
+  .rmtile{background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;padding:9px 14px;min-width:110px;}
+  .rmtile .rv{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;line-height:1;}
+  .rmtile .rl{font-size:10px;color:var(--slate);text-transform:uppercase;letter-spacing:.08em;margin-top:4px;}
+  .rmtile .rs{font-size:10px;margin-top:2px;}
+
   /* LOADING STATE */
   .loading{color:var(--slate-dim);font-family:'IBM Plex Mono',monospace;font-size:12px;padding:24px 0;}
 
@@ -152,6 +165,13 @@
 
   <!-- THIS WEEK -->
   <section class="panel active" id="panel-week">
+
+    <!-- DAILY READINESS -->
+    <div class="card" style="margin-bottom:18px;" id="readiness-card">
+      <h2>Daily Readiness <span class="accent" id="readiness-date-label"></span></h2>
+      <div id="readiness-body"></div>
+    </div>
+
     <div class="grid grid-2" style="margin-bottom:18px;">
       <div class="card">
         <h2 id="week-card-title">Week — · — · loading</h2>
@@ -602,6 +622,106 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
+/* ── Daily Readiness ─────────────────────────────────────────────── */
+function renderReadiness(live) {
+  const t = live.today;
+  const today = new Date();
+  document.getElementById('readiness-date-label').textContent =
+    `· ${today.toLocaleDateString('en-AU', {weekday:'short', day:'numeric', month:'short'})}`;
+
+  // Score each signal (0 = bad, 1 = ok, 2 = good)
+  const signals = [];
+
+  const hrv = t.hrv_7d_avg;
+  let hrvScore = 1;
+  if (hrv != null) { hrvScore = hrv >= 75 ? 2 : hrv >= 60 ? 1 : 0; }
+  signals.push(hrvScore);
+
+  const sleep = t.sleep_score;
+  let sleepScore = 1;
+  if (sleep != null) { sleepScore = sleep >= 80 ? 2 : sleep >= 65 ? 1 : 0; }
+  signals.push(sleepScore);
+
+  const bb = t.body_battery;
+  let bbScore = 1;
+  if (bb != null) { bbScore = bb >= 70 ? 2 : bb >= 40 ? 1 : 0; }
+  signals.push(bbScore);
+
+  const rhr = t.rhr;
+  let rhrScore = 1;
+  if (rhr != null) { rhrScore = rhr <= 42 ? 2 : rhr <= 48 ? 1 : 0; }
+  signals.push(rhrScore);
+
+  const avg = signals.reduce((a, b) => a + b, 0) / signals.length;
+  const status = avg >= 1.6 ? 'ready' : avg >= 0.9 ? 'moderate' : 'recover';
+  const statusLabel = { ready: 'READY TO TRAIN', moderate: 'MODERATE', recover: 'PRIORITISE RECOVERY' }[status];
+
+  // Build plain-English lines
+  const lines = [];
+
+  if (hrv != null) {
+    const hrvText = hrv >= 75 ? `HRV strong at ${hrv}ms` : hrv >= 60 ? `HRV at ${hrv}ms — within normal range` : `HRV suppressed at ${hrv}ms — body still adapting`;
+    const statusNote = t.hrv_status ? ` (${t.hrv_status.charAt(0) + t.hrv_status.slice(1).toLowerCase()})` : '';
+    lines.push(hrvText + statusNote + '.');
+  }
+
+  if (sleep != null) {
+    const sleepText = sleep >= 80
+      ? `Sleep solid — scored ${sleep}${t.sleep_hrs ? ' over ' + t.sleep_hrs + 'hrs' : ''}.`
+      : sleep >= 65
+      ? `Sleep fair — scored ${sleep}${t.sleep_hrs ? ' over ' + t.sleep_hrs + 'hrs' : ''}.`
+      : `Sleep poor — scored ${sleep}${t.sleep_hrs ? ' over ' + t.sleep_hrs + 'hrs' : ''}. Factor this into effort today.`;
+    lines.push(sleepText);
+  }
+
+  if (bb != null) {
+    const bbText = bb >= 70 ? `Body battery high at ${bb} — well recovered.`
+      : bb >= 40 ? `Body battery moderate at ${bb}.`
+      : `Body battery low at ${bb} — cumulative fatigue showing.`;
+    lines.push(bbText);
+  }
+
+  if (rhr != null) {
+    const rhrText = rhr <= 42 ? `RHR ${rhr}bpm — aerobic fitness holding.`
+      : rhr <= 48 ? `RHR ${rhr}bpm — normal range.`
+      : `RHR elevated at ${rhr}bpm — possible fatigue or illness signal.`;
+    lines.push(rhrText);
+  }
+
+  // Training recommendation
+  const rec = {
+    ready:    'All systems green — good day for quality work or a long run.',
+    moderate: 'Keep effort honest today. Easy or moderate sessions fine; hold off on a hard session if flat.',
+    recover:  'Back off today. Easy movement only — protect the next hard session.',
+  }[status];
+  lines.push(rec);
+
+  // Render
+  const metrics = [
+    { v: hrv  != null ? hrv+'ms'  : '—', l: 'HRV 7d avg',    s: hrvScore },
+    { v: sleep != null ? String(sleep) : '—', l: 'Sleep score', s: sleepScore },
+    { v: bb   != null ? String(bb)    : '—', l: 'Body battery', s: bbScore },
+    { v: rhr  != null ? rhr+'bpm'  : '—', l: 'RHR',           s: rhrScore },
+  ];
+  const sigColor = s => s === 2 ? 'var(--good)' : s === 1 ? 'var(--warn)' : 'var(--bad)';
+  const sigLabel = s => s === 2 ? '↑ good' : s === 1 ? '→ ok' : '↓ low';
+
+  document.getElementById('readiness-body').innerHTML = `
+    <div class="readiness-status">
+      <span class="readiness-badge ${status}">${statusLabel}</span>
+    </div>
+    <div class="readiness-summary">${lines.join(' ')}</div>
+    <div class="readiness-metrics">
+      ${metrics.map(m => `
+        <div class="rmtile">
+          <div class="rv">${m.v}</div>
+          <div class="rl">${m.l}</div>
+          <div class="rs" style="color:${sigColor(m.s)}">${sigLabel(m.s)}</div>
+        </div>`).join('')}
+    </div>
+  `;
+}
+
 /* ── Bootstrap ───────────────────────────────────────────────────── */
 async function init() {
   const [plan, live] = await Promise.all([
@@ -611,6 +731,7 @@ async function init() {
 
   renderCountdowns(plan);
   renderHeaderSub(plan, live);
+  renderReadiness(live);
   renderWeekStrip(live, plan);
   renderTodayTiles(live);
   renderQualityChart(live);
