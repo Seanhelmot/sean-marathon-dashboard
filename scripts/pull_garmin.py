@@ -82,8 +82,14 @@ def pull_data(client):
         max_hr   = act.get("maxHR") or 0
         duration_s = act.get("duration") or 0
         speed    = act.get("averageSpeed") or 0
-        feel     = act.get("feelingAfter")        # 1–5 Garmin feel score
-        effort   = act.get("userPerceivedEffort") # 0–10 RPE
+        # feel/effort not in list response — fetch activity detail
+        feel, effort = None, None
+        try:
+            detail = client.get_activity(act["activityId"])
+            feel   = detail.get("feelingAfter") or detail.get("userFeelingAfterActivityId")
+            effort = detail.get("userPerceivedEffort")
+        except Exception:
+            pass
 
         bucket = week_buckets.setdefault(wk_num, {"actual_km": 0.0, "quality": None, "days": {}})
         bucket["actual_km"] += dist_km

@@ -114,16 +114,14 @@
   .phase-legend i{width:14px;height:5px;border-radius:2px;display:inline-block;}
 
   /* WEEKLY VOLUME SUMMARY */
-  .vol-summary{display:flex;gap:0;margin-bottom:16px;}
-  .vol-stat{flex:1;padding:14px 18px;background:var(--panel-raised);border:1px solid var(--line);}
-  .vol-stat:first-child{border-radius:3px 0 0 3px;}
-  .vol-stat:last-child{border-radius:0 3px 3px 0;}
-  .vol-stat+.vol-stat{border-left:none;}
-  .vol-stat .vs-v{font-family:'IBM Plex Mono',monospace;font-size:30px;font-weight:600;line-height:1;}
-  .vol-stat .vs-l{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--slate);margin-top:5px;}
-  .vol-stat .vs-sub{font-size:11px;color:var(--slate-dim);margin-top:3px;}
-  .vol-progress-track{height:8px;background:var(--panel-raised);border-radius:4px;overflow:hidden;border:1px solid var(--line);}
-  .vol-progress-fill{height:100%;border-radius:4px;transition:width .4s ease;}
+  .vol-strip{display:flex;align-items:center;gap:0;flex-wrap:wrap;}
+  .vol-stat{display:flex;align-items:baseline;gap:6px;padding:8px 18px;border-right:1px solid var(--line);}
+  .vol-stat:last-of-type{border-right:none;}
+  .vol-stat .vs-v{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;color:var(--paper);}
+  .vol-stat .vs-l{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--slate);}
+  .vol-stat .vs-sub{font-size:10px;color:var(--slate-dim);margin-left:4px;}
+  .vol-progress-track{flex:1;height:5px;background:var(--panel-raised);border-radius:3px;overflow:hidden;min-width:80px;margin:0 16px;}
+  .vol-progress-fill{height:100%;border-radius:3px;}
 
   /* READINESS CARD */
   .readiness-status{display:inline-flex;align-items:center;gap:10px;margin-bottom:14px;}
@@ -741,29 +739,25 @@ function renderWeeklyVolume(live, plan) {
   const deltaColor = forecastDelta == null ? 'var(--slate)' : forecastDelta >= -3 ? 'var(--good)' : 'var(--warn)';
 
   document.getElementById('weekly-vol-body').innerHTML = `
-    <div class="vol-summary">
+    <div class="vol-strip">
       <div class="vol-stat">
-        <div class="vs-v" style="color:var(--slate);">${planned}<span style="font-size:16px;"> km</span></div>
-        <div class="vs-l">Planned</div>
-        <div class="vs-sub">${planWk.long_run_km ? 'LR ' + planWk.long_run_km + 'km' : ''}</div>
+        <span class="vs-v" style="color:var(--slate);">${planned}km</span>
+        <span class="vs-l">Planned</span>
+        <span class="vs-sub">${planWk.long_run_km ? '· LR ' + planWk.long_run_km + 'km' : ''}</span>
       </div>
       <div class="vol-stat">
-        <div class="vs-v" style="color:var(--signal);">${actual}<span style="font-size:16px;"> km</span></div>
-        <div class="vs-l">Actual so far</div>
-        <div class="vs-sub">${(pct*100).toFixed(0)}% of plan</div>
+        <span class="vs-v" style="color:var(--signal);">${actual}km</span>
+        <span class="vs-l">Actual</span>
+        <span class="vs-sub">· ${(pct*100).toFixed(0)}%</span>
+      </div>
+      <div class="vol-progress-track">
+        <div class="vol-progress-fill" style="width:${barWidth}%;background:${barColor};"></div>
       </div>
       <div class="vol-stat">
-        <div class="vs-v" style="color:var(--good);">${forecast != null ? forecast : actual}<span style="font-size:16px;"> km</span></div>
-        <div class="vs-l">Forecast</div>
-        <div class="vs-sub" style="color:${deltaColor}">${deltaStr}</div>
+        <span class="vs-v" style="color:var(--good);">${forecast != null ? forecast : actual}km</span>
+        <span class="vs-l">Forecast</span>
+        <span class="vs-sub" style="color:${deltaColor}">· ${deltaStr}</span>
       </div>
-    </div>
-    <div class="vol-progress-track">
-      <div class="vol-progress-fill" style="width:${barWidth}%;background:${barColor};"></div>
-    </div>
-    <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--slate-dim);margin-top:5px;">
-      <span>0 km</span>
-      <span>${planned} km planned</span>
     </div>
   `;
 }
