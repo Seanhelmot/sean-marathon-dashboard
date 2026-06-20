@@ -2002,7 +2002,7 @@ async function fetchWeather() {
   try {
     const url = 'https://api.open-meteo.com/v1/forecast'
       + '?latitude=-37.8136&longitude=144.9631'
-      + '&hourly=temperature_2m,wind_speed_10m'
+      + '&hourly=temperature_2m,wind_speed_10m,wind_direction_10m'
       + '&timezone=Australia%2FMelbourne'
       + '&past_days=7&forecast_days=7';
     const resp = await fetch(url, {cache:'no-store'});
@@ -2011,15 +2011,21 @@ async function fetchWeather() {
     const times = j.hourly?.time || [];
     const temps = j.hourly?.temperature_2m || [];
     const winds = j.hourly?.wind_speed_10m || [];
+    const wdirs = j.hourly?.wind_direction_10m || [];
     const map = {};
     times.forEach((t, i) => {
-      // t = "2026-06-20T06:00" → key = "2026-06-20T06"
-      map[t.slice(0, 13)] = { temp_c: temps[i], wind_kph: winds[i] };
+      map[t.slice(0, 13)] = { temp_c: temps[i], wind_kph: winds[i], wind_dir: wdirs[i] };
     });
     return map;
   } catch (e) {
     return {};
   }
+}
+
+function windDir(deg) {
+  if (deg == null) return '';
+  const dirs = ['N','NE','E','SE','S','SW','W','NW'];
+  return dirs[Math.round(deg / 45) % 8];
 }
 
 function wxBadge(wxMap, isoDatetime, style) {
@@ -2030,7 +2036,8 @@ function wxBadge(wxMap, isoDatetime, style) {
   if (!wx || wx.temp_c == null) return '';
   const t = Math.round(wx.temp_c);
   const w = Math.round(wx.wind_kph);
-  return `<span style="${style||''}font-size:10.5px;color:var(--slate);font-family:\'IBM Plex Mono\',monospace;white-space:nowrap;">🌡${t}°&thinsp;💨${w}</span>`;
+  const dir = windDir(wx.wind_dir);
+  return `<span style="${style||''}font-size:10.5px;color:var(--slate);font-family:\'IBM Plex Mono\',monospace;white-space:nowrap;">🌡${t}°&thinsp;💨${w}${dir ? '&thinsp;' + dir : ''}</span>`;
 }
 
 /* ── Bootstrap ───────────────────────────────────────────────────── */
