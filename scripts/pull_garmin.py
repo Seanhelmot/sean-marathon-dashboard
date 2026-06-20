@@ -58,28 +58,48 @@ def pace_from_speed(speed_m_s: float):
 
 def _work_interval_stats(client, activity_id):
     """
-    Fetch lap splits for a quality session and return (pace_min_per_km, avg_hr)
-    computed from work laps only (HR >= 150bpm), weighted by distance.
-    Returns (None, None) if splits unavailable or no work laps found.
+    Fetch lap splits and return (pace_min_per_km, avg_hr) for work reps only.
+    Uses the same recovery-lap detection as _quality_laps: groups laps into reps
+    separated by short recovery laps (<500m, <=150s), then averages across all reps.
+    Returns (None, None) if splits unavailable or no rep groups found.
     """
-    WORK_HR_FLOOR = 158  # Z4 threshold floor per plan.json hr_zones
     try:
         splits = client.get_activity_splits(activity_id)
         laps = splits.get("lapDTOs") or splits.get("activityLapDTOs") or []
         if not laps:
             return None, None
 
-        work_laps = [
-            lap for lap in laps
-            if (lap.get("averageHR") or 0) >= WORK_HR_FLOOR
-            and (lap.get("distance") or 0) > 200  # ignore sub-200m laps (standing rest)
-        ]
-        if not work_laps:
+        groups, buf = [], []
+        for l in laps:
+            dist = l.get("distance") or 0
+            dur  = l.get("duration") or l.get("elapsedDuration") or 0
+            if dist < 500 and dur <= 150 and buf:
+                groups.append(buf)
+                buf = []
+            elif dist > 100:
+                buf.append(l)
+        if buf:
+            groups.append(buf)
+
+        HR_FLOOR = 130
+        rep_groups = []
+        for group in groups:
+            total_d = sum(l["distance"] for l in group)
+            if total_d < 200:
+                continue
+            avg_hr = sum((l.get("averageHR") or 0) * l["distance"] for l in group) / total_d
+            if avg_hr < HR_FLOOR:
+                continue
+            rep_groups.append(group)
+
+        if not rep_groups:
             return None, None
 
-        total_dist  = sum(lap["distance"] for lap in work_laps)
-        weighted_hr = sum(lap["averageHR"] * lap["distance"] for lap in work_laps) / total_dist
-        avg_speed   = total_dist / sum(lap.get("duration", lap.get("elapsedDuration", 0)) for lap in work_laps)
+        all_laps = [l for g in rep_groups for l in g]
+        total_dist  = sum(l["distance"] for l in all_laps)
+        weighted_hr = sum((l.get("averageHR") or 0) * l["distance"] for l in all_laps) / total_dist
+        total_time  = sum(l.get("duration") or l.get("elapsedDuration") or 0 for l in all_laps)
+        avg_speed   = total_dist / total_time if total_time > 0 else 0
 
         return pace_from_speed(avg_speed), round(weighted_hr)
     except Exception:
