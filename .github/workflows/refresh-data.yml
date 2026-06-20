@@ -1,9 +1,9 @@
-name: Refresh Garmin data
+name: Refresh training data
 
 on:
   schedule:
-    - cron: '0 */6 * * *'   # every 6 hours (00:00, 06:00, 12:00, 18:00 UTC)
-  workflow_dispatch:          # manual trigger from GitHub UI
+    - cron: '0 */6 * * *'   # every 6 hours
+  workflow_dispatch:
 
 jobs:
   pull:
@@ -21,14 +21,30 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: pip install garminconnect
-
-      - name: Pull Garmin data
+        run: |
+          if [ -n "$INTERVALS_API_KEY" ]; then
+            pip install requests
+          else
+            pip install garminconnect
+          fi
         env:
-          GARMIN_EMAIL: ${{ secrets.GARMIN_EMAIL }}
-          GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
+          INTERVALS_API_KEY: ${{ secrets.INTERVALS_API_KEY }}
+
+      - name: Pull training data
+        env:
+          INTERVALS_API_KEY:    ${{ secrets.INTERVALS_API_KEY }}
+          INTERVALS_ATHLETE_ID: ${{ secrets.INTERVALS_ATHLETE_ID }}
+          GARMIN_EMAIL:         ${{ secrets.GARMIN_EMAIL }}
+          GARMIN_PASSWORD:      ${{ secrets.GARMIN_PASSWORD }}
           GARMIN_SESSION_TOKEN: ${{ secrets.GARMIN_SESSION_TOKEN }}
-        run: python scripts/pull_garmin.py
+        run: |
+          if [ -n "$INTERVALS_API_KEY" ]; then
+            echo "Using intervals.icu source"
+            python scripts/pull_intervals.py
+          else
+            echo "Using Garmin Connect source"
+            python scripts/pull_garmin.py
+          fi
 
       - name: Commit and push live.json if changed
         run: |

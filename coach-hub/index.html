@@ -233,9 +233,14 @@ function renderActs(live) {
       a.effort != null    ? `RPE ${a.effort}`             : null,
     ].filter(Boolean).join(' · ');
 
-    // Work laps
+    // Work laps / interval summary
     let lapHtml = '';
-    if (a.work_laps?.length) {
+    if (a.interval_summary?.length) {
+      // intervals.icu pre-formatted strings e.g. ["12x 4m24s 157bpm", "4x 2m3s 147bpm"]
+      const work = a.interval_summary[0];
+      const rec  = a.interval_summary[1];
+      lapHtml = `<div class="act-laps">${work}${rec ? ' · recovery: ' + rec : ''}</div>`;
+    } else if (a.work_laps?.length) {
       const repRows = a.work_laps.map(l =>
         `<tr><td>Rep ${l.rep}</td><td>${l.dist_km}km</td><td>${fmtPace(l.pace)}/km</td><td>${l.avg_hr ?? '—'}bpm</td><td>${l.max_hr ?? '—'}bpm</td></tr>`
       ).join('');
@@ -334,11 +339,11 @@ function buildCard(id, athlete, live, plan) {
         ${st(decouple!=null?(decouple>0?'+':'')+decouple+'%':'—', 'LR decouple')}
       </div>
     </div>
-    <button class="toggle-bar" id="toggle-${id}" onclick="toggleActs(${id})">
+    <button class="toggle-bar open" id="toggle-${id}" onclick="toggleActs(${id})">
       <span>▾ Activities (last ${Math.min(actCount,8)})</span>
       <span class="arrow">▾</span>
     </button>
-    <div class="acts-panel" id="acts-${id}">
+    <div class="acts-panel open" id="acts-${id}">
       <div style="padding-bottom:4px;">${actsHtml}</div>
     </div>
     <a class="dash-link" href="${athlete.dash_url}" target="_blank" rel="noopener">Open full dashboard →</a>
