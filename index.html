@@ -667,117 +667,114 @@ function renderSeasonTimeline(plan, live) {
 }
 
 /* ── Aerobic Efficiency Trend ────────────────────────────────────── */
-function renderAETrend(live) {
-  const wrap = document.getElementById('ae-chart-wrap');
-  const lbls = document.getElementById('ae-week-labels');
-  if (!wrap) return;
-
+function buildAEData(live) {
   const SERIES = [
-    { key: 'easy',    label: 'Easy',    color: 'var(--good)',   r: 3.5 },
-    { key: 'long',    label: 'Long',    color: 'var(--signal)', r: 3.5 },
-    { key: 'quality', label: 'Quality', color: 'var(--warn)',   r: 3.5 },
+    { key: 'easy',    label: 'Easy',    color: '#00c48a' },
+    { key: 'long',    label: 'Long run', color: '#00d4ff' },
+    { key: 'quality', label: 'Quality',  color: '#ffb300' },
   ];
-
-  // Build per-week data points for each series
   const weekNums = [];
   const seriesData = { easy: [], long: [], quality: [] };
 
   (live.weeks || []).forEach(w => {
     const days = w.days || {};
     weekNums.push(w.wk);
-
-    // Easy: HR 110–147, dist < 18km
-    let eDist = 0, eAE = 0;
+    let eDist = 0, eAE = 0, lDist = 0, lAE = 0;
     Object.values(days).forEach(d => {
       if (!d.avg_hr || !d.pace || !d.dist_km) return;
       if (d.avg_hr >= 110 && d.avg_hr < 148 && d.dist_km < 18) {
-        const ae = 1000 / (d.pace * d.avg_hr);
-        eAE += ae * d.dist_km; eDist += d.dist_km;
+        const ae = 1000 / (d.pace * d.avg_hr); eAE += ae * d.dist_km; eDist += d.dist_km;
+      }
+      if (d.dist_km >= 18 && d.avg_hr >= 110 && d.avg_hr < 158) {
+        const ae = 1000 / (d.pace * d.avg_hr); lAE += ae * d.dist_km; lDist += d.dist_km;
       }
     });
     seriesData.easy.push(eDist > 0 ? { wk: w.wk, ae: eAE / eDist, partial: w.partial } : null);
-
-    // Long: dist >= 18km and HR < 158
-    let lDist = 0, lAE = 0;
-    Object.values(days).forEach(d => {
-      if (!d.avg_hr || !d.pace || !d.dist_km) return;
-      if (d.dist_km >= 18 && d.avg_hr < 158) {
-        const ae = 1000 / (d.pace * d.avg_hr);
-        lAE += ae * d.dist_km; lDist += d.dist_km;
-      }
-    });
     seriesData.long.push(lDist > 0 ? { wk: w.wk, ae: lAE / lDist, partial: w.partial } : null);
-
-    // Quality: use work-interval stats from quality field if present
     const q = w.quality;
     seriesData.quality.push((q && q.pace_min_per_km && q.avg_hr)
-      ? { wk: w.wk, ae: 1000 / (q.pace_min_per_km * q.avg_hr), partial: w.partial }
-      : null);
+      ? { wk: w.wk, ae: 1000 / (q.pace_min_per_km * q.avg_hr), partial: w.partial } : null);
+  });
+  return { SERIES, weekNums, seriesData };
+}
+
+function renderAETrend(live) {
+  const wrap = document.getElementById('ae-chart-wrap');
+  if (!wrap) return;
+  const W = wrap.offsetWidth;
+  if (!W) { wrap._pendingLive = live; return; }
+
+  const { SERIES, weekNums, seriesData } = buildAEData(live);
+  const allAE = Object.values(seriesData).flat().filter(Boolean).map(p => p.ae);
+  if (!allAE.length) { wrap.innerHTML = '<div style="color:#6a8fa8;font-size:12px;padding:20px 0;">Not enough data yet.</div>'; return; }
+
+  const n = weekNums.length;
+  const LEGEND_H = 22;
+  const PAD = { l: 38, r: 16, t: 10, b: 22 };
+  const H = 140;
+  const plotW = W - PAD.l - PAD.r;
+  const plotH = H - PAD.t - PAD.b - LEGEND_H;
+  const minAE = Math.min(...allAE) * 0.975;
+  const maxAE = Math.max(...allAE) * 1.025;
+
+  const xOf = i => PAD.l + (n < 2 ? plotW / 2 : (i / (n - 1)) * plotW);
+  const yOf = ae => LEGEND_H + PAD.t + plotH - ((ae - minAE) / (maxAE - minAE)) * plotH;
+
+  // Legend inside SVG
+  let legend = '';
+  SERIES.forEach((s, si) => {
+    const lx = PAD.l + si * 100;
+    legend += `<line x1="${lx}" y1="11" x2="${lx+14}" y2="11" stroke="${s.color}" stroke-width="2"/>
+      <circle cx="${lx+7}" cy="11" r="3" fill="${s.color}"/>
+      <text x="${lx+19}" y="15" fill="#6a8fa8" font-size="10.5">${s.label}</text>`;
   });
 
-  // Gather all non-null AE values to set shared Y scale
-  const allAE = Object.values(seriesData).flat().filter(Boolean).map(p => p.ae);
-  if (!allAE.length) { wrap.innerHTML = '<div style="color:var(--slate);font-size:12px;padding:20px 0;">Not enough data yet.</div>'; return; }
-
-  const W = wrap.offsetWidth || 600;
-  const H = 110;
-  const PAD = { l: 44, r: 12, t: 10, b: 18 };
-  const plotW = W - PAD.l - PAD.r;
-  const plotH = H - PAD.t - PAD.b;
-  const minAE = Math.min(...allAE) * 0.97;
-  const maxAE = Math.max(...allAE) * 1.03;
-
-  const n   = weekNums.length;
-  const xOf = i => PAD.l + (n < 2 ? plotW / 2 : i / (n - 1) * plotW);
-  const yOf = ae => PAD.t + plotH - (ae - minAE) / (maxAE - minAE) * plotH;
-
-  // Y grid + labels
+  // Y grid + labels (3 horizontal lines)
   let yGrid = '';
   [0, 0.5, 1].forEach(t => {
     const val = minAE + (maxAE - minAE) * t;
     const y   = yOf(val);
-    yGrid += `<line x1="${PAD.l}" y1="${y.toFixed(1)}" x2="${W - PAD.r}" y2="${y.toFixed(1)}" stroke="var(--line)" stroke-width="0.5"/>`;
-    yGrid += `<text x="${PAD.l - 4}" y="${y.toFixed(1)}" text-anchor="end" dominant-baseline="middle" fill="var(--slate)" font-size="10">${val.toFixed(2)}</text>`;
+    yGrid += `<line x1="${PAD.l}" y1="${y.toFixed(1)}" x2="${W - PAD.r}" y2="${y.toFixed(1)}" stroke="#1a2d40" stroke-width="0.75"/>`;
+    yGrid += `<text x="${PAD.l - 4}" y="${y.toFixed(1)}" text-anchor="end" dominant-baseline="middle" fill="#6a8fa8" font-size="9.5">${val.toFixed(2)}</text>`;
   });
 
-  // Render each series
+  // X axis week labels — show every week
+  let xLabels = '';
+  const step = n <= 12 ? 1 : n <= 18 ? 2 : 3;
+  weekNums.forEach((wk, i) => {
+    if (i % step !== 0 && i !== n - 1) return;
+    const x = xOf(i);
+    xLabels += `<text x="${x.toFixed(1)}" y="${(LEGEND_H + PAD.t + plotH + 15).toFixed(1)}" text-anchor="middle" fill="#6a8fa8" font-size="9.5">W${wk}</text>`;
+  });
+
+  // Vertical column lines at each week (subtle)
+  let xGrid = '';
+  weekNums.forEach((_, i) => {
+    const x = xOf(i).toFixed(1);
+    xGrid += `<line x1="${x}" y1="${(LEGEND_H + PAD.t).toFixed(1)}" x2="${x}" y2="${(LEGEND_H + PAD.t + plotH).toFixed(1)}" stroke="#1a2d40" stroke-width="0.5"/>`;
+  });
+
+  // Series lines + dots
   let seriesSVG = '';
   SERIES.forEach(s => {
     const pts = seriesData[s.key];
     const valid = pts.map((p, i) => p ? { i, p } : null).filter(Boolean);
     if (!valid.length) return;
     const linePts = valid.map(({ i, p }) => `${xOf(i).toFixed(1)},${yOf(p.ae).toFixed(1)}`).join(' ');
-    seriesSVG += `<polyline points="${linePts}" fill="none" stroke="${s.color}" stroke-width="1.5" stroke-linejoin="round" opacity="0.85"/>`;
+    seriesSVG += `<polyline points="${linePts}" fill="none" stroke="${s.color}" stroke-width="2" stroke-linejoin="round" opacity="0.9"/>`;
     valid.forEach(({ i, p }) => {
-      seriesSVG += `<circle cx="${xOf(i).toFixed(1)}" cy="${yOf(p.ae).toFixed(1)}" r="${s.r}" fill="${p.partial ? 'transparent' : s.color}" stroke="${s.color}" stroke-width="1.5">
-        <title>W${p.wk} ${s.label}: AE ${p.ae.toFixed(3)}${p.partial ? ' (partial)' : ''}</title>
+      const cx = xOf(i).toFixed(1), cy = yOf(p.ae).toFixed(1);
+      seriesSVG += `<circle cx="${cx}" cy="${cy}" r="4" fill="${p.partial ? '#0d1825' : s.color}" stroke="${s.color}" stroke-width="1.5">
+        <title>W${p.wk} ${s.label}: ${p.ae.toFixed(3)}${p.partial ? ' (partial)' : ''}</title>
       </circle>`;
     });
   });
 
-  // Legend
-  const legend = SERIES.map(s =>
-    `<span style="display:inline-flex;align-items:center;gap:5px;margin-right:14px;font-size:10.5px;color:var(--slate);">
-      <span style="width:12px;height:2px;background:${s.color};display:inline-block;border-radius:1px;"></span>${s.label}
-    </span>`).join('');
-
-  wrap.innerHTML = `
-    <div style="margin-bottom:6px;">${legend}</div>
-    <svg width="100%" height="${H}" viewBox="0 0 ${W} ${H}" style="overflow:visible;">
-      ${yGrid}${seriesSVG}
-    </svg>`;
+  wrap.innerHTML = `<svg width="${W}" height="${H + LEGEND_H}" viewBox="0 0 ${W} ${H + LEGEND_H}" style="display:block;overflow:visible;">
+    ${legend}${yGrid}${xGrid}${xLabels}${seriesSVG}
+  </svg>`;
   wrap.style.height = 'auto';
-
-  // Week labels
-  lbls.innerHTML = '';
-  lbls.style.cssText = 'position:relative;height:14px;';
-  weekNums.forEach((wk, i) => {
-    if (i % Math.ceil(n / 10) !== 0 && i !== n - 1) return;
-    const span = document.createElement('span');
-    span.style.cssText = `position:absolute;left:${xOf(i)}px;transform:translateX(-50%);font-size:9.5px;color:var(--slate);font-family:'IBM Plex Mono',monospace;`;
-    span.textContent = `W${wk}`;
-    lbls.appendChild(span);
-  });
+  document.getElementById('ae-week-labels').style.display = 'none';
 }
 
 /* ── Targets ─────────────────────────────────────────────────────── */
@@ -820,6 +817,10 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+    if (btn.dataset.tab === 'season') {
+      const wrap = document.getElementById('ae-chart-wrap');
+      if (wrap && wrap._pendingLive) { renderAETrend(wrap._pendingLive); wrap._pendingLive = null; }
+    }
   });
 });
 
