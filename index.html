@@ -716,7 +716,7 @@ function buildGarminDayMap(liveWeeks, wkNum) {
 }
 
 /* ── Dual-week strip (This Week + Next Week aligned) ─────────────── */
-function renderWeekStrip(live, plan) {
+function renderWeekStrip(live, plan, wxMap) {
   const wkNum    = live.current_week;
   const nextWkNum = wkNum + 1;
   const planWk   = plan.weeks.find(w => w.wk === wkNum) || {};
@@ -782,12 +782,18 @@ function renderWeekStrip(live, plan) {
     const curEffort = gCur.effort != null ? `<span style="font-size:10px;color:var(--slate);margin-left:4px;">RPE ${gCur.effort}</span>` : '';
     const curName = cur.live_name || cur.name;
     const curMeta = cur.live_meta || cur.meta;
+    // Weather: for done days use 06:00, upcoming use 06:00 forecast
+    const curIsoDate = curDate.toISOString().slice(0, 10);
+    const curWxTime = curIsoDate + 'T06';
+    const curWx = wxBadge(wxMap, curWxTime, 'margin-left:8px;');
 
     // Next week day
     let nxtHtml = '<div style="padding:8px 12px;border-left:1px solid var(--line);"></div>';
     if (nxt && monNext) {
       const nxtDate = new Date(monNext); nxtDate.setDate(nxtDate.getDate() + i);
       const nxtLabel = nxtDate.getDate() + ' ' + MONTHS[nxtDate.getMonth()];
+      const nxtIsoDate = nxtDate.toISOString().slice(0, 10);
+      const nxtWx = wxBadge(wxMap, nxtIsoDate + 'T06', 'margin-left:8px;');
       const gNxt = garminNext[nxtLabel] || {};
       const nxtFeel = gNxt.feel != null ? `<span style="margin-left:6px;opacity:.7;">${feelLabel[gNxt.feel]||''}</span>` : '';
       nxtHtml = `
@@ -795,7 +801,7 @@ function renderWeekStrip(live, plan) {
           <div style="font-size:12px;font-weight:600;color:var(--paper);margin-bottom:2px;">
             <span class="status-dot" style="background:var(--slate-dim)"></span>${nxt.name}
             ${nxt.zone ? `<span class="zone-chip" style="background:${ZONE_COLOR[nxt.zone]};margin-left:6px;">${ZONE_LABEL[nxt.zone]}</span>` : ''}
-            ${nxtFeel}
+            ${nxtFeel}${nxtWx}
           </div>
           <div style="font-size:11px;color:var(--slate);line-height:1.4;">${nxt.meta}</div>
         </div>`;
@@ -817,7 +823,7 @@ function renderWeekStrip(live, plan) {
           <div style="font-size:12px;font-weight:600;color:var(--paper);margin-bottom:2px;">
             <span class="status-dot" style="background:${curDot}"></span>${curName}
             ${cur.zone ? `<span class="zone-chip" style="background:${ZONE_COLOR[cur.zone]};margin-left:6px;">${ZONE_LABEL[cur.zone]}</span>` : ''}
-            ${curFeel}${curEffort}
+            ${curFeel}${curEffort}${curWx}
           </div>
           <div style="font-size:11px;color:var(--slate);line-height:1.4;">${curMeta}</div>
         </div>
@@ -1831,7 +1837,7 @@ function activityObservation(a) {
   return obs.join(' ') || 'No observation — limited data returned from Garmin.';
 }
 
-function renderActivity(live) {
+function renderActivity(live, wxMap) {
   const container = document.getElementById('activity-list');
   const acts = live.recent_activities;
   if (!acts || !acts.length) {
@@ -1846,31 +1852,34 @@ function renderActivity(live) {
     return;
   }
 
-  const feelEmoji = ['','😩','😕','😐','🙂','😄'];
-  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const feelLabel = ['','😩 Terrible','😕 Bad','😐 Okay','🙂 Good','😄 Great'];
+  const TH = 'style="text-align:left;padding:4px 8px;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);border-bottom:1px solid var(--line);font-weight:600;"';
+  const TD = 'style="padding:4px 8px;font-family:\'IBM Plex Mono\',monospace;font-size:11.5px;color:var(--paper);"';
 
   container.innerHTML = recent.map((a, idx) => {
     const date = new Date(a.date + 'T00:00:00');
-    const dateStr = date.toLocaleDateString('en-AU', {weekday:'long', day:'numeric', month:'long'});
+    const dateStr = date.toLocaleDateString('en-AU', {weekday:'short', day:'numeric', month:'short'});
+    const timeStr = a.start_local ? a.start_local.slice(11, 16) : '';
     const obs = activityObservation(a);
 
-    const stats = [
-      { v: a.dist_km    != null ? a.dist_km.toFixed(1)+'km' : '—',          l: 'Distance' },
-      { v: fmtDuration(a.duration_s),                                          l: 'Duration' },
-      { v: a.pace       != null ? fmtPace(a.pace) : '—',                      l: 'Avg Pace' },
-      { v: a.avg_hr     != null ? a.avg_hr+'bpm' : '—',                       l: 'Avg HR' },
-      { v: a.max_hr     != null ? a.max_hr+'bpm' : '—',                       l: 'Max HR' },
-      { v: a.elevation_gain != null ? Math.round(a.elevation_gain)+'m' : '—', l: 'Elevation' },
-      { v: a.avg_cadence!= null ? Math.round(a.avg_cadence)+'spm' : '—',     l: 'Cadence' },
-      { v: a.feel   != null ? (feelEmoji[a.feel]||'') + ' ' + (['','Terrible','Bad','Okay','Good','Great'][a.feel]||a.feel) : '—', l: 'Feel' },
-      { v: a.effort != null ? a.effort+'/10' : '—',                           l: 'RPE' },
-    ];
+    // Compact inline stat tokens
+    const statTokens = [
+      a.dist_km    != null ? `<b>${a.dist_km.toFixed(1)}km</b>` : null,
+      a.duration_s           ? fmtDuration(a.duration_s) : null,
+      a.pace       != null ? `${fmtPace(a.pace)}/km` : null,
+      a.avg_hr     != null ? `HR ${a.avg_hr}` + (a.max_hr != null ? `/${a.max_hr}` : '') + 'bpm' : null,
+      a.elevation_gain != null ? `↑${Math.round(a.elevation_gain)}m` : null,
+      a.avg_cadence!= null ? `${Math.round(a.avg_cadence)}spm` : null,
+      a.feel       != null ? feelLabel[a.feel] : null,
+      a.effort     != null ? `RPE ${a.effort}` : null,
+    ].filter(Boolean);
+
+    // Weather
+    const wx = wxBadge(wxMap, a.start_local, '');
 
     // Lap detail block
     let lapDetail = '';
     if (a.work_laps && a.work_laps.length) {
-      const TH = 'style="text-align:left;padding:5px 10px;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);border-bottom:1px solid var(--line);font-weight:600;"';
-      const TD = 'style="padding:5px 10px;font-family:\'IBM Plex Mono\',monospace;font-size:12px;color:var(--paper);"';
       const rows = a.work_laps.map(l => `
         <tr>
           <td ${TD}>Rep ${l.rep}</td>
@@ -1880,18 +1889,14 @@ function renderActivity(live) {
           <td ${TD}>${l.max_hr != null ? l.max_hr + 'bpm' : '—'}</td>
         </tr>`).join('');
       lapDetail = `
-        <div style="margin-top:14px;">
-          <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--signal);margin-bottom:6px;font-weight:600;">Work Laps</div>
+        <div style="margin-top:10px;">
+          <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--signal);margin-bottom:5px;font-weight:600;">Work Laps</div>
           <table style="width:100%;border-collapse:collapse;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
-            <thead><tr>
-              <th ${TH}>Rep</th><th ${TH}>Dist</th><th ${TH}>Pace</th><th ${TH}>Avg HR</th><th ${TH}>Max HR</th>
-            </tr></thead>
+            <thead><tr><th ${TH}>Rep</th><th ${TH}>Dist</th><th ${TH}>Pace</th><th ${TH}>Avg HR</th><th ${TH}>Max HR</th></tr></thead>
             <tbody>${rows}</tbody>
           </table>
         </div>`;
     } else if (a.km_chunks && a.km_chunks.length) {
-      const TH = 'style="text-align:left;padding:5px 10px;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);border-bottom:1px solid var(--line);font-weight:600;"';
-      const TD = 'style="padding:5px 10px;font-family:\'IBM Plex Mono\',monospace;font-size:12px;color:var(--paper);"';
       const rows = a.km_chunks.map(c => `
         <tr>
           <td ${TD}>${c.label}</td>
@@ -1899,32 +1904,31 @@ function renderActivity(live) {
           <td ${TD}>${c.avg_hr != null ? c.avg_hr + 'bpm' : '—'}</td>
         </tr>`).join('');
       const dc = a.decoupling_pct != null
-        ? `<span style="margin-left:16px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:${a.decoupling_pct <= 5 ? 'var(--good)' : 'var(--warn)'};">Decoupling: ${a.decoupling_pct > 0 ? '+' : ''}${a.decoupling_pct}% ${a.decoupling_pct <= 5 ? '✓' : '↑'}</span>`
+        ? `<span style="margin-left:12px;font-size:11px;color:${a.decoupling_pct <= 5 ? 'var(--good)' : 'var(--warn)'};">Decoupling ${a.decoupling_pct > 0 ? '+' : ''}${a.decoupling_pct}% ${a.decoupling_pct <= 5 ? '✓' : '↑'}</span>`
         : '';
       lapDetail = `
-        <div style="margin-top:14px;">
-          <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--signal);margin-bottom:6px;font-weight:600;">5km Splits${dc}</div>
+        <div style="margin-top:10px;">
+          <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--signal);margin-bottom:5px;font-weight:600;">5km Splits${dc}</div>
           <table style="width:100%;border-collapse:collapse;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
-            <thead><tr>
-              <th ${TH}>Segment</th><th ${TH}>Pace</th><th ${TH}>Avg HR</th>
-            </tr></thead>
+            <thead><tr><th ${TH}>Segment</th><th ${TH}>Pace</th><th ${TH}>Avg HR</th></tr></thead>
             <tbody>${rows}</tbody>
           </table>
         </div>`;
     }
 
-    return `<div class="card" style="margin-bottom:18px;">
-      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;">
-        <div>
-          <div style="font-family:'Big Shoulders Display',sans-serif;font-size:20px;font-weight:700;color:var(--paper);">${a.name}</div>
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate);margin-top:2px;">${dateStr}</div>
+    return `<div class="card" style="margin-bottom:10px;padding:12px 14px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">
+        <div style="font-size:15px;font-weight:700;color:var(--paper);line-height:1.2;">${a.name}</div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          ${wx}
+          ${idx === 0 ? '<span style="font-family:\'IBM Plex Mono\',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--signal);border:1px solid var(--signal);padding:1px 6px;border-radius:2px;">Latest</span>' : ''}
         </div>
-        ${idx === 0 ? '<span style="font-family:\'IBM Plex Mono\',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--signal);border:1px solid var(--signal);padding:2px 8px;border-radius:2px;">Latest</span>' : ''}
       </div>
-      <div style="font-size:13px;line-height:1.65;color:var(--paper);padding:10px 14px;background:var(--panel-raised);border:1px solid var(--line);border-left:3px solid var(--signal);border-radius:3px;margin-bottom:14px;">${obs}</div>
-      <div class="metric-tiles" style="grid-template-columns:repeat(3,1fr);">
-        ${stats.map(s => `<div class="mtile"><div class="v" style="font-size:18px;">${s.v}</div><div class="l">${s.l}</div></div>`).join('')}
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--slate);margin-bottom:7px;">${dateStr}${timeStr ? ' · ' + timeStr : ''}</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:var(--paper);font-family:'IBM Plex Mono',monospace;line-height:1.6;">
+        ${statTokens.join('<span style="color:var(--line);">·</span>')}
       </div>
+      <div style="font-size:11.5px;color:var(--slate);margin-top:6px;line-height:1.5;">${obs}</div>
       ${lapDetail}
     </div>`;
   }).join('');
@@ -1992,11 +1996,49 @@ function renderDietHistory() {
   });
 }
 
+/* ── Weather ─────────────────────────────────────────────────────── */
+async function fetchWeather() {
+  // Melbourne coords; single request with past_days=7 covers actuals + 7d forecast
+  try {
+    const url = 'https://api.open-meteo.com/v1/forecast'
+      + '?latitude=-37.8136&longitude=144.9631'
+      + '&hourly=temperature_2m,wind_speed_10m'
+      + '&timezone=Australia%2FMelbourne'
+      + '&past_days=7&forecast_days=7';
+    const resp = await fetch(url, {cache:'no-store'});
+    if (!resp.ok) return {};
+    const j = await resp.json();
+    const times = j.hourly?.time || [];
+    const temps = j.hourly?.temperature_2m || [];
+    const winds = j.hourly?.wind_speed_10m || [];
+    const map = {};
+    times.forEach((t, i) => {
+      // t = "2026-06-20T06:00" → key = "2026-06-20T06"
+      map[t.slice(0, 13)] = { temp_c: temps[i], wind_kph: winds[i] };
+    });
+    return map;
+  } catch (e) {
+    return {};
+  }
+}
+
+function wxBadge(wxMap, isoDatetime, style) {
+  // isoDatetime = "YYYY-MM-DDTHH:MM" or "YYYY-MM-DDTHH"
+  if (!wxMap || !isoDatetime) return '';
+  const key = isoDatetime.slice(0, 13);
+  const wx = wxMap[key];
+  if (!wx || wx.temp_c == null) return '';
+  const t = Math.round(wx.temp_c);
+  const w = Math.round(wx.wind_kph);
+  return `<span style="${style||''}font-size:10.5px;color:var(--slate);font-family:\'IBM Plex Mono\',monospace;white-space:nowrap;">🌡${t}°&thinsp;💨${w}</span>`;
+}
+
 /* ── Bootstrap ───────────────────────────────────────────────────── */
 async function init() {
-  const [plan, live] = await Promise.all([
+  const [plan, live, wxMap] = await Promise.all([
     fetch('./data/plan.json', {cache:'no-store'}).then(r => r.json()),
     fetch('./data/live.json', {cache:'no-store'}).then(r => r.json()),
+    fetchWeather(),
   ]);
 
   renderCountdowns(plan);
@@ -2004,7 +2046,7 @@ async function init() {
   renderWeeklyVolume(live, plan);
   renderMotivation();
   renderReadiness(live);
-  renderWeekStrip(live, plan);
+  renderWeekStrip(live, plan, wxMap);
   renderNextWeekStrip(live, plan);
   renderVolumeChart(live, plan);
   renderSleepChart(live);
@@ -2015,7 +2057,7 @@ async function init() {
   renderTargets(plan);
   renderZones(plan);
   renderPerformanceTab(live);
-  renderActivity(live);
+  renderActivity(live, wxMap);
   renderDiet();
 }
 

@@ -345,8 +345,13 @@ def pull_data(client):
             elif is_qual_recent:
                 work_laps_detail = _quality_laps(client, act["activityId"])
 
+            start_local = act.get("startTimeLocal") or act.get("startTimeGMT") or ""
+            if start_local and len(start_local) >= 16:
+                start_local = start_local[:16]  # "YYYY-MM-DDTHH:MM"
+
             entry = {
                 "date":       iso(act_date),
+                "start_local": start_local or None,
                 "name":       act.get("activityName") or "Run",
                 "dist_km":    round(dist_km, 2),
                 "duration_s": int(duration_s),
