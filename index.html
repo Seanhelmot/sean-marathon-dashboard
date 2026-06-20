@@ -195,42 +195,21 @@
       <div id="motivation-body"></div>
     </div>
 
-    <!-- DAILY READINESS -->
+    <!-- DAILY READINESS + RECOVERY METRICS (consolidated) -->
     <div class="card" style="margin-bottom:18px;" id="readiness-card">
       <h2>Daily Readiness <span class="accent" id="readiness-date-label"></span></h2>
       <div id="readiness-body"></div>
     </div>
 
+    <!-- CURRENT WEEK + NEXT WEEK -->
     <div class="grid grid-2" style="margin-bottom:18px;">
       <div class="card">
         <h2 id="week-card-title">Week — · — · loading</h2>
         <div class="week-strip" id="week-strip"><div class="loading">Loading week data…</div></div>
       </div>
       <div class="card">
-        <h2>Today <span class="accent" id="today-date-label"></span></h2>
-        <div class="metric-tiles" id="today-tiles"><div class="loading">Loading…</div></div>
-        <div class="chart-foot" id="today-foot"></div>
-      </div>
-    </div>
-
-    <div class="grid grid-2" style="margin-bottom:18px;">
-      <div class="card">
-        <h2>Quality Session Trend <span class="accent">· Wed threshold, recent weeks</span></h2>
-        <div id="quality-chart"></div>
-        <div class="legend-row">
-          <span><i style="background:var(--signal)"></i>Pace (min/km)</span>
-          <span><i style="background:var(--z5)"></i>Avg HR (bpm)</span>
-        </div>
-        <div class="chart-foot">Work-interval pace and HR only — warm-up, cool-down and recovery jogs excluded. Improving pace at steady HR = aerobic adaptation on track.</div>
-      </div>
-      <div class="card">
-        <h2>Volume <span class="accent">· planned vs actual, weekly km</span></h2>
-        <div id="volume-chart"></div>
-        <div class="legend-row">
-          <span><i style="background:var(--line)"></i>Planned</span>
-          <span><i style="background:var(--signal)"></i>Actual</span>
-        </div>
-        <div class="chart-foot" id="volume-foot">Current week marked partial if Sat/Sun still to come.</div>
+        <h2 id="next-week-card-title">Next Week · loading</h2>
+        <div class="week-strip" id="next-week-strip"><div class="loading">Loading…</div></div>
       </div>
     </div>
 
@@ -238,7 +217,7 @@
       <div class="card">
         <h2>Injury Status <span class="accent">· manually tracked, not Garmin-sourced</span></h2>
         <div id="injury-list"></div>
-        <div class="chart-foot">Physio assessment booked with Mohsin Raza (Richmond Medical Practice). Trialling meloxicam for knee from ~18 Jun.</div>
+        <div class="chart-foot">Trialling meloxicam for knee from ~18 Jun. Glute med asymmetry unresolved — needs objective physio assessment.</div>
       </div>
       <div class="card">
         <h2>Sleep &amp; HRV <span class="accent">· recent nights</span></h2>
@@ -328,6 +307,16 @@
       <div class="chart-foot" style="margin-top:14px;">
         Bar height = planned weekly volume (max 95km, W18 peak). Number beneath = long run distance. Solid orange = completed/actual; outline = planned. Current week partial if in-progress.
       </div>
+    </div>
+
+    <div class="card" style="margin-bottom:18px;">
+      <h2>Volume <span class="accent">· planned vs actual, weekly km</span></h2>
+      <div id="volume-chart"></div>
+      <div class="legend-row">
+        <span><i style="background:var(--line)"></i>Planned</span>
+        <span><i style="background:var(--signal)"></i>Actual</span>
+      </div>
+      <div class="chart-foot" id="volume-foot">Current week marked partial if Sat/Sun still to come.</div>
     </div>
 
     <div class="card" style="margin-bottom:18px;">
@@ -721,40 +710,73 @@ function renderWeekStrip(live, plan) {
   });
 }
 
-/* ── Today tiles ─────────────────────────────────────────────────── */
-function renderTodayTiles(live) {
-  const t = live.today;
-  const today = new Date();
-  const yesterday = new Date(today); yesterday.setDate(today.getDate()-1);
-  const yStr = yesterday.toLocaleDateString('en-AU',{day:'numeric',month:'short'});
+/* ── Next week strip ─────────────────────────────────────────────── */
+function renderNextWeekStrip(live, plan) {
+  const nextWkNum = live.current_week + 1;
+  const planWk = plan.weeks.find(w => w.wk === nextWkNum);
+  const title = document.getElementById('next-week-card-title');
+  const strip = document.getElementById('next-week-strip');
 
-  document.getElementById('today-date-label').textContent = `· ${today.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short'})}`;
+  if (!planWk) {
+    title.innerHTML = 'Next Week';
+    strip.innerHTML = '<div class="loading">No plan data for next week.</div>';
+    return;
+  }
 
-  const tiles = [
-    { v: t.hrv_7d_avg != null ? t.hrv_7d_avg+'ms' : '—', l:'HRV 7-day avg', d: t.hrv_status || '—' },
-    { v: t.rhr != null ? t.rhr+'bpm' : '—',             l:'Resting HR',      d:'current' },
-    { v: t.sleep_score != null ? String(t.sleep_score) : '—', l:`Sleep score (${yStr})`, d: t.sleep_hrs != null ? t.sleep_hrs+'hrs' : '' },
-    { v: t.vo2max_garmin != null ? String(t.vo2max_garmin) : '—', l:"Garmin VO2max est.", d: t.vo2max_note || '' },
-  ];
+  title.innerHTML = `Week ${nextWkNum} <span class="accent">· ${planWk.phase} · ${planWk.plan_km}km planned</span>`;
 
-  const container = document.getElementById('today-tiles');
-  container.innerHTML = '';
-  tiles.forEach(ti => {
-    const el = document.createElement('div');
-    el.className = 'mtile';
-    el.innerHTML = `<div class="v">${ti.v}</div><div class="l">${ti.l}</div><div class="d flat">${ti.d}</div>`;
-    container.appendChild(el);
-  });
+  // Check if next week has live day data (partial start)
+  const nextWkData = (live.weeks || []).find(w => w.wk === nextWkNum);
+  const garminDays = {};
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  if (nextWkData && nextWkData.days) {
+    Object.entries(nextWkData.days).forEach(([isoDate, data]) => {
+      const d = new Date(isoDate + 'T00:00:00');
+      garminDays[d.getDate() + ' ' + MONTHS[d.getMonth()]] = data;
+    });
+  }
 
-  const bioV = document.getElementById('bio-vo2max');
-  if (bioV && t.vo2max_garmin != null) bioV.textContent = t.vo2max_garmin;
-
-  const foot = document.getElementById('today-foot');
-  const parts = [];
-  if (t.rhr != null)          parts.push(`RHR ${t.rhr}bpm`);
-  if (t.hrv_status)           parts.push(`HRV ${t.hrv_status.toLowerCase()}`);
-  if (t.body_battery != null) parts.push(`Body battery ${t.body_battery}`);
-  foot.textContent = parts.join(' · ');
+  // Use next_week_days from live if available, else show plan summary
+  const days = live.next_week_days;
+  if (days && days.length) {
+    strip.innerHTML = '';
+    const feelLabel = ['','😩 Terrible','😕 Bad','😐 Okay','🙂 Good','😄 Great'];
+    days.forEach(d => {
+      const gd = garminDays[d.date];
+      const feelChip   = (gd && gd.feel   != null) ? `<span style="font-size:10.5px;color:var(--slate);margin-left:8px;">Feel: ${feelLabel[gd.feel] || gd.feel}</span>` : '';
+      const effortChip = (gd && gd.effort != null) ? `<span style="font-size:10.5px;color:var(--slate);margin-left:8px;">RPE: ${gd.effort}/10</span>` : '';
+      const row = document.createElement('div');
+      row.className = 'day-row';
+      row.innerHTML = `
+        <div class="day-date">${d.date}<span class="dow">${d.dow}</span></div>
+        <div>
+          <div class="day-name"><span class="status-dot" style="background:var(--slate-dim)"></span>${d.name}</div>
+          <div class="day-meta">${d.meta}${feelChip}${effortChip}</div>
+        </div>
+        <div>${d.zone ? `<span class="zone-chip" style="background:${ZONE_COLOR[d.zone]}">${ZONE_LABEL[d.zone]}</span>` : ''}</div>`;
+      strip.appendChild(row);
+    });
+  } else {
+    // Fallback: plan-level summary
+    const lr = planWk.long_run_km;
+    const lrStr = typeof lr === 'number' ? lr + 'km long run' : lr;
+    const tag = planWk.tag ? `<span style="color:var(--z5);margin-left:6px;font-size:10.5px;">· ${planWk.tag.toUpperCase()}</span>` : '';
+    strip.innerHTML = `
+      <div style="padding:12px 0 8px;color:var(--slate);font-size:12.5px;line-height:1.7;">
+        <div style="margin-bottom:10px;font-size:13px;color:var(--paper);font-weight:600;">${planWk.phase}${tag}</div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;">
+          <div style="padding:8px 14px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
+            <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:3px;">Planned volume</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600;color:var(--signal);">${planWk.plan_km}km</div>
+          </div>
+          <div style="padding:8px 14px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
+            <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:3px;">Long run</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600;color:var(--paper);">${lrStr}</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;font-size:11.5px;color:var(--slate-dim);">Day-by-day schedule: add <code>next_week_days</code> to live.json to show full breakdown.</div>
+      </div>`;
+  }
 }
 
 /* ── Quality session chart ───────────────────────────────────────── */
@@ -1648,11 +1670,13 @@ function renderReadiness(live) {
   lines.push(rec);
 
   // Render
+  const vo2 = t.vo2max_garmin;
   const metrics = [
     { v: hrv  != null ? hrv+'ms'  : '—', l: 'HRV 7d avg',    s: hrvScore },
     { v: sleep != null ? String(sleep) : '—', l: 'Sleep score', s: sleepScore },
     { v: bb   != null ? String(bb)    : '—', l: 'Body battery (peak)', s: bbScore },
     { v: rhr  != null ? rhr+'bpm'  : '—', l: 'RHR',           s: rhrScore },
+    { v: vo2  != null ? String(vo2)   : '—', l: 'Garmin VO₂max est.', s: 1, note: t.vo2max_note || '' },
   ];
   const sigColor = s => s === 2 ? 'var(--good)' : s === 1 ? 'var(--warn)' : 'var(--bad)';
   const sigLabel = s => s === 2 ? '↑ good' : s === 1 ? '→ ok' : '↓ low';
@@ -1667,10 +1691,13 @@ function renderReadiness(live) {
         <div class="rmtile">
           <div class="rv">${m.v}</div>
           <div class="rl">${m.l}</div>
-          <div class="rs" style="color:${sigColor(m.s)}">${sigLabel(m.s)}</div>
+          <div class="rs" style="color:${m.note ? 'var(--slate)' : sigColor(m.s)}">${m.note || sigLabel(m.s)}</div>
         </div>`).join('')}
     </div>
   `;
+
+  const bioV = document.getElementById('bio-vo2max');
+  if (bioV && t.vo2max_garmin != null) bioV.textContent = t.vo2max_garmin;
 }
 
 /* ── Last Activity ───────────────────────────────────────────────── */
@@ -1835,8 +1862,7 @@ async function init() {
   renderMotivation();
   renderReadiness(live);
   renderWeekStrip(live, plan);
-  renderTodayTiles(live);
-  renderQualityChart(live);
+  renderNextWeekStrip(live, plan);
   renderVolumeChart(live, plan);
   renderSleepChart(live);
   renderInjuryList(plan);
