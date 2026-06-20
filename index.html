@@ -1811,6 +1811,53 @@ function renderActivity(live) {
       { v: a.effort != null ? a.effort+'/10' : '—',                           l: 'RPE' },
     ];
 
+    // Lap detail block
+    let lapDetail = '';
+    if (a.work_laps && a.work_laps.length) {
+      const TH = 'style="text-align:left;padding:5px 10px;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);border-bottom:1px solid var(--line);font-weight:600;"';
+      const TD = 'style="padding:5px 10px;font-family:\'IBM Plex Mono\',monospace;font-size:12px;color:var(--paper);"';
+      const rows = a.work_laps.map(l => `
+        <tr>
+          <td ${TD}>Rep ${l.rep}</td>
+          <td ${TD}>${l.dist_km}km</td>
+          <td ${TD}>${l.pace != null ? fmtPace(l.pace) : '—'}</td>
+          <td ${TD}>${l.avg_hr != null ? l.avg_hr + 'bpm' : '—'}</td>
+          <td ${TD}>${l.max_hr != null ? l.max_hr + 'bpm' : '—'}</td>
+        </tr>`).join('');
+      lapDetail = `
+        <div style="margin-top:14px;">
+          <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--signal);margin-bottom:6px;font-weight:600;">Work Laps</div>
+          <table style="width:100%;border-collapse:collapse;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
+            <thead><tr>
+              <th ${TH}>Rep</th><th ${TH}>Dist</th><th ${TH}>Pace</th><th ${TH}>Avg HR</th><th ${TH}>Max HR</th>
+            </tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>`;
+    } else if (a.km_chunks && a.km_chunks.length) {
+      const TH = 'style="text-align:left;padding:5px 10px;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--slate);border-bottom:1px solid var(--line);font-weight:600;"';
+      const TD = 'style="padding:5px 10px;font-family:\'IBM Plex Mono\',monospace;font-size:12px;color:var(--paper);"';
+      const rows = a.km_chunks.map(c => `
+        <tr>
+          <td ${TD}>${c.label}</td>
+          <td ${TD}>${c.pace != null ? fmtPace(c.pace) : '—'}</td>
+          <td ${TD}>${c.avg_hr != null ? c.avg_hr + 'bpm' : '—'}</td>
+        </tr>`).join('');
+      const dc = a.decoupling_pct != null
+        ? `<span style="margin-left:16px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:${a.decoupling_pct <= 5 ? 'var(--good)' : 'var(--warn)'};">Decoupling: ${a.decoupling_pct > 0 ? '+' : ''}${a.decoupling_pct}% ${a.decoupling_pct <= 5 ? '✓' : '↑'}</span>`
+        : '';
+      lapDetail = `
+        <div style="margin-top:14px;">
+          <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--signal);margin-bottom:6px;font-weight:600;">5km Splits${dc}</div>
+          <table style="width:100%;border-collapse:collapse;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
+            <thead><tr>
+              <th ${TH}>Segment</th><th ${TH}>Pace</th><th ${TH}>Avg HR</th>
+            </tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>`;
+    }
+
     return `<div class="card" style="margin-bottom:18px;">
       <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;">
         <div>
@@ -1823,6 +1870,7 @@ function renderActivity(live) {
       <div class="metric-tiles" style="grid-template-columns:repeat(3,1fr);">
         ${stats.map(s => `<div class="mtile"><div class="v" style="font-size:18px;">${s.v}</div><div class="l">${s.l}</div></div>`).join('')}
       </div>
+      ${lapDetail}
     </div>`;
   }).join('');
 }

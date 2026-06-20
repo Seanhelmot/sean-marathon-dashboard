@@ -86,6 +86,91 @@ def _work_interval_stats(client, activity_id):
         return None, None
 
 
+def _quality_laps(client, activity_id):
+    """
+    Return per-rep details for a quality session: list of work laps with
+    rep number, distance, pace, avg HR, max HR.
+    """
+    WORK_HR_FLOOR = 158
+    try:
+        splits = client.get_activity_splits(activity_id)
+        laps = splits.get("lapDTOs") or splits.get("activityLapDTOs") or []
+        work_laps = [
+            l for l in laps
+            if (l.get("averageHR") or 0) >= WORK_HR_FLOOR
+            and (l.get("distance") or 0) > 200
+        ]
+        if not work_laps:
+            return None
+        result = []
+        for i, l in enumerate(work_laps):
+            dist  = l["distance"]
+            dur   = l.get("duration") or l.get("elapsedDuration") or 0
+            speed = dist / dur if dur > 0 else 0
+            result.append({
+                "rep":     i + 1,
+                "dist_km": round(dist / 1000, 2),
+                "pace":    pace_from_speed(speed),
+                "avg_hr":  round(l["averageHR"]),
+                "max_hr":  round(l["maxHR"]) if l.get("maxHR") else None,
+            })
+        return result
+    except Exception:
+        return None
+
+
+def _km_chunks(client, activity_id, chunk_km=5):
+    """
+    Aggregate autolaps into chunk_km-sized buckets for long run breakdown.
+    Returns list of {label, dist_km, pace, avg_hr} or None.
+    """
+    try:
+        splits = client.get_activity_splits(activity_id)
+        laps = splits.get("lapDTOs") or splits.get("activityLapDTOs") or []
+        laps = [l for l in laps
+                if (l.get("distance") or 0) > 100
+                and (l.get("averageHR") or 0) > 80
+                and (l.get("averageSpeed") or 0) > 0]
+        if not laps:
+            return None
+
+        chunks, buf, cum = [], [], 0.0
+        chunk_m = chunk_km * 1000
+
+        def flush(buf, start_km):
+            total_d = sum(l["distance"] for l in buf)
+            total_t = sum(l.get("duration") or l.get("elapsedDuration") or 0 for l in buf)
+            if total_d < 500 or total_t < 1:
+                return None
+            avg_hr = sum(l["averageHR"] * l["distance"] for l in buf) / total_d
+            spd    = total_d / total_t
+            end_km = round(start_km + total_d / 1000, 1)
+            return {
+                "label":   f"{int(start_km)}–{end_km}km",
+                "dist_km": round(total_d / 1000, 1),
+                "pace":    pace_from_speed(spd),
+                "avg_hr":  round(avg_hr),
+            }
+
+        for l in laps:
+            buf.append(l)
+            cum += l["distance"]
+            if cum >= chunk_m - 200:
+                c = flush(buf, len(chunks) * chunk_km)
+                if c:
+                    chunks.append(c)
+                buf, cum = [], 0.0
+
+        if buf:
+            c = flush(buf, len(chunks) * chunk_km)
+            if c:
+                chunks.append(c)
+
+        return chunks or None
+    except Exception:
+        return None
+
+
 def _decoupling(client, activity_id):
     """
     HR:pace decoupling for a long run.
@@ -201,7 +286,23 @@ def pull_data(client):
 
         # Build recent activities list (last 14 days)
         if act_date >= today - timedelta(days=14):
-            recent_activities.append({
+            is_long_recent = dist_km >= 18
+            is_qual_recent = avg_hr >= 150 or any(
+                kw in (act.get("activityName") or "").lower()
+                for kw in ("threshold", "interval", "tempo", "track", "repeat")
+            )
+
+            work_laps_detail = None
+            km_chunks_detail = None
+            decouple_recent  = None
+
+            if is_long_recent:
+                km_chunks_detail = _km_chunks(client, act["activityId"])
+                decouple_recent  = _decoupling(client, act["activityId"])
+            elif is_qual_recent:
+                work_laps_detail = _quality_laps(client, act["activityId"])
+
+            entry = {
                 "date":       iso(act_date),
                 "name":       act.get("activityName") or "Run",
                 "dist_km":    round(dist_km, 2),
@@ -213,7 +314,15 @@ def pull_data(client):
                 "effort":     round(float(effort), 1) if effort is not None else None,
                 "elevation_gain": act.get("elevationGain"),
                 "avg_cadence":    act.get("averageRunningCadenceInStepsPerMinute"),
-            })
+            }
+            if work_laps_detail:
+                entry["work_laps"]     = work_laps_detail
+            if km_chunks_detail:
+                entry["km_chunks"]     = km_chunks_detail
+            if decouple_recent is not None:
+                entry["decoupling_pct"] = decouple_recent
+
+            recent_activities.append(entry)
 
     recent_activities.sort(key=lambda x: x["date"], reverse=True)
 
