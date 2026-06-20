@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-20T21:03:03+10:00",
+  "generated_at": "2026-06-20T21:11:22+10:00",
   "current_week": 6,
   "today": {
     "rhr": 42,
@@ -7,7 +7,7 @@
     "hrv_status": null,
     "sleep_score": 79.0,
     "sleep_hrs": 7.8,
-    "body_battery": null,
+    "body_battery": 83,
     "vo2max_garmin": 52,
     "vo2max_note": "lab-tested 58.4 (2022)",
     "ctl": 44.4,
@@ -669,6 +669,33 @@
         "1x 51m6s 138bpm",
         "2x 33m21s 147bpm",
         "1x 2s 148bpm"
+      ],
+      "decoupling_pct": 4.3,
+      "km_chunks": [
+        {
+          "label": "0–5.0km",
+          "dist_km": 5.0,
+          "pace": 5.09,
+          "avg_hr": 130
+        },
+        {
+          "label": "5–15.0km",
+          "dist_km": 10.0,
+          "pace": 5.07,
+          "avg_hr": 138
+        },
+        {
+          "label": "10–17.0km",
+          "dist_km": 7.0,
+          "pace": 4.52,
+          "avg_hr": 147
+        },
+        {
+          "label": "15–21.0km",
+          "dist_km": 6.0,
+          "pace": 4.57,
+          "avg_hr": 148
+        }
       ]
     },
     {
@@ -866,6 +893,33 @@
         "1x 1h 144bpm",
         "1x 29m6s 149bpm",
         "1x 16m42s 152bpm"
+      ],
+      "decoupling_pct": 2.4,
+      "km_chunks": [
+        {
+          "label": "0–8.0km",
+          "dist_km": 8.0,
+          "pace": 5.19,
+          "avg_hr": 132
+        },
+        {
+          "label": "5–17.0km",
+          "dist_km": 12.0,
+          "pace": 5.03,
+          "avg_hr": 144
+        },
+        {
+          "label": "10–15.0km",
+          "dist_km": 5.0,
+          "pace": 4.56,
+          "avg_hr": 149
+        },
+        {
+          "label": "15–15.7km",
+          "dist_km": 0.7,
+          "pace": 4.52,
+          "avg_hr": 153
+        }
       ]
     }
   ]
