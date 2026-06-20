@@ -66,7 +66,7 @@
   /* WEEK STRIP */
   .week-strip{display:flex;flex-direction:column;gap:8px;}
   .day-row{display:grid;grid-template-columns:54px 1fr auto;gap:14px;align-items:center;padding:10px 12px;border-radius:3px;background:var(--panel-raised);border:1px solid var(--line);}
-  .day-row.done{opacity:.55;}
+  .day-row.done{opacity:.82;}
   .day-row.today{border-color:var(--signal);}
   .day-date{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--slate);text-align:center;line-height:1.3;}
   .day-date .dow{display:block;font-size:10px;letter-spacing:.08em;color:var(--slate-dim);text-transform:uppercase;}
@@ -758,7 +758,7 @@ function renderWeekStrip(live, plan) {
     const curToday = curDate.getTime() === today.getTime();
     const curDone  = !curToday && curDate < today;
     const curDot   = curToday ? 'var(--signal)' : curDone ? 'var(--good)' : 'var(--slate-dim)';
-    const curOpacity = curDone ? '0.55' : '1';
+    const curOpacity = curDone ? '0.82' : '1';
     const curBg    = curToday ? 'var(--panel-raised)' : 'transparent';
     const curBorder = curToday ? '1px solid var(--signal)' : '1px solid transparent';
     const gCur = garminCur[curLabel] || {};
@@ -1288,12 +1288,22 @@ function renderPerformanceTab(live) {
     const d=new Date(x.date+'T00:00:00');
     return { v: x.hrv, lbl: d.getDate()+' '+MONTHS[d.getMonth()], tip: `${x.date}: ${x.hrv}ms` };
   });
+  const rhrPts = (live.sleep_hrv_14d||[]).filter(x=>x.rhr).map(x=>{
+    const d=new Date(x.date+'T00:00:00');
+    return { v: x.rhr, lbl: d.getDate()+' '+MONTHS[d.getMonth()], tip: `${x.date}: ${x.rhr}bpm` };
+  });
+  const sleepPts = (live.sleep_hrv_14d||[]).filter(x=>x.score!=null).map(x=>{
+    const d=new Date(x.date+'T00:00:00');
+    return { v: x.score, lbl: d.getDate()+' '+MONTHS[d.getMonth()], tip: `${x.date}: ${x.score}` };
+  });
 
   // Latest values
   const latAE   = key => { const v=seriesData[key].filter(Boolean); return v.length?v[v.length-1].ae:null; };
   const latThresh = threshPts.length ? threshPts[threshPts.length-1].v : null;
   const latDC   = dcPts.length ? dcPts[dcPts.length-1].v : null;
   const latHRV  = hrvPts.length ? hrvPts[hrvPts.length-1].v : null;
+  const latRHR  = rhrPts.length ? rhrPts[rhrPts.length-1].v : (live.today?.rhr || null);
+  const latSleep = sleepPts.length ? sleepPts[sleepPts.length-1].v : (live.today?.sleep_score || null);
 
   // ── Observational summary ────────────────────────────────────────
   (function() {
@@ -1380,6 +1390,18 @@ function renderPerformanceTab(live) {
       <td style="${TD}${mono}font-size:14px;color:#a78bfa;font-weight:600;">${latDC!=null?latDC.toFixed(1)+'%':'—'}</td>
       ${dcTc(dcPts.map(p=>({v:p.v})),4)} ${dcTc(dcPts.map(p=>({v:p.v})),8)} ${dcTc(dcPts.map(p=>({v:p.v})),12)}
     </tr>`,
+    // ── Recovery section header ──────────────────────────────────────
+    `<tr>
+      <td colspan="5" style="padding:6px 14px 4px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#2e4a60;font-weight:600;border-top:2px solid #1a2d40;border-bottom:1px solid #1a2d40;background:#060f1a;">Recovery Metrics</td>
+    </tr>`,
+    // Overnight RHR
+    `<tr>
+      ${nameCell('Overnight RHR','#f97316', rhrPts.length)}
+      <td style="${TD}${mono}font-size:14px;color:#f97316;font-weight:600;">${latRHR!=null?latRHR+'bpm':'—'}</td>
+      ${tc(rhrPts.length>=2?linRegPct(rhrPts,4):null,false)}
+      ${tc(rhrPts.length>=2?linRegPct(rhrPts,8):null,false)}
+      ${tc(rhrPts.length>=2?linRegPct(rhrPts,12):null,false)}
+    </tr>`,
     // HRV
     `<tr>
       ${nameCell('HRV','#00d4ff', hrvPts.length)}
@@ -1387,6 +1409,14 @@ function renderPerformanceTab(live) {
       ${tc(hrvPts.length>=2?linRegPct(hrvPts,4):null,true)}
       ${tc(hrvPts.length>=2?linRegPct(hrvPts,8):null,true)}
       ${tc(hrvPts.length>=2?linRegPct(hrvPts,12):null,true)}
+    </tr>`,
+    // Sleep score
+    `<tr>
+      ${nameCell('Sleep score','#a78bfa', sleepPts.length)}
+      <td style="${TD}${mono}font-size:14px;color:#a78bfa;font-weight:600;">${latSleep!=null?Math.round(latSleep):'—'}</td>
+      ${tc(sleepPts.length>=2?linRegPct(sleepPts,4):null,true)}
+      ${tc(sleepPts.length>=2?linRegPct(sleepPts,8):null,true)}
+      ${tc(sleepPts.length>=2?linRegPct(sleepPts,12):null,true)}
     </tr>`,
   ].join('');
 

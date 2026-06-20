@@ -404,11 +404,17 @@ def pull_data(client):
             sr  = client.get_sleep_data(iso(night))
             sd  = (sr.get("dailySleepDTO") or {})
             sc  = (sd.get("sleepScores") or {}).get("overall", {}).get("value")
-            hrv_r      = client.get_hrv_data(iso(night))
-            hrv_sum    = hrv_r.get("hrvSummary") or {}
-            night_hrv  = hrv_sum.get("lastNight") or hrv_sum.get("weeklyAvg")
-            if sc is not None or night_hrv is not None:
-                sleep_hrv_14d.append({"date": iso(night), "score": sc, "hrv": night_hrv})
+            hrv_r     = client.get_hrv_data(iso(night))
+            hrv_sum   = hrv_r.get("hrvSummary") or {}
+            night_hrv = hrv_sum.get("lastNight") or hrv_sum.get("weeklyAvg")
+            rhr_r     = client.get_rhr_day(iso(night))
+            night_rhr = None
+            if isinstance(rhr_r, dict):
+                night_rhr = rhr_r.get("restingHeartRate") or rhr_r.get("value")
+            elif isinstance(rhr_r, list) and rhr_r:
+                night_rhr = rhr_r[0].get("restingHeartRate") or rhr_r[0].get("value")
+            if sc is not None or night_hrv is not None or night_rhr is not None:
+                sleep_hrv_14d.append({"date": iso(night), "score": sc, "hrv": night_hrv, "rhr": night_rhr})
         except Exception:
             pass
 
