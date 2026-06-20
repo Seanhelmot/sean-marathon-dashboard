@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-06-20T21:30:45+10:00",
+  "generated_at": "2026-06-21T03:09:22+10:00",
   "current_week": 6,
   "today": {
-    "rhr": 42,
-    "hrv_7d_avg": 76,
+    "rhr": 43,
+    "hrv_7d_avg": 74,
     "hrv_status": null,
-    "sleep_score": 79.0,
-    "sleep_hrs": 7.8,
-    "body_battery": 83,
-    "vo2max_garmin": 52,
+    "sleep_score": null,
+    "sleep_hrs": null,
+    "body_battery": 60,
+    "vo2max_garmin": null,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 44.4,
-    "atl": 46.1
+    "ctl": 47.4,
+    "atl": 63.0
   },
   "this_week_days": [
     {
@@ -253,8 +253,8 @@
           "dist_km": 25.7,
           "avg_hr": 141,
           "pace": 5.06,
-          "feel": 2,
-          "effort": 6.0,
+          "feel": null,
+          "effort": null,
           "decoupling_pct": null,
           "_main_dist": 25.690150000000003
         },
@@ -365,7 +365,7 @@
     {
       "wk": 6,
       "actual_km": 57.2,
-      "partial": true,
+      "partial": false,
       "quality": {
         "pace_min_per_km": 4.24,
         "avg_hr": 157,
@@ -421,12 +421,6 @@
     }
   ],
   "sleep_hrv_14d": [
-    {
-      "date": "2026-06-07",
-      "score": 84.0,
-      "hrv": 73.0,
-      "rhr": 42
-    },
     {
       "date": "2026-06-08",
       "score": 89.0,
@@ -504,6 +498,12 @@
       "score": 79.0,
       "hrv": 68.0,
       "rhr": 42
+    },
+    {
+      "date": "2026-06-21",
+      "score": null,
+      "hrv": null,
+      "rhr": 43
     }
   ],
   "recent_activities": [
@@ -603,8 +603,9 @@
       "elevation_gain": 93.37073,
       "avg_cadence": 174,
       "interval_summary": [
-        "12x 4m24s 157bpm",
-        "4x 2m3s 147bpm"
+        "10x 4m24s 157bpm",
+        "4x 2m3s 147bpm",
+        "1x 8m47s 161bpm"
       ],
       "work_laps": [
         {
@@ -943,61 +944,6 @@
       "interval_summary": [
         "1x 1h53m 109bpm",
         "1x 19m11s 113bpm"
-      ]
-    },
-    {
-      "date": "2026-06-06",
-      "start_local": "2026-06-06T06:10",
-      "name": "HR progressive long run",
-      "dist_km": 25.69,
-      "duration_s": 7863,
-      "avg_hr": 141,
-      "max_hr": 155,
-      "pace": 5.06,
-      "feel": 2,
-      "effort": 6.0,
-      "elevation_gain": 189.65187,
-      "avg_cadence": 170,
-      "decoupling_pct": 10.8,
-      "interval_summary": [
-        "1x 5m53s 116bpm",
-        "1x 15m54s 130bpm",
-        "1x 20m48s 137bpm",
-        "1x 1h 144bpm",
-        "1x 29m6s 149bpm",
-        "1x 16m42s 152bpm"
-      ],
-      "km_chunks": [
-        {
-          "label": "0.0-5.0km",
-          "dist_km": 5.0,
-          "pace": 5.23,
-          "avg_hr": 128
-        },
-        {
-          "label": "5.0-10.0km",
-          "dist_km": 5.0,
-          "pace": 5.1,
-          "avg_hr": 139
-        },
-        {
-          "label": "10.0-15.0km",
-          "dist_km": 5.0,
-          "pace": 5.02,
-          "avg_hr": 144
-        },
-        {
-          "label": "15.0-20.0km",
-          "dist_km": 5.0,
-          "pace": 5.02,
-          "avg_hr": 146
-        },
-        {
-          "label": "20.0-25.0km",
-          "dist_km": 5.0,
-          "pace": 5.49,
-          "avg_hr": 149
-        }
       ]
     }
   ]
