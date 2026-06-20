@@ -360,51 +360,58 @@
 
   <!-- BIO -->
   <section class="panel" id="panel-bio">
+
+    <!-- Row 1: Athlete + Season Goal -->
     <div class="grid grid-2" style="margin-bottom:18px;">
 
-      <!-- Personal Bests -->
       <div class="card">
-        <h2>Personal Bests</h2>
+        <h2>Athlete Profile</h2>
+        <div style="display:flex;gap:18px;align-items:flex-start;margin-bottom:16px;">
+          <div>
+            <div style="font-family:'Big Shoulders Display',sans-serif;font-size:28px;font-weight:800;color:var(--paper);line-height:1;">Sean Helmot</div>
+            <div style="font-size:12px;color:var(--slate);margin-top:4px;">Age 51 · Brighton, VIC · 13 years running</div>
+            <div style="font-size:12px;color:var(--slate);margin-top:2px;">18 marathons · 2013–2024 · Mod Squad Running</div>
+          </div>
+        </div>
         <table style="width:100%;border-collapse:collapse;font-size:13px;">
           <thead>
             <tr style="border-bottom:1px solid var(--line);">
-              <th style="text-align:left;padding:6px 10px 8px 0;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:500;">Event</th>
-              <th style="text-align:left;padding:6px 10px 8px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:500;">Time</th>
-              <th style="text-align:left;padding:6px 0 8px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:500;">Race / Year</th>
+              <th style="text-align:left;padding:5px 10px 7px 0;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:500;">Event</th>
+              <th style="text-align:left;padding:5px 10px 7px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:500;">PB</th>
+              <th style="text-align:left;padding:5px 0 7px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:500;">Race</th>
             </tr>
           </thead>
           <tbody>
             <tr style="border-bottom:1px solid var(--line);">
-              <td style="padding:9px 10px 9px 0;color:var(--slate);">5 km</td>
-              <td style="padding:9px 10px;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--signal);">—</td>
-              <td style="padding:9px 0;font-size:11.5px;color:var(--slate);">—</td>
+              <td style="padding:8px 10px 8px 0;color:var(--slate);">5 km</td>
+              <td style="padding:8px 10px;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--signal);">—</td>
+              <td style="padding:8px 0;font-size:11.5px;color:var(--slate);">—</td>
             </tr>
             <tr style="border-bottom:1px solid var(--line);">
-              <td style="padding:9px 10px 9px 0;color:var(--slate);">10 km</td>
-              <td style="padding:9px 10px;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--signal);">—</td>
-              <td style="padding:9px 0;font-size:11.5px;color:var(--slate);">Lakeside 10k target: 40–43 min · Jul 2026</td>
+              <td style="padding:8px 10px 8px 0;color:var(--slate);">10 km</td>
+              <td style="padding:8px 10px;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--signal);">—</td>
+              <td style="padding:8px 0;font-size:11.5px;color:var(--slate);">Target: 40–43 min · Lakeside Jul 2026</td>
             </tr>
             <tr style="border-bottom:1px solid var(--line);">
-              <td style="padding:9px 10px 9px 0;color:var(--slate);">Half Marathon</td>
-              <td style="padding:9px 10px;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--signal);">—</td>
-              <td style="padding:9px 0;font-size:11.5px;color:var(--slate);">—</td>
+              <td style="padding:8px 10px 8px 0;color:var(--slate);">Half</td>
+              <td style="padding:8px 10px;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--signal);">—</td>
+              <td style="padding:8px 0;font-size:11.5px;color:var(--slate);">—</td>
             </tr>
             <tr>
-              <td style="padding:9px 10px 9px 0;color:var(--slate);">Marathon</td>
-              <td style="padding:9px 10px;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--signal);">2:46:57</td>
-              <td style="padding:9px 0;font-size:11.5px;color:var(--slate);">—</td>
+              <td style="padding:8px 10px 8px 0;color:var(--slate);">Marathon</td>
+              <td style="padding:8px 10px;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--signal);">2:46:57</td>
+              <td style="padding:8px 0;font-size:11.5px;color:var(--slate);">Gold Coast 2018 · 3:56/km · avg HR 162</td>
             </tr>
           </tbody>
         </table>
-        <div class="chart-foot" style="margin-top:10px;">Lab VO₂max: 58.4 ml/kg/min (2022)</div>
+        <div class="chart-foot" style="margin-top:10px;">Lab VO₂max: 58.4 ml/kg/min (Nov 2022) · Garmin est. <span id="bio-vo2max">—</span> (different method — not a regression)</div>
       </div>
 
-      <!-- Season Goal -->
       <div class="card">
-        <h2>2026 Season Goal</h2>
-        <div style="font-family:'Big Shoulders Display',sans-serif;font-size:36px;font-weight:800;color:var(--signal);line-height:1;margin-bottom:8px;">3:22–3:35</div>
-        <div style="font-size:13px;color:var(--slate);margin-bottom:16px;">Melbourne Marathon · 11 October 2026</div>
-        <div style="display:flex;flex-direction:column;gap:8px;">
+        <h2>2026 Season Goals</h2>
+        <div style="font-family:'Big Shoulders Display',sans-serif;font-size:34px;font-weight:800;color:var(--signal);line-height:1;margin-bottom:6px;">3:22–3:35</div>
+        <div style="font-size:12px;color:var(--slate);margin-bottom:16px;">Nike Melbourne Marathon · 11 October 2026 · confirmed after Lakeside result</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
           <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
             <span style="font-size:12px;color:var(--slate);">A goal</span>
             <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--good);">Sub 3:22</span>
@@ -414,103 +421,176 @@
             <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--warn);">Sub 3:35</span>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
-            <span style="font-size:12px;color:var(--slate);">PB</span>
-            <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--slate);">2:46:57</span>
+            <span style="font-size:12px;color:var(--slate);">B-race</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--z5);">Lakeside 10k · 40–43 min · 26 Jul</span>
           </div>
           <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
-            <span style="font-size:12px;color:var(--slate);">B-race</span>
-            <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--z5);">Lakeside 10k · 40–43 min</span>
+            <span style="font-size:12px;color:var(--slate);">Marathon PB to beat</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--slate);">2:46:57</span>
           </div>
         </div>
+        <div class="chart-foot">Final Melbourne target confirmed post-Lakeside using race conversion table.</div>
       </div>
     </div>
 
+    <!-- Row 2: Race History + Lab Calibration -->
     <div class="grid grid-2" style="margin-bottom:18px;">
 
-      <!-- Race History -->
       <div class="card">
         <h2>Key Race History</h2>
-        <div style="display:flex;flex-direction:column;gap:0;">
+        <div style="display:flex;flex-direction:column;">
           <div style="display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--line);align-items:flex-start;">
             <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--slate-dim);width:38px;flex-shrink:0;padding-top:2px;">2026</div>
             <div style="flex:1;">
-              <div style="font-size:13px;font-weight:600;color:var(--paper);">Melbourne Marathon <span style="font-size:10.5px;color:var(--signal);margin-left:6px;">· TARGET</span></div>
-              <div style="font-size:11.5px;color:var(--slate);margin-top:2px;">Goal: 3:22–3:35 · 11 Oct · 22-week build from 11 May</div>
+              <div style="font-size:13px;font-weight:600;color:var(--paper);">Nike Melbourne Marathon <span style="font-size:10px;color:var(--signal);margin-left:6px;">· TARGET</span></div>
+              <div style="font-size:11.5px;color:var(--slate);margin-top:2px;">Goal: 3:22–3:35 · 11 Oct · 22-week build</div>
             </div>
           </div>
           <div style="display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--line);align-items:flex-start;">
             <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--slate-dim);width:38px;flex-shrink:0;padding-top:2px;">2026</div>
             <div style="flex:1;">
-              <div style="font-size:13px;font-weight:600;color:var(--paper);">Lakeside 10k <span style="font-size:10.5px;color:var(--z5);margin-left:6px;">· B-RACE</span></div>
-              <div style="font-size:11.5px;color:var(--slate);margin-top:2px;">Target: 40–43 min · 26 Jul · Brighton</div>
+              <div style="font-size:13px;font-weight:600;color:var(--paper);">Lakeside 10k <span style="font-size:10px;color:var(--z5);margin-left:6px;">· B-RACE</span></div>
+              <div style="font-size:11.5px;color:var(--slate);margin-top:2px;">Target: 40–43 min · 26 Jul</div>
             </div>
           </div>
           <div style="display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--line);align-items:flex-start;">
-            <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--slate-dim);width:38px;flex-shrink:0;padding-top:2px;">—</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--slate-dim);width:38px;flex-shrink:0;padding-top:2px;">2019</div>
             <div style="flex:1;">
-              <div style="font-size:13px;font-weight:600;color:var(--paper);">Marathon PB</div>
-              <div style="font-size:11.5px;color:var(--slate);margin-top:2px;">2:46:57 · race / year TBC</div>
+              <div style="font-size:13px;font-weight:600;color:var(--paper);">Melbourne Marathon</div>
+              <div style="font-size:11.5px;color:var(--slate);margin-top:2px;">2:51:19 · 4:01/km · avg HR 161 · max 180</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--line);align-items:flex-start;">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--slate-dim);width:38px;flex-shrink:0;padding-top:2px;">2019</div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--paper);">Boston Marathon</div>
+              <div style="font-size:11.5px;color:var(--slate);margin-top:2px;">Time TBC · steady HR fade pattern noted</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--line);align-items:flex-start;">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--slate-dim);width:38px;flex-shrink:0;padding-top:2px;">2018</div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--paper);">Gold Coast Marathon <span style="font-size:10px;color:var(--signal);margin-left:6px;">· PB</span></div>
+              <div style="font-size:11.5px;color:var(--slate);margin-top:2px;">2:46:57 · 3:56/km · avg HR 162 · max 169</div>
             </div>
           </div>
           <div style="display:flex;gap:14px;padding:10px 0;align-items:flex-start;">
-            <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--slate-dim);width:38px;flex-shrink:0;padding-top:2px;">—</div>
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--slate-dim);width:38px;flex-shrink:0;padding-top:2px;">2017</div>
             <div style="flex:1;">
-              <div style="font-size:13px;font-weight:600;color:var(--paper);">Add race here</div>
-              <div style="font-size:11.5px;color:var(--slate);margin-top:2px;">Time · Venue · Notes</div>
+              <div style="font-size:13px;font-weight:600;color:var(--paper);">Berlin Marathon</div>
+              <div style="font-size:11.5px;color:var(--slate);margin-top:2px;">Training era: 140–226km weeks, quality at 3:40–3:44/km</div>
             </div>
           </div>
         </div>
+        <div class="chart-foot" style="margin-top:8px;">18 marathons raced 2013–2024. Consistent pattern: strong even pacing to ~25km then a steady HR-driven fade (not a blow-up).</div>
       </div>
 
-      <!-- Running Background -->
       <div class="card">
-        <h2>Running Background</h2>
+        <h2>Lab Calibration <span class="accent">· Nov 2022</span></h2>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            <div style="padding:10px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
+              <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:4px;">VO₂max</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600;color:var(--signal);">58.4</div>
+              <div style="font-size:10.5px;color:var(--slate);margin-top:2px;">ml/kg/min · max HR 178</div>
+            </div>
+            <div style="padding:10px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
+              <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:4px;">Max HR (working)</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600;color:var(--paper);">176 bpm</div>
+              <div style="font-size:10.5px;color:var(--slate);margin-top:2px;">Lab confirmed</div>
+            </div>
+            <div style="padding:10px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
+              <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:4px;">LT2 (Threshold)</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600;color:var(--z4);">167 bpm</div>
+              <div style="font-size:10.5px;color:var(--slate);margin-top:2px;">3:55/km in 2022 → est. 4:25–4:40 now</div>
+            </div>
+            <div style="padding:10px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
+              <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:4px;">LT1 (Aerobic)</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600;color:var(--z2);">150 bpm</div>
+              <div style="font-size:10.5px;color:var(--slate);margin-top:2px;">4:26/km in 2022</div>
+            </div>
+          </div>
+        </div>
+        <h2 style="margin-top:14px;">HR Zones</h2>
+        <table style="width:100%;border-collapse:collapse;font-size:12px;">
+          <tbody>
+            <tr style="border-bottom:1px solid var(--line);">
+              <td style="padding:6px 8px 6px 0;"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--z1);">Z1</span> Recovery</td>
+              <td style="padding:6px 8px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate);">&lt;130</td>
+              <td style="padding:6px 0;font-size:11px;color:var(--slate);">6:00+/km · warm-up / recovery jogs</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line);">
+              <td style="padding:6px 8px 6px 0;"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--z2);">Z2</span> Aerobic</td>
+              <td style="padding:6px 8px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate);">130–150</td>
+              <td style="padding:6px 0;font-size:11px;color:var(--slate);">5:10–5:35/km · all easy runs, cap 148</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line);">
+              <td style="padding:6px 8px 6px 0;"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--z3);">Z3</span> Marathon</td>
+              <td style="padding:6px 8px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate);">150–158</td>
+              <td style="padding:6px 0;font-size:11px;color:var(--slate);">4:50–5:10/km · long run finish, MP sessions</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line);">
+              <td style="padding:6px 8px 6px 0;"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--z4);">Z4</span> Threshold</td>
+              <td style="padding:6px 8px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate);">158–165</td>
+              <td style="padding:6px 0;font-size:11px;color:var(--slate);">4:25–4:45/km · Wednesday quality</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line);">
+              <td style="padding:6px 8px 6px 0;"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--z5);">Z5</span> VO₂max</td>
+              <td style="padding:6px 8px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate);">165–173</td>
+              <td style="padding:6px 0;font-size:11px;color:var(--slate);">4:05–4:25/km · Lakeside race, sharpening</td>
+            </tr>
+            <tr>
+              <td style="padding:6px 8px 6px 0;"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(--z6);">Z6</span> Anaerobic</td>
+              <td style="padding:6px 8px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate);">174–176</td>
+              <td style="padding:6px 0;font-size:11px;color:var(--slate);">Sub 4:05/km · finishing kicks only</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Row 3: Plan rationale + Load rules + Shoes -->
+    <div class="grid grid-3" style="margin-bottom:18px;">
+
+      <div class="card" style="grid-column:span 2;">
+        <h2>Why This Plan</h2>
+        <div style="font-size:13px;line-height:1.7;color:var(--paper);">Built after two injury setbacks interrupted the 2026 Ballarat campaign — a Feb 2026 thoracic injury from 4 high-quality sessions in 3 weeks on 100km weeks, and an April Cairns rep session that spiked intensity onto unconditioned tendons after a low-volume period.</div>
+        <div style="font-size:12px;line-height:1.6;color:var(--slate);margin-top:10px;">The plan's core architecture exists specifically to prevent repeating those two failure modes:</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;">
+          <div style="padding:8px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;border-left:2px solid var(--signal);font-size:11.5px;color:var(--paper);">One quality session per week (Wednesday only)</div>
+          <div style="padding:8px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;border-left:2px solid var(--signal);font-size:11.5px;color:var(--paper);">Never back-to-back hard days</div>
+          <div style="padding:8px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;border-left:2px solid var(--signal);font-size:11.5px;color:var(--paper);">Max 8% weekly volume increase</div>
+          <div style="padding:8px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;border-left:2px solid var(--signal);font-size:11.5px;color:var(--paper);">Max 2km long run increase per step</div>
+          <div style="padding:8px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;border-left:2px solid var(--signal);font-size:11.5px;color:var(--paper);">Single variable in quality reps per week (count OR distance, never both)</div>
+          <div style="padding:8px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;border-left:2px solid var(--signal);font-size:11.5px;color:var(--paper);">Recovery weeks every 4th week, non-negotiable (W7, W16, W19)</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Shoe Rotation</h2>
         <div style="display:flex;flex-direction:column;gap:10px;">
-          <div style="padding:10px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
-            <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:4px;">Club</div>
-            <div style="font-size:13px;font-weight:600;color:var(--paper);">Mod Squad Running (MSR)</div>
-            <div style="font-size:11.5px;color:var(--slate);margin-top:2px;">Brighton VIC</div>
+          <div style="padding:9px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
+            <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:4px;">Long runs</div>
+            <div style="font-size:12px;color:var(--paper);">Nike Vomero Plus</div>
+            <div style="font-size:11px;color:var(--slate);margin-top:2px;">Hoka Bondi 9 (trialling — lower knee awareness)</div>
           </div>
-          <div style="padding:10px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
-            <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:4px;">Current build</div>
-            <div style="font-size:13px;font-weight:600;color:var(--paper);">22-week structured plan</div>
-            <div style="font-size:11.5px;color:var(--slate);margin-top:2px;">11 May → 11 Oct 2026 · Base rebuild → Marathon specific → Taper</div>
+          <div style="padding:9px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
+            <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:4px;">Easy / hills</div>
+            <div style="font-size:12px;color:var(--paper);">Hoka Mach 6</div>
           </div>
-          <div style="padding:10px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
-            <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:4px;">Peak weekly volume</div>
-            <div style="font-size:13px;font-weight:600;color:var(--paper);">95 km</div>
-            <div style="font-size:11.5px;color:var(--slate);margin-top:2px;">Week 18 · 36km long run · Marathon specific phase</div>
+          <div style="padding:9px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
+            <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:4px;">Wednesday quality</div>
+            <div style="font-size:12px;color:var(--paper);">NB SuperComp Elite 4</div>
+            <div style="font-size:11px;color:var(--slate);margin-top:2px;">Nike Alphafly 3</div>
           </div>
-          <div style="padding:10px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
-            <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:4px;">Fitness marker</div>
-            <div style="font-size:13px;font-weight:600;color:var(--paper);">VO₂max 58.4 ml/kg/min</div>
-            <div style="font-size:11.5px;color:var(--slate);margin-top:2px;">Lab tested 2022 · Garmin est. <span id="bio-vo2max">—</span></div>
+          <div style="padding:9px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;border-left:2px solid var(--signal);">
+            <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:4px;">Race day</div>
+            <div style="font-size:12px;font-weight:600;color:var(--signal);">Nike Alphafly 3</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Career highlights / callouts -->
-    <div class="card">
-      <h2>Career Highlights &amp; Callouts</h2>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:4px;">
-        <div style="padding:14px 16px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;border-left:3px solid var(--signal);">
-          <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:6px;">Marathon PB</div>
-          <div style="font-size:18px;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--signal);">2:46:57</div>
-          <div style="font-size:11.5px;color:var(--slate);margin-top:4px;">Race / year TBC — update in index.html</div>
-        </div>
-        <div style="padding:14px 16px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;border-left:3px solid var(--z2);">
-          <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:6px;">Highlight</div>
-          <div style="font-size:13px;font-weight:600;color:var(--paper);">Add highlight here</div>
-          <div style="font-size:11.5px;color:var(--slate);margin-top:4px;">Description / year</div>
-        </div>
-        <div style="padding:14px 16px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;border-left:3px solid var(--z5);">
-          <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:6px;">Highlight</div>
-          <div style="font-size:13px;font-weight:600;color:var(--paper);">Add highlight here</div>
-          <div style="font-size:11.5px;color:var(--slate);margin-top:4px;">Description / year</div>
-        </div>
-      </div>
-    </div>
   </section>
 
   <footer class="note" id="footer-note">
