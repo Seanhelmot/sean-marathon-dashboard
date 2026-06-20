@@ -789,13 +789,13 @@ function renderWeekStrip(live, plan) {
 
     html += `
       <div style="display:grid;grid-template-columns:44px 1fr 1fr;gap:0;border-radius:3px;
-                  background:${curToday ? 'var(--panel-raised)' : rowBg};
-                  border:${curToday ? '1px solid var(--signal)' : '1px solid transparent'};
+                  background:${rowBg};border:1px solid transparent;
                   opacity:${curOpacity};margin-bottom:3px;">
         <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;
-                    padding:8px 0;border-right:1px solid var(--line);gap:2px;">
+                    padding:8px 0;border-right:1px solid var(--line);gap:2px;
+                    ${curToday ? 'background:rgba(0,212,255,0.08);border-radius:3px 0 0 3px;outline:1px solid var(--signal);outline-offset:-1px;' : ''}">
           <span style="font-size:9.5px;font-weight:700;letter-spacing:.05em;color:${curToday?'var(--signal)':'var(--slate)'};">${cur.dow.toUpperCase()}</span>
-          <span style="font-size:9px;color:var(--slate-dim);">${curLabel}</span>
+          <span style="font-size:9px;color:${curToday?'var(--signal)':'var(--slate-dim)'};">${curLabel}</span>
         </div>
         <div style="padding:8px 12px;opacity:${curOpacity};">
           <div style="font-size:12px;font-weight:600;color:var(--paper);margin-bottom:2px;">
