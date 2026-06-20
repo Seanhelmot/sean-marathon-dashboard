@@ -237,8 +237,8 @@
       </div>
     </div>
 
-    <!-- Sparkline charts -->
-    <div class="grid grid-3" style="gap:14px;">
+    <!-- Performance sparkline charts -->
+    <div class="grid grid-3" style="gap:14px;margin-bottom:14px;">
       <div class="card">
         <h2 style="font-size:13px;margin-bottom:10px;">AE Index <span class="accent">↑ better</span></h2>
         <div id="perf-ae-spark"></div>
@@ -250,6 +250,22 @@
       <div class="card">
         <h2 style="font-size:13px;margin-bottom:10px;">HR decoupling <span class="accent">↓ better</span></h2>
         <div id="perf-decouple-spark"></div>
+      </div>
+    </div>
+
+    <!-- Recovery sparkline charts -->
+    <div class="grid grid-3" style="gap:14px;">
+      <div class="card">
+        <h2 style="font-size:13px;margin-bottom:10px;">Overnight RHR <span class="accent">↓ better</span></h2>
+        <div id="perf-rhr-spark"></div>
+      </div>
+      <div class="card">
+        <h2 style="font-size:13px;margin-bottom:10px;">HRV <span class="accent">↑ better</span></h2>
+        <div id="perf-hrv-spark"></div>
+      </div>
+      <div class="card">
+        <h2 style="font-size:13px;margin-bottom:10px;">Sleep score <span class="accent">↑ better</span></h2>
+        <div id="perf-sleep-spark"></div>
       </div>
     </div>
 
@@ -1490,6 +1506,15 @@ function renderPerformanceTab(live) {
 
   spark(document.getElementById('perf-decouple-spark'),
     dcPts.map(p=>({...p,lbl:'W'+p.wk})), '#a78bfa', v=>v.toFixed(1)+'%', false);
+
+  spark(document.getElementById('perf-rhr-spark'),
+    rhrPts, '#f97316', v=>Math.round(v)+'bpm', false);
+
+  spark(document.getElementById('perf-hrv-spark'),
+    hrvPts, '#00d4ff', v=>Math.round(v)+'ms', true);
+
+  spark(document.getElementById('perf-sleep-spark'),
+    sleepPts, '#a78bfa', v=>Math.round(v), true);
 }
 
 /* ── Targets ─────────────────────────────────────────────────────── */
