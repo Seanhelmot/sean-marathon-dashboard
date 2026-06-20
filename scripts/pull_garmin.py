@@ -62,7 +62,7 @@ def _work_interval_stats(client, activity_id):
     computed from work laps only (HR >= 150bpm), weighted by distance.
     Returns (None, None) if splits unavailable or no work laps found.
     """
-    WORK_HR_FLOOR = 150  # laps below this are warm-up / recovery
+    WORK_HR_FLOOR = 158  # Z4 threshold floor per plan.json hr_zones
     try:
         splits = client.get_activity_splits(activity_id)
         laps = splits.get("lapDTOs") or splits.get("activityLapDTOs") or []
