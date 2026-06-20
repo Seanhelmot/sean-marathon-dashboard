@@ -786,23 +786,25 @@ function renderAETable(live) {
   function trendOver(pts, weeks) {
     const valid = pts.filter(Boolean);
     if (valid.length < 2) return null;
-    const window = valid.slice(-weeks);
-    if (window.length < 2) return null;
-    const n = window.length, meanX = (n - 1) / 2;
-    const vals = window.map(p => p.ae);
+    const win = valid.slice(-weeks);
+    if (win.length < 2) return null;
+    const n = win.length, meanX = (n - 1) / 2;
+    const vals = win.map(p => p.ae);
     const meanY = vals.reduce((s, v) => s + v, 0) / n;
     const slope = vals.reduce((s, v, i) => s + (i - meanX) * (v - meanY), 0) /
                   (vals.reduce((s, _, i) => s + (i - meanX) ** 2, 0) || 1);
-    return slope * (n - 1);
+    const delta = slope * (n - 1);
+    const base  = win[0].ae;
+    return (delta / base) * 100;   // % change
   }
 
-  function trendCell(delta) {
-    if (delta === null) return `<td style="color:#2e4a60;font-size:12px;text-align:center;">—</td>`;
-    const up = delta > 0.002, down = delta < -0.002;
+  function trendCell(pct) {
+    if (pct === null) return `<td style="color:#2e4a60;font-size:12px;text-align:center;">—</td>`;
+    const up = pct > 0.2, down = pct < -0.2;
     const col = up ? '#00c48a' : down ? '#ff4d6a' : '#6a8fa8';
     const arrow = up ? '↑' : down ? '↓' : '→';
-    const sign = delta >= 0 ? '+' : '';
-    return `<td style="text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;color:${col};">${arrow} ${sign}${delta.toFixed(3)}</td>`;
+    const sign = pct >= 0 ? '+' : '';
+    return `<td style="text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;color:${col};">${arrow} ${sign}${pct.toFixed(1)}%</td>`;
   }
 
   const thStyle = 'padding:6px 12px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#2e4a60;font-weight:500;text-align:center;border-bottom:1px solid #1a2d40;white-space:nowrap;';
@@ -817,7 +819,7 @@ function renderAETable(live) {
     const t8  = trendOver(pts, 8);
     const t12 = trendOver(pts, 12);
     const latestCell = latest != null
-      ? `<td style="${tdBase}font-family:'IBM Plex Mono',monospace;font-size:13px;color:${s.color};font-weight:600;">${latest.toFixed(3)}</td>`
+      ? `<td style="${tdBase}font-family:'IBM Plex Mono',monospace;font-size:13px;color:${s.color};font-weight:600;">${latest.toFixed(2)}</td>`
       : `<td style="${tdBase}color:#2e4a60;">—</td>`;
     const nCell = `<td style="${tdBase}color:#6a8fa8;font-size:11px;">${valid.length}w</td>`;
     rows += `<tr>
