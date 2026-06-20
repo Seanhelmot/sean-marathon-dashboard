@@ -157,17 +157,13 @@
           <div class="lbl">Days to Melbourne</div>
           <div class="date">A-race · Sun 11 Oct</div>
         </div>
-        <div class="cd-card" id="vol-cd-card" style="min-width:160px;">
-          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;">
-            <span class="mono" style="font-size:13px;color:var(--slate);">Actual</span>
-            <span class="mono" style="font-size:13px;color:var(--slate-dim);">/ <span id="vol-planned">—</span>km plan</span>
-          </div>
-          <div class="num mono" id="vol-actual" style="font-size:26px;color:var(--signal);line-height:1;margin-bottom:5px;">—</div>
-          <div id="vol-bar-track" style="height:4px;background:var(--line);border-radius:2px;margin-bottom:6px;overflow:hidden;">
+        <div class="cd-card" id="vol-cd-card">
+          <div class="num mono" id="vol-actual" style="color:var(--signal);">—</div>
+          <div id="vol-bar-track" style="height:3px;background:var(--line);border-radius:2px;margin:5px 0 4px;overflow:hidden;">
             <div id="vol-bar-fill" style="height:100%;border-radius:2px;width:0%;background:var(--signal);"></div>
           </div>
-          <div class="num mono" id="vol-forecast-label" style="font-size:13px;line-height:1.3;"></div>
-          <div class="lbl" style="margin-top:3px;">Forecast</div>
+          <div class="lbl">W<span id="vol-wk">—</span> · <span id="vol-planned">—</span>km plan</div>
+          <div class="date">→ <span id="vol-forecast-label">—</span>km forecast</div>
         </div>
       </div>
       <div class="freshness" id="freshness-note"></div>
@@ -749,12 +745,12 @@ function renderWeeklyVolume(live, plan) {
   const deltaColor = delta >= -3 ? 'var(--good)' : 'var(--warn)';
 
   document.getElementById('vol-actual').textContent  = actual + 'km';
+  document.getElementById('vol-wk').textContent      = wkNum;
   document.getElementById('vol-planned').textContent = planned;
   document.getElementById('vol-bar-fill').style.width      = (pct * 100).toFixed(1) + '%';
   document.getElementById('vol-bar-fill').style.background = barColor;
   document.getElementById('vol-forecast-label').style.color = deltaColor;
-  document.getElementById('vol-forecast-label').textContent =
-    `↗ ${forecast}km · ${deltaStr} vs plan`;
+  document.getElementById('vol-forecast-label').textContent = forecast;
 }
 
 /* ── Daily Motivation ────────────────────────────────────────────── */
