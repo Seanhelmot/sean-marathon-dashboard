@@ -57,13 +57,22 @@ def icu_get_activity(activity_id: str, athlete_id: str, api_key: str):
     return data
 
 
-def icu_get_laps(activity_id: str, athlete_id: str, api_key: str):
-    """Fetch lap splits. Returns list of lap dicts, or None on 404/error."""
+def icu_get_streams(activity_id: str, api_key: str,
+                    types: str = "time,distance,heartrate,velocity_smooth,cadence") -> dict | None:
+    """
+    Fetch per-second streams for an activity.
+    Endpoint: /api/v1/activity/{id}/streams  (no athlete prefix)
+    Returns {type: [values]} or None on error.
+    """
     try:
-        data = icu_get(f"activities/{activity_id}/laps", athlete_id, api_key)
-        return data if isinstance(data, list) else None
-    except requests.HTTPError:
-        return None
+        url = f"{BASE_URL}/activity/{activity_id}/streams"
+        resp = requests.get(url, params={"types": types},
+                            auth=("API_KEY", api_key), timeout=30)
+        if resp.status_code == 404:
+            return None
+        resp.raise_for_status()
+        data = resp.json()
+        return {s["type"]: s["data"] for s in data} if isinstance(data, list) else None
     except Exception:
         return None
 
@@ -129,115 +138,138 @@ def iso(d) -> str:
 
 # ── Long run splits ──────────────────────────────────────────────────────────
 
-def _km_chunks_from_laps(laps: list, chunk_km: int = 5) -> list | None:
-    """Aggregate 1km autolaps into 5km chunks for long run breakdown."""
-    if not laps:
-        return None
-    laps = [l for l in laps
-            if (l.get("distance") or 0) > 100
-            and (l.get("average_heartrate") or l.get("averageHR") or 0) > 80]
-    if not laps:
-        return None
-
-    chunks, buf, cum = [], [], 0.0
-    chunk_m = chunk_km * 1000
-
-    def flush(buf, start_km):
-        total_d = sum(l.get("distance") or 0 for l in buf)
-        total_t = sum(l.get("elapsed_time") or l.get("moving_time") or 0 for l in buf)
-        if total_d < 500 or total_t < 1:
-            return None
-        avg_hr = sum((l.get("average_heartrate") or l.get("averageHR") or 0) * l.get("distance", 0)
-                     for l in buf) / total_d
-        spd = total_d / total_t
-        end_km = round(start_km + total_d / 1000, 1)
-        return {
-            "label":   f"{int(start_km)}–{end_km}km",
-            "dist_km": round(total_d / 1000, 1),
-            "pace":    pace_from_speed(spd),
-            "avg_hr":  round(avg_hr),
-        }
-
-    for l in laps:
-        buf.append(l)
-        cum += l.get("distance") or 0
-        if cum >= chunk_m - 200:
-            c = flush(buf, len(chunks) * chunk_km)
-            if c:
-                chunks.append(c)
-            buf, cum = [], 0.0
-
-    if buf:
-        c = flush(buf, len(chunks) * chunk_km)
-        if c:
-            chunks.append(c)
-
-    return chunks or None
 
 
-# ── Garmin supplement helpers ────────────────────────────────────────────────
+# ── Stream-based lap computation ─────────────────────────────────────────────
 
-def _garmin_decoupling(client, activity_id) -> float | None:
+def _streams_quality_laps(streams: dict) -> list | None:
+    """
+    Detect work/recovery laps from per-second velocity stream.
+    Returns list of {rep, dist_km, pace, avg_hr, max_hr, avg_cadence}.
+    """
     try:
-        splits = client.get_activity_splits(activity_id)
-        laps = splits.get("lapDTOs") or splits.get("activityLapDTOs") or []
-        laps = [l for l in laps if (l.get("distance") or 0) > 200
-                and (l.get("averageHR") or 0) > 100
-                and (l.get("averageSpeed") or 0) > 0]
-        if len(laps) < 4:
+        t   = streams["time"]
+        d   = streams["distance"]
+        hr  = streams.get("heartrate", [0] * len(t))
+        vel = streams["velocity_smooth"]
+        cad = streams.get("cadence", [0] * len(t))
+        n   = len(t)
+
+        # Dynamic threshold: estimate work pace from top-30% speeds, then use 85% of that.
+        # This cleanly separates work reps from warmup/cooldown jogs for marathon-pace athletes.
+        live_vels = sorted(v for v in vel if v > 1.5)
+        if not live_vels:
             return None
-        total = sum(l["distance"] for l in laps)
-        half, cum, first, second = total / 2, 0, [], []
-        for l in laps:
-            (first if cum < half else second).append(l)
-            cum += l["distance"]
-        if not first or not second:
-            return None
-        def ratio(ls):
-            d   = sum(l["distance"] for l in ls)
-            hr  = sum(l["averageHR"] * l["distance"] for l in ls) / d
-            spd = d / sum(l.get("duration") or l.get("elapsedDuration") or 1 for l in ls)
-            return hr / spd
-        return round((ratio(second) - ratio(first)) / ratio(first) * 100, 1)
+        top30 = live_vels[int(len(live_vels) * 0.70):]
+        work_pace_est = sum(top30) / len(top30)
+        work_thresh = work_pace_est * 0.85
+
+        def sm(arr, w=5):
+            out = []
+            for i in range(len(arr)):
+                lo, hi = max(0, i - w // 2), min(len(arr), i + w // 2 + 1)
+                out.append(sum(arr[lo:hi]) / (hi - lo))
+            return out
+
+        vel_sm = sm(vel)
+        segments, in_work, seg_start = [], False, 0
+        for i in range(1, n):
+            is_work = vel_sm[i] >= work_thresh
+            if is_work != in_work:
+                dur = t[i] - t[seg_start]; dist = d[i] - d[seg_start]
+                if dur >= 30 and dist >= 100:
+                    segments.append({"work": in_work, "i0": seg_start, "i1": i,
+                                     "dist": dist, "dur": dur})
+                seg_start, in_work = i, is_work
+        dur = t[-1] - t[seg_start]; dist = d[-1] - d[seg_start]
+        if dur >= 30 and dist >= 100:
+            segments.append({"work": in_work, "i0": seg_start, "i1": n - 1,
+                              "dist": dist, "dur": dur})
+
+        result, rep_num = [], 0
+        for seg in segments:
+            if not seg["work"]:
+                continue
+            i0, i1 = seg["i0"], seg["i1"]
+            avg_hr = round(sum(hr[i0:i1]) / (i1 - i0)) if hr else None
+            if avg_hr is not None and avg_hr < 130:
+                continue
+            rep_num += 1
+            result.append({
+                "rep":         rep_num,
+                "dist_km":     round(seg["dist"] / 1000, 2),
+                "pace":        pace_from_speed(seg["dist"] / seg["dur"]),
+                "avg_hr":      avg_hr,
+                "max_hr":      max(hr[i0:i1]) if hr else None,
+                "avg_cadence": round(sum(cad[i0:i1]) / (i1 - i0) * 2) if any(cad) else None,
+            })
+        return result or None
     except Exception:
         return None
 
 
-def _garmin_km_chunks(client, activity_id, chunk_km: int = 5) -> list | None:
+def _streams_km_chunks(streams: dict, chunk_km: int = 5) -> list | None:
+    """Aggregate per-second stream into chunk_km-sized blocks. Skips stopped/walking segments."""
     try:
-        splits = client.get_activity_splits(activity_id)
-        laps = splits.get("lapDTOs") or splits.get("activityLapDTOs") or []
-        laps = [l for l in laps
-                if (l.get("distance") or 0) > 100
-                and (l.get("averageHR") or 0) > 80
-                and (l.get("averageSpeed") or 0) > 0]
-        if not laps:
-            return None
-        chunks, buf, cum = [], [], 0.0
-        chunk_m = chunk_km * 1000
-        def flush(buf, start_km):
-            total_d = sum(l["distance"] for l in buf)
-            total_t = sum(l.get("duration") or l.get("elapsedDuration") or 0 for l in buf)
-            if total_d < 500 or total_t < 1:
+        t   = streams["time"]; d = streams["distance"]
+        hr  = streams.get("heartrate", [0] * len(t))
+        vel = streams.get("velocity_smooth", [1.0] * len(t))
+        n   = len(t)
+        chunks, buf_start, next_bdry = [], 0, chunk_km * 1000
+
+        def flush(i0, i1):
+            dist = d[i1] - d[i0]; dur = t[i1] - t[i0]
+            if dist < 500 or dur < 1:
                 return None
-            avg_hr = sum(l["averageHR"] * l["distance"] for l in buf) / total_d
+            pace = pace_from_speed(dist / dur)
+            if pace is None or pace > 10.0:   # skip near-stopped fragments
+                return None
+            avg_hr = round(sum(hr[i0:i1]) / (i1 - i0)) if any(hr) else None
             return {
-                "label":   f"{int(start_km)}–{round(start_km + total_d/1000, 1)}km",
-                "dist_km": round(total_d / 1000, 1),
-                "pace":    pace_from_speed(total_d / total_t),
-                "avg_hr":  round(avg_hr),
+                "label":   f"{round(d[i0]/1000, 1)}-{round(d[i1]/1000, 1)}km",
+                "dist_km": round(dist / 1000, 1),
+                "pace":    pace,
+                "avg_hr":  avg_hr,
             }
-        for l in laps:
-            buf.append(l)
-            cum += l["distance"]
-            if cum >= chunk_m - 200:
-                c = flush(buf, len(chunks) * chunk_km)
-                if c: chunks.append(c)
-                buf, cum = [], 0.0
-        if buf:
-            c = flush(buf, len(chunks) * chunk_km)
-            if c: chunks.append(c)
+
+        for i in range(1, n):
+            if d[i] >= next_bdry or i == n - 1:
+                c = flush(buf_start, i)
+                if c:
+                    chunks.append(c)
+                buf_start = i
+                next_bdry += chunk_km * 1000
         return chunks or None
+    except Exception:
+        return None
+
+
+def _streams_decoupling(streams: dict) -> float | None:
+    """HR:pace decoupling from per-second streams — first vs second half, running only."""
+    try:
+        t   = streams["time"]; d = streams["distance"]
+        hr  = streams.get("heartrate")
+        vel = streams.get("velocity_smooth", [1.0] * len(t))
+        n   = len(t)
+        if not hr or n < 60:
+            return None
+        # Only use samples where athlete is running (>1.5 m/s) to exclude stops
+        run_idx = [i for i in range(n) if vel[i] > 1.5]
+        if len(run_idx) < 60:
+            return None
+        mid_dist  = (d[run_idx[-1]] + d[run_idx[0]]) / 2
+        split_pos = next((i for i in run_idx if d[i] >= mid_dist), run_idx[len(run_idx)//2])
+        first  = [i for i in run_idx if i < split_pos]
+        second = [i for i in run_idx if i >= split_pos]
+        if not first or not second:
+            return None
+        def ratio(idxs):
+            dist = d[idxs[-1]] - d[idxs[0]]
+            dur  = t[idxs[-1]] - t[idxs[0]]
+            avg_hr = sum(hr[i] for i in idxs) / len(idxs)
+            spd = dist / dur if dur > 0 else 1
+            return avg_hr / spd
+        return round((ratio(second) - ratio(first)) / ratio(first) * 100, 1)
     except Exception:
         return None
 
@@ -346,11 +378,18 @@ def pull_data(athlete_id: str, api_key: str):
                 kw in workout_name for kw in ("threshold", "interval", "tempo", "track", "repeat", "cruise")
             )
 
+            # Fetch streams for per-rep or per-5km breakdown
+            work_laps_detail = None
             km_chunks_detail = None
-            if is_long:
-                laps = icu_get_laps(act_id, athlete_id, api_key)
-                if laps:
-                    km_chunks_detail = _km_chunks_from_laps(laps)
+            decouple_streams = None
+            if act_id and (is_long or is_qual_r):
+                streams = icu_get_streams(act_id, api_key)
+                if streams:
+                    if is_qual_r:
+                        work_laps_detail = _streams_quality_laps(streams)
+                    if is_long:
+                        km_chunks_detail  = _streams_km_chunks(streams)
+                        decouple_streams  = _streams_decoupling(streams)
 
             entry = {
                 "date":            iso(act_date),
@@ -366,10 +405,15 @@ def pull_data(athlete_id: str, api_key: str):
                 "elevation_gain":  elev,
                 "avg_cadence":     cadence,
             }
-            if decouple is not None:
-                entry["decoupling_pct"] = round(float(decouple), 1)
+            decouple_final = decouple_streams if decouple_streams is not None else (
+                round(float(decouple), 1) if decouple is not None else None
+            )
+            if decouple_final is not None:
+                entry["decoupling_pct"] = decouple_final
             if interval_summary:
                 entry["interval_summary"] = interval_summary
+            if work_laps_detail:
+                entry["work_laps"] = work_laps_detail
             if km_chunks_detail:
                 entry["km_chunks"] = km_chunks_detail
             if wx_temp is not None:
@@ -462,7 +506,7 @@ def pull_data(athlete_id: str, api_key: str):
                 "rhr":   rhr_n,
             })
 
-    # Garmin supplement — body battery, decoupling, km_chunks for long runs
+    # Garmin supplement — body battery only (splits computed from intervals.icu streams)
     body_battery = None
     garmin_email    = os.environ.get("GARMIN_EMAIL", "").strip()
     garmin_password = os.environ.get("GARMIN_PASSWORD", "").strip()
@@ -471,38 +515,14 @@ def pull_data(athlete_id: str, api_key: str):
             from garminconnect import Garmin
             g = Garmin(garmin_email, garmin_password)
             g.login()
-            print("Garmin logged in — pulling body battery + long run splits")
-
-            # Body battery
-            try:
-                bb = g.get_body_battery(iso(today), iso(today))
-                if bb and isinstance(bb, list):
-                    entries = bb[0].get("bodyBatteryValuesArray") or []
-                    if entries:
-                        body_battery = max(v[1] for v in entries if v[1] is not None)
-            except Exception:
-                pass
-
-            # Decoupling + km_chunks for long runs missing these fields
-            long_runs = [a for a in recent_activities
-                         if (a.get("dist_km") or 0) >= 18
-                         and (a.get("decoupling_pct") is None or not a.get("km_chunks"))]
-            for act in long_runs:
-                try:
-                    garmin_acts = g.get_activities_by_date(act["date"], act["date"], "running")
-                    if not garmin_acts:
-                        continue
-                    # Pick the longest activity on that day
-                    garmin_acts.sort(key=lambda x: x.get("distance") or 0, reverse=True)
-                    gid = garmin_acts[0]["activityId"]
-                    if act.get("decoupling_pct") is None:
-                        act["decoupling_pct"] = _garmin_decoupling(g, gid)
-                    if not act.get("km_chunks"):
-                        act["km_chunks"] = _garmin_km_chunks(g, gid)
-                except Exception:
-                    pass
+            bb = g.get_body_battery(iso(today), iso(today))
+            if bb and isinstance(bb, list):
+                entries = bb[0].get("bodyBatteryValuesArray") or []
+                if entries:
+                    body_battery = max(v[1] for v in entries if v[1] is not None)
+            print(f"Body battery: {body_battery}")
         except Exception as e:
-            print(f"Garmin supplement skipped: {e}")
+            print(f"Garmin body battery skipped: {e}")
 
     # Preserve this_week_days from existing live.json
     this_week_days = None
