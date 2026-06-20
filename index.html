@@ -38,7 +38,7 @@
   .id-block .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--signal);margin-bottom:6px;}
   .id-block h1{font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:42px;line-height:.95;margin:0;letter-spacing:-.01em;}
   .id-block .sub{color:var(--slate);font-size:13.5px;margin-top:6px;}
-  .countdowns{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end;}
+  .countdowns{display:flex;gap:18px;flex-wrap:wrap;align-items:stretch;}
   .cd-card{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:10px 18px;min-width:128px;text-align:center;}
   .cd-card .num{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:30px;line-height:1;color:var(--paper);}
   .cd-card.lakeside .num{color:var(--z5);}
@@ -137,16 +137,16 @@
 <div class="wrap">
 
   <header class="top">
-    <div class="id-block" style="display:flex;align-items:center;gap:20px;">
-      <img src="msr-logo.png" alt="Mod Squad Running" style="height:64px;width:auto;filter:sepia(1) saturate(4) hue-rotate(155deg) brightness(1.2) opacity(0.85);">
-      <div>
-        <div class="eyebrow">22-Week Build · Brighton VIC</div>
-        <h1>SEAN HELMOT</h1>
-        <div class="sub" id="header-sub">Melbourne Marathon 2026 — loading…</div>
-      </div>
+    <div class="id-block">
+      <div class="eyebrow">22-Week Build · Brighton VIC</div>
+      <h1>SEAN HELMOT</h1>
+      <div class="sub" id="header-sub">Melbourne Marathon 2026 — loading…</div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
       <div class="countdowns">
+        <div class="cd-card" style="display:flex;align-items:center;justify-content:center;padding:8px 14px;">
+          <img src="msr-logo.png" alt="Mod Squad Running" style="height:52px;width:auto;filter:sepia(1) saturate(4) hue-rotate(155deg) brightness(1.2) opacity(0.85);">
+        </div>
         <div class="cd-card lakeside">
           <div class="num mono" id="cd-lakeside">—</div>
           <div class="lbl">Days to Lakeside</div>
