@@ -11,41 +11,1345 @@
     "pb": "2:46:57"
   },
   "hr_zones": [
-    { "zone": "Z1 Recovery",   "hr": "<130",    "pace": "6:00+/km",     "color_var": "--z1" },
-    { "zone": "Z2 Aerobic",    "hr": "130–150",  "pace": "5:10–5:35/km", "color_var": "--z2" },
-    { "zone": "Z3 Marathon",   "hr": "150–158",  "pace": "4:50–5:10/km", "color_var": "--z3" },
-    { "zone": "Z4 Threshold",  "hr": "158–165",  "pace": "4:25–4:45/km", "color_var": "--z4" },
-    { "zone": "Z5 VO2max",     "hr": "165–173",  "pace": "4:05–4:25/km", "color_var": "--z5" },
-    { "zone": "Z6 Anaerobic",  "hr": "174–176",  "pace": "sub 4:05/km",  "color_var": "--z6" }
+    {
+      "zone": "Z1 Recovery",
+      "hr": "<130",
+      "pace": "6:00+/km",
+      "color_var": "--z1"
+    },
+    {
+      "zone": "Z2 Aerobic",
+      "hr": "130–150",
+      "pace": "5:10–5:35/km",
+      "color_var": "--z2"
+    },
+    {
+      "zone": "Z3 Marathon",
+      "hr": "150–158",
+      "pace": "4:50–5:10/km",
+      "color_var": "--z3"
+    },
+    {
+      "zone": "Z4 Threshold",
+      "hr": "158–165",
+      "pace": "4:25–4:45/km",
+      "color_var": "--z4"
+    },
+    {
+      "zone": "Z5 VO2max",
+      "hr": "165–173",
+      "pace": "4:05–4:25/km",
+      "color_var": "--z5"
+    },
+    {
+      "zone": "Z6 Anaerobic",
+      "hr": "174–176",
+      "pace": "sub 4:05/km",
+      "color_var": "--z6"
+    }
   ],
   "weeks": [
-    { "wk": 1,  "phase": "Base rebuild",      "plan_km": 59, "long_run_km": 18,    "tag": null },
-    { "wk": 2,  "phase": "Base rebuild",      "plan_km": 68, "long_run_km": 20,    "tag": null },
-    { "wk": 3,  "phase": "Base rebuild",      "plan_km": 70, "long_run_km": 22,    "tag": null },
-    { "wk": 4,  "phase": "Aerobic build",     "plan_km": 75, "long_run_km": 25.7,  "tag": null },
-    { "wk": 5,  "phase": "Aerobic build",     "plan_km": 78, "long_run_km": 28,    "tag": null },
-    { "wk": 6,  "phase": "Aerobic build",     "plan_km": 80, "long_run_km": 30,    "tag": null },
-    { "wk": 7,  "phase": "Recovery",          "plan_km": 72, "long_run_km": 24,    "tag": "Recovery" },
-    { "wk": 8,  "phase": "Lakeside sharp",    "plan_km": 75, "long_run_km": 30,    "tag": null },
-    { "wk": 9,  "phase": "Lakeside sharp",    "plan_km": 72, "long_run_km": 26,    "tag": null },
-    { "wk": 10, "phase": "Lakeside sharp",    "plan_km": 55, "long_run_km": 16,    "tag": null },
-    { "wk": 11, "phase": "Lakeside sharp",    "plan_km": 20, "long_run_km": "10k", "tag": "Lakeside" },
-    { "wk": 12, "phase": "Reset",             "plan_km": 60, "long_run_km": 20,    "tag": null },
-    { "wk": 13, "phase": "Marathon base",     "plan_km": 75, "long_run_km": 26,    "tag": null },
-    { "wk": 14, "phase": "Marathon base",     "plan_km": 80, "long_run_km": 28,    "tag": null },
-    { "wk": 15, "phase": "Marathon base",     "plan_km": 85, "long_run_km": 30,    "tag": null },
-    { "wk": 16, "phase": "Recovery",          "plan_km": 70, "long_run_km": 24,    "tag": "Recovery" },
-    { "wk": 17, "phase": "Marathon specific", "plan_km": 90, "long_run_km": 32,    "tag": null },
-    { "wk": 18, "phase": "Marathon specific", "plan_km": 95, "long_run_km": 36,    "tag": "Peak" },
-    { "wk": 19, "phase": "Recovery",          "plan_km": 75, "long_run_km": 28,    "tag": "Recovery" },
-    { "wk": 20, "phase": "Taper",             "plan_km": 65, "long_run_km": 22,    "tag": null },
-    { "wk": 21, "phase": "Taper",             "plan_km": 48, "long_run_km": 16,    "tag": null },
-    { "wk": 22, "phase": "Taper",             "plan_km": 18, "long_run_km": "42.2k","tag": "Melbourne" }
+    {
+      "wk": 1,
+      "phase": "Base rebuild",
+      "plan_km": 59,
+      "long_run_km": 18,
+      "tag": null,
+      "days": [
+        {
+          "date_offset": 0,
+          "dow": "Mon",
+          "name": "Rest + gym upper",
+          "meta": "Priority 1+2, ~40min",
+          "zone": null
+        },
+        {
+          "date_offset": 1,
+          "dow": "Tue",
+          "name": "Easy run",
+          "meta": "~10km · cap 148bpm",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 2,
+          "dow": "Wed",
+          "name": "Transition quality",
+          "meta": "~14km · Z3 progression — easing into quality",
+          "zone": "z3"
+        },
+        {
+          "date_offset": 3,
+          "dow": "Thu",
+          "name": "Easy + gym legs",
+          "meta": "~8km · cap 145bpm · gym legs PM",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 4,
+          "dow": "Fri",
+          "name": "Easy run",
+          "meta": "~9km · cap 148bpm",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 5,
+          "dow": "Sat",
+          "name": "Easy run",
+          "meta": "~8km · cap 148bpm · pre-run activation",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 6,
+          "dow": "Sun",
+          "name": "Easy long run",
+          "meta": "18km · cap 148bpm",
+          "zone": "z2"
+        }
+      ]
+    },
+    {
+      "wk": 2,
+      "phase": "Base rebuild",
+      "plan_km": 68,
+      "long_run_km": 20,
+      "tag": null,
+      "days": [
+        {
+          "date_offset": 0,
+          "dow": "Mon",
+          "name": "Rest + gym upper",
+          "meta": "Priority 1+2, ~40min",
+          "zone": null
+        },
+        {
+          "date_offset": 1,
+          "dow": "Tue",
+          "name": "Easy + drills + strides",
+          "meta": "~10km · cap 148bpm · drills + 4x80m strides",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 2,
+          "dow": "Wed",
+          "name": "4x1200m Z4",
+          "meta": "~14km · 3km WU + 4x1200m Z4 / 2min rec + 3km CD",
+          "zone": "z4"
+        },
+        {
+          "date_offset": 3,
+          "dow": "Thu",
+          "name": "Easy + gym legs",
+          "meta": "~8km · cap 145bpm · gym legs PM",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 4,
+          "dow": "Fri",
+          "name": "Easy run",
+          "meta": "~9km · cap 148bpm",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 5,
+          "dow": "Sat",
+          "name": "Easy run",
+          "meta": "~8km · cap 148bpm · pre-run activation",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 6,
+          "dow": "Sun",
+          "name": "Easy long run",
+          "meta": "20km · cap 148bpm",
+          "zone": "z2"
+        }
+      ]
+    },
+    {
+      "wk": 3,
+      "phase": "Base rebuild",
+      "plan_km": 70,
+      "long_run_km": 22,
+      "tag": null,
+      "days": [
+        {
+          "date_offset": 0,
+          "dow": "Mon",
+          "name": "Rest + gym upper",
+          "meta": "Priority 1+2, ~40min",
+          "zone": null
+        },
+        {
+          "date_offset": 1,
+          "dow": "Tue",
+          "name": "Easy + drills + strides",
+          "meta": "~10km · cap 148bpm · drills + 4x80m strides",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 2,
+          "dow": "Wed",
+          "name": "4x1600m Z4",
+          "meta": "~15km · 3km WU + 4x1600m Z4 / 2min rec + 3km CD",
+          "zone": "z4"
+        },
+        {
+          "date_offset": 3,
+          "dow": "Thu",
+          "name": "Easy + gym legs",
+          "meta": "~8km · cap 145bpm · gym legs PM",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 4,
+          "dow": "Fri",
+          "name": "Easy run",
+          "meta": "~9km · cap 148bpm",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 5,
+          "dow": "Sat",
+          "name": "Easy run",
+          "meta": "~8km · cap 148bpm · pre-run activation",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 6,
+          "dow": "Sun",
+          "name": "HR prog long run",
+          "meta": "22km · 5:20 to 4:55/km · cap 158bpm",
+          "zone": "z3"
+        }
+      ]
+    },
+    {
+      "wk": 4,
+      "phase": "Aerobic build",
+      "plan_km": 75,
+      "long_run_km": 25.7,
+      "tag": null,
+      "days": [
+        {
+          "date_offset": 0,
+          "dow": "Mon",
+          "name": "Rest + gym upper",
+          "meta": "Priority 1+2, ~40min",
+          "zone": null
+        },
+        {
+          "date_offset": 1,
+          "dow": "Tue",
+          "name": "Easy + drills + strides",
+          "meta": "~10km · cap 148bpm · drills + 4x80m strides",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 2,
+          "dow": "Wed",
+          "name": "5x1600m Z4",
+          "meta": "~16km · 3km WU + 5x1600m Z4 / 2min rec + 3km CD · Rep 1 controlled entry",
+          "zone": "z4"
+        },
+        {
+          "date_offset": 3,
+          "dow": "Thu",
+          "name": "Easy + gym legs",
+          "meta": "~8km · cap 145bpm · gym legs PM",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 4,
+          "dow": "Fri",
+          "name": "Easy run",
+          "meta": "~9km · cap 148bpm",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 5,
+          "dow": "Sat",
+          "name": "Easy run",
+          "meta": "~8km · cap 148bpm · pre-run activation",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 6,
+          "dow": "Sun",
+          "name": "HR prog long run",
+          "meta": "25.7km · 5:06/km avg HR 141 · cap 158bpm · gel km 10+20",
+          "zone": "z3"
+        }
+      ]
+    },
+    {
+      "wk": 5,
+      "phase": "Aerobic build",
+      "plan_km": 78,
+      "long_run_km": 28,
+      "tag": null,
+      "days": [
+        {
+          "date_offset": 0,
+          "dow": "Mon",
+          "name": "Rest + gym upper",
+          "meta": "Priority 1+2, ~40min",
+          "zone": null
+        },
+        {
+          "date_offset": 1,
+          "dow": "Tue",
+          "name": "Easy + drills + strides",
+          "meta": "10km · 5:15-5:35/km · cap 148bpm · drills + 4x80m strides",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 2,
+          "dow": "Wed",
+          "name": "3x3km Z4 threshold",
+          "meta": "16km · 3km WU + 3x3km Z4 / 2min rec + 3km CD · Rep 1 controlled",
+          "zone": "z4"
+        },
+        {
+          "date_offset": 3,
+          "dow": "Thu",
+          "name": "Easy + drills + gym legs",
+          "meta": "8km · 5:25-5:45/km · cap 145bpm · gym legs PM",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 4,
+          "dow": "Fri",
+          "name": "Easy + Pt Ormond hills",
+          "meta": "~10km · 9km easy + 6-8x10sec hill sprints · first km flat",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 5,
+          "dow": "Sat",
+          "name": "Easy run",
+          "meta": "~8km · 5:20-5:35/km · cap 148bpm · pre-run activation",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 6,
+          "dow": "Sun",
+          "name": "HR prog long run",
+          "meta": "28km · 5:20 to 4:50/km · cap 158bpm · gel km 10+20",
+          "zone": "z3"
+        }
+      ]
+    },
+    {
+      "wk": 6,
+      "phase": "Aerobic build",
+      "plan_km": 80,
+      "long_run_km": 30,
+      "tag": null,
+      "days": [
+        {
+          "date_offset": 0,
+          "dow": "Mon",
+          "name": "Rest + gym upper",
+          "meta": "Priority 1+2",
+          "zone": null
+        },
+        {
+          "date_offset": 1,
+          "dow": "Tue",
+          "name": "Easy + drills + strides",
+          "meta": "10km · 5:20-5:40/km · cap 142bpm · drills + 4x80m strides",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 2,
+          "dow": "Wed",
+          "name": "4x3km Z4 threshold",
+          "meta": "17km · 3km WU + 4x3km Z4 / 2min rec + 3km CD · hardest quality of block",
+          "zone": "z4"
+        },
+        {
+          "date_offset": 3,
+          "dow": "Thu",
+          "name": "Easy + drills + gym legs",
+          "meta": "8km · 5:25-5:45/km · cap 142bpm · gym legs PM",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 4,
+          "dow": "Fri",
+          "name": "Easy + flat strides",
+          "meta": "9km · 5:25-5:45/km · cap 142bpm · 6x100m flat strides",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 5,
+          "dow": "Sat",
+          "name": "Easy run",
+          "meta": "~8km · 5:20-5:35/km · cap 148bpm · pre-run activation",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 6,
+          "dow": "Sun",
+          "name": "Capital City Trail LR",
+          "meta": "30km · 5:20 to 4:50/km · cap 158bpm · rolling hills · gel km 10+20",
+          "zone": "z3"
+        }
+      ]
+    },
+    {
+      "wk": 7,
+      "phase": "Recovery",
+      "plan_km": 72,
+      "long_run_km": 24,
+      "tag": "Recovery",
+      "days": [
+        {
+          "date_offset": 0,
+          "dow": "Mon",
+          "name": "Rest + gym upper",
+          "meta": "Priority 1+2",
+          "zone": null
+        },
+        {
+          "date_offset": 1,
+          "dow": "Tue",
+          "name": "Easy + drills",
+          "meta": "10km · 5:15-5:35/km · cap 148bpm · cadence drills · no strides (recovery week)",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 2,
+          "dow": "Wed",
+          "name": "3x1600m Z4 light",
+          "meta": "12km · 3km WU + 3x1600m Z4 / 2min rec + 3km CD · should feel easier than W6",
+          "zone": "z4"
+        },
+        {
+          "date_offset": 3,
+          "dow": "Thu",
+          "name": "Easy + drills + gym legs",
+          "meta": "8km · 5:20-5:40/km · cap 145bpm · gym legs PM",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 4,
+          "dow": "Fri",
+          "name": "Easy + flat strides",
+          "meta": "10km · 5:20/km · flat strides only · no Pt Ormond (recovery week) · 6x100m",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 5,
+          "dow": "Sat",
+          "name": "Easy run",
+          "meta": "~8km · 5:20-5:35/km · cap 148bpm · pre-run activation",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 6,
+          "dow": "Sun",
+          "name": "Easy long run",
+          "meta": "24km · 5:20 to 4:55/km · cap 158bpm · should feel easier than W6",
+          "zone": "z3"
+        }
+      ]
+    },
+    {
+      "wk": 8,
+      "phase": "Lakeside sharp",
+      "plan_km": 75,
+      "long_run_km": 30,
+      "tag": null,
+      "days": [
+        {
+          "date_offset": 0,
+          "dow": "Mon",
+          "name": "Rest + gym upper",
+          "meta": "Priority 1+2",
+          "zone": null
+        },
+        {
+          "date_offset": 1,
+          "dow": "Tue",
+          "name": "Easy + drills",
+          "meta": "10km · 5:15-5:35/km · cap 148bpm · cadence drills · no strides (Z5 week)",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 2,
+          "dow": "Wed",
+          "name": "4x2km Z5 reps",
+          "meta": "14km · 3km WU + 4x2km Z5 / 3min rec + 3km CD · HR ceiling 170 · first Z5",
+          "zone": "z5"
+        },
+        {
+          "date_offset": 3,
+          "dow": "Thu",
+          "name": "Easy + drills + gym legs",
+          "meta": "8km · 5:20-5:40/km · cap 145bpm · Achilles check after Z5 · gym legs PM",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 4,
+          "dow": "Fri",
+          "name": "Easy + Pt Ormond hills",
+          "meta": "~10km · 5:20/km · 6-8x10sec hill sprints · walk back · first km flat",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 5,
+          "dow": "Sat",
+          "name": "Easy run",
+          "meta": "~8km · 5:20-5:35/km · cap 148bpm · pre-run activation",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 6,
+          "dow": "Sun",
+          "name": "Yarra Boulevard LR",
+          "meta": "30km · 5:20-5:35/km · cap 158bpm · easy only · walk uphills if HR above cap",
+          "zone": "z2"
+        }
+      ]
+    },
+    {
+      "wk": 9,
+      "phase": "Lakeside sharp",
+      "plan_km": 72,
+      "long_run_km": 26,
+      "tag": null,
+      "days": [
+        {
+          "date_offset": 0,
+          "dow": "Mon",
+          "name": "Rest + gym upper",
+          "meta": "Priority 1+2",
+          "zone": null
+        },
+        {
+          "date_offset": 1,
+          "dow": "Tue",
+          "name": "Easy + drills",
+          "meta": "10km · 5:15-5:35/km · cap 148bpm · cadence drills",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 2,
+          "dow": "Wed",
+          "name": "5x1km Z5 reps",
+          "meta": "13km · 3km WU + 5x1km Z5 / 3min full rec + 2km CD · near-maximal",
+          "zone": "z5"
+        },
+        {
+          "date_offset": 3,
+          "dow": "Thu",
+          "name": "Easy + drills + gym legs",
+          "meta": "8km · 5:20-5:40/km · cap 145bpm · gym legs PM",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 4,
+          "dow": "Fri",
+          "name": "Easy + flat strides",
+          "meta": "8km · 5:20/km · 4x80m flat strides",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 5,
+          "dow": "Sat",
+          "name": "Easy run",
+          "meta": "~6km · 5:20-5:35/km · cap 148bpm · pre-run activation",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 6,
+          "dow": "Sun",
+          "name": "Easy long run",
+          "meta": "26km · 5:20-5:35/km · cap 148bpm · pull back to 22km if W8/Z5 hit hard",
+          "zone": "z2"
+        }
+      ]
+    },
+    {
+      "wk": 10,
+      "phase": "Lakeside sharp",
+      "plan_km": 55,
+      "long_run_km": 16,
+      "tag": null,
+      "days": [
+        {
+          "date_offset": 0,
+          "dow": "Mon",
+          "name": "Rest + light gym upper",
+          "meta": "Light Priority 1+2 only",
+          "zone": null
+        },
+        {
+          "date_offset": 1,
+          "dow": "Tue",
+          "name": "Easy run",
+          "meta": "8km · 5:20-5:40/km · cap 148bpm · no drills (taper)",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 2,
+          "dow": "Wed",
+          "name": "3x1km Z5 sharpener",
+          "meta": "10km · 3km WU + 3x1km Z5 / 3min rec + 2km CD · short sharp confident",
+          "zone": "z5"
+        },
+        {
+          "date_offset": 3,
+          "dow": "Thu",
+          "name": "Easy run",
+          "meta": "6km · 5:25-5:45/km · cap 145bpm",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 4,
+          "dow": "Fri",
+          "name": "Easy + strides",
+          "meta": "6km · 5:20/km · 4x60m flat strides · last strides before race week",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 5,
+          "dow": "Sat",
+          "name": "Easy run",
+          "meta": "~4km · 5:20-5:35/km · cap 148bpm",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 6,
+          "dow": "Sun",
+          "name": "Easy long run",
+          "meta": "16km · 5:20-5:35/km · cap 148bpm · last long run before race week",
+          "zone": "z2"
+        }
+      ]
+    },
+    {
+      "wk": 11,
+      "phase": "Lakeside sharp",
+      "plan_km": 20,
+      "long_run_km": "10k",
+      "tag": "Lakeside",
+      "days": [
+        {
+          "date_offset": 0,
+          "dow": "Mon",
+          "name": "Easy jog",
+          "meta": "6km · 6:00-6:10/km · cap 130bpm · very easy",
+          "zone": "z1"
+        },
+        {
+          "date_offset": 1,
+          "dow": "Tue",
+          "name": "Easy run",
+          "meta": "5km · 5:30-5:45/km · cap 142bpm",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 2,
+          "dow": "Wed",
+          "name": "4x600m race preview",
+          "meta": "8km · 2km easy + 4x600m race effort / 2min rec + 2km CD",
+          "zone": "z5"
+        },
+        {
+          "date_offset": 3,
+          "dow": "Thu",
+          "name": "Easy jog",
+          "meta": "4km · 6:00-6:10/km · cap 130bpm · very easy",
+          "zone": "z1"
+        },
+        {
+          "date_offset": 4,
+          "dow": "Fri",
+          "name": "Shakeout + strides",
+          "meta": "3km · 6:00/km + 4x50m strides · lay out race kit tonight",
+          "zone": "z1"
+        },
+        {
+          "date_offset": 5,
+          "dow": "Sat",
+          "name": "Full rest",
+          "meta": "No running · sleep well",
+          "zone": null
+        },
+        {
+          "date_offset": 6,
+          "dow": "Sun",
+          "name": "LAKESIDE 10K",
+          "meta": "10km race · km 1-3: Z4 (158-165bpm) · km 4-7: Z5 open to 173 · km 8-10 everything",
+          "zone": "z5"
+        }
+      ]
+    },
+    {
+      "wk": 12,
+      "phase": "Reset",
+      "plan_km": 60,
+      "long_run_km": 20,
+      "tag": null,
+      "days": [
+        {
+          "date_offset": 0,
+          "dow": "Mon",
+          "name": "Rest + gym upper",
+          "meta": "Priority 1+2 · easy reset week",
+          "zone": null
+        },
+        {
+          "date_offset": 1,
+          "dow": "Tue",
+          "name": "Easy run",
+          "meta": "~10km · cap 148bpm · cadence drills",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 2,
+          "dow": "Wed",
+          "name": "Easy run",
+          "meta": "~10km · cap 148bpm · no quality · set MP from Lakeside result",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 3,
+          "dow": "Thu",
+          "name": "Easy + gym legs",
+          "meta": "~8km · cap 145bpm · gym legs PM",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 4,
+          "dow": "Fri",
+          "name": "Easy + strides",
+          "meta": "~8km · cap 148bpm · 6x100m strides",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 5,
+          "dow": "Sat",
+          "name": "Easy run",
+          "meta": "~8km · cap 148bpm · pre-run activation",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 6,
+          "dow": "Sun",
+          "name": "Easy long run",
+          "meta": "20km · cap 148bpm",
+          "zone": "z2"
+        }
+      ]
+    },
+    {
+      "wk": 13,
+      "phase": "Marathon base",
+      "plan_km": 75,
+      "long_run_km": 26,
+      "tag": null,
+      "days": [
+        {
+          "date_offset": 0,
+          "dow": "Mon",
+          "name": "Rest + gym upper",
+          "meta": "Priority 1+2",
+          "zone": null
+        },
+        {
+          "date_offset": 1,
+          "dow": "Tue",
+          "name": "Easy + drills + strides",
+          "meta": "~10km · cap 148bpm · drills + 4x80m strides",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 2,
+          "dow": "Wed",
+          "name": "4x3km @ MP",
+          "meta": "~16km · 3km WU + 4x3km MP (Z3) + 3km CD · marathon pace introduced",
+          "zone": "z3"
+        },
+        {
+          "date_offset": 3,
+          "dow": "Thu",
+          "name": "Easy + drills + gym legs",
+          "meta": "~8km · cap 145bpm · gym legs PM",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 4,
+          "dow": "Fri",
+          "name": "Easy + flat strides",
+          "meta": "~8km · 6x100m flat strides",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 5,
+          "dow": "Sat",
+          "name": "Easy run",
+          "meta": "~8km · cap 148bpm · pre-run activation",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 6,
+          "dow": "Sun",
+          "name": "Capital City Trail LR",
+          "meta": "26km · cap 158bpm · rolling hills",
+          "zone": "z3"
+        }
+      ]
+    },
+    {
+      "wk": 14,
+      "phase": "Marathon base",
+      "plan_km": 80,
+      "long_run_km": 28,
+      "tag": null,
+      "days": [
+        {
+          "date_offset": 0,
+          "dow": "Mon",
+          "name": "Rest + gym upper",
+          "meta": "Priority 1+2",
+          "zone": null
+        },
+        {
+          "date_offset": 1,
+          "dow": "Tue",
+          "name": "Easy + drills + strides",
+          "meta": "~10km · cap 148bpm · drills + 4x80m strides",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 2,
+          "dow": "Wed",
+          "name": "10km @ MP continuous",
+          "meta": "~16km · 3km WU + 10km MP (Z3) + 3km CD · first sustained MP tempo",
+          "zone": "z3"
+        },
+        {
+          "date_offset": 3,
+          "dow": "Thu",
+          "name": "Easy + drills + gym legs",
+          "meta": "~8km · cap 145bpm · gym legs PM",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 4,
+          "dow": "Fri",
+          "name": "Easy + Pt Ormond hills",
+          "meta": "~10km · 6-8x10sec hill sprints · first km flat",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 5,
+          "dow": "Sat",
+          "name": "Easy run",
+          "meta": "~8km · cap 148bpm · pre-run activation",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 6,
+          "dow": "Sun",
+          "name": "Yarra Boulevard LR",
+          "meta": "28km · HR prog Z2 to Z3 · cap 158bpm",
+          "zone": "z3"
+        }
+      ]
+    },
+    {
+      "wk": 15,
+      "phase": "Marathon base",
+      "plan_km": 85,
+      "long_run_km": 30,
+      "tag": null,
+      "days": [
+        {
+          "date_offset": 0,
+          "dow": "Mon",
+          "name": "Rest + gym upper",
+          "meta": "Priority 1+2",
+          "zone": null
+        },
+        {
+          "date_offset": 1,
+          "dow": "Tue",
+          "name": "Easy + drills + strides",
+          "meta": "~10km · cap 148bpm · drills + 4x80m strides",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 2,
+          "dow": "Wed",
+          "name": "5x2km @ MP",
+          "meta": "~16km · 3km WU + 5x2km MP (Z3) / 2min rec + 3km CD",
+          "zone": "z3"
+        },
+        {
+          "date_offset": 3,
+          "dow": "Thu",
+          "name": "Easy + drills + gym legs",
+          "meta": "~8km · cap 145bpm · gym legs PM",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 4,
+          "dow": "Fri",
+          "name": "Easy + flat strides",
+          "meta": "~8km · 6x100m flat strides",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 5,
+          "dow": "Sat",
+          "name": "Easy run",
+          "meta": "~8km · cap 148bpm · pre-run activation",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 6,
+          "dow": "Sun",
+          "name": "HR prog long run",
+          "meta": "30km · 20km easy + 10km MP · cap 158bpm",
+          "zone": "z3"
+        }
+      ]
+    },
+    {
+      "wk": 16,
+      "phase": "Recovery",
+      "plan_km": 70,
+      "long_run_km": 24,
+      "tag": "Recovery",
+      "days": [
+        {
+          "date_offset": 0,
+          "dow": "Mon",
+          "name": "Rest + gym upper",
+          "meta": "Priority 1+2",
+          "zone": null
+        },
+        {
+          "date_offset": 1,
+          "dow": "Tue",
+          "name": "Easy + drills",
+          "meta": "~10km · cap 148bpm · drills · no strides (recovery week)",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 2,
+          "dow": "Wed",
+          "name": "3x2km @ MP light",
+          "meta": "~12km · 3km WU + 3x2km MP (Z3) / 2min rec + 3km CD · recovery week",
+          "zone": "z3"
+        },
+        {
+          "date_offset": 3,
+          "dow": "Thu",
+          "name": "Easy + drills + gym legs",
+          "meta": "~8km · cap 145bpm · gym legs PM",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 4,
+          "dow": "Fri",
+          "name": "Easy + flat strides",
+          "meta": "~8km · 6x100m flat strides · no Pt Ormond (recovery week)",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 5,
+          "dow": "Sat",
+          "name": "Easy run",
+          "meta": "~8km · cap 148bpm · pre-run activation",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 6,
+          "dow": "Sun",
+          "name": "Easy long run",
+          "meta": "24km · cap 158bpm · RECOVERY WEEK",
+          "zone": "z2"
+        }
+      ]
+    },
+    {
+      "wk": 17,
+      "phase": "Marathon specific",
+      "plan_km": 90,
+      "long_run_km": 32,
+      "tag": null,
+      "days": [
+        {
+          "date_offset": 0,
+          "dow": "Mon",
+          "name": "Rest + gym upper",
+          "meta": "Priority 1+2",
+          "zone": null
+        },
+        {
+          "date_offset": 1,
+          "dow": "Tue",
+          "name": "Easy + drills + strides",
+          "meta": "~10km · cap 148bpm · drills + 4x80m strides",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 2,
+          "dow": "Wed",
+          "name": "12km @ MP continuous",
+          "meta": "~18km · 3km WU + 12km MP (Z3) + 3km CD · build back",
+          "zone": "z3"
+        },
+        {
+          "date_offset": 3,
+          "dow": "Thu",
+          "name": "Easy + drills + gym legs",
+          "meta": "~8km · cap 145bpm · gym legs PM",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 4,
+          "dow": "Fri",
+          "name": "Easy + Pt Ormond hills",
+          "meta": "~10km · 6-8x10sec hill sprints · first km flat",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 5,
+          "dow": "Sat",
+          "name": "Easy run",
+          "meta": "~8km · cap 148bpm · pre-run activation",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 6,
+          "dow": "Sun",
+          "name": "Yarra Boulevard LR",
+          "meta": "32km · build back · cap 162bpm",
+          "zone": "z3"
+        }
+      ]
+    },
+    {
+      "wk": 18,
+      "phase": "Marathon specific",
+      "plan_km": 95,
+      "long_run_km": 36,
+      "tag": "Peak",
+      "days": [
+        {
+          "date_offset": 0,
+          "dow": "Mon",
+          "name": "Rest + gym upper",
+          "meta": "Priority 1+2",
+          "zone": null
+        },
+        {
+          "date_offset": 1,
+          "dow": "Tue",
+          "name": "Easy + drills + strides",
+          "meta": "~10km · cap 148bpm · drills + 4x80m strides",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 2,
+          "dow": "Wed",
+          "name": "5x2km @ MP",
+          "meta": "~16km · 3km WU + 5x2km MP (Z3) / 2min rec + 3km CD · PEAK week",
+          "zone": "z3"
+        },
+        {
+          "date_offset": 3,
+          "dow": "Thu",
+          "name": "Easy + drills + gym legs",
+          "meta": "~8km · cap 145bpm · gym legs PM",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 4,
+          "dow": "Fri",
+          "name": "Easy + flat strides",
+          "meta": "~8km · 6x100m flat strides",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 5,
+          "dow": "Sat",
+          "name": "Easy run",
+          "meta": "~8km · cap 148bpm · pre-run activation",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 6,
+          "dow": "Sun",
+          "name": "Race simulation LR",
+          "meta": "36km · 24km easy + 12km MP · PEAK · full fuel protocol",
+          "zone": "z3"
+        }
+      ]
+    },
+    {
+      "wk": 19,
+      "phase": "Recovery",
+      "plan_km": 75,
+      "long_run_km": 28,
+      "tag": "Recovery",
+      "days": [
+        {
+          "date_offset": 0,
+          "dow": "Mon",
+          "name": "Rest + gym upper",
+          "meta": "Priority 1+2",
+          "zone": null
+        },
+        {
+          "date_offset": 1,
+          "dow": "Tue",
+          "name": "Easy + drills",
+          "meta": "~10km · cap 148bpm · drills · no strides (recovery week)",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 2,
+          "dow": "Wed",
+          "name": "3x2km @ MP light",
+          "meta": "~12km · 3km WU + 3x2km MP / 2min rec + 3km CD · recovery week",
+          "zone": "z3"
+        },
+        {
+          "date_offset": 3,
+          "dow": "Thu",
+          "name": "Easy + drills + gym legs",
+          "meta": "~8km · cap 145bpm · gym legs PM",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 4,
+          "dow": "Fri",
+          "name": "Easy + flat strides",
+          "meta": "~8km · 6x100m flat strides · no Pt Ormond (recovery week)",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 5,
+          "dow": "Sat",
+          "name": "Easy run",
+          "meta": "~8km · cap 148bpm · pre-run activation",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 6,
+          "dow": "Sun",
+          "name": "Easy long run",
+          "meta": "28km · cap 158bpm · RECOVERY WEEK",
+          "zone": "z2"
+        }
+      ]
+    },
+    {
+      "wk": 20,
+      "phase": "Taper",
+      "plan_km": 65,
+      "long_run_km": 22,
+      "tag": null,
+      "days": [
+        {
+          "date_offset": 0,
+          "dow": "Mon",
+          "name": "Rest + gym upper",
+          "meta": "Priority 1+2",
+          "zone": null
+        },
+        {
+          "date_offset": 1,
+          "dow": "Tue",
+          "name": "Easy + drills + strides",
+          "meta": "~10km · cap 148bpm · drills + 4x80m strides",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 2,
+          "dow": "Wed",
+          "name": "6km @ MP",
+          "meta": "~12km · 3km WU + 6km MP + 3km CD · taper begins",
+          "zone": "z3"
+        },
+        {
+          "date_offset": 3,
+          "dow": "Thu",
+          "name": "Easy + drills + gym legs",
+          "meta": "~8km · cap 145bpm · gym legs PM",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 4,
+          "dow": "Fri",
+          "name": "Easy + flat strides",
+          "meta": "~8km · 6x100m flat strides",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 5,
+          "dow": "Sat",
+          "name": "Easy run",
+          "meta": "~6km · cap 148bpm · pre-run activation",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 6,
+          "dow": "Sun",
+          "name": "Easy long run",
+          "meta": "22km · cap 148bpm · taper begins",
+          "zone": "z2"
+        }
+      ]
+    },
+    {
+      "wk": 21,
+      "phase": "Taper",
+      "plan_km": 48,
+      "long_run_km": 16,
+      "tag": null,
+      "days": [
+        {
+          "date_offset": 0,
+          "dow": "Mon",
+          "name": "Rest + gym upper",
+          "meta": "Priority 1+2 (light)",
+          "zone": null
+        },
+        {
+          "date_offset": 1,
+          "dow": "Tue",
+          "name": "Easy + drills + strides",
+          "meta": "~8km · cap 148bpm · drills + 4x80m strides",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 2,
+          "dow": "Wed",
+          "name": "3x2km @ MP",
+          "meta": "~10km · 2km WU + 3x2km MP / 2min rec + 2km CD · deep taper",
+          "zone": "z3"
+        },
+        {
+          "date_offset": 3,
+          "dow": "Thu",
+          "name": "Easy run",
+          "meta": "~6km · cap 145bpm",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 4,
+          "dow": "Fri",
+          "name": "Easy + strides",
+          "meta": "~4km · 4x60m strides · last strides before race week",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 5,
+          "dow": "Sat",
+          "name": "Easy run",
+          "meta": "~4km · cap 148bpm",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 6,
+          "dow": "Sun",
+          "name": "Easy long run",
+          "meta": "16km · cap 148bpm · deep taper",
+          "zone": "z2"
+        }
+      ]
+    },
+    {
+      "wk": 22,
+      "phase": "Taper",
+      "plan_km": 18,
+      "long_run_km": "42.2k",
+      "tag": "Melbourne",
+      "days": [
+        {
+          "date_offset": 0,
+          "dow": "Mon",
+          "name": "Easy jog",
+          "meta": "~6km · very easy · cap 130bpm",
+          "zone": "z1"
+        },
+        {
+          "date_offset": 1,
+          "dow": "Tue",
+          "name": "Easy run",
+          "meta": "~5km · cap 142bpm",
+          "zone": "z2"
+        },
+        {
+          "date_offset": 2,
+          "dow": "Wed",
+          "name": "3x1km @ MP preview",
+          "meta": "~8km · 2km easy + 3x1km MP / 2min rec + 2km CD",
+          "zone": "z3"
+        },
+        {
+          "date_offset": 3,
+          "dow": "Thu",
+          "name": "Easy jog",
+          "meta": "~4km · very easy · cap 130bpm",
+          "zone": "z1"
+        },
+        {
+          "date_offset": 4,
+          "dow": "Fri",
+          "name": "Shakeout + strides",
+          "meta": "~3km · 4x50m strides · lay out race kit tonight",
+          "zone": "z1"
+        },
+        {
+          "date_offset": 5,
+          "dow": "Sat",
+          "name": "Full rest",
+          "meta": "No running · sleep well · visualise race plan",
+          "zone": null
+        },
+        {
+          "date_offset": 6,
+          "dow": "Sun",
+          "name": "MELBOURNE MARATHON",
+          "meta": "42.2km · hold MP to km 30 · open final 12km · race day",
+          "zone": "z3"
+        }
+      ]
+    }
   ],
   "injuries": [
-    { "name": "Lower back",          "score": 0,   "max": 10, "note": "0/10 — resolved, advise by exception only" },
-    { "name": "Right knee (run)",    "score": 1,   "max": 10, "note": "1/10 stable — suprapatellar bursitis, scan-confirmed" },
-    { "name": "Right knee (sit/kneel)", "score": 2.5, "max": 10, "note": "2–3/10 — bilateral patellofemoral awareness" },
-    { "name": "Achilles",            "score": 0,   "max": 10, "note": "0/10 — resolved, advise by exception only" }
+    {
+      "name": "Lower back",
+      "score": 0,
+      "max": 10,
+      "note": "0/10 — resolved, advise by exception only"
+    },
+    {
+      "name": "Right knee (run)",
+      "score": 1,
+      "max": 10,
+      "note": "1/10 stable — suprapatellar bursitis, scan-confirmed"
+    },
+    {
+      "name": "Right knee (sit/kneel)",
+      "score": 2.5,
+      "max": 10,
+      "note": "2–3/10 — bilateral patellofemoral awareness"
+    },
+    {
+      "name": "Achilles",
+      "score": 0,
+      "max": 10,
+      "note": "0/10 — resolved, advise by exception only"
+    }
   ]
 }

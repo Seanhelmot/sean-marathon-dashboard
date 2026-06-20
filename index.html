@@ -648,6 +648,64 @@ function renderHeaderSub(plan, live) {
   }
 }
 
+/* ── Shared strip renderer ───────────────────────────────────────── */
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+function wkMonday(plan, wkNum) {
+  // Returns a Date for the Monday of week wkNum
+  const base = new Date(plan.build_start_date + 'T00:00:00');
+  base.setDate(base.getDate() + (wkNum - 1) * 7);
+  return base;
+}
+
+function renderDayStrip(stripEl, planDays, garminDays, wkMon) {
+  stripEl.innerHTML = '';
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const feelLabel = ['','😩 Terrible','😕 Bad','😐 Okay','🙂 Good','😄 Great'];
+
+  planDays.forEach(d => {
+    const dayDate = new Date(wkMon);
+    dayDate.setDate(dayDate.getDate() + d.date_offset);
+    const dateLabel = dayDate.getDate() + ' ' + MONTHS[dayDate.getMonth()];
+    const isToday = dayDate.getTime() === today.getTime();
+    const isDone  = !isToday && dayDate < today;
+    const row = document.createElement('div');
+    row.className = 'day-row' + (isDone?' done':'') + (isToday?' today':'');
+    const dotColor = isToday ? 'var(--signal)' : isDone ? 'var(--good)' : 'var(--slate-dim)';
+
+    const gd = garminDays[dateLabel];
+    const feelChip   = (gd && gd.feel   != null) ? `<span style="font-size:10.5px;color:var(--slate);margin-left:8px;">Feel: ${feelLabel[gd.feel] || gd.feel}</span>` : '';
+    const effortChip = (gd && gd.effort != null) ? `<span style="font-size:10.5px;color:var(--slate);margin-left:8px;">RPE: ${gd.effort}/10</span>` : '';
+
+    // For current week, prefer live.this_week_days name/meta if available
+    const name = d.live_name || d.name;
+    const meta = d.live_meta || d.meta;
+
+    row.innerHTML = `
+      <div class="day-date">${dateLabel}<span class="dow">${d.dow}</span></div>
+      <div>
+        <div class="day-name"><span class="status-dot" style="background:${dotColor}"></span>${name}</div>
+        <div class="day-meta">${meta}${feelChip}${effortChip}</div>
+      </div>
+      <div>${d.zone ? `<span class="zone-chip" style="background:${ZONE_COLOR[d.zone]}">${ZONE_LABEL[d.zone]}</span>` : ''}</div>
+    `;
+    stripEl.appendChild(row);
+  });
+}
+
+function buildGarminDayMap(liveWeeks, wkNum) {
+  const liveWkData = (liveWeeks || []).find(w => w.wk === wkNum);
+  const garminDays = {};
+  if (liveWkData && liveWkData.days) {
+    Object.entries(liveWkData.days).forEach(([isoDate, data]) => {
+      const d = new Date(isoDate + 'T00:00:00');
+      garminDays[d.getDate() + ' ' + MONTHS[d.getMonth()]] = data;
+    });
+  }
+  return garminDays;
+}
+
 /* ── This Week strip ─────────────────────────────────────────────── */
 function renderWeekStrip(live, plan) {
   const wkNum = live.current_week;
@@ -656,54 +714,23 @@ function renderWeekStrip(live, plan) {
   title.innerHTML = `Week ${wkNum} <span class="accent">· ${planWk.phase || ''} · ${planWk.plan_km || '—'}km planned</span>`;
 
   const strip = document.getElementById('week-strip');
-  strip.innerHTML = '';
+  const garminDays = buildGarminDayMap(live.weeks, wkNum);
+  const mon = wkMonday(plan, wkNum);
 
-  const days = live.this_week_days;
-  if (!days || !days.length) {
-    strip.innerHTML = '<div class="loading">Week schedule not available in live data — update <code>this_week_days</code> in live.json.</div>';
+  // Start from plan days; overlay live.this_week_days names/metas if present
+  let days = planWk.days ? planWk.days.map(d => ({...d})) : null;
+  if (!days) {
+    strip.innerHTML = '<div class="loading">No plan data for this week.</div>';
     return;
   }
-
-  // Build a lookup of Garmin day data by date string (e.g. "20 Jun")
-  const currentWkData = (live.weeks || []).find(w => w.wk === wkNum);
-  const garminDays = {};
-  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  if (currentWkData && currentWkData.days) {
-    Object.entries(currentWkData.days).forEach(([isoDate, data]) => {
-      const d = new Date(isoDate + 'T00:00:00');
-      const label = d.getDate() + ' ' + MONTHS[d.getMonth()];
-      garminDays[label] = data;
+  if (live.this_week_days && live.this_week_days.length) {
+    live.this_week_days.forEach(ld => {
+      const match = days.find(d => d.dow === ld.dow);
+      if (match) { match.live_name = ld.name; match.live_meta = ld.meta; }
     });
   }
 
-  // Determine today's date label for dynamic highlight
-  const nowLabel = (() => {
-    const n = new Date();
-    return n.getDate() + ' ' + n.toLocaleDateString('en-AU', {month:'short'});
-  })();
-
-  days.forEach(d => {
-    const isToday = d.date === nowLabel;
-    const isDone  = !isToday && d.status === 'done';
-    const row = document.createElement('div');
-    row.className = 'day-row' + (isDone?' done':'') + (isToday?' today':'');
-    const dotColor = isToday ? 'var(--signal)' : isDone ? 'var(--good)' : 'var(--slate-dim)';
-
-    const gd = garminDays[d.date];
-    const feelLabel  = ['','😩 Terrible','😕 Bad','😐 Okay','🙂 Good','😄 Great'];
-    const feelChip   = (gd && gd.feel != null)   ? `<span style="font-size:10.5px;color:var(--slate);margin-left:8px;">Feel: ${feelLabel[gd.feel] || gd.feel}</span>` : '';
-    const effortChip = (gd && gd.effort != null) ? `<span style="font-size:10.5px;color:var(--slate);margin-left:8px;">RPE: ${gd.effort}/10</span>` : '';
-
-    row.innerHTML = `
-      <div class="day-date">${d.date}<span class="dow">${d.dow}</span></div>
-      <div>
-        <div class="day-name"><span class="status-dot" style="background:${dotColor}"></span>${d.name}</div>
-        <div class="day-meta">${d.meta}${feelChip}${effortChip}</div>
-      </div>
-      <div>${d.zone ? `<span class="zone-chip" style="background:${ZONE_COLOR[d.zone]}">${ZONE_LABEL[d.zone]}</span>` : ''}</div>
-    `;
-    strip.appendChild(row);
-  });
+  renderDayStrip(strip, days, garminDays, mon);
 }
 
 /* ── Next week strip ─────────────────────────────────────────────── */
@@ -713,66 +740,16 @@ function renderNextWeekStrip(live, plan) {
   const title = document.getElementById('next-week-card-title');
   const strip = document.getElementById('next-week-strip');
 
-  if (!planWk) {
+  if (!planWk || !planWk.days) {
     title.innerHTML = 'Next Week';
     strip.innerHTML = '<div class="loading">No plan data for next week.</div>';
     return;
   }
 
   title.innerHTML = `Week ${nextWkNum} <span class="accent">· ${planWk.phase} · ${planWk.plan_km}km planned</span>`;
-
-  // Check if next week has live day data (partial start)
-  const nextWkData = (live.weeks || []).find(w => w.wk === nextWkNum);
-  const garminDays = {};
-  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  if (nextWkData && nextWkData.days) {
-    Object.entries(nextWkData.days).forEach(([isoDate, data]) => {
-      const d = new Date(isoDate + 'T00:00:00');
-      garminDays[d.getDate() + ' ' + MONTHS[d.getMonth()]] = data;
-    });
-  }
-
-  // Use next_week_days from live if available, else show plan summary
-  const days = live.next_week_days;
-  if (days && days.length) {
-    strip.innerHTML = '';
-    const feelLabel = ['','😩 Terrible','😕 Bad','😐 Okay','🙂 Good','😄 Great'];
-    days.forEach(d => {
-      const gd = garminDays[d.date];
-      const feelChip   = (gd && gd.feel   != null) ? `<span style="font-size:10.5px;color:var(--slate);margin-left:8px;">Feel: ${feelLabel[gd.feel] || gd.feel}</span>` : '';
-      const effortChip = (gd && gd.effort != null) ? `<span style="font-size:10.5px;color:var(--slate);margin-left:8px;">RPE: ${gd.effort}/10</span>` : '';
-      const row = document.createElement('div');
-      row.className = 'day-row';
-      row.innerHTML = `
-        <div class="day-date">${d.date}<span class="dow">${d.dow}</span></div>
-        <div>
-          <div class="day-name"><span class="status-dot" style="background:var(--slate-dim)"></span>${d.name}</div>
-          <div class="day-meta">${d.meta}${feelChip}${effortChip}</div>
-        </div>
-        <div>${d.zone ? `<span class="zone-chip" style="background:${ZONE_COLOR[d.zone]}">${ZONE_LABEL[d.zone]}</span>` : ''}</div>`;
-      strip.appendChild(row);
-    });
-  } else {
-    // Fallback: plan-level summary
-    const lr = planWk.long_run_km;
-    const lrStr = typeof lr === 'number' ? lr + 'km long run' : lr;
-    const tag = planWk.tag ? `<span style="color:var(--z5);margin-left:6px;font-size:10.5px;">· ${planWk.tag.toUpperCase()}</span>` : '';
-    strip.innerHTML = `
-      <div style="padding:12px 0 8px;color:var(--slate);font-size:12.5px;line-height:1.7;">
-        <div style="margin-bottom:10px;font-size:13px;color:var(--paper);font-weight:600;">${planWk.phase}${tag}</div>
-        <div style="display:flex;gap:14px;flex-wrap:wrap;">
-          <div style="padding:8px 14px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
-            <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:3px;">Planned volume</div>
-            <div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600;color:var(--signal);">${planWk.plan_km}km</div>
-          </div>
-          <div style="padding:8px 14px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
-            <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:3px;">Long run</div>
-            <div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600;color:var(--paper);">${lrStr}</div>
-          </div>
-        </div>
-        <div style="margin-top:12px;font-size:11.5px;color:var(--slate-dim);">Day-by-day schedule: add <code>next_week_days</code> to live.json to show full breakdown.</div>
-      </div>`;
-  }
+  const garminDays = buildGarminDayMap(live.weeks, nextWkNum);
+  const mon = wkMonday(plan, nextWkNum);
+  renderDayStrip(strip, planWk.days, garminDays, mon);
 }
 
 /* ── Quality session chart ───────────────────────────────────────── */
@@ -1853,8 +1830,8 @@ function renderDietHistory() {
 /* ── Bootstrap ───────────────────────────────────────────────────── */
 async function init() {
   const [plan, live] = await Promise.all([
-    fetch('./data/plan.json').then(r => r.json()),
-    fetch('./data/live.json').then(r => r.json()),
+    fetch('./data/plan.json', {cache:'no-store'}).then(r => r.json()),
+    fetch('./data/live.json', {cache:'no-store'}).then(r => r.json()),
   ]);
 
   renderCountdowns(plan);
