@@ -147,15 +147,22 @@
         <div class="cd-card" style="display:flex;align-items:center;justify-content:center;padding:8px 14px;">
           <img src="msr-logo.png" alt="Mod Squad Running" style="height:72px;width:auto;filter:sepia(1) saturate(4) hue-rotate(155deg) brightness(1.2) opacity(0.85);">
         </div>
-        <div class="cd-card lakeside">
-          <div class="num mono" id="cd-lakeside">—</div>
-          <div class="lbl">Days to Lakeside</div>
-          <div class="date">10k · Sun 26 Jul</div>
-        </div>
-        <div class="cd-card melbourne">
-          <div class="num mono" id="cd-melbourne">—</div>
-          <div class="lbl">Days to Melbourne</div>
-          <div class="date">A-race · Sun 11 Oct</div>
+        <div class="cd-card" style="display:flex;flex-direction:column;justify-content:center;gap:6px;min-width:160px;">
+          <div style="display:flex;align-items:baseline;gap:10px;">
+            <div class="num mono lakeside" id="cd-lakeside" style="color:var(--z5);font-size:24px;">—</div>
+            <div style="text-align:left;">
+              <div class="lbl" style="margin-top:0;font-size:9.5px;">Days · Lakeside 10k</div>
+              <div class="date" style="font-size:9px;">Sun 26 Jul</div>
+            </div>
+          </div>
+          <div style="border-top:1px solid var(--line);margin:0 -2px;"></div>
+          <div style="display:flex;align-items:baseline;gap:10px;">
+            <div class="num mono melbourne" id="cd-melbourne" style="color:var(--signal);font-size:24px;">—</div>
+            <div style="text-align:left;">
+              <div class="lbl" style="margin-top:0;font-size:9.5px;">Days · Melbourne</div>
+              <div class="date" style="font-size:9px;">A-race · Sun 11 Oct</div>
+            </div>
+          </div>
         </div>
         <div class="cd-card" id="vol-cd-card">
           <div class="num mono" id="vol-actual" style="color:var(--signal);">—</div>
@@ -176,6 +183,7 @@
     <button class="tab-btn" data-tab="performance">Performance</button>
     <button class="tab-btn" data-tab="activity">Last Activity</button>
     <button class="tab-btn" data-tab="diet">Diet</button>
+    <button class="tab-btn" data-tab="bio">Bio</button>
   </nav>
 
   <!-- THIS WEEK -->
@@ -345,6 +353,149 @@
       <div class="card">
         <h2>HR Zones <span class="accent">· lab-calibrated</span></h2>
         <div id="zone-ref"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BIO -->
+  <section class="panel" id="panel-bio">
+    <div class="grid grid-2" style="margin-bottom:18px;">
+
+      <!-- Personal Bests -->
+      <div class="card">
+        <h2>Personal Bests</h2>
+        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+          <thead>
+            <tr style="border-bottom:1px solid var(--line);">
+              <th style="text-align:left;padding:6px 10px 8px 0;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:500;">Event</th>
+              <th style="text-align:left;padding:6px 10px 8px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:500;">Time</th>
+              <th style="text-align:left;padding:6px 0 8px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:500;">Race / Year</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--line);">
+              <td style="padding:9px 10px 9px 0;color:var(--slate);">5 km</td>
+              <td style="padding:9px 10px;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--signal);">—:——</td>
+              <td style="padding:9px 0;font-size:11.5px;color:var(--slate);">—</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line);">
+              <td style="padding:9px 10px 9px 0;color:var(--slate);">10 km</td>
+              <td style="padding:9px 10px;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--signal);">—:——</td>
+              <td style="padding:9px 0;font-size:11.5px;color:var(--slate);">—</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--line);">
+              <td style="padding:9px 10px 9px 0;color:var(--slate);">Half Marathon</td>
+              <td style="padding:9px 10px;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--signal);">—:——:——</td>
+              <td style="padding:9px 0;font-size:11.5px;color:var(--slate);">—</td>
+            </tr>
+            <tr>
+              <td style="padding:9px 10px 9px 0;color:var(--slate);">Marathon</td>
+              <td style="padding:9px 10px;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--signal);">—:——:——</td>
+              <td style="padding:9px 0;font-size:11.5px;color:var(--slate);">—</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="chart-foot" style="margin-top:10px;">Lab VO₂max: 58.4 ml/kg/min (2022)</div>
+      </div>
+
+      <!-- Season Goal -->
+      <div class="card">
+        <h2>2026 Season Goal</h2>
+        <div style="font-family:'Big Shoulders Display',sans-serif;font-size:36px;font-weight:800;color:var(--signal);line-height:1;margin-bottom:8px;">SUB 3:30</div>
+        <div style="font-size:13px;color:var(--slate);margin-bottom:16px;">Melbourne Marathon · 11 October 2026 · pace 4:58/km</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
+            <span style="font-size:12px;color:var(--slate);">A goal</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--good);">Sub 3:30</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
+            <span style="font-size:12px;color:var(--slate);">B goal</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--warn);">Sub 3:45</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
+            <span style="font-size:12px;color:var(--slate);">C goal</span>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:var(--slate);">Finish strong</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-bottom:18px;">
+
+      <!-- Race History -->
+      <div class="card">
+        <h2>Key Race History</h2>
+        <div style="display:flex;flex-direction:column;gap:0;">
+          <!-- Repeat this block for each race -->
+          <div style="display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--line);align-items:flex-start;">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--slate-dim);width:38px;flex-shrink:0;padding-top:2px;">2026</div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--paper);">Melbourne Marathon <span style="font-size:10.5px;color:var(--signal);margin-left:6px;">· TARGET</span></div>
+              <div style="font-size:11.5px;color:var(--slate);margin-top:2px;">Goal: Sub 3:30 · 11 Oct</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--line);align-items:flex-start;">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--slate-dim);width:38px;flex-shrink:0;padding-top:2px;">—</div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--paper);">Add race here</div>
+              <div style="font-size:11.5px;color:var(--slate);margin-top:2px;">Time · Venue · Notes</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:14px;padding:10px 0;align-items:flex-start;">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--slate-dim);width:38px;flex-shrink:0;padding-top:2px;">—</div>
+            <div style="flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--paper);">Add race here</div>
+              <div style="font-size:11.5px;color:var(--slate);margin-top:2px;">Time · Venue · Notes</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Running Background -->
+      <div class="card">
+        <h2>Running Background</h2>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="padding:10px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
+            <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:4px;">Club</div>
+            <div style="font-size:13px;font-weight:600;color:var(--paper);">Mod Squad Running (MSR)</div>
+            <div style="font-size:11.5px;color:var(--slate);margin-top:2px;">Brighton VIC</div>
+          </div>
+          <div style="padding:10px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
+            <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:4px;">Training since</div>
+            <div style="font-size:13px;font-weight:600;color:var(--paper);">—</div>
+          </div>
+          <div style="padding:10px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
+            <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:4px;">Weekly volume (typical)</div>
+            <div style="font-size:13px;font-weight:600;color:var(--paper);">60–80 km</div>
+          </div>
+          <div style="padding:10px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
+            <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);margin-bottom:4px;">Physio</div>
+            <div style="font-size:13px;font-weight:600;color:var(--paper);">Mohsin Raza</div>
+            <div style="font-size:11.5px;color:var(--slate);margin-top:2px;">Richmond Medical Practice</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Career highlights / callouts -->
+    <div class="card">
+      <h2>Career Highlights &amp; Callouts</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:4px;">
+        <div style="padding:14px 16px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;border-left:3px solid var(--signal);">
+          <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:6px;">Highlight</div>
+          <div style="font-size:13px;font-weight:600;color:var(--paper);">Add highlight here</div>
+          <div style="font-size:11.5px;color:var(--slate);margin-top:4px;">Description / year</div>
+        </div>
+        <div style="padding:14px 16px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;border-left:3px solid var(--z2);">
+          <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:6px;">Highlight</div>
+          <div style="font-size:13px;font-weight:600;color:var(--paper);">Add highlight here</div>
+          <div style="font-size:11.5px;color:var(--slate);margin-top:4px;">Description / year</div>
+        </div>
+        <div style="padding:14px 16px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;border-left:3px solid var(--z5);">
+          <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:6px;">Highlight</div>
+          <div style="font-size:13px;font-weight:600;color:var(--paper);">Add highlight here</div>
+          <div style="font-size:11.5px;color:var(--slate);margin-top:4px;">Description / year</div>
+        </div>
       </div>
     </div>
   </section>
