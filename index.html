@@ -400,10 +400,11 @@ function renderWeekStrip(live, plan) {
   // Build a lookup of Garmin day data by date string (e.g. "20 Jun")
   const currentWkData = (live.weeks || []).find(w => w.wk === wkNum);
   const garminDays = {};
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   if (currentWkData && currentWkData.days) {
     Object.entries(currentWkData.days).forEach(([isoDate, data]) => {
       const d = new Date(isoDate + 'T00:00:00');
-      const label = d.getDate() + ' ' + d.toLocaleDateString('en-AU', {month:'short'});
+      const label = d.getDate() + ' ' + MONTHS[d.getMonth()];
       garminDays[label] = data;
     });
   }
