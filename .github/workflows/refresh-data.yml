@@ -22,13 +22,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          if [ -n "$INTERVALS_API_KEY" ]; then
-            pip install requests
-          else
-            pip install garminconnect
-          fi
-        env:
-          INTERVALS_API_KEY: ${{ secrets.INTERVALS_API_KEY }}
+          pip install requests garminconnect
 
       - name: Pull training data
         env:

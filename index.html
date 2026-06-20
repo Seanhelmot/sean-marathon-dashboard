@@ -2040,7 +2040,21 @@ function renderActivity(live, wxMap) {
 
     // Lap detail block
     let lapDetail = '';
-    if (a.work_laps && a.work_laps.length) {
+    if (a.interval_summary && a.interval_summary.length && !a.work_laps) {
+      // intervals.icu pre-formatted summary — only show for structured sessions (multi-rep first element)
+      const firstEl = a.interval_summary[0] || '';
+      const nMatch = firstEl.match(/^(\d+)x/);
+      const nReps = nMatch ? parseInt(nMatch[1]) : 1;
+      if (nReps > 1) {
+        const work = a.interval_summary[0];
+        const rec  = a.interval_summary[1];
+        lapDetail = `
+          <div style="margin-top:10px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--signal);">
+            <span style="font-size:9.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--slate);margin-right:8px;">Intervals</span>
+            ${work}${rec ? '<span style="color:var(--slate);margin:0 6px;">·</span>' + rec : ''}
+          </div>`;
+      }
+    } else if (a.work_laps && a.work_laps.length) {
       const rows = a.work_laps.map(l => `
         <tr>
           <td ${TD}>Rep ${l.rep}</td>

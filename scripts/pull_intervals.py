@@ -175,6 +175,73 @@ def _km_chunks_from_laps(laps: list, chunk_km: int = 5) -> list | None:
     return chunks or None
 
 
+# ── Garmin supplement helpers ────────────────────────────────────────────────
+
+def _garmin_decoupling(client, activity_id) -> float | None:
+    try:
+        splits = client.get_activity_splits(activity_id)
+        laps = splits.get("lapDTOs") or splits.get("activityLapDTOs") or []
+        laps = [l for l in laps if (l.get("distance") or 0) > 200
+                and (l.get("averageHR") or 0) > 100
+                and (l.get("averageSpeed") or 0) > 0]
+        if len(laps) < 4:
+            return None
+        total = sum(l["distance"] for l in laps)
+        half, cum, first, second = total / 2, 0, [], []
+        for l in laps:
+            (first if cum < half else second).append(l)
+            cum += l["distance"]
+        if not first or not second:
+            return None
+        def ratio(ls):
+            d   = sum(l["distance"] for l in ls)
+            hr  = sum(l["averageHR"] * l["distance"] for l in ls) / d
+            spd = d / sum(l.get("duration") or l.get("elapsedDuration") or 1 for l in ls)
+            return hr / spd
+        return round((ratio(second) - ratio(first)) / ratio(first) * 100, 1)
+    except Exception:
+        return None
+
+
+def _garmin_km_chunks(client, activity_id, chunk_km: int = 5) -> list | None:
+    try:
+        splits = client.get_activity_splits(activity_id)
+        laps = splits.get("lapDTOs") or splits.get("activityLapDTOs") or []
+        laps = [l for l in laps
+                if (l.get("distance") or 0) > 100
+                and (l.get("averageHR") or 0) > 80
+                and (l.get("averageSpeed") or 0) > 0]
+        if not laps:
+            return None
+        chunks, buf, cum = [], [], 0.0
+        chunk_m = chunk_km * 1000
+        def flush(buf, start_km):
+            total_d = sum(l["distance"] for l in buf)
+            total_t = sum(l.get("duration") or l.get("elapsedDuration") or 0 for l in buf)
+            if total_d < 500 or total_t < 1:
+                return None
+            avg_hr = sum(l["averageHR"] * l["distance"] for l in buf) / total_d
+            return {
+                "label":   f"{int(start_km)}–{round(start_km + total_d/1000, 1)}km",
+                "dist_km": round(total_d / 1000, 1),
+                "pace":    pace_from_speed(total_d / total_t),
+                "avg_hr":  round(avg_hr),
+            }
+        for l in laps:
+            buf.append(l)
+            cum += l["distance"]
+            if cum >= chunk_m - 200:
+                c = flush(buf, len(chunks) * chunk_km)
+                if c: chunks.append(c)
+                buf, cum = [], 0.0
+        if buf:
+            c = flush(buf, len(chunks) * chunk_km)
+            if c: chunks.append(c)
+        return chunks or None
+    except Exception:
+        return None
+
+
 # ── Main pull ────────────────────────────────────────────────────────────────
 
 def pull_data(athlete_id: str, api_key: str):
@@ -395,7 +462,7 @@ def pull_data(athlete_id: str, api_key: str):
                 "rhr":   rhr_n,
             })
 
-    # Body battery — Garmin-only; try to pull if credentials available
+    # Garmin supplement — body battery, decoupling, km_chunks for long runs
     body_battery = None
     garmin_email    = os.environ.get("GARMIN_EMAIL", "").strip()
     garmin_password = os.environ.get("GARMIN_PASSWORD", "").strip()
@@ -404,13 +471,38 @@ def pull_data(athlete_id: str, api_key: str):
             from garminconnect import Garmin
             g = Garmin(garmin_email, garmin_password)
             g.login()
-            bb = g.get_body_battery(iso(today), iso(today))
-            if bb and isinstance(bb, list):
-                entries = bb[0].get("bodyBatteryValuesArray") or []
-                if entries:
-                    body_battery = max(v[1] for v in entries if v[1] is not None)
-        except Exception:
-            pass
+            print("Garmin logged in — pulling body battery + long run splits")
+
+            # Body battery
+            try:
+                bb = g.get_body_battery(iso(today), iso(today))
+                if bb and isinstance(bb, list):
+                    entries = bb[0].get("bodyBatteryValuesArray") or []
+                    if entries:
+                        body_battery = max(v[1] for v in entries if v[1] is not None)
+            except Exception:
+                pass
+
+            # Decoupling + km_chunks for long runs missing these fields
+            long_runs = [a for a in recent_activities
+                         if (a.get("dist_km") or 0) >= 18
+                         and (a.get("decoupling_pct") is None or not a.get("km_chunks"))]
+            for act in long_runs:
+                try:
+                    garmin_acts = g.get_activities_by_date(act["date"], act["date"], "running")
+                    if not garmin_acts:
+                        continue
+                    # Pick the longest activity on that day
+                    garmin_acts.sort(key=lambda x: x.get("distance") or 0, reverse=True)
+                    gid = garmin_acts[0]["activityId"]
+                    if act.get("decoupling_pct") is None:
+                        act["decoupling_pct"] = _garmin_decoupling(g, gid)
+                    if not act.get("km_chunks"):
+                        act["km_chunks"] = _garmin_km_chunks(g, gid)
+                except Exception:
+                    pass
+        except Exception as e:
+            print(f"Garmin supplement skipped: {e}")
 
     # Preserve this_week_days from existing live.json
     this_week_days = None
