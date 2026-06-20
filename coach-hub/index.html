@@ -8,129 +8,102 @@
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink:      #060b12;
-    --panel:    #0d1520;
-    --raised:   #141f2e;
-    --line:     #1e2d40;
-    --slate:    #6b8299;
-    --paper:    #d6e4f0;
-    --signal:   #00d4ff;
-    --good:     #22c55e;
-    --warn:     #f59e0b;
-    --bad:      #ef4444;
-    --z2:       #4ade80;
-    --z4:       #00aaff;
+    --ink:    #060b12; --panel:  #0d1520; --raised: #141f2e; --line:   #1e2d40;
+    --slate:  #6b8299; --paper:  #d6e4f0; --signal: #00d4ff;
+    --good:   #22c55e; --warn:   #f59e0b; --bad:    #ef4444;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--ink); color: var(--paper); font-family: 'Inter', sans-serif; min-height: 100vh; }
 
-  header {
-    background: var(--panel);
-    border-bottom: 1px solid var(--line);
-    padding: 20px 32px;
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
-  }
-  header h1 {
-    font-family: 'Big Shoulders Display', sans-serif;
-    font-size: 28px;
-    font-weight: 800;
-    color: var(--signal);
-    letter-spacing: .03em;
-  }
-  header .sub { font-size: 12px; color: var(--slate); }
+  /* ── Header ── */
+  header { background: var(--panel); border-bottom: 1px solid var(--line); padding: 18px 32px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+  header h1 { font-family: 'Big Shoulders Display', sans-serif; font-size: 26px; font-weight: 800; color: var(--signal); letter-spacing: .03em; }
+  header .sub { font-size: 11.5px; color: var(--slate); flex: 1; }
 
-  .wrap { max-width: 1100px; margin: 0 auto; padding: 28px 24px; }
+  /* ── Flags bar ── */
+  #flags-bar { display: none; background: rgba(245,158,11,.07); border-bottom: 1px solid rgba(245,158,11,.2); padding: 10px 32px; font-size: 12px; color: var(--warn); font-family: 'IBM Plex Mono', monospace; }
+  #flags-bar span { margin-right: 20px; }
 
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 24px; }
+  .section-head { font-size: 10px; font-family: 'IBM Plex Mono', monospace; text-transform: uppercase; letter-spacing: .1em; color: var(--slate); margin-bottom: 12px; margin-top: 24px; }
 
-  .athlete-card {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 18px 20px;
-    text-decoration: none;
-    color: inherit;
-    display: block;
-    transition: border-color .15s, background .15s;
-    position: relative;
-  }
-  .athlete-card:hover { border-color: var(--signal); background: var(--raised); }
+  /* ── Grid — single column on narrow, up to 2 cols on wide ── */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; }
 
-  .athlete-name {
-    font-family: 'Big Shoulders Display', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--paper);
-    margin-bottom: 2px;
-  }
-  .athlete-meta { font-size: 11px; color: var(--slate); margin-bottom: 14px; font-family: 'IBM Plex Mono', monospace; }
+  /* ── Athlete card ── */
+  .acard { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+  .acard.flagged { border-color: rgba(245,158,11,.45); }
 
-  .status-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-  .chip {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10.5px;
-    padding: 3px 8px;
-    border-radius: 3px;
-    border: 1px solid;
-    white-space: nowrap;
-  }
-  .chip.green  { color: var(--good); border-color: var(--good);  background: rgba(34,197,94,.08); }
-  .chip.amber  { color: var(--warn); border-color: var(--warn);  background: rgba(245,158,11,.08); }
-  .chip.red    { color: var(--bad);  border-color: var(--bad);   background: rgba(239,68,68,.08); }
-  .chip.cyan   { color: var(--signal); border-color: var(--signal); background: rgba(0,212,255,.06); }
-  .chip.slate  { color: var(--slate); border-color: var(--line); }
+  .acard-head { padding: 16px 18px 12px; cursor: pointer; user-select: none; }
+  .acard-head:hover { background: var(--raised); }
 
+  .name-row { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 2px; gap: 8px; }
+  .aname { font-family: 'Big Shoulders Display', sans-serif; font-size: 19px; font-weight: 700; color: var(--paper); }
+  .stale { font-size: 9.5px; font-family: 'IBM Plex Mono', monospace; color: var(--warn); }
+  .ameta { font-size: 10.5px; color: var(--slate); margin-bottom: 11px; font-family: 'IBM Plex Mono', monospace; }
+
+  /* chips */
+  .chip-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 11px; }
+  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; padding: 2px 7px; border-radius: 3px; border: 1px solid; white-space: nowrap; }
+  .ch-green  { color: var(--good);   border-color: var(--good);   background: rgba(34,197,94,.08); }
+  .ch-amber  { color: var(--warn);   border-color: var(--warn);   background: rgba(245,158,11,.08); }
+  .ch-red    { color: var(--bad);    border-color: var(--bad);    background: rgba(239,68,68,.08); }
+  .ch-cyan   { color: var(--signal); border-color: var(--signal); background: rgba(0,212,255,.06); }
+  .ch-slate  { color: var(--slate);  border-color: var(--line); }
+
+  /* flag chips — more prominent */
+  .flag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+  .flag-chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; padding: 2px 7px; border-radius: 3px; white-space: nowrap; }
+  .fc-warn { color: var(--warn); border: 1px solid var(--warn); background: rgba(245,158,11,.12); }
+  .fc-bad  { color: var(--bad);  border: 1px solid var(--bad);  background: rgba(239,68,68,.12); }
+  .fc-info { color: var(--slate); border: 1px solid var(--line); }
+
+  /* stat tiles */
   .stat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; }
-  .stat-tile {
-    background: var(--raised);
-    border: 1px solid var(--line);
-    border-radius: 3px;
-    padding: 7px 9px;
-  }
-  .stat-tile .v { font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 600; color: var(--paper); }
-  .stat-tile .l { font-size: 9.5px; color: var(--slate); text-transform: uppercase; letter-spacing: .06em; margin-top: 2px; }
+  .stile { background: var(--raised); border: 1px solid var(--line); border-radius: 3px; padding: 7px 9px; }
+  .stile .v { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; color: var(--paper); }
+  .stile .l { font-size: 9px; color: var(--slate); text-transform: uppercase; letter-spacing: .06em; margin-top: 2px; }
 
-  .stale-badge {
-    position: absolute; top: 12px; right: 14px;
-    font-size: 9.5px; font-family: 'IBM Plex Mono', monospace;
-    color: var(--warn); letter-spacing: .05em;
+  /* toggle bar */
+  .toggle-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 18px; border-top: 1px solid var(--line);
+    font-size: 11px; color: var(--slate); cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace;
+    background: transparent; width: 100%; text-align: left;
   }
+  .toggle-bar:hover { background: var(--raised); color: var(--paper); }
+  .toggle-bar .arrow { font-size: 10px; transition: transform .2s; }
+  .toggle-bar.open .arrow { transform: rotate(180deg); }
 
-  .loading-card {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 6px;
-    padding: 24px 20px;
-    text-align: center;
-    color: var(--slate);
-    font-size: 12px;
-  }
+  /* activities panel */
+  .acts-panel { display: none; border-top: 1px solid var(--line); padding: 0 18px; }
+  .acts-panel.open { display: block; }
 
-  .error-card { border-color: var(--bad); }
-  .error-card .athlete-name { color: var(--bad); }
+  .act-row { padding: 9px 0; border-bottom: 1px solid var(--line); }
+  .act-row:last-child { border-bottom: none; }
+  .act-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px; }
+  .act-name { font-size: 12px; font-weight: 600; color: var(--paper); }
+  .act-date { font-size: 10px; color: var(--slate); font-family: 'IBM Plex Mono', monospace; }
+  .act-stats { font-size: 10.5px; color: var(--slate); font-family: 'IBM Plex Mono', monospace; margin-bottom: 2px; }
+  .act-laps  { font-size: 10px; color: var(--signal); font-family: 'IBM Plex Mono', monospace; }
 
-  .section-head {
-    font-size: 10px; font-family: 'IBM Plex Mono', monospace;
-    text-transform: uppercase; letter-spacing: .1em;
-    color: var(--slate); margin-bottom: 12px; margin-top: 24px;
-  }
+  /* lap table */
+  .lap-table { width: 100%; border-collapse: collapse; margin-top: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; }
+  .lap-table th { text-align: left; padding: 3px 8px; color: var(--slate); font-weight: 500; font-size: 9.5px; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--line); }
+  .lap-table td { padding: 3px 8px; color: var(--paper); }
+  .lap-table tr:not(:last-child) td { border-bottom: 1px solid rgba(30,45,64,.6); }
 
-  .add-btn {
-    display: flex; align-items: center; justify-content: center;
-    gap: 8px; padding: 24px;
-    border: 1px dashed var(--line); border-radius: 6px;
-    color: var(--slate); font-size: 13px; cursor: default;
-    background: transparent;
-  }
-  .add-btn code {
-    font-family: 'IBM Plex Mono', monospace; font-size: 11.5px;
-    background: var(--raised); padding: 3px 8px; border-radius: 3px;
-    color: var(--signal);
-  }
+  /* dash link */
+  .dash-link { display: block; text-align: center; padding: 9px; font-size: 11px; color: var(--signal); font-family: 'IBM Plex Mono', monospace; border-top: 1px solid var(--line); text-decoration: none; }
+  .dash-link:hover { background: var(--raised); }
 
-  footer { text-align: center; padding: 32px; font-size: 11px; color: var(--slate); }
+  .error-card { border-color: var(--bad); padding: 18px; border-radius: 6px; background: var(--panel); }
+
+  .add-hint { padding: 18px 20px; border: 1px dashed var(--line); border-radius: 6px; color: var(--slate); font-size: 11.5px; line-height: 1.7; }
+  .add-hint code { font-family: 'IBM Plex Mono', monospace; background: var(--raised); padding: 2px 6px; border-radius: 3px; color: var(--signal); font-size: 11px; }
+
+  footer { text-align: center; padding: 28px; font-size: 11px; color: var(--slate); margin-top: 16px; }
 </style>
 </head>
 <body>
@@ -140,27 +113,27 @@
   <div class="sub" id="hub-sub">Loading athletes…</div>
 </header>
 
+<div id="flags-bar"></div>
+
 <div class="wrap">
   <div class="section-head">Athletes</div>
   <div class="grid" id="athlete-grid">
-    <div class="loading-card">Fetching athlete data…</div>
+    <div style="color:var(--slate);font-size:13px;padding:20px;">Fetching athlete data…</div>
   </div>
 
   <div class="section-head" style="margin-top:32px;">Add a new athlete</div>
-  <div class="add-btn">
-    Run <code>python scripts/create_athlete.py --name "Athlete Name" --garmin-email … --garmin-password … --github-token … --github-owner …</code>
-    then add their URL below
+  <div class="add-hint">
+    Run <code>python scripts/create_athlete.py --name "Jane Smith" --garmin-email … --garmin-password … --github-token … --github-owner …</code>
+    then add their dashboard URL to the <code>ATHLETES</code> array at the top of this file.
   </div>
 </div>
 
-<footer id="hub-footer">Coach Hub · data fetched live from each athlete's GitHub Pages dashboard</footer>
+<footer>Coach Hub · data pulled live from each athlete's GitHub Pages · refreshes on page load</footer>
 
 <script>
-/*
-  ── ATHLETE ROSTER ───────────────────────────────────────────────────
-  Add each athlete here. live_url points to their GitHub Pages site.
-  plan_url and live_url must be CORS-accessible (GitHub Pages are public).
-*/
+/* ── ATHLETE ROSTER ─────────────────────────────────────────────────
+   Add each athlete here after running create_athlete.py.
+   All URLs point to the athlete's own GitHub Pages deployment.      */
 const ATHLETES = [
   {
     name:     'Sean Helmot',
@@ -168,7 +141,6 @@ const ATHLETES = [
     plan_url: 'https://seanhelmot.github.io/sean-marathon-dashboard/data/plan.json',
     dash_url: 'https://seanhelmot.github.io/sean-marathon-dashboard/',
   },
-  // Add more athletes below:
   // {
   //   name:     'Jane Smith',
   //   live_url: 'https://seanhelmot.github.io/jane-smith-marathon-dashboard/data/live.json',
@@ -177,111 +149,249 @@ const ATHLETES = [
   // },
 ];
 
+/* ── Helpers ──────────────────────────────────────────────────────── */
 function fmtPace(dec) {
   if (dec == null) return '—';
   const mins = Math.floor(dec);
   const secs = String(Math.round((dec % 1) * 100)).padStart(2, '0');
-  return `${mins}:${secs}/km`;
+  return `${mins}:${secs}`;
 }
 
-function chipHRV(hrv) {
-  if (hrv == null) return '<span class="chip slate">HRV —</span>';
-  const cls = hrv >= 75 ? 'green' : hrv >= 60 ? 'amber' : 'red';
-  return `<span class="chip ${cls}">HRV ${hrv}ms</span>`;
-}
-function chipSleep(s) {
-  if (s == null) return '<span class="chip slate">Sleep —</span>';
-  const cls = s >= 80 ? 'green' : s >= 65 ? 'amber' : 'red';
-  return `<span class="chip ${cls}">Sleep ${s}</span>`;
-}
-function chipBB(bb) {
-  if (bb == null) return '';
-  const cls = bb >= 60 ? 'green' : bb >= 30 ? 'amber' : 'red';
-  return `<span class="chip ${cls}">BB ${bb}</span>`;
-}
-function chipRHR(rhr) {
-  if (rhr == null) return '';
-  return `<span class="chip cyan">RHR ${rhr}</span>`;
-}
-function chipWeek(wk, total) {
-  if (wk == null) return '';
-  return `<span class="chip slate">W${wk}/${total}</span>`;
+function fmtDur(s) {
+  if (!s) return '';
+  const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
+  return h > 0 ? `${h}h${m}m` : `${m}m`;
 }
 
-function staleLabel(generatedAt) {
-  if (!generatedAt) return '';
-  const ago = Math.round((Date.now() - new Date(generatedAt)) / 60000);
-  if (ago < 120) return '';
-  const label = ago < 1440 ? `${Math.round(ago/60)}h ago` : `${Math.round(ago/1440)}d ago`;
-  return `<div class="stale-badge">⚠ ${label}</div>`;
+const FEEL = ['','😩','😕','😐','🙂','😄'];
+
+/* ── Flag computation ─────────────────────────────────────────────── */
+function computeFlags(live) {
+  const flags = [];
+  const t = live.today || {};
+  const hrv14 = [...(live.sleep_hrv_14d || [])].sort((a,b) => a.date.localeCompare(b.date));
+
+  // HRV dropping: last 3 nights avg vs prior 3
+  if (hrv14.length >= 6) {
+    const avg = arr => arr.reduce((s,v) => s+v, 0) / arr.length;
+    const r3 = hrv14.slice(-3).map(d => d.hrv).filter(v => v != null);
+    const p3 = hrv14.slice(-6,-3).map(d => d.hrv).filter(v => v != null);
+    if (r3.length >= 2 && p3.length >= 2 && avg(r3) < avg(p3) - 5)
+      flags.push({ cls:'fc-warn', text:`HRV ↓ ${Math.round(avg(p3)-avg(r3))}ms (3d)` });
+  }
+
+  // RHR spike: today vs 7d rolling
+  const rhrVals = hrv14.slice(-7).map(d => d.rhr).filter(v => v != null);
+  if (t.rhr && rhrVals.length >= 3) {
+    const avg7 = rhrVals.reduce((s,v) => s+v, 0) / rhrVals.length;
+    if (t.rhr > avg7 + 3)
+      flags.push({ cls:'fc-warn', text:`RHR ↑${Math.round(t.rhr - avg7)}bpm` });
+  }
+
+  // Two consecutive bad sleep nights
+  const sleepRecent = hrv14.slice(-2).map(d => d.score).filter(v => v != null);
+  if (sleepRecent.length === 2 && sleepRecent.every(s => s < 65))
+    flags.push({ cls:'fc-warn', text:`Poor sleep ×2` });
+
+  // Body battery critically low
+  if (t.body_battery != null && t.body_battery < 25)
+    flags.push({ cls:'fc-bad', text:`BB ${t.body_battery}` });
+
+  // LR decoupling > 5%
+  const lastLR = (live.recent_activities || []).find(a => a.decoupling_pct != null);
+  if (lastLR?.decoupling_pct > 5)
+    flags.push({ cls:'fc-warn', text:`Decoupling +${lastLR.decoupling_pct}%` });
+
+  // Training gap — no activity in 2+ days
+  const acts = live.recent_activities || [];
+  if (acts.length) {
+    const today = new Date(); today.setHours(0,0,0,0);
+    const lastRun = new Date(acts[0].date + 'T00:00:00');
+    const gap = Math.round((today - lastRun) / 86400000);
+    if (gap >= 2)
+      flags.push({ cls:'fc-info', text:`No run ${gap}d` });
+  }
+
+  return flags;
 }
 
-async function loadAthlete(athlete) {
-  try {
-    const [live, plan] = await Promise.all([
-      fetch(athlete.live_url, {cache:'no-store'}).then(r => { if(!r.ok) throw new Error(r.status); return r.json(); }),
-      fetch(athlete.plan_url, {cache:'no-store'}).then(r => { if(!r.ok) throw new Error(r.status); return r.json(); }),
-    ]);
+/* ── Activity rows ────────────────────────────────────────────────── */
+function renderActs(live) {
+  const acts = (live.recent_activities || []).slice(0, 8);
+  if (!acts.length) return '<div class="act-row" style="color:var(--slate);font-size:11.5px;">No recent activities</div>';
 
-    const t = live.today || {};
-    const wk = live.current_week;
-    const total = plan.build_weeks;
-    const race = plan.race || '';
-    const raceDate = plan.race_date ? new Date(plan.race_date) : null;
-    const daysToRace = raceDate ? Math.round((raceDate - new Date()) / 86400000) : null;
+  return acts.map(a => {
+    const date = new Date(a.date + 'T00:00:00');
+    const dateStr = date.toLocaleDateString('en-AU', {weekday:'short', day:'numeric', month:'short'});
 
-    // This week's volume
-    const thisWkData = (live.weeks || []).find(w => w.wk === wk);
-    const thisWkKm = thisWkData?.actual_km != null ? Math.round(thisWkData.actual_km) + 'km' : '—';
-    const planKm = plan.weeks?.find(w => w.wk === wk)?.plan_km;
+    const tokens = [
+      a.dist_km != null   ? `${a.dist_km.toFixed(1)}km` : null,
+      a.duration_s        ? fmtDur(a.duration_s)         : null,
+      a.pace != null      ? `${fmtPace(a.pace)}/km`      : null,
+      a.avg_hr != null    ? `HR ${a.avg_hr}${a.max_hr ? '/' + a.max_hr : ''}` : null,
+      a.feel != null      ? FEEL[a.feel]                  : null,
+      a.effort != null    ? `RPE ${a.effort}`             : null,
+    ].filter(Boolean).join(' · ');
 
-    // Latest threshold pace
-    const qualWeeks = (live.weeks || []).filter(w => w.quality?.pace_min_per_km);
-    const latestThresh = qualWeeks.length ? qualWeeks[qualWeeks.length - 1].quality.pace_min_per_km : null;
+    // Work laps
+    let lapHtml = '';
+    if (a.work_laps?.length) {
+      const repRows = a.work_laps.map(l =>
+        `<tr><td>Rep ${l.rep}</td><td>${l.dist_km}km</td><td>${fmtPace(l.pace)}/km</td><td>${l.avg_hr ?? '—'}bpm</td><td>${l.max_hr ?? '—'}bpm</td></tr>`
+      ).join('');
+      lapHtml = `<table class="lap-table">
+        <thead><tr><th>Rep</th><th>Dist</th><th>Pace</th><th>Avg HR</th><th>Max HR</th></tr></thead>
+        <tbody>${repRows}</tbody>
+      </table>`;
+    } else if (a.km_chunks?.length) {
+      const dc = a.decoupling_pct != null
+        ? `<span style="color:${a.decoupling_pct<=5?'var(--good)':'var(--warn)'}"> · Decoupling ${a.decoupling_pct>0?'+':''}${a.decoupling_pct}%</span>` : '';
+      const chunkRows = a.km_chunks.map(c =>
+        `<tr><td>${c.label}</td><td>${fmtPace(c.pace)}/km</td><td>${c.avg_hr ?? '—'}bpm</td></tr>`
+      ).join('');
+      lapHtml = `<div style="font-size:9.5px;color:var(--signal);text-transform:uppercase;letter-spacing:.06em;margin-top:5px;font-family:'IBM Plex Mono',monospace;">5km Splits${dc}</div>
+      <table class="lap-table">
+        <thead><tr><th>Segment</th><th>Pace</th><th>Avg HR</th></tr></thead>
+        <tbody>${chunkRows}</tbody>
+      </table>`;
+    }
 
-    // Latest LR decoupling
-    const recentActs = live.recent_activities || [];
-    const lastLR = recentActs.find(a => a.decoupling_pct != null);
-    const decouple = lastLR?.decoupling_pct;
+    return `<div class="act-row">
+      <div class="act-top">
+        <span class="act-name">${a.name}</span>
+        <span class="act-date">${dateStr}</span>
+      </div>
+      <div class="act-stats">${tokens}</div>
+      ${lapHtml}
+    </div>`;
+  }).join('');
+}
 
-    const statTile = (v, l) => `<div class="stat-tile"><div class="v">${v}</div><div class="l">${l}</div></div>`;
+/* ── Build one athlete card ───────────────────────────────────────── */
+function buildCard(id, athlete, live, plan) {
+  const t = live.today || {};
+  const wk = live.current_week;
+  const total = plan.build_weeks;
+  const raceDate = plan.race_date ? new Date(plan.race_date) : null;
+  const daysToRace = raceDate ? Math.round((raceDate - new Date()) / 86400000) : null;
 
-    return `<a class="athlete-card" href="${athlete.dash_url}" target="_blank" rel="noopener">
-      ${staleLabel(live.generated_at)}
-      <div class="athlete-name">${plan.athlete || athlete.name}</div>
-      <div class="athlete-meta">${race}${daysToRace != null ? ' · ' + daysToRace + 'd to race' : ''}</div>
-      <div class="status-row">
-        ${chipWeek(wk, total)}
-        ${chipHRV(t.hrv_7d_avg)}
-        ${chipSleep(t.sleep_score)}
-        ${chipBB(t.body_battery)}
-        ${chipRHR(t.rhr)}
+  const thisWkData = (live.weeks || []).find(w => w.wk === wk);
+  const thisWkKm = thisWkData?.actual_km != null ? Math.round(thisWkData.actual_km) + 'km' : '—';
+  const planKm = (plan.weeks || []).find(w => w.wk === wk)?.plan_km;
+
+  const qualWeeks = (live.weeks || []).filter(w => w.quality?.pace_min_per_km);
+  const latestThresh = qualWeeks.length ? qualWeeks[qualWeeks.length-1].quality.pace_min_per_km : null;
+
+  const lastLR = (live.recent_activities || []).find(a => a.decoupling_pct != null);
+  const decouple = lastLR?.decoupling_pct;
+
+  // Stale check
+  const staleHtml = (() => {
+    if (!live.generated_at) return '';
+    const ago = Math.round((Date.now() - new Date(live.generated_at)) / 60000);
+    if (ago < 120) return '';
+    return `<span class="stale">⚠ ${ago < 1440 ? Math.round(ago/60)+'h' : Math.round(ago/1440)+'d'} stale</span>`;
+  })();
+
+  // Readiness chips
+  const chipHRV = t.hrv_7d_avg != null
+    ? `<span class="chip ${t.hrv_7d_avg>=75?'ch-green':t.hrv_7d_avg>=60?'ch-amber':'ch-red'}">HRV ${t.hrv_7d_avg}ms</span>` : '';
+  const chipSleep = t.sleep_score != null
+    ? `<span class="chip ${t.sleep_score>=80?'ch-green':t.sleep_score>=65?'ch-amber':'ch-red'}">Sleep ${t.sleep_score}</span>` : '';
+  const chipBB = t.body_battery != null
+    ? `<span class="chip ${t.body_battery>=60?'ch-green':t.body_battery>=30?'ch-amber':'ch-red'}">BB ${t.body_battery}</span>` : '';
+  const chipRHR = t.rhr != null
+    ? `<span class="chip ch-cyan">RHR ${t.rhr}</span>` : '';
+
+  // Flags
+  const flags = computeFlags(live);
+  const flagsHtml = flags.length
+    ? `<div class="flag-row">${flags.map(f=>`<span class="flag-chip ${f.cls}">⚠ ${f.text}</span>`).join('')}</div>` : '';
+
+  // Stat tiles
+  const st = (v,l) => `<div class="stile"><div class="v">${v}</div><div class="l">${l}</div></div>`;
+
+  const actsHtml = renderActs(live);
+  const actCount = (live.recent_activities||[]).length;
+
+  const cardEl = document.createElement('div');
+  cardEl.className = 'acard' + (flags.length ? ' flagged' : '');
+  cardEl.id = `card-${id}`;
+  cardEl.innerHTML = `
+    <div class="acard-head" onclick="toggleActs(${id})">
+      <div class="name-row">
+        <span class="aname">${plan.athlete || athlete.name}</span>
+        ${staleHtml}
+      </div>
+      <div class="ameta">${plan.race||''} · W${wk}/${total}${daysToRace!=null?' · '+daysToRace+'d to race':''}</div>
+      ${flagsHtml}
+      <div class="chip-row">
+        ${chipHRV}${chipSleep}${chipBB}${chipRHR}
       </div>
       <div class="stat-grid">
-        ${statTile(thisWkKm + (planKm ? ' / ' + planKm + 'km' : ''), 'This week')}
-        ${statTile(latestThresh ? fmtPace(latestThresh) : '—', 'Thresh pace')}
-        ${statTile(decouple != null ? (decouple > 0 ? '+' : '') + decouple + '%' : '—', 'LR decoupling')}
+        ${st(thisWkKm+(planKm?' / '+planKm+'km':''), 'This week')}
+        ${st(latestThresh ? fmtPace(latestThresh)+'/km' : '—', 'Thresh pace')}
+        ${st(decouple!=null?(decouple>0?'+':'')+decouple+'%':'—', 'LR decouple')}
       </div>
-    </a>`;
-  } catch (e) {
-    return `<div class="athlete-card error-card">
-      <div class="athlete-name">${athlete.name}</div>
-      <div class="athlete-meta" style="color:var(--bad);">Could not load data — ${e.message}</div>
-      <div style="margin-top:8px;font-size:11.5px;color:var(--slate);">
-        <a href="${athlete.dash_url}" target="_blank" style="color:var(--signal);">Open dashboard →</a>
-      </div>
-    </div>`;
-  }
+    </div>
+    <button class="toggle-bar" id="toggle-${id}" onclick="toggleActs(${id})">
+      <span>▾ Activities (last ${Math.min(actCount,8)})</span>
+      <span class="arrow">▾</span>
+    </button>
+    <div class="acts-panel" id="acts-${id}">
+      <div style="padding-bottom:4px;">${actsHtml}</div>
+    </div>
+    <a class="dash-link" href="${athlete.dash_url}" target="_blank" rel="noopener">Open full dashboard →</a>
+  `;
+  return { el: cardEl, flagCount: flags.length };
 }
 
+function toggleActs(id) {
+  const panel = document.getElementById(`acts-${id}`);
+  const btn   = document.getElementById(`toggle-${id}`);
+  const open  = panel.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  event.stopPropagation();
+}
+
+/* ── Main ─────────────────────────────────────────────────────────── */
 async function init() {
   const grid = document.getElementById('athlete-grid');
-  const cards = await Promise.all(ATHLETES.map(loadAthlete));
-  grid.innerHTML = cards.join('');
+  grid.innerHTML = '';
+
+  const results = await Promise.all(ATHLETES.map(async (athlete, id) => {
+    try {
+      const [live, plan] = await Promise.all([
+        fetch(athlete.live_url, {cache:'no-store'}).then(r => { if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }),
+        fetch(athlete.plan_url, {cache:'no-store'}).then(r => { if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }),
+      ]);
+      return { ok: true, ...buildCard(id, athlete, live, plan) };
+    } catch(e) {
+      const div = document.createElement('div');
+      div.className = 'error-card';
+      div.innerHTML = `<div style="font-family:'Big Shoulders Display',sans-serif;font-size:18px;font-weight:700;color:var(--bad);margin-bottom:6px;">${athlete.name}</div>
+        <div style="font-size:11.5px;color:var(--slate);margin-bottom:10px;">Could not load — ${e.message}</div>
+        <a href="${athlete.dash_url}" target="_blank" style="font-size:11.5px;color:var(--signal);">Open dashboard →</a>`;
+      return { ok: false, el: div, flagCount: 0 };
+    }
+  }));
+
+  // Sort: flagged athletes first
+  results.sort((a,b) => b.flagCount - a.flagCount);
+  results.forEach(r => grid.appendChild(r.el));
+
+  // Flags summary bar
+  const totalFlags = results.reduce((s,r) => s + r.flagCount, 0);
+  const flagBar = document.getElementById('flags-bar');
+  if (totalFlags > 0) {
+    const flaggedAthletes = results.filter(r => r.flagCount > 0);
+    flagBar.style.display = 'block';
+    flagBar.innerHTML = `⚠ ${totalFlags} flag${totalFlags!==1?'s':''} across ${flaggedAthletes.length} athlete${flaggedAthletes.length!==1?'s':''} — review cards below`;
+  }
 
   const now = new Date().toLocaleTimeString('en-AU', {hour:'2-digit', minute:'2-digit'});
   document.getElementById('hub-sub').textContent =
-    `${ATHLETES.length} athlete${ATHLETES.length !== 1 ? 's' : ''} · refreshed ${now}`;
+    `${ATHLETES.length} athlete${ATHLETES.length!==1?'s':''} · refreshed ${now}${totalFlags ? ' · ⚠ '+totalFlags+' flags' : ' · all clear'}`;
 }
 
 init();
