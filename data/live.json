@@ -31,7 +31,7 @@
     {
       "dow": "Wed",
       "date": "17 Jun",
-      "name": "4\u00c3\u20143km Threshold",
+      "name": "4Ã—3km Threshold",
       "meta": "13.3km reps · avg HR 156, max 166 · 4:35/km",
       "zone": "z4",
       "status": "done"
@@ -572,7 +572,37 @@
       "feel": 4,
       "effort": 8.0,
       "elevation_gain": 10.0,
-      "avg_cadence": 175.0
+      "avg_cadence": 175.0,
+      "work_laps": [
+        {
+          "rep": 1,
+          "dist_km": 3.0,
+          "pace": 4.23,
+          "avg_hr": 151,
+          "max_hr": 162
+        },
+        {
+          "rep": 2,
+          "dist_km": 3.0,
+          "pace": 4.24,
+          "avg_hr": 156,
+          "max_hr": 161
+        },
+        {
+          "rep": 3,
+          "dist_km": 3.0,
+          "pace": 4.24,
+          "avg_hr": 161,
+          "max_hr": 165
+        },
+        {
+          "rep": 4,
+          "dist_km": 3.0,
+          "pace": 4.26,
+          "avg_hr": 162,
+          "max_hr": 166
+        }
+      ]
     },
     {
       "date": "2026-06-17",
@@ -611,7 +641,34 @@
       "feel": 4,
       "effort": 7.0,
       "elevation_gain": 32.0,
-      "avg_cadence": 168.328125
+      "avg_cadence": 168.328125,
+      "km_chunks": [
+        {
+          "label": "0-5km",
+          "dist_km": 5.0,
+          "pace": 5.09,
+          "avg_hr": 130
+        },
+        {
+          "label": "5-15km",
+          "dist_km": 10.0,
+          "pace": 5.07,
+          "avg_hr": 138
+        },
+        {
+          "label": "15-22km",
+          "dist_km": 7.0,
+          "pace": 4.52,
+          "avg_hr": 147
+        },
+        {
+          "label": "22-28km",
+          "dist_km": 6.0,
+          "pace": 4.57,
+          "avg_hr": 148
+        }
+      ],
+      "decoupling_pct": 4.3
     },
     {
       "date": "2026-06-14",

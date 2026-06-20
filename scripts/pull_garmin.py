@@ -88,33 +88,56 @@ def _work_interval_stats(client, activity_id):
 
 def _quality_laps(client, activity_id):
     """
-    Return per-rep details for a quality session: list of work laps with
-    rep number, distance, pace, avg HR, max HR.
+    Return per-rep details for a quality session.
+    Groups laps into reps by detecting short recovery laps (<500m, <=150s) as
+    separators between efforts. Handles both 1km autolaps grouped into 3km reps
+    and single large-lap formats. Filters out warmup/cooldown groups with avg HR < 130.
     """
-    WORK_HR_FLOOR = 158
     try:
         splits = client.get_activity_splits(activity_id)
         laps = splits.get("lapDTOs") or splits.get("activityLapDTOs") or []
-        work_laps = [
-            l for l in laps
-            if (l.get("averageHR") or 0) >= WORK_HR_FLOOR
-            and (l.get("distance") or 0) > 200
-        ]
-        if not work_laps:
+        if not laps:
             return None
+
+        # Split into groups separated by short recovery laps
+        groups, buf = [], []
+        for l in laps:
+            dist = l.get("distance") or 0
+            dur  = l.get("duration") or l.get("elapsedDuration") or 0
+            # Recovery lap: short distance with ≤150s (2.5 min)
+            if dist < 500 and dur <= 150 and buf:
+                groups.append(buf)
+                buf = []
+            elif dist > 100:
+                buf.append(l)
+        if buf:
+            groups.append(buf)
+
+        if not groups:
+            return None
+
+        # Filter warmup/cooldown groups (avg HR too low)
+        HR_FLOOR = 130
         result = []
-        for i, l in enumerate(work_laps):
-            dist  = l["distance"]
-            dur   = l.get("duration") or l.get("elapsedDuration") or 0
-            speed = dist / dur if dur > 0 else 0
+        for i, group in enumerate(groups):
+            total_d = sum(l["distance"] for l in group)
+            if total_d < 200:
+                continue
+            total_t = sum(l.get("duration") or l.get("elapsedDuration") or 0 for l in group)
+            avg_hr  = sum((l.get("averageHR") or 0) * l["distance"] for l in group) / total_d
+            if avg_hr < HR_FLOOR:
+                continue
+            max_hr  = max((l.get("maxHR") or 0) for l in group)
+            speed   = total_d / total_t if total_t > 0 else 0
             result.append({
-                "rep":     i + 1,
-                "dist_km": round(dist / 1000, 2),
+                "rep":     len(result) + 1,
+                "dist_km": round(total_d / 1000, 2),
                 "pace":    pace_from_speed(speed),
-                "avg_hr":  round(l["averageHR"]),
-                "max_hr":  round(l["maxHR"]) if l.get("maxHR") else None,
+                "avg_hr":  round(avg_hr),
+                "max_hr":  round(max_hr) if max_hr else None,
             })
-        return result
+
+        return result or None
     except Exception:
         return None
 
