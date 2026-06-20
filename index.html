@@ -180,8 +180,8 @@
   <nav class="tabs">
     <button class="tab-btn" data-tab="bio">Bio</button>
     <button class="tab-btn active" data-tab="week">This Week</button>
-    <button class="tab-btn" data-tab="activity">Last Activity</button>
-    <button class="tab-btn" data-tab="performance">Performance</button>
+    <button class="tab-btn" data-tab="activity">Last 7d Activities</button>
+    <button class="tab-btn" data-tab="performance">Performance Metrics</button>
     <button class="tab-btn" data-tab="season">Season Overview</button>
     <button class="tab-btn" data-tab="diet">Diet</button>
   </nav>
@@ -264,11 +264,7 @@
 
   <!-- LAST ACTIVITY -->
   <section class="panel" id="panel-activity">
-    <div class="card" style="margin-bottom:18px;">
-      <h2>Most Recent Run <span class="accent" id="activity-date-label"></span></h2>
-      <div id="activity-observation" style="font-size:13.5px;line-height:1.7;color:var(--paper);margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--line);"></div>
-      <div id="activity-body"><div class="loading">Loading…</div></div>
-    </div>
+    <div id="activity-list"><div class="loading">Loading…</div></div>
   </section>
 
   <!-- DIET -->
@@ -1700,7 +1696,7 @@ function renderReadiness(live) {
   if (bioV && t.vo2max_garmin != null) bioV.textContent = t.vo2max_garmin;
 }
 
-/* ── Last Activity ───────────────────────────────────────────────── */
+/* ── Last 7d Activities ──────────────────────────────────────────── */
 function fmtDuration(secs) {
   if (!secs) return '—';
   const h = Math.floor(secs / 3600);
@@ -1709,53 +1705,14 @@ function fmtDuration(secs) {
   return h > 0 ? `${h}h ${m}m` : `${m}m ${String(s).padStart(2,'0')}s`;
 }
 
-function renderActivity(live) {
-  const acts = live.recent_activities;
-  if (!acts || !acts.length) {
-    document.getElementById('activity-body').innerHTML = '<div class="loading">No recent activities in live data — trigger a Garmin refresh.</div>';
-    document.getElementById('activity-observation').textContent = '';
-    return;
-  }
-
-  const a = acts[0];
-  const date = new Date(a.date + 'T00:00:00');
-  const dateStr = date.toLocaleDateString('en-AU', {weekday:'long', day:'numeric', month:'long'});
-  document.getElementById('activity-date-label').textContent = `· ${dateStr}`;
-
-  const feelLabel = ['','😩 Terrible','😕 Bad','😐 Okay','🙂 Good','😄 Great'];
-
-  const stats = [
-    { v: a.dist_km != null ? a.dist_km.toFixed(1)+'km' : '—',         l: 'Distance' },
-    { v: fmtDuration(a.duration_s),                                      l: 'Duration' },
-    { v: a.pace    != null ? fmtPace(a.pace) : '—',                     l: 'Avg Pace' },
-    { v: a.avg_hr  != null ? a.avg_hr+'bpm' : '—',                      l: 'Avg HR' },
-    { v: a.max_hr  != null ? a.max_hr+'bpm' : '—',                      l: 'Max HR' },
-    { v: a.elevation_gain != null ? Math.round(a.elevation_gain)+'m' : '—', l: 'Elevation' },
-    { v: a.avg_cadence != null ? Math.round(a.avg_cadence)+'spm' : '—', l: 'Cadence' },
-    { v: a.feel   != null ? feelLabel[a.feel] || a.feel : '—',          l: 'Feel' },
-    { v: a.effort != null ? a.effort+'/10' : '—',                       l: 'Effort (RPE)' },
-  ];
-
-  document.getElementById('activity-body').innerHTML = `
-    <div style="font-family:'Big Shoulders Display',sans-serif;font-size:22px;font-weight:700;margin-bottom:14px;">${a.name}</div>
-    <div class="metric-tiles" style="grid-template-columns:repeat(3,1fr);">
-      ${stats.map(s => `
-        <div class="mtile">
-          <div class="v" style="font-size:20px;">${s.v}</div>
-          <div class="l">${s.l}</div>
-        </div>`).join('')}
-    </div>
-  `;
-
-  // Auto-generated observation
+function activityObservation(a) {
   const obs = [];
-
+  const feelLabel = ['','terrible','bad','okay','good','great'];
   if (a.dist_km != null) {
     if (a.dist_km >= 25) obs.push(`Solid long run at ${a.dist_km.toFixed(1)}km.`);
     else if (a.dist_km >= 15) obs.push(`Good medium-long effort at ${a.dist_km.toFixed(1)}km.`);
     else obs.push(`${a.dist_km.toFixed(1)}km session.`);
   }
-
   if (a.avg_hr && a.pace) {
     const paceStr = fmtPace(a.pace);
     if (a.avg_hr < 145) obs.push(`Aerobic work — ${paceStr} at ${a.avg_hr}bpm, well within Z2.`);
@@ -1763,28 +1720,72 @@ function renderActivity(live) {
     else if (a.avg_hr < 166) obs.push(`Threshold effort — ${paceStr} at ${a.avg_hr}bpm, right in Z4.`);
     else obs.push(`High-intensity work — ${paceStr} at ${a.avg_hr}bpm.`);
   }
-
   if (a.feel != null && a.effort != null) {
-    const feelText = ['','terrible','bad','okay','good','great'][a.feel] || a.feel;
+    const feelText = feelLabel[a.feel] || a.feel;
     const effortText = a.effort >= 8 ? 'hard' : a.effort >= 6 ? 'moderate-hard' : a.effort >= 4 ? 'moderate' : 'easy';
     if (a.feel >= 4 && a.effort <= 7) obs.push(`Felt ${feelText} at a ${effortText} effort — efficiency signal worth tracking.`);
     else if (a.feel <= 2 && a.effort >= 7) obs.push(`Tough session — felt ${feelText} at a ${effortText} effort. Factor recovery into the next 24 hours.`);
     else obs.push(`Felt ${feelText}, effort rated ${a.effort}/10.`);
   } else if (a.feel != null) {
-    const feelText = ['','terrible','bad','okay','good','great'][a.feel] || a.feel;
-    obs.push(`Felt ${feelText} on this one.`);
+    obs.push(`Felt ${feelLabel[a.feel] || a.feel} on this one.`);
   }
-
-  if (a.elevation_gain != null && a.elevation_gain > 150) {
-    obs.push(`${Math.round(a.elevation_gain)}m of elevation — legs will know about it.`);
-  }
-
+  if (a.elevation_gain != null && a.elevation_gain > 150) obs.push(`${Math.round(a.elevation_gain)}m of elevation — legs will know about it.`);
   if (a.avg_cadence != null) {
     if (a.avg_cadence < 170) obs.push(`Cadence at ${Math.round(a.avg_cadence)}spm — worth nudging toward 175–180 on easy runs.`);
     else if (a.avg_cadence >= 178) obs.push(`Cadence strong at ${Math.round(a.avg_cadence)}spm.`);
   }
+  return obs.join(' ') || 'No observation — limited data returned from Garmin.';
+}
 
-  document.getElementById('activity-observation').textContent = obs.join(' ') || 'No observation — limited data returned from Garmin.';
+function renderActivity(live) {
+  const container = document.getElementById('activity-list');
+  const acts = live.recent_activities;
+  if (!acts || !acts.length) {
+    container.innerHTML = '<div class="loading">No recent activities in live data — trigger a Garmin refresh.</div>';
+    return;
+  }
+
+  const cutoff = new Date(); cutoff.setDate(cutoff.getDate() - 7);
+  const recent = acts.filter(a => new Date(a.date + 'T00:00:00') >= cutoff);
+  if (!recent.length) {
+    container.innerHTML = '<div class="card"><div class="loading">No activities in the last 7 days.</div></div>';
+    return;
+  }
+
+  const feelEmoji = ['','😩','😕','😐','🙂','😄'];
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  container.innerHTML = recent.map((a, idx) => {
+    const date = new Date(a.date + 'T00:00:00');
+    const dateStr = date.toLocaleDateString('en-AU', {weekday:'long', day:'numeric', month:'long'});
+    const obs = activityObservation(a);
+
+    const stats = [
+      { v: a.dist_km    != null ? a.dist_km.toFixed(1)+'km' : '—',          l: 'Distance' },
+      { v: fmtDuration(a.duration_s),                                          l: 'Duration' },
+      { v: a.pace       != null ? fmtPace(a.pace) : '—',                      l: 'Avg Pace' },
+      { v: a.avg_hr     != null ? a.avg_hr+'bpm' : '—',                       l: 'Avg HR' },
+      { v: a.max_hr     != null ? a.max_hr+'bpm' : '—',                       l: 'Max HR' },
+      { v: a.elevation_gain != null ? Math.round(a.elevation_gain)+'m' : '—', l: 'Elevation' },
+      { v: a.avg_cadence!= null ? Math.round(a.avg_cadence)+'spm' : '—',     l: 'Cadence' },
+      { v: a.feel   != null ? (feelEmoji[a.feel]||'') + ' ' + (['','Terrible','Bad','Okay','Good','Great'][a.feel]||a.feel) : '—', l: 'Feel' },
+      { v: a.effort != null ? a.effort+'/10' : '—',                           l: 'RPE' },
+    ];
+
+    return `<div class="card" style="margin-bottom:18px;">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;">
+        <div>
+          <div style="font-family:'Big Shoulders Display',sans-serif;font-size:20px;font-weight:700;color:var(--paper);">${a.name}</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate);margin-top:2px;">${dateStr}</div>
+        </div>
+        ${idx === 0 ? '<span style="font-family:\'IBM Plex Mono\',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--signal);border:1px solid var(--signal);padding:2px 8px;border-radius:2px;">Latest</span>' : ''}
+      </div>
+      <div style="font-size:13px;line-height:1.65;color:var(--paper);padding:10px 14px;background:var(--panel-raised);border:1px solid var(--line);border-left:3px solid var(--signal);border-radius:3px;margin-bottom:14px;">${obs}</div>
+      <div class="metric-tiles" style="grid-template-columns:repeat(3,1fr);">
+        ${stats.map(s => `<div class="mtile"><div class="v" style="font-size:18px;">${s.v}</div><div class="l">${s.l}</div></div>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
 }
 
 /* ── Diet tab ────────────────────────────────────────────────────── */

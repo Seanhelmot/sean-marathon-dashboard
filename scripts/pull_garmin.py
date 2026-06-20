@@ -309,7 +309,7 @@ def pull_data(client):
     # To auto-populate, extend this section using scheduled workouts API.
     this_week_days = None
     try:
-        existing = json.loads(LIVE_JSON.read_text())
+        existing = json.loads(LIVE_JSON.read_text(encoding='utf-8'))
         this_week_days = existing.get("this_week_days")
     except Exception:
         pass
@@ -349,7 +349,7 @@ def main():
         traceback.print_exc()
         sys.exit(1)
 
-    LIVE_JSON.write_text(json.dumps(live, indent=2))
+    LIVE_JSON.write_text(json.dumps(live, indent=2, ensure_ascii=False), encoding='utf-8')
     print(f"Wrote {LIVE_JSON} — {len(live['weeks'])} weeks, {len(live['sleep_hrv_14d'])} sleep nights.")
 
 
