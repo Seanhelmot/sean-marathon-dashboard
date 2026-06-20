@@ -290,6 +290,13 @@
       </div>
     </div>
 
+    <div class="card" style="margin-bottom:18px;">
+      <h2>Aerobic Efficiency Trend <span class="accent">· easy runs only · higher = better</span></h2>
+      <div id="ae-chart-wrap" style="position:relative;height:90px;margin:10px 0 4px;"></div>
+      <div id="ae-week-labels" style="display:flex;gap:0;margin-bottom:6px;"></div>
+      <div class="chart-foot">AE Index = 1000 ÷ (pace min/km × avg HR), easy runs only (avg HR &lt; 150). Improving fitness = rising index. Hover for details.</div>
+    </div>
+
     <div class="grid grid-3">
       <div class="card">
         <h2>Peak Numbers</h2>
@@ -657,6 +664,102 @@ function renderSeasonTimeline(plan, live) {
     `;
     container.appendChild(col);
   });
+}
+
+/* ── Aerobic Efficiency Trend ────────────────────────────────────── */
+function renderAETrend(live) {
+  const wrap  = document.getElementById('ae-chart-wrap');
+  const lbls  = document.getElementById('ae-week-labels');
+  if (!wrap) return;
+
+  // Build per-week AE: easy days only (avg_hr 110–149), weighted by dist_km
+  const points = [];
+  (live.weeks || []).forEach(w => {
+    if (!w.days) return;
+    let sumDist = 0, sumAE = 0;
+    Object.values(w.days).forEach(d => {
+      const hr = d.avg_hr, pace = d.pace, dist = d.dist_km;
+      if (!hr || !pace || !dist) return;
+      if (hr < 110 || hr >= 150) return;   // easy runs only
+      const ae = 1000 / (pace * hr);
+      sumAE   += ae * dist;
+      sumDist += dist;
+    });
+    if (sumDist > 0) points.push({ wk: w.wk, ae: sumAE / sumDist, partial: w.partial });
+  });
+
+  if (points.length < 1) { wrap.innerHTML = '<div style="color:var(--slate);font-size:12px;padding:20px 0;">Not enough easy run data yet.</div>'; return; }
+
+  const W = wrap.offsetWidth || 600;
+  const H = 90;
+  const PAD = { l: 42, r: 12, t: 10, b: 18 };
+  const plotW = W - PAD.l - PAD.r;
+  const plotH = H - PAD.t - PAD.b;
+
+  const aes  = points.map(p => p.ae);
+  const minAE = Math.min(...aes) * 0.97;
+  const maxAE = Math.max(...aes) * 1.03;
+
+  const xOf = i => PAD.l + (points.length < 2 ? plotW / 2 : i / (points.length - 1) * plotW);
+  const yOf = ae => PAD.t + plotH - (ae - minAE) / (maxAE - minAE) * plotH;
+
+  // Trend line (linear regression)
+  const n = points.length;
+  const meanX = (n - 1) / 2;
+  const meanY = aes.reduce((s, v) => s + v, 0) / n;
+  const slope = aes.reduce((s, v, i) => s + (i - meanX) * (v - meanY), 0) /
+                aes.reduce((s, _, i) => s + (i - meanX) ** 2, 0);
+  const trendDir = slope > 0.0002 ? '↑ improving' : slope < -0.0002 ? '↓ declining' : '→ stable';
+  const trendCol = slope > 0.0002 ? 'var(--good)' : slope < -0.0002 ? 'var(--bad)' : 'var(--slate)';
+
+  // Polyline path
+  const linePts = points.map((p, i) => `${xOf(i).toFixed(1)},${yOf(p.ae).toFixed(1)}`).join(' ');
+  // Trend line endpoints
+  const ty0 = meanY + slope * (0 - meanX);
+  const ty1 = meanY + slope * (n - 1 - meanX);
+
+  // Y-axis ticks
+  const tickCount = 3;
+  let yTicks = '';
+  for (let t = 0; t < tickCount; t++) {
+    const val = minAE + (maxAE - minAE) * t / (tickCount - 1);
+    const y   = yOf(val);
+    yTicks += `<line x1="${PAD.l}" y1="${y.toFixed(1)}" x2="${W - PAD.r}" y2="${y.toFixed(1)}" stroke="var(--line)" stroke-width="0.5"/>`;
+    yTicks += `<text x="${PAD.l - 4}" y="${y.toFixed(1)}" text-anchor="end" dominant-baseline="middle" fill="var(--slate)" font-size="10">${val.toFixed(2)}</text>`;
+  }
+
+  // Dots with tooltips
+  const dots = points.map((p, i) => {
+    const x = xOf(i).toFixed(1), y = yOf(p.ae).toFixed(1);
+    const col = p.partial ? 'var(--slate)' : 'var(--signal)';
+    return `<circle cx="${x}" cy="${y}" r="4" fill="${col}" stroke="var(--panel)" stroke-width="1.5">
+      <title>W${p.wk}: AE ${p.ae.toFixed(3)}${p.partial ? ' (partial)' : ''}</title>
+    </circle>`;
+  }).join('');
+
+  wrap.innerHTML = `
+    <svg width="100%" height="${H}" viewBox="0 0 ${W} ${H}" style="overflow:visible;">
+      ${yTicks}
+      <polyline points="${linePts}" fill="none" stroke="var(--signal)" stroke-width="1.5" stroke-linejoin="round"/>
+      <line x1="${xOf(0).toFixed(1)}" y1="${yOf(ty0).toFixed(1)}" x2="${xOf(n-1).toFixed(1)}" y2="${yOf(ty1).toFixed(1)}"
+            stroke="${trendCol}" stroke-width="1" stroke-dasharray="4 3" opacity="0.6"/>
+      ${dots}
+    </svg>
+    <div style="position:absolute;top:${PAD.t}px;right:${PAD.r}px;font-size:11px;color:${trendCol};font-family:'IBM Plex Mono',monospace;">${trendDir}</div>
+  `;
+
+  // Week labels below
+  lbls.innerHTML = '';
+  const step = Math.ceil(points.length / 10);
+  points.forEach((p, i) => {
+    const span = document.createElement('span');
+    const x = xOf(i);
+    span.style.cssText = `position:absolute;left:${x}px;transform:translateX(-50%);font-size:9.5px;color:var(--slate);font-family:'IBM Plex Mono',monospace;`;
+    span.textContent = (i % step === 0 || i === points.length - 1) ? `W${p.wk}` : '';
+    lbls.appendChild(span);
+  });
+  lbls.style.position = 'relative';
+  lbls.style.height = '14px';
 }
 
 /* ── Targets ─────────────────────────────────────────────────────── */
@@ -1087,6 +1190,7 @@ async function init() {
   renderSleepChart(live);
   renderInjuryList(plan);
   renderSeasonTimeline(plan, live);
+  renderAETrend(live);
   renderTargets(plan);
   renderZones(plan);
   renderActivity(live);
