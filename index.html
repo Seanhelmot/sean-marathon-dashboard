@@ -258,6 +258,7 @@
     <!-- Unified metrics table -->
     <div class="card" style="margin-bottom:18px;">
       <h2>Performance Metrics <span class="accent">· weekly summary</span></h2>
+      <div id="perf-summary" style="font-size:13.5px;line-height:1.7;color:var(--paper);margin-bottom:16px;padding:14px 16px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;border-left:3px solid var(--signal);"></div>
       <div id="perf-table" style="overflow-x:auto;margin-top:12px;"></div>
       <div class="chart-foot" style="margin-top:10px;">
         AE = 1000 ÷ (pace × HR). Decoupling = HR drift first vs second half of long run (&lt;5% good). Threshold pace = work intervals only. Trends = change over window.
@@ -1141,6 +1142,54 @@ function renderPerformanceTab(live) {
   const latThresh = threshPts.length ? threshPts[threshPts.length-1].v : null;
   const latDC   = dcPts.length ? dcPts[dcPts.length-1].v : null;
   const latHRV  = hrvPts.length ? hrvPts[hrvPts.length-1].v : null;
+
+  // ── Observational summary ────────────────────────────────────────
+  (function() {
+    const sentences = [];
+    // AE Easy trend
+    const easyPts = seriesData.easy.filter(Boolean);
+    if (easyPts.length >= 3) {
+      const trend4 = aePct('easy', 4);
+      const latE = easyPts[easyPts.length-1].ae;
+      if (trend4 !== null && trend4 > 1) sentences.push(`Aerobic efficiency on easy runs is trending up ${trend4.toFixed(1)}% over the last 4 weeks (now ${latE.toFixed(2)}) — aerobic base is responding well to training load.`);
+      else if (trend4 !== null && trend4 < -1) sentences.push(`Aerobic efficiency on easy runs has dipped ${Math.abs(trend4).toFixed(1)}% over 4 weeks — could reflect accumulated fatigue or a change in conditions.`);
+      else sentences.push(`Aerobic efficiency on easy runs is holding steady at ${latE.toFixed(2)} — consistent base fitness.`);
+    }
+    // Threshold pace
+    if (threshPts.length >= 2) {
+      const t4 = threshPts.length >= 2 ? linRegPct(threshPts.map(p=>({v:p.v})), Math.min(threshPts.length,4)) : null;
+      if (t4 !== null && t4 < -1) sentences.push(`Threshold pace is improving (${Math.abs(t4).toFixed(1)}% faster trend) — anaerobic capacity is tracking in the right direction.`);
+      else if (t4 !== null && t4 > 1) sentences.push(`Threshold pace has slowed slightly over recent weeks — worth monitoring after next quality session.`);
+      else sentences.push(`Threshold pace is consistent at ${fmtPace(latThresh)}/km.`);
+    }
+    // HR decoupling
+    if (dcPts.length >= 2) {
+      const lastDC = dcPts[dcPts.length-1].v;
+      if (lastDC < 5) sentences.push(`HR decoupling on long runs is ${lastDC.toFixed(1)}% — below the 5% threshold, indicating a solid aerobic base with good cardiac drift control.`);
+      else sentences.push(`HR decoupling on the last long run was ${lastDC.toFixed(1)}% — above 5%, suggesting some cardiac drift; aerobic base may need more easy volume before pushing long run intensity.`);
+    } else if (dcPts.length === 1) {
+      const lastDC = dcPts[0].v;
+      sentences.push(`One long run decoupling reading so far: ${lastDC.toFixed(1)}% (${lastDC < 5 ? 'within' : 'above'} the healthy <5% threshold).`);
+    }
+    // HRV
+    if (hrvPts.length >= 7) {
+      const recent3 = hrvPts.slice(-3).map(p=>p.v);
+      const older3  = hrvPts.slice(-7,-4).map(p=>p.v);
+      const avgR = recent3.reduce((s,v)=>s+v,0)/recent3.length;
+      const avgO = older3.reduce((s,v)=>s+v,0)/older3.length;
+      const delta = avgR - avgO;
+      if (delta > 3) sentences.push(`HRV has risen recently (avg ${Math.round(avgR)}ms vs ${Math.round(avgO)}ms a week ago) — recovery is tracking well.`);
+      else if (delta < -3) sentences.push(`HRV has dipped recently (avg ${Math.round(avgR)}ms vs ${Math.round(avgO)}ms a week ago) — ensure adequate recovery between sessions.`);
+    }
+    // Overall verdict
+    const positives = sentences.filter(s => /respond|solid|improv|good|right direction|holding|within/.test(s)).length;
+    const concerns  = sentences.filter(s => /dip|slow|above 5|fatigue|drift/.test(s)).length;
+    if (concerns === 0 && positives >= 2) sentences.push(`Overall picture looks positive — training is producing the right adaptations for Melbourne.`);
+    else if (concerns >= 2) sentences.push(`A few metrics worth keeping an eye on — consider whether load or recovery balance needs adjusting.`);
+
+    const el = document.getElementById('perf-summary');
+    if (el) el.textContent = sentences.join(' ') || 'Not enough data yet for a summary — check back after a few more weeks of training.';
+  })();
 
   // ── Unified table ────────────────────────────────────────────────
   const TH = 'padding:7px 14px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#2e4a60;font-weight:500;text-align:center;border-bottom:1px solid #1a2d40;white-space:nowrap;';
