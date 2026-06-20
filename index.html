@@ -173,6 +173,7 @@
   <nav class="tabs">
     <button class="tab-btn active" data-tab="week">This Week</button>
     <button class="tab-btn" data-tab="season">Season Overview</button>
+    <button class="tab-btn" data-tab="performance">Performance</button>
     <button class="tab-btn" data-tab="activity">Last Activity</button>
     <button class="tab-btn" data-tab="diet">Diet</button>
   </nav>
@@ -241,6 +242,36 @@
         <div class="chart-foot">HRV dips after hard sessions are normal single-night noise. Watch the 7-day rolling average, not individual nights.</div>
       </div>
     </div>
+  </section>
+
+  <!-- PERFORMANCE -->
+  <section class="panel" id="panel-performance">
+
+    <!-- Headline stat cards -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:20px;" id="perf-stat-cards"></div>
+
+    <!-- AE Index -->
+    <div class="card" style="margin-bottom:18px;">
+      <h2>Aerobic Efficiency Index <span class="accent">· 1000 ÷ (pace × HR) · higher = better</span></h2>
+      <div id="perf-ae-table" style="margin:12px 0 16px;overflow-x:auto;"></div>
+      <div id="perf-ae-chart" style="margin:0 0 4px;"></div>
+      <div class="chart-foot">Easy: HR &lt;148, &lt;18km. Long: ≥18km. Quality: work intervals only. Trend = % change over window.</div>
+    </div>
+
+    <!-- Threshold Pace -->
+    <div class="card" style="margin-bottom:18px;">
+      <h2>Threshold Pace <span class="accent">· quality sessions · lower = faster = better</span></h2>
+      <div id="perf-thresh-chart" style="margin:12px 0 4px;"></div>
+      <div class="chart-foot">Pace from work intervals only (HR ≥150, distance ≥200m). Improving = line trending down.</div>
+    </div>
+
+    <!-- HRV Trend -->
+    <div class="card" style="margin-bottom:18px;">
+      <h2>HRV Trend <span class="accent">· 14-day rolling · higher = better recovered</span></h2>
+      <div id="perf-hrv-chart" style="margin:12px 0 4px;"></div>
+      <div class="chart-foot">Overnight HRV. Rising trend = absorbing training load well.</div>
+    </div>
+
   </section>
 
   <!-- LAST ACTIVITY -->
@@ -844,6 +875,210 @@ function renderAETable(live) {
   </table>`;
 }
 
+/* ── Performance Tab ─────────────────────────────────────────────── */
+function fmtPace(p) {
+  if (!p) return '—';
+  const mins = Math.floor(p), secs = Math.round((p - mins) * 100);
+  return `${mins}:${secs.toString().padStart(2,'0')}`;
+}
+
+function svgLineChart(container, pts, opts = {}) {
+  const W = container.offsetWidth || 640;
+  const H = opts.h || 120;
+  const PAD = { l: opts.yWide || 42, r: 14, t: 12, b: 26 };
+  const plotW = W - PAD.l - PAD.r, plotH = H - PAD.t - PAD.b;
+  const vals = pts.map(p => p.v);
+  const minV = (opts.minV !== undefined ? opts.minV : Math.min(...vals)) * (opts.flipY ? 1.025 : 0.975);
+  const maxV = (opts.maxV !== undefined ? opts.maxV : Math.max(...vals)) * (opts.flipY ? 0.975 : 1.025);
+  const n = pts.length;
+  const xOf = i => PAD.l + (n < 2 ? plotW / 2 : i / (n - 1) * plotW);
+  const yOf = v => PAD.t + plotH - ((v - minV) / (maxV - minV || 1)) * plotH;
+  if (opts.flipY) { /* lower = better: invert so line going down = improvement */ }
+
+  let grid = '', xLbls = '', dots = '';
+  [0, 0.5, 1].forEach(t => {
+    const v = minV + (maxV - minV) * (opts.flipY ? 1 - t : t);
+    const y = yOf(v);
+    grid += `<line x1="${PAD.l}" y1="${y.toFixed(1)}" x2="${W - PAD.r}" y2="${y.toFixed(1)}" stroke="#1a2d40" stroke-width="0.75"/>`;
+    const lbl = opts.fmtY ? opts.fmtY(v) : v.toFixed(2);
+    grid += `<text x="${PAD.l - 4}" y="${y.toFixed(1)}" text-anchor="end" dominant-baseline="middle" fill="#6a8fa8" font-size="9.5">${lbl}</text>`;
+  });
+
+  const step = n <= 12 ? 1 : n <= 18 ? 2 : 3;
+  pts.forEach((p, i) => {
+    if (i % step !== 0 && i !== n - 1) return;
+    xLbls += `<text x="${xOf(i).toFixed(1)}" y="${(PAD.t + plotH + 16).toFixed(1)}" text-anchor="middle" fill="#6a8fa8" font-size="9.5">${p.lbl}</text>`;
+  });
+
+  const linePts = pts.map((p, i) => `${xOf(i).toFixed(1)},${yOf(p.v).toFixed(1)}`).join(' ');
+  pts.forEach((p, i) => {
+    const col = p.partial ? 'transparent' : (opts.color || '#00d4ff');
+    dots += `<circle cx="${xOf(i).toFixed(1)}" cy="${yOf(p.v).toFixed(1)}" r="4" fill="${col}" stroke="${opts.color || '#00d4ff'}" stroke-width="1.5"><title>${p.lbl}: ${opts.fmtY ? opts.fmtY(p.v) : p.v.toFixed(2)}${p.tip || ''}</title></circle>`;
+  });
+
+  container.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" style="display:block;">
+    ${grid}
+    <polyline points="${linePts}" fill="none" stroke="${opts.color || '#00d4ff'}" stroke-width="2" stroke-linejoin="round" opacity="0.9"/>
+    ${dots}${xLbls}
+  </svg>`;
+}
+
+function renderPerformanceTab(live) {
+  const panel = document.getElementById('panel-performance');
+  if (!panel || !panel.classList.contains('active')) { panel._pendingLive = live; return; }
+
+  const weeks = live.weeks || [];
+  const { SERIES, seriesData } = buildAEData(live);
+
+  // ── Headline stat cards ──────────────────────────────────────────
+  const latestEasyAE = (() => {
+    const pts = seriesData.easy.filter(Boolean); return pts.length ? pts[pts.length-1].ae : null;
+  })();
+  const latestThreshPace = (() => {
+    for (let i = weeks.length - 1; i >= 0; i--) {
+      const q = weeks[i].quality; if (q && q.pace_min_per_km) return q.pace_min_per_km;
+    } return null;
+  })();
+  const latestHRV = (() => {
+    const d = (live.sleep_hrv_14d || []).filter(x => x.hrv); return d.length ? d[d.length-1].hrv : null;
+  })();
+  const weekKm = (() => {
+    const w = weeks.find(w => w.wk === live.current_week); return w ? w.actual_km : null;
+  })();
+
+  const statCards = [
+    { v: latestEasyAE ? latestEasyAE.toFixed(2) : '—', l: 'AE Index (easy)', sub: 'higher = better', col: '#00c48a' },
+    { v: fmtPace(latestThreshPace), l: 'Threshold pace', sub: 'min/km · lower = faster', col: '#ffb300' },
+    { v: latestHRV ? latestHRV + 'ms' : '—', l: 'HRV (last night)', sub: 'higher = better recovered', col: '#00d4ff' },
+    { v: weekKm ? weekKm + 'km' : '—', l: `Week ${live.current_week} volume`, sub: 'current week actual', col: '#a78bfa' },
+  ];
+  document.getElementById('perf-stat-cards').innerHTML = statCards.map(s => `
+    <div style="background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:14px 16px;">
+      <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:6px;">${s.l}</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:600;color:${s.col};line-height:1;">${s.v}</div>
+      <div style="font-size:10px;color:var(--slate-dim);margin-top:5px;">${s.sub}</div>
+    </div>`).join('');
+
+  // ── AE Index (reuse existing functions) ─────────────────────────
+  const aeTableEl  = document.getElementById('perf-ae-table');
+  const aeChartEl  = document.getElementById('perf-ae-chart');
+  if (aeTableEl) { aeTableEl.id = 'ae-table-wrap-perf'; renderAETableInto(live, aeTableEl); }
+  if (aeChartEl) { aeChartEl.id = 'ae-chart-wrap-perf'; renderAETrendInto(live, aeChartEl); }
+
+  // ── Threshold pace trend ─────────────────────────────────────────
+  const threshEl = document.getElementById('perf-thresh-chart');
+  if (threshEl) {
+    const pts = weeks.filter(w => w.quality && w.quality.pace_min_per_km).map(w => ({
+      v: w.quality.pace_min_per_km, lbl: `W${w.wk}`, partial: w.partial,
+      tip: ` · HR ${w.quality.avg_hr}bpm${w.quality.work_intervals_only ? ' (intervals only)' : ''}`
+    }));
+    if (pts.length >= 1) {
+      const allV = pts.map(p => p.v);
+      svgLineChart(threshEl, pts, {
+        h: 130, color: '#ffb300', flipY: false,
+        minV: Math.min(...allV) * 0.99, maxV: Math.max(...allV) * 1.01,
+        fmtY: fmtPace, yWide: 40
+      });
+      // Add "lower = faster" annotation
+      const svg = threshEl.querySelector('svg');
+      if (svg) svg.insertAdjacentHTML('beforeend',
+        `<text x="${svg.getAttribute('width')-14}" y="14" text-anchor="end" fill="#2e4a60" font-size="9.5">↓ faster</text>`);
+    } else {
+      threshEl.innerHTML = '<div style="color:var(--slate);font-size:12px;padding:20px 0;">No quality sessions logged yet.</div>';
+    }
+  }
+
+  // ── HRV trend ────────────────────────────────────────────────────
+  const hrvEl = document.getElementById('perf-hrv-chart');
+  if (hrvEl) {
+    const pts = (live.sleep_hrv_14d || []).filter(x => x.hrv).map(x => {
+      const d = new Date(x.date + 'T00:00:00');
+      const lbl = d.getDate() + ' ' + ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];
+      return { v: x.hrv, lbl, tip: ` · ${x.date}` };
+    });
+    if (pts.length >= 1) {
+      svgLineChart(hrvEl, pts, { h: 130, color: '#00d4ff', yWide: 36, fmtY: v => Math.round(v) + 'ms' });
+    } else {
+      hrvEl.innerHTML = '<div style="color:var(--slate);font-size:12px;padding:20px 0;">No HRV data available.</div>';
+    }
+  }
+}
+
+function renderAETableInto(live, el) {
+  const { SERIES, seriesData } = buildAEData(live);
+  function trendOver(pts, weeks) {
+    const valid = pts.filter(Boolean); if (valid.length < 2) return null;
+    const win = valid.slice(-weeks); if (win.length < 2) return null;
+    const n = win.length, meanX = (n-1)/2, vals = win.map(p => p.ae);
+    const meanY = vals.reduce((s,v)=>s+v,0)/n;
+    const slope = vals.reduce((s,v,i)=>s+(i-meanX)*(v-meanY),0)/(vals.reduce((s,_,i)=>s+(i-meanX)**2,0)||1);
+    return ((slope*(n-1))/win[0].ae)*100;
+  }
+  function trendCell(pct) {
+    if (pct===null) return `<td style="color:#2e4a60;text-align:center;">—</td>`;
+    const up=pct>0.2,down=pct<-0.2,col=up?'#00c48a':down?'#ff4d6a':'#6a8fa8';
+    return `<td style="text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;color:${col};">${up?'↑':down?'↓':'→'} ${pct>=0?'+':''}${pct.toFixed(1)}%</td>`;
+  }
+  const th = 'padding:6px 12px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#2e4a60;font-weight:500;text-align:center;border-bottom:1px solid #1a2d40;white-space:nowrap;';
+  const td = 'padding:7px 12px;border-bottom:1px solid #1a2d40;';
+  const rows = SERIES.map(s => {
+    const valid = seriesData[s.key].filter(Boolean);
+    const latest = valid.length ? valid[valid.length-1].ae : null;
+    return `<tr>
+      <td style="${td}font-size:12px;color:#e8f4ff;font-weight:500;white-space:nowrap;">
+        <span style="display:inline-block;width:10px;height:2px;background:${s.color};border-radius:1px;margin-right:7px;vertical-align:middle;"></span>${s.label}
+      </td>
+      <td style="${td}font-family:'IBM Plex Mono',monospace;font-size:13px;color:${s.color};font-weight:600;">${latest?latest.toFixed(2):'—'}</td>
+      <td style="${td}color:#6a8fa8;font-size:11px;">${valid.length}w</td>
+      ${trendCell(trendOver(seriesData[s.key],4))}${trendCell(trendOver(seriesData[s.key],8))}${trendCell(trendOver(seriesData[s.key],12))}
+    </tr>`;
+  }).join('');
+  el.innerHTML = `<table style="width:100%;border-collapse:collapse;">
+    <thead><tr>
+      <th style="${th}text-align:left;">Series</th><th style="${th}">Latest AE</th><th style="${th}">Data</th>
+      <th style="${th}">4-week</th><th style="${th}">8-week</th><th style="${th}">12-week</th>
+    </tr></thead><tbody style="font-size:12px;">${rows}</tbody></table>`;
+}
+
+function renderAETrendInto(live, wrap) {
+  const W = wrap.offsetWidth || 640;
+  const { SERIES, weekNums, seriesData } = buildAEData(live);
+  const allAE = Object.values(seriesData).flat().filter(Boolean).map(p => p.ae);
+  if (!allAE.length) return;
+  const n = weekNums.length;
+  const LEGEND_H = 22, PAD = { l: 38, r: 16, t: 10, b: 22 }, H = 130;
+  const plotW = W-PAD.l-PAD.r, plotH = H-PAD.t-PAD.b-LEGEND_H;
+  const minAE = Math.min(...allAE)*0.975, maxAE = Math.max(...allAE)*1.025;
+  const xOf = i => PAD.l+(n<2?plotW/2:(i/(n-1))*plotW);
+  const yOf = ae => LEGEND_H+PAD.t+plotH-((ae-minAE)/(maxAE-minAE))*plotH;
+  let legend = '';
+  SERIES.forEach((s,si) => {
+    const lx = PAD.l+si*100;
+    legend += `<line x1="${lx}" y1="11" x2="${lx+14}" y2="11" stroke="${s.color}" stroke-width="2"/><circle cx="${lx+7}" cy="11" r="3" fill="${s.color}"/><text x="${lx+19}" y="15" fill="#6a8fa8" font-size="10.5">${s.label}</text>`;
+  });
+  let yGrid = '';
+  [0,0.5,1].forEach(t => {
+    const val=minAE+(maxAE-minAE)*t, y=yOf(val);
+    yGrid += `<line x1="${PAD.l}" y1="${y.toFixed(1)}" x2="${W-PAD.r}" y2="${y.toFixed(1)}" stroke="#1a2d40" stroke-width="0.75"/>`;
+    yGrid += `<text x="${PAD.l-4}" y="${y.toFixed(1)}" text-anchor="end" dominant-baseline="middle" fill="#6a8fa8" font-size="9.5">${val.toFixed(2)}</text>`;
+  });
+  const step = n<=12?1:n<=18?2:3;
+  let xLbls = '';
+  weekNums.forEach((wk,i) => {
+    if (i%step!==0&&i!==n-1) return;
+    xLbls += `<text x="${xOf(i).toFixed(1)}" y="${(LEGEND_H+PAD.t+plotH+15).toFixed(1)}" text-anchor="middle" fill="#6a8fa8" font-size="9.5">W${wk}</text>`;
+  });
+  let xGrid = weekNums.map((_,i)=>`<line x1="${xOf(i).toFixed(1)}" y1="${(LEGEND_H+PAD.t).toFixed(1)}" x2="${xOf(i).toFixed(1)}" y2="${(LEGEND_H+PAD.t+plotH).toFixed(1)}" stroke="#1a2d40" stroke-width="0.5"/>`).join('');
+  let seriesSVG = '';
+  SERIES.forEach(s => {
+    const valid = seriesData[s.key].map((p,i)=>p?{i,p}:null).filter(Boolean);
+    if (!valid.length) return;
+    seriesSVG += `<polyline points="${valid.map(({i,p})=>`${xOf(i).toFixed(1)},${yOf(p.ae).toFixed(1)}`).join(' ')}" fill="none" stroke="${s.color}" stroke-width="2" stroke-linejoin="round" opacity="0.9"/>`;
+    valid.forEach(({i,p}) => seriesSVG += `<circle cx="${xOf(i).toFixed(1)}" cy="${yOf(p.ae).toFixed(1)}" r="4" fill="${p.partial?'#0d1825':s.color}" stroke="${s.color}" stroke-width="1.5"><title>W${p.wk} ${s.label}: ${p.ae.toFixed(3)}${p.partial?' (partial)':''}</title></circle>`);
+  });
+  wrap.innerHTML = `<svg width="${W}" height="${H+LEGEND_H}" viewBox="0 0 ${W} ${H+LEGEND_H}" style="display:block;">${legend}${yGrid}${xGrid}${xLbls}${seriesSVG}</svg>`;
+}
+
 /* ── Targets ─────────────────────────────────────────────────────── */
 function renderTargets(plan) {
   const t = plan.targets || {};
@@ -887,6 +1122,10 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     if (btn.dataset.tab === 'season') {
       const wrap = document.getElementById('ae-chart-wrap');
       if (wrap && wrap._pendingLive) { renderAETrend(wrap._pendingLive); renderAETable(wrap._pendingLive); wrap._pendingLive = null; }
+    }
+    if (btn.dataset.tab === 'performance') {
+      const panel = document.getElementById('panel-performance');
+      if (panel && panel._pendingLive) { renderPerformanceTab(panel._pendingLive); panel._pendingLive = null; }
     }
   });
 });
@@ -1280,6 +1519,7 @@ async function init() {
   renderAETable(live);
   renderTargets(plan);
   renderZones(plan);
+  renderPerformanceTab(live);
   renderActivity(live);
   renderDiet();
 }
