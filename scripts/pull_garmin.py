@@ -86,6 +86,38 @@ def _work_interval_stats(client, activity_id):
         return None, None
 
 
+def _decoupling(client, activity_id):
+    """
+    HR:pace decoupling for a long run.
+    Splits laps into first and second half by distance, compares HR/speed ratio.
+    Returns % decoupling (positive = HR drifted up relative to pace).
+    """
+    try:
+        splits = client.get_activity_splits(activity_id)
+        laps = splits.get("lapDTOs") or splits.get("activityLapDTOs") or []
+        laps = [l for l in laps if (l.get("distance") or 0) > 200
+                and (l.get("averageHR") or 0) > 100
+                and (l.get("averageSpeed") or 0) > 0]
+        if len(laps) < 4:
+            return None
+        total = sum(l["distance"] for l in laps)
+        half, cum, first, second = total / 2, 0, [], []
+        for l in laps:
+            (first if cum < half else second).append(l)
+            cum += l["distance"]
+        if not first or not second:
+            return None
+        def ratio(ls):
+            d = sum(l["distance"] for l in ls)
+            hr = sum(l["averageHR"] * l["distance"] for l in ls) / d
+            spd = d / sum(l.get("duration", l.get("elapsedDuration", 1)) for l in ls)
+            return hr / spd   # beats per m/s — higher means HR high for speed
+        r1, r2 = ratio(first), ratio(second)
+        return round((r2 - r1) / r1 * 100, 1)
+    except Exception:
+        return None
+
+
 def pull_data(client):
     from zoneinfo import ZoneInfo
     today = datetime.now(ZoneInfo("Australia/Melbourne")).date()
@@ -142,13 +174,16 @@ def pull_data(client):
                 if feel   is not None: existing_day["feel"]   = int(feel)
                 if effort is not None: existing_day["effort"] = round(float(effort), 1)
         else:
+            is_long = dist_km >= 18
+            decouple = _decoupling(client, act["activityId"]) if is_long else None
             bucket["days"][day_key] = {
-                "dist_km":    round(dist_km, 1),
-                "avg_hr":     int(avg_hr) if avg_hr else None,
-                "pace":       pace_from_speed(speed),
-                "feel":       int(feel) if feel is not None else None,
-                "effort":     round(float(effort), 1) if effort is not None else None,
-                "_main_dist": dist_km,
+                "dist_km":        round(dist_km, 1),
+                "avg_hr":         int(avg_hr) if avg_hr else None,
+                "pace":           pace_from_speed(speed),
+                "feel":           int(feel) if feel is not None else None,
+                "effort":         round(float(effort), 1) if effort is not None else None,
+                "decoupling_pct": decouple,
+                "_main_dist":     dist_km,
             }
 
         workout_name = (act.get("activityName") or "").lower()
