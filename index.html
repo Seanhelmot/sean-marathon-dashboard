@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sean Helmot — Melbourne Marathon 2026</title>
+<title id="page-title">Marathon Dashboard</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -138,14 +138,14 @@
 
   <header class="top">
     <div class="id-block">
-      <div class="eyebrow">22-Week Build · Brighton VIC</div>
-      <h1>SEAN HELMOT</h1>
-      <div class="sub" id="header-sub">Melbourne Marathon 2026 — loading…</div>
+      <div class="eyebrow" id="header-eyebrow">Loading…</div>
+      <h1 id="header-name">—</h1>
+      <div class="sub" id="header-sub">Loading…</div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
       <div class="countdowns">
         <div class="cd-card" style="display:flex;align-items:center;justify-content:center;padding:8px 14px;">
-          <img src="msr-logo.png" alt="Mod Squad Running" style="height:72px;width:auto;filter:sepia(1) saturate(4) hue-rotate(155deg) brightness(1.2) opacity(0.85);">
+          <img id="header-logo" src="msr-logo.png" alt="" style="height:72px;width:auto;filter:sepia(1) saturate(4) hue-rotate(155deg) brightness(1.2) opacity(0.85);">
         </div>
         <div class="cd-card" style="display:flex;flex-direction:column;justify-content:center;gap:6px;min-width:160px;">
           <div style="display:flex;align-items:baseline;gap:10px;">
@@ -210,7 +210,7 @@
       <div class="card">
         <h2>Injury Status <span class="accent">· manually tracked, not Garmin-sourced</span></h2>
         <div id="injury-list"></div>
-        <div class="chart-foot">Trialling meloxicam for knee from ~18 Jun. Glute med asymmetry unresolved — needs objective physio assessment.</div>
+        <div class="chart-foot" id="injury-footer"></div>
       </div>
       <div class="card">
         <h2>Sleep &amp; HRV <span class="accent">· recent nights</span></h2>
@@ -354,6 +354,11 @@
 
   <!-- BIO -->
   <section class="panel" id="panel-bio">
+    <div id="bio-root"><div class="loading">Loading athlete profile…</div></div>
+  </section>
+
+  <!-- BIO_PLACEHOLDER_END -->
+  <section class="panel" id="panel-bio-old" style="display:none;">
 
     <!-- Row 1: Athlete + Season Goal -->
     <div class="grid grid-2" style="margin-bottom:18px;">
@@ -585,7 +590,7 @@
       </div>
     </div>
 
-  </section>
+  </section><!-- end panel-bio-old -->
 
   <footer class="note" id="footer-note">
     Data sources: weekly volume and quality-session pace/HR pulled live from Garmin Connect. Injury status, targets, and the 22-week structure are hand-authored in <code>data/plan.json</code>. Refreshes every 6 hours via GitHub Actions.
@@ -649,12 +654,166 @@ function renderHeaderSub(plan, live) {
   document.getElementById('header-sub').textContent =
     `${plan.race} — Week ${live.current_week} of ${plan.build_weeks} · ${dateStr}`;
 
+  // Dynamic header fields
+  document.title = `${plan.athlete} — ${plan.race}`;
+  document.getElementById('header-name').textContent = plan.athlete.toUpperCase();
+  document.getElementById('header-eyebrow').textContent =
+    `${plan.build_weeks}-Week Build · ${plan.athlete_location || ''}`;
+  if (plan.logo_url) {
+    const logo = document.getElementById('header-logo');
+    logo.src = plan.logo_url;
+    logo.alt = plan.club || '';
+    logo.style.display = '';
+  } else {
+    document.getElementById('header-logo').style.display = 'none';
+  }
+
   if (live.generated_at) {
     const gen = new Date(live.generated_at);
     const ago = Math.round((Date.now() - gen) / 60000);
     document.getElementById('freshness-note').textContent =
       `Data refreshed ${ago < 60 ? ago + 'm ago' : Math.round(ago/60) + 'h ago'} · ${gen.toUTCString().replace(':00 GMT','Z')}`;
   }
+}
+
+/* ── Bio tab ──────────────────────────────────────────────────────── */
+function renderBio(plan) {
+  const root = document.getElementById('bio-root');
+  if (!root) return;
+
+  const p = plan;
+  const tagColor = { 'TARGET':'var(--signal)', 'B-RACE':'var(--z5)', 'PB':'var(--signal)' };
+
+  const pbRow = (dist, pb, detail) => `
+    <tr style="border-bottom:1px solid var(--line);">
+      <td style="padding:8px 10px 8px 0;color:var(--slate);">${dist}</td>
+      <td style="padding:8px 10px;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--signal);">${pb || '—'}</td>
+      <td style="padding:8px 0;font-size:11.5px;color:var(--slate);">${detail || '—'}</td>
+    </tr>`;
+
+  const goalRow = (label, val, color) => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
+      <span style="font-size:12px;color:var(--slate);">${label}</span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;color:${color};">${val}</span>
+    </div>`;
+
+  const shoeCard = s => `
+    <div style="padding:9px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;${s.highlight ? 'border-left:2px solid var(--signal);' : ''}">
+      <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:4px;">${s.role}</div>
+      ${s.models.map((m,i) => `<div style="font-size:12px;${i===0&&s.highlight?'font-weight:600;color:var(--signal);':'color:var(--paper);'}${i>0?'font-size:11px;color:var(--slate);margin-top:2px;':''}">${m}</div>`).join('')}
+    </div>`;
+
+  const historyRow = r => {
+    const tagHtml = r.tag ? `<span style="font-size:10px;color:${tagColor[r.tag]||'var(--signal)'};margin-left:6px;">· ${r.tag}</span>` : '';
+    return `
+      <div style="display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--line);align-items:flex-start;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--slate-dim);width:38px;flex-shrink:0;padding-top:2px;">${r.year}</div>
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:600;color:var(--paper);">${r.name}${tagHtml}</div>
+          <div style="font-size:11.5px;color:var(--slate);margin-top:2px;">${r.detail}</div>
+        </div>
+      </div>`;
+  };
+
+  const labTile = (label, val, sub, color) => `
+    <div style="padding:10px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
+      <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:4px;">${label}</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600;color:${color};">${val}</div>
+      <div style="font-size:10.5px;color:var(--slate);margin-top:2px;">${sub}</div>
+    </div>`;
+
+  const ruleGrid = (rules) => (rules||[]).map(r =>
+    `<div style="padding:8px 12px;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;border-left:2px solid var(--signal);font-size:11.5px;color:var(--paper);">${r}</div>`
+  ).join('');
+
+  root.innerHTML = `
+    <!-- Row 1: Athlete + Season Goals -->
+    <div class="grid grid-2" style="margin-bottom:18px;">
+      <div class="card">
+        <h2>Athlete Profile</h2>
+        <div style="margin-bottom:14px;">
+          <div style="font-family:'Big Shoulders Display',sans-serif;font-size:28px;font-weight:800;color:var(--paper);line-height:1;">${p.athlete}</div>
+          <div style="font-size:12px;color:var(--slate);margin-top:4px;">Age ${p.athlete_age||'—'} · ${p.athlete_location||'—'} · ${p.athlete_years_running||'—'} years running</div>
+          <div style="font-size:12px;color:var(--slate);margin-top:2px;">${p.athlete_marathon_count||'—'} marathons · ${p.athlete_marathon_years||''} · ${p.club||''}</div>
+        </div>
+        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+          <thead><tr style="border-bottom:1px solid var(--line);">
+            <th style="text-align:left;padding:5px 10px 7px 0;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:500;">Event</th>
+            <th style="text-align:left;padding:5px 10px 7px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:500;">PB</th>
+            <th style="text-align:left;padding:5px 0 7px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--slate);font-weight:500;">Race / Note</th>
+          </tr></thead>
+          <tbody>
+            ${pbRow('5 km',  p.pb_5k,        '—')}
+            ${pbRow('10 km', p.pb_10k,       p.targets?.lakeside_10k ? `Target: ${p.targets.lakeside_10k} · Lakeside ${new Date(p.lakeside_date).toLocaleDateString('en-AU',{month:'short',year:'numeric'})}` : '—')}
+            ${pbRow('Half',  p.pb_half,      '—')}
+            ${pbRow('Marathon', p.pb_marathon, p.pb_marathon_race || '—')}
+          </tbody>
+        </table>
+        ${p.vo2max_lab ? `<div class="chart-foot" style="margin-top:10px;">Lab VO₂max: ${p.vo2max_lab} ml/kg/min (${p.vo2max_lab_date||''}) · Garmin est. <span id="bio-vo2max">—</span> (different method — not a regression)</div>` : ''}
+      </div>
+
+      <div class="card">
+        <h2>Season Goals</h2>
+        <div style="font-family:'Big Shoulders Display',sans-serif;font-size:34px;font-weight:800;color:var(--signal);line-height:1;margin-bottom:6px;">${p.targets?.melbourne_marathon || p.season_goal_b || '—'}</div>
+        <div style="font-size:12px;color:var(--slate);margin-bottom:16px;">${p.race} · ${new Date(p.race_date).toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'})}</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
+          ${p.season_goal_a ? goalRow('A goal', p.season_goal_a, 'var(--good)') : ''}
+          ${p.season_goal_b ? goalRow('B goal', p.season_goal_b, 'var(--warn)') : ''}
+          ${p.targets?.lakeside_10k ? goalRow('B-race', `Lakeside 10k · ${p.targets.lakeside_10k} · ${new Date(p.lakeside_date).toLocaleDateString('en-AU',{day:'numeric',month:'short'})}`, 'var(--z5)') : ''}
+          ${p.pb_marathon ? goalRow('Marathon PB to beat', p.pb_marathon, 'var(--slate)') : ''}
+        </div>
+        ${p.season_goal_note ? `<div class="chart-foot">${p.season_goal_note}</div>` : ''}
+      </div>
+    </div>
+
+    <!-- Row 2: Race History + Lab Calibration -->
+    <div class="grid grid-2" style="margin-bottom:18px;">
+      <div class="card">
+        <h2>Key Race History</h2>
+        <div style="display:flex;flex-direction:column;">
+          ${(p.race_history||[]).map(historyRow).join('')}
+        </div>
+        ${p.race_history_note ? `<div class="chart-foot" style="margin-top:8px;">${p.race_history_note}</div>` : ''}
+      </div>
+
+      <div class="card">
+        ${p.vo2max_lab ? `<h2>Lab Calibration <span class="accent">· ${p.vo2max_lab_date||''}</span></h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">
+          ${labTile('VO₂max', p.vo2max_lab, `ml/kg/min · max HR ${p.vo2max_lab_max_hr||'—'}`, 'var(--signal)')}
+          ${labTile('Max HR (working)', `${p.vo2max_lab_max_hr||'—'} bpm`, 'Lab confirmed', 'var(--paper)')}
+          ${p.lt2_hr ? labTile('LT2 (Threshold)', `${p.lt2_hr} bpm`, p.lt2_pace||'', 'var(--z4)') : ''}
+          ${p.lt1_hr ? labTile('LT1 (Aerobic)',   `${p.lt1_hr} bpm`, p.lt1_pace||'', 'var(--z2)') : ''}
+        </div>` : ''}
+        <h2 style="margin-top:${p.vo2max_lab?'14':'0'}px;">HR Zones</h2>
+        <table style="width:100%;border-collapse:collapse;font-size:12px;"><tbody>
+          ${(p.hr_zones||[]).map((z,i) => `
+            <tr style="${i<p.hr_zones.length-1?'border-bottom:1px solid var(--line);':''}">
+              <td style="padding:6px 8px 6px 0;"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:var(${z.color_var});">${z.zone.slice(0,2)}</span> ${z.zone.slice(3)}</td>
+              <td style="padding:6px 8px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate);">${z.hr}</td>
+              <td style="padding:6px 0;font-size:11px;color:var(--slate);">${z.pace}</td>
+            </tr>`).join('')}
+        </tbody></table>
+      </div>
+    </div>
+
+    <!-- Row 3: Plan rationale + Shoes -->
+    <div class="grid grid-3" style="margin-bottom:18px;">
+      <div class="card" style="grid-column:span 2;">
+        <h2>Why This Plan</h2>
+        ${p.plan_rationale ? `<div style="font-size:13px;line-height:1.7;color:var(--paper);">${p.plan_rationale}</div>` : ''}
+        ${p.plan_rules?.length ? `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;">${ruleGrid(p.plan_rules)}</div>` : ''}
+      </div>
+      <div class="card">
+        <h2>Shoe Rotation</h2>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          ${(p.shoes||[]).map(shoeCard).join('')}
+        </div>
+      </div>
+    </div>`;
+
+  // Wire up Garmin VO2max if available
+  const bioVo2 = document.getElementById('bio-vo2max');
+  if (bioVo2 && plan._garmin_vo2max) bioVo2.textContent = plan._garmin_vo2max;
 }
 
 /* ── Shared strip renderer ───────────────────────────────────────── */
@@ -991,6 +1150,8 @@ function renderInjuryList(plan) {
     `;
     container.appendChild(row);
   });
+  const footer = document.getElementById('injury-footer');
+  if (footer) footer.textContent = plan.injury_footer || '';
 }
 
 /* ── Season timeline ─────────────────────────────────────────────── */
@@ -2050,6 +2211,7 @@ async function init() {
 
   renderCountdowns(plan);
   renderHeaderSub(plan, live);
+  renderBio(plan);
   renderWeeklyVolume(live, plan);
   renderMotivation();
   renderReadiness(live);

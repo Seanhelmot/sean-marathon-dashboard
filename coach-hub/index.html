@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coach Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:      #060b12;
+    --panel:    #0d1520;
+    --raised:   #141f2e;
+    --line:     #1e2d40;
+    --slate:    #6b8299;
+    --paper:    #d6e4f0;
+    --signal:   #00d4ff;
+    --good:     #22c55e;
+    --warn:     #f59e0b;
+    --bad:      #ef4444;
+    --z2:       #4ade80;
+    --z4:       #00aaff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--ink); color: var(--paper); font-family: 'Inter', sans-serif; min-height: 100vh; }
+
+  header {
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+    padding: 20px 32px;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+  }
+  header h1 {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--signal);
+    letter-spacing: .03em;
+  }
+  header .sub { font-size: 12px; color: var(--slate); }
+
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 28px 24px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+
+  .athlete-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 18px 20px;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: border-color .15s, background .15s;
+    position: relative;
+  }
+  .athlete-card:hover { border-color: var(--signal); background: var(--raised); }
+
+  .athlete-name {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--paper);
+    margin-bottom: 2px;
+  }
+  .athlete-meta { font-size: 11px; color: var(--slate); margin-bottom: 14px; font-family: 'IBM Plex Mono', monospace; }
+
+  .status-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .chip {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    border: 1px solid;
+    white-space: nowrap;
+  }
+  .chip.green  { color: var(--good); border-color: var(--good);  background: rgba(34,197,94,.08); }
+  .chip.amber  { color: var(--warn); border-color: var(--warn);  background: rgba(245,158,11,.08); }
+  .chip.red    { color: var(--bad);  border-color: var(--bad);   background: rgba(239,68,68,.08); }
+  .chip.cyan   { color: var(--signal); border-color: var(--signal); background: rgba(0,212,255,.06); }
+  .chip.slate  { color: var(--slate); border-color: var(--line); }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; }
+  .stat-tile {
+    background: var(--raised);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    padding: 7px 9px;
+  }
+  .stat-tile .v { font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 600; color: var(--paper); }
+  .stat-tile .l { font-size: 9.5px; color: var(--slate); text-transform: uppercase; letter-spacing: .06em; margin-top: 2px; }
+
+  .stale-badge {
+    position: absolute; top: 12px; right: 14px;
+    font-size: 9.5px; font-family: 'IBM Plex Mono', monospace;
+    color: var(--warn); letter-spacing: .05em;
+  }
+
+  .loading-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 24px 20px;
+    text-align: center;
+    color: var(--slate);
+    font-size: 12px;
+  }
+
+  .error-card { border-color: var(--bad); }
+  .error-card .athlete-name { color: var(--bad); }
+
+  .section-head {
+    font-size: 10px; font-family: 'IBM Plex Mono', monospace;
+    text-transform: uppercase; letter-spacing: .1em;
+    color: var(--slate); margin-bottom: 12px; margin-top: 24px;
+  }
+
+  .add-btn {
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; padding: 24px;
+    border: 1px dashed var(--line); border-radius: 6px;
+    color: var(--slate); font-size: 13px; cursor: default;
+    background: transparent;
+  }
+  .add-btn code {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11.5px;
+    background: var(--raised); padding: 3px 8px; border-radius: 3px;
+    color: var(--signal);
+  }
+
+  footer { text-align: center; padding: 32px; font-size: 11px; color: var(--slate); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>COACH HUB</h1>
+  <div class="sub" id="hub-sub">Loading athletes…</div>
+</header>
+
+<div class="wrap">
+  <div class="section-head">Athletes</div>
+  <div class="grid" id="athlete-grid">
+    <div class="loading-card">Fetching athlete data…</div>
+  </div>
+
+  <div class="section-head" style="margin-top:32px;">Add a new athlete</div>
+  <div class="add-btn">
+    Run <code>python scripts/create_athlete.py --name "Athlete Name" --garmin-email … --garmin-password … --github-token … --github-owner …</code>
+    then add their URL below
+  </div>
+</div>
+
+<footer id="hub-footer">Coach Hub · data fetched live from each athlete's GitHub Pages dashboard</footer>
+
+<script>
+/*
+  ── ATHLETE ROSTER ───────────────────────────────────────────────────
+  Add each athlete here. live_url points to their GitHub Pages site.
+  plan_url and live_url must be CORS-accessible (GitHub Pages are public).
+*/
+const ATHLETES = [
+  {
+    name:     'Sean Helmot',
+    live_url: 'https://seanhelmot.github.io/sean-marathon-dashboard/data/live.json',
+    plan_url: 'https://seanhelmot.github.io/sean-marathon-dashboard/data/plan.json',
+    dash_url: 'https://seanhelmot.github.io/sean-marathon-dashboard/',
+  },
+  // Add more athletes below:
+  // {
+  //   name:     'Jane Smith',
+  //   live_url: 'https://seanhelmot.github.io/jane-smith-marathon-dashboard/data/live.json',
+  //   plan_url: 'https://seanhelmot.github.io/jane-smith-marathon-dashboard/data/plan.json',
+  //   dash_url: 'https://seanhelmot.github.io/jane-smith-marathon-dashboard/',
+  // },
+];
+
+function fmtPace(dec) {
+  if (dec == null) return '—';
+  const mins = Math.floor(dec);
+  const secs = String(Math.round((dec % 1) * 100)).padStart(2, '0');
+  return `${mins}:${secs}/km`;
+}
+
+function chipHRV(hrv) {
+  if (hrv == null) return '<span class="chip slate">HRV —</span>';
+  const cls = hrv >= 75 ? 'green' : hrv >= 60 ? 'amber' : 'red';
+  return `<span class="chip ${cls}">HRV ${hrv}ms</span>`;
+}
+function chipSleep(s) {
+  if (s == null) return '<span class="chip slate">Sleep —</span>';
+  const cls = s >= 80 ? 'green' : s >= 65 ? 'amber' : 'red';
+  return `<span class="chip ${cls}">Sleep ${s}</span>`;
+}
+function chipBB(bb) {
+  if (bb == null) return '';
+  const cls = bb >= 60 ? 'green' : bb >= 30 ? 'amber' : 'red';
+  return `<span class="chip ${cls}">BB ${bb}</span>`;
+}
+function chipRHR(rhr) {
+  if (rhr == null) return '';
+  return `<span class="chip cyan">RHR ${rhr}</span>`;
+}
+function chipWeek(wk, total) {
+  if (wk == null) return '';
+  return `<span class="chip slate">W${wk}/${total}</span>`;
+}
+
+function staleLabel(generatedAt) {
+  if (!generatedAt) return '';
+  const ago = Math.round((Date.now() - new Date(generatedAt)) / 60000);
+  if (ago < 120) return '';
+  const label = ago < 1440 ? `${Math.round(ago/60)}h ago` : `${Math.round(ago/1440)}d ago`;
+  return `<div class="stale-badge">⚠ ${label}</div>`;
+}
+
+async function loadAthlete(athlete) {
+  try {
+    const [live, plan] = await Promise.all([
+      fetch(athlete.live_url, {cache:'no-store'}).then(r => { if(!r.ok) throw new Error(r.status); return r.json(); }),
+      fetch(athlete.plan_url, {cache:'no-store'}).then(r => { if(!r.ok) throw new Error(r.status); return r.json(); }),
+    ]);
+
+    const t = live.today || {};
+    const wk = live.current_week;
+    const total = plan.build_weeks;
+    const race = plan.race || '';
+    const raceDate = plan.race_date ? new Date(plan.race_date) : null;
+    const daysToRace = raceDate ? Math.round((raceDate - new Date()) / 86400000) : null;
+
+    // This week's volume
+    const thisWkData = (live.weeks || []).find(w => w.wk === wk);
+    const thisWkKm = thisWkData?.actual_km != null ? Math.round(thisWkData.actual_km) + 'km' : '—';
+    const planKm = plan.weeks?.find(w => w.wk === wk)?.plan_km;
+
+    // Latest threshold pace
+    const qualWeeks = (live.weeks || []).filter(w => w.quality?.pace_min_per_km);
+    const latestThresh = qualWeeks.length ? qualWeeks[qualWeeks.length - 1].quality.pace_min_per_km : null;
+
+    // Latest LR decoupling
+    const recentActs = live.recent_activities || [];
+    const lastLR = recentActs.find(a => a.decoupling_pct != null);
+    const decouple = lastLR?.decoupling_pct;
+
+    const statTile = (v, l) => `<div class="stat-tile"><div class="v">${v}</div><div class="l">${l}</div></div>`;
+
+    return `<a class="athlete-card" href="${athlete.dash_url}" target="_blank" rel="noopener">
+      ${staleLabel(live.generated_at)}
+      <div class="athlete-name">${plan.athlete || athlete.name}</div>
+      <div class="athlete-meta">${race}${daysToRace != null ? ' · ' + daysToRace + 'd to race' : ''}</div>
+      <div class="status-row">
+        ${chipWeek(wk, total)}
+        ${chipHRV(t.hrv_7d_avg)}
+        ${chipSleep(t.sleep_score)}
+        ${chipBB(t.body_battery)}
+        ${chipRHR(t.rhr)}
+      </div>
+      <div class="stat-grid">
+        ${statTile(thisWkKm + (planKm ? ' / ' + planKm + 'km' : ''), 'This week')}
+        ${statTile(latestThresh ? fmtPace(latestThresh) : '—', 'Thresh pace')}
+        ${statTile(decouple != null ? (decouple > 0 ? '+' : '') + decouple + '%' : '—', 'LR decoupling')}
+      </div>
+    </a>`;
+  } catch (e) {
+    return `<div class="athlete-card error-card">
+      <div class="athlete-name">${athlete.name}</div>
+      <div class="athlete-meta" style="color:var(--bad);">Could not load data — ${e.message}</div>
+      <div style="margin-top:8px;font-size:11.5px;color:var(--slate);">
+        <a href="${athlete.dash_url}" target="_blank" style="color:var(--signal);">Open dashboard →</a>
+      </div>
+    </div>`;
+  }
+}
+
+async function init() {
+  const grid = document.getElementById('athlete-grid');
+  const cards = await Promise.all(ATHLETES.map(loadAthlete));
+  grid.innerHTML = cards.join('');
+
+  const now = new Date().toLocaleTimeString('en-AU', {hour:'2-digit', minute:'2-digit'});
+  document.getElementById('hub-sub').textContent =
+    `${ATHLETES.length} athlete${ATHLETES.length !== 1 ? 's' : ''} · refreshed ${now}`;
+}
+
+init();
+</script>
+</body>
+</html>
