@@ -202,15 +202,8 @@
     </div>
 
     <!-- CURRENT WEEK + NEXT WEEK -->
-    <div class="grid grid-2" style="margin-bottom:18px;">
-      <div class="card">
-        <h2 id="week-card-title">Week — · — · loading</h2>
-        <div class="week-strip" id="week-strip"><div class="loading">Loading week data…</div></div>
-      </div>
-      <div class="card">
-        <h2 id="next-week-card-title">Next Week · loading</h2>
-        <div class="week-strip" id="next-week-strip"><div class="loading">Loading…</div></div>
-      </div>
+    <div class="card" style="margin-bottom:18px;">
+      <div id="dual-week-strip"><div class="loading">Loading week data…</div></div>
     </div>
 
     <div class="grid grid-2">
@@ -706,51 +699,120 @@ function buildGarminDayMap(liveWeeks, wkNum) {
   return garminDays;
 }
 
-/* ── This Week strip ─────────────────────────────────────────────── */
+/* ── Dual-week strip (This Week + Next Week aligned) ─────────────── */
 function renderWeekStrip(live, plan) {
-  const wkNum = live.current_week;
-  const planWk = plan.weeks.find(w => w.wk === wkNum) || {};
-  const title = document.getElementById('week-card-title');
-  title.innerHTML = `Week ${wkNum} <span class="accent">· ${planWk.phase || ''} · ${planWk.plan_km || '—'}km planned</span>`;
+  const wkNum    = live.current_week;
+  const nextWkNum = wkNum + 1;
+  const planWk   = plan.weeks.find(w => w.wk === wkNum) || {};
+  const planNext  = plan.weeks.find(w => w.wk === nextWkNum);
+  const container = document.getElementById('dual-week-strip');
 
-  const strip = document.getElementById('week-strip');
-  const garminDays = buildGarminDayMap(live.weeks, wkNum);
-  const mon = wkMonday(plan, wkNum);
-
-  // Start from plan days; overlay live.this_week_days names/metas if present
-  let days = planWk.days ? planWk.days.map(d => ({...d})) : null;
-  if (!days) {
-    strip.innerHTML = '<div class="loading">No plan data for this week.</div>';
+  if (!planWk.days) {
+    container.innerHTML = '<div class="loading">No plan data for this week.</div>';
     return;
   }
+
+  const garminCur  = buildGarminDayMap(live.weeks, wkNum);
+  const garminNext = planNext ? buildGarminDayMap(live.weeks, nextWkNum) : {};
+  const monCur  = wkMonday(plan, wkNum);
+  const monNext = planNext ? wkMonday(plan, nextWkNum) : null;
+
+  // Overlay live.this_week_days names/metas onto plan days
+  const curDays = planWk.days.map(d => ({...d}));
   if (live.this_week_days && live.this_week_days.length) {
     live.this_week_days.forEach(ld => {
-      const match = days.find(d => d.dow === ld.dow);
+      const match = curDays.find(d => d.dow === ld.dow);
       if (match) { match.live_name = ld.name; match.live_meta = ld.meta; }
     });
   }
+  const nextDays = planNext && planNext.days ? planNext.days : null;
 
-  renderDayStrip(strip, days, garminDays, mon);
-}
+  const today = new Date(); today.setHours(0,0,0,0);
+  const feelLabel = ['','😩','😕','😐','🙂','😄'];
 
-/* ── Next week strip ─────────────────────────────────────────────── */
-function renderNextWeekStrip(live, plan) {
-  const nextWkNum = live.current_week + 1;
-  const planWk = plan.weeks.find(w => w.wk === nextWkNum);
-  const title = document.getElementById('next-week-card-title');
-  const strip = document.getElementById('next-week-strip');
+  // Header row
+  const wkTag   = planWk.tag   ? ` <span style="color:var(--z5);font-size:10px;font-weight:400;">${planWk.tag.toUpperCase()}</span>` : '';
+  const nextTag  = planNext && planNext.tag ? ` <span style="color:var(--z5);font-size:10px;font-weight:400;">${planNext.tag.toUpperCase()}</span>` : '';
+  const nextLabel = planNext
+    ? `Week ${nextWkNum} <span style="color:var(--slate);font-size:11px;font-weight:400;">· ${planNext.phase} · ${planNext.plan_km}km</span>${nextTag}`
+    : 'Next Week';
 
-  if (!planWk || !planWk.days) {
-    title.innerHTML = 'Next Week';
-    strip.innerHTML = '<div class="loading">No plan data for next week.</div>';
-    return;
+  let html = `
+    <div style="display:grid;grid-template-columns:44px 1fr 1fr;gap:0;margin-bottom:10px;padding:0 4px;">
+      <div></div>
+      <div style="font-size:13px;font-weight:700;color:var(--paper);padding:0 12px;">
+        Week ${wkNum} <span style="color:var(--slate);font-size:11px;font-weight:400;">· ${planWk.phase} · ${planWk.plan_km}km</span>${wkTag}
+      </div>
+      <div style="font-size:13px;font-weight:700;color:var(--paper);padding:0 12px;border-left:1px solid var(--line);">
+        ${nextLabel}
+      </div>
+    </div>`;
+
+  for (let i = 0; i < 7; i++) {
+    const cur  = curDays[i];
+    const nxt  = nextDays ? nextDays[i] : null;
+
+    // Current week day
+    const curDate = new Date(monCur); curDate.setDate(curDate.getDate() + i);
+    const curLabel = curDate.getDate() + ' ' + MONTHS[curDate.getMonth()];
+    const curToday = curDate.getTime() === today.getTime();
+    const curDone  = !curToday && curDate < today;
+    const curDot   = curToday ? 'var(--signal)' : curDone ? 'var(--good)' : 'var(--slate-dim)';
+    const curOpacity = curDone ? '0.55' : '1';
+    const curBg    = curToday ? 'var(--panel-raised)' : 'transparent';
+    const curBorder = curToday ? '1px solid var(--signal)' : '1px solid transparent';
+    const gCur = garminCur[curLabel] || {};
+    const curFeel   = gCur.feel   != null ? `<span style="margin-left:6px;opacity:.7;">${feelLabel[gCur.feel]||''}</span>` : '';
+    const curEffort = gCur.effort != null ? `<span style="font-size:10px;color:var(--slate);margin-left:4px;">RPE ${gCur.effort}</span>` : '';
+    const curName = cur.live_name || cur.name;
+    const curMeta = cur.live_meta || cur.meta;
+
+    // Next week day
+    let nxtHtml = '<div style="padding:8px 12px;border-left:1px solid var(--line);"></div>';
+    if (nxt && monNext) {
+      const nxtDate = new Date(monNext); nxtDate.setDate(nxtDate.getDate() + i);
+      const nxtLabel = nxtDate.getDate() + ' ' + MONTHS[nxtDate.getMonth()];
+      const gNxt = garminNext[nxtLabel] || {};
+      const nxtFeel = gNxt.feel != null ? `<span style="margin-left:6px;opacity:.7;">${feelLabel[gNxt.feel]||''}</span>` : '';
+      nxtHtml = `
+        <div style="padding:8px 12px;border-left:1px solid var(--line);">
+          <div style="font-size:12px;font-weight:600;color:var(--paper);margin-bottom:2px;">
+            <span class="status-dot" style="background:var(--slate-dim)"></span>${nxt.name}
+            ${nxt.zone ? `<span class="zone-chip" style="background:${ZONE_COLOR[nxt.zone]};margin-left:6px;">${ZONE_LABEL[nxt.zone]}</span>` : ''}
+            ${nxtFeel}
+          </div>
+          <div style="font-size:11px;color:var(--slate);line-height:1.4;">${nxt.meta}</div>
+        </div>`;
+    }
+
+    const rowBg = i % 2 === 0 ? 'var(--panel-raised)' : 'transparent';
+
+    html += `
+      <div style="display:grid;grid-template-columns:44px 1fr 1fr;gap:0;border-radius:3px;
+                  background:${curToday ? 'var(--panel-raised)' : rowBg};
+                  border:${curToday ? '1px solid var(--signal)' : '1px solid transparent'};
+                  opacity:${curOpacity};margin-bottom:3px;">
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;
+                    padding:8px 0;border-right:1px solid var(--line);gap:2px;">
+          <span style="font-size:9.5px;font-weight:700;letter-spacing:.05em;color:${curToday?'var(--signal)':'var(--slate)'};">${cur.dow.toUpperCase()}</span>
+          <span style="font-size:9px;color:var(--slate-dim);">${curLabel}</span>
+        </div>
+        <div style="padding:8px 12px;opacity:${curOpacity};">
+          <div style="font-size:12px;font-weight:600;color:var(--paper);margin-bottom:2px;">
+            <span class="status-dot" style="background:${curDot}"></span>${curName}
+            ${cur.zone ? `<span class="zone-chip" style="background:${ZONE_COLOR[cur.zone]};margin-left:6px;">${ZONE_LABEL[cur.zone]}</span>` : ''}
+            ${curFeel}${curEffort}
+          </div>
+          <div style="font-size:11px;color:var(--slate);line-height:1.4;">${curMeta}</div>
+        </div>
+        ${nxtHtml}
+      </div>`;
   }
 
-  title.innerHTML = `Week ${nextWkNum} <span class="accent">· ${planWk.phase} · ${planWk.plan_km}km planned</span>`;
-  const garminDays = buildGarminDayMap(live.weeks, nextWkNum);
-  const mon = wkMonday(plan, nextWkNum);
-  renderDayStrip(strip, planWk.days, garminDays, mon);
+  container.innerHTML = html;
 }
+
+function renderNextWeekStrip() {} // no-op — merged into renderWeekStrip
 
 /* ── Quality session chart ───────────────────────────────────────── */
 function renderQualityChart(live) {
