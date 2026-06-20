@@ -113,12 +113,17 @@ def pull_data(client):
         max_hr   = act.get("maxHR") or 0
         duration_s = act.get("duration") or 0
         speed    = act.get("averageSpeed") or 0
-        # feel/effort not in list response — fetch activity detail
+        # feel/effort live in summaryDTO.directWorkoutFeel/Rpe (0–100 scale)
         feel, effort = None, None
         try:
-            detail = client.get_activity(act["activityId"])
-            feel   = detail.get("feelingAfter") or detail.get("userFeelingAfterActivityId")
-            effort = detail.get("userPerceivedEffort")
+            detail  = client.get_activity(act["activityId"])
+            summary = detail.get("summaryDTO") or {}
+            feel_raw   = summary.get("directWorkoutFeel")
+            effort_raw = summary.get("directWorkoutRpe")
+            if feel_raw is not None:
+                feel = max(1, min(5, int((feel_raw - 1) // 20 + 1)))
+            if effort_raw is not None:
+                effort = round(effort_raw / 10, 1)
         except Exception:
             pass
 
@@ -133,8 +138,9 @@ def pull_data(client):
                 existing_day["avg_hr"]  = int(avg_hr)
                 existing_day["pace"]    = pace_from_speed(speed)
                 existing_day["_main_dist"] = dist_km
-            if feel   is not None: existing_day["feel"]   = int(feel)
-            if effort is not None: existing_day["effort"] = round(float(effort), 1)
+                # feel/effort follow the dominant (longest) activity
+                if feel   is not None: existing_day["feel"]   = int(feel)
+                if effort is not None: existing_day["effort"] = round(float(effort), 1)
         else:
             bucket["days"][day_key] = {
                 "dist_km":    round(dist_km, 1),
