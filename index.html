@@ -2038,9 +2038,28 @@ function renderActivity(live, wxMap) {
     // Weather
     const wx = wxBadge(wxMap, a.start_local, '');
 
-    // Lap detail block
+    // Lap detail block — long runs prefer km_chunks+decoupling over interval_summary
     let lapDetail = '';
-    if (a.interval_summary && a.interval_summary.length && !a.work_laps) {
+    const isLongRun = (a.dist_km || 0) >= 18;
+    if (a.km_chunks && a.km_chunks.length && isLongRun) {
+      const rows = a.km_chunks.map(c => `
+        <tr>
+          <td ${TD}>${c.label}</td>
+          <td ${TD}>${c.pace != null ? fmtPace(c.pace) : '—'}</td>
+          <td ${TD}>${c.avg_hr != null ? c.avg_hr + 'bpm' : '—'}</td>
+        </tr>`).join('');
+      const dc = a.decoupling_pct != null
+        ? `<span style="margin-left:12px;font-size:11px;color:${a.decoupling_pct <= 5 ? 'var(--good)' : 'var(--warn)'};">Decoupling ${a.decoupling_pct > 0 ? '+' : ''}${a.decoupling_pct}% ${a.decoupling_pct <= 5 ? '✓' : '↑'}</span>`
+        : '';
+      lapDetail = `
+        <div style="margin-top:10px;">
+          <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--signal);margin-bottom:5px;font-weight:600;">5km Splits${dc}</div>
+          <table style="width:100%;border-collapse:collapse;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
+            <thead><tr><th ${TH}>Segment</th><th ${TH}>Pace</th><th ${TH}>Avg HR</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>`;
+    } else if (a.interval_summary && a.interval_summary.length && !a.work_laps) {
       // intervals.icu pre-formatted summary — only show for structured sessions (multi-rep first element)
       const firstEl = a.interval_summary[0] || '';
       const nMatch = firstEl.match(/^(\d+)x/);
@@ -2068,24 +2087,6 @@ function renderActivity(live, wxMap) {
           <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--signal);margin-bottom:5px;font-weight:600;">Work Laps</div>
           <table style="width:100%;border-collapse:collapse;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
             <thead><tr><th ${TH}>Rep</th><th ${TH}>Dist</th><th ${TH}>Pace</th><th ${TH}>Avg HR</th><th ${TH}>Max HR</th></tr></thead>
-            <tbody>${rows}</tbody>
-          </table>
-        </div>`;
-    } else if (a.km_chunks && a.km_chunks.length) {
-      const rows = a.km_chunks.map(c => `
-        <tr>
-          <td ${TD}>${c.label}</td>
-          <td ${TD}>${c.pace != null ? fmtPace(c.pace) : '—'}</td>
-          <td ${TD}>${c.avg_hr != null ? c.avg_hr + 'bpm' : '—'}</td>
-        </tr>`).join('');
-      const dc = a.decoupling_pct != null
-        ? `<span style="margin-left:12px;font-size:11px;color:${a.decoupling_pct <= 5 ? 'var(--good)' : 'var(--warn)'};">Decoupling ${a.decoupling_pct > 0 ? '+' : ''}${a.decoupling_pct}% ${a.decoupling_pct <= 5 ? '✓' : '↑'}</span>`
-        : '';
-      lapDetail = `
-        <div style="margin-top:10px;">
-          <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--signal);margin-bottom:5px;font-weight:600;">5km Splits${dc}</div>
-          <table style="width:100%;border-collapse:collapse;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
-            <thead><tr><th ${TH}>Segment</th><th ${TH}>Pace</th><th ${TH}>Avg HR</th></tr></thead>
             <tbody>${rows}</tbody>
           </table>
         </div>`;
