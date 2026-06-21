@@ -79,8 +79,8 @@ def icu_get_laps(activity_id: str, api_key: str) -> list | None:
             mt   = lap.get("moving_time") or 0
             if dist < 200 or mt < 10:
                 continue
-            pace_min_km = round((mt / 60) / (dist / 1000), 2)  # min/km, consistent with rest of code
-            if pace_min_km > 15:          # exclude near-stopped laps
+            pace_min_km = pace_from_speed(dist / mt)   # stored as mins + secs/100, e.g. 4.35 = 4:35
+            if pace_min_km is None or pace_min_km > 15:
                 continue
             start_km = round(cum_dist / 1000, 1)
             cum_dist += dist
