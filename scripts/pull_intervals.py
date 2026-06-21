@@ -57,6 +57,45 @@ def icu_get_activity(activity_id: str, athlete_id: str, api_key: str):
     return data
 
 
+def icu_get_laps(activity_id: str, api_key: str) -> list | None:
+    """
+    Fetch auto-detected laps from intervals.icu Data view.
+    Endpoint: /api/v1/activity/{id}/intervals  (no athlete prefix)
+    Returns list of lap dicts with dist_km, pace, avg_hr, or None.
+    """
+    try:
+        url = f"{BASE_URL}/activity/{activity_id}/intervals"
+        resp = requests.get(url, auth=("API_KEY", api_key), timeout=30)
+        if not resp.ok:
+            return None
+        data = resp.json()
+        laps = data.get("icu_intervals", []) if isinstance(data, dict) else []
+        if not laps:
+            return None
+        result = []
+        cum_dist = 0.0
+        for lap in laps:
+            dist = lap.get("distance") or 0
+            mt   = lap.get("moving_time") or 0
+            if dist < 200 or mt < 10:
+                continue
+            pace_min_km = round((mt / 60) / (dist / 1000), 2)  # min/km, consistent with rest of code
+            if pace_min_km > 15:          # exclude near-stopped laps
+                continue
+            start_km = round(cum_dist / 1000, 1)
+            cum_dist += dist
+            end_km   = round(cum_dist / 1000, 1)
+            result.append({
+                "label":   f"{start_km}-{end_km}km",
+                "dist_km": round(dist / 1000, 2),
+                "pace":    pace_min_km,
+                "avg_hr":  int(lap["average_heartrate"]) if lap.get("average_heartrate") else None,
+            })
+        return result or None
+    except Exception:
+        return None
+
+
 def icu_get_streams(activity_id: str, api_key: str,
                     types: str = "time,distance,heartrate,velocity_smooth,cadence") -> dict | None:
     """
@@ -390,11 +429,12 @@ def pull_data(athlete_id: str, api_key: str):
             if act_id and (is_long or is_qual_r):
                 streams = icu_get_streams(act_id, api_key)
                 if streams:
-                    if is_qual_r and not is_long:   # long runs get km chunks, not rep laps
+                    if is_qual_r and not is_long:
                         work_laps_detail = _streams_quality_laps(streams)
                     if is_long:
-                        km_chunks_detail  = _streams_km_chunks(streams)
-                        decouple_streams  = _streams_decoupling(streams)
+                        # prefer explicit lap data from intervals.icu Data view; fall back to stream chunks
+                        km_chunks_detail = icu_get_laps(act_id, api_key) or _streams_km_chunks(streams)
+                        decouple_streams = _streams_decoupling(streams)
 
             entry = {
                 "date":            iso(act_date),
