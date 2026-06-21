@@ -363,7 +363,8 @@ def pull_data(athlete_id: str, api_key: str):
                 except Exception:
                     pass
 
-            feel   = detail.get("feel")           # 1–5 already
+            # prefer feel from list endpoint (user-set); detail endpoint often has a Garmin-sync default of 2
+            feel   = act.get("feel") if act.get("feel") is not None else detail.get("feel")
             effort = detail.get("perceived_exertion") or detail.get("icu_rpe")
             decouple = detail.get("decoupling")   # % already
             interval_summary = detail.get("interval_summary") or []
@@ -385,7 +386,7 @@ def pull_data(athlete_id: str, api_key: str):
             if act_id and (is_long or is_qual_r):
                 streams = icu_get_streams(act_id, api_key)
                 if streams:
-                    if is_qual_r:
+                    if is_qual_r and not is_long:   # long runs get km chunks, not rep laps
                         work_laps_detail = _streams_quality_laps(streams)
                     if is_long:
                         km_chunks_detail  = _streams_km_chunks(streams)
