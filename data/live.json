@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-06-21T21:33:43+10:00",
-  "current_week": 6,
+  "generated_at": "2026-06-22T03:12:37+10:00",
+  "current_week": 7,
   "today": {
-    "rhr": 42,
-    "hrv_7d_avg": 74,
+    "rhr": 41,
+    "hrv_7d_avg": 73,
     "hrv_status": null,
-    "sleep_score": 82.0,
-    "sleep_hrs": 7.5,
-    "body_battery": 97,
+    "sleep_score": null,
+    "sleep_hrs": null,
+    "body_battery": 75,
     "vo2max_garmin": null,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 50.7,
-    "atl": 81.3
+    "ctl": 49.5,
+    "atl": 70.5
   },
   "this_week_days": [
     {
@@ -244,8 +244,8 @@
           "dist_km": 7.2,
           "avg_hr": 110,
           "pace": 6.38,
-          "feel": 3,
-          "effort": 2.0,
+          "feel": null,
+          "effort": null,
           "decoupling_pct": null,
           "_main_dist": 7.22
         },
@@ -431,12 +431,6 @@
   ],
   "sleep_hrv_14d": [
     {
-      "date": "2026-06-08",
-      "score": 89.0,
-      "hrv": 79.0,
-      "rhr": 39
-    },
-    {
       "date": "2026-06-09",
       "score": 81.0,
       "hrv": 78.0,
@@ -512,7 +506,13 @@
       "date": "2026-06-21",
       "score": 82.0,
       "hrv": 78.0,
-      "rhr": 42
+      "rhr": 40
+    },
+    {
+      "date": "2026-06-22",
+      "score": null,
+      "hrv": null,
+      "rhr": 41
     }
   ],
   "recent_activities": [
@@ -1024,24 +1024,6 @@
         "1x 76s 117bpm",
         "1x 2m7s 115bpm",
         "1x 1h11m 124bpm"
-      ]
-    },
-    {
-      "date": "2026-06-07",
-      "start_local": "2026-06-07T07:19",
-      "name": "Recovery jog",
-      "dist_km": 7.22,
-      "duration_s": 2873,
-      "avg_hr": 110,
-      "max_hr": 134,
-      "pace": 6.38,
-      "feel": 3,
-      "effort": 2.0,
-      "elevation_gain": 90.698044,
-      "avg_cadence": 159,
-      "interval_summary": [
-        "1x 1h53m 109bpm",
-        "1x 19m11s 113bpm"
       ]
     }
   ]
