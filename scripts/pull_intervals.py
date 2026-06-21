@@ -75,21 +75,24 @@ def icu_get_laps(activity_id: str, api_key: str) -> list | None:
         result = []
         cum_dist = 0.0
         for lap in laps:
-            dist = lap.get("distance") or 0
-            mt   = lap.get("moving_time") or 0
-            if dist < 200 or mt < 10:
+            dist  = lap.get("distance") or 0
+            speed = lap.get("average_speed")   # m/s — intervals.icu already computed this
+            if dist < 200 or not speed:
                 continue
-            pace_min_km = pace_from_speed(dist / mt)   # stored as mins + secs/100, e.g. 4.35 = 4:35
-            if pace_min_km is None or pace_min_km > 15:
+            pace = pace_from_speed(speed)      # only conversion needed: m/s → min:sec string
+            if pace is None or pace > 15:
                 continue
             start_km = round(cum_dist / 1000, 1)
             cum_dist += dist
             end_km   = round(cum_dist / 1000, 1)
             result.append({
-                "label":   f"{start_km}-{end_km}km",
-                "dist_km": round(dist / 1000, 2),
-                "pace":    pace_min_km,
-                "avg_hr":  int(lap["average_heartrate"]) if lap.get("average_heartrate") else None,
+                "label":       f"{start_km}-{end_km}km",
+                "dist_km":     round(dist / 1000, 2),
+                "elapsed":     lap.get("elapsed_time"),   # seconds, for display if wanted
+                "pace":        pace,
+                "avg_hr":      int(lap["average_heartrate"]) if lap.get("average_heartrate") else None,
+                "max_hr":      int(lap["max_heartrate"])      if lap.get("max_heartrate")      else None,
+                "avg_cadence": round(lap["average_cadence"])  if lap.get("average_cadence")    else None,
             })
         return result or None
     except Exception:

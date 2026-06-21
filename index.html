@@ -2047,6 +2047,8 @@ function renderActivity(live, wxMap) {
           <td ${TD}>${c.label}</td>
           <td ${TD}>${c.pace != null ? fmtPace(c.pace) : '—'}</td>
           <td ${TD}>${c.avg_hr != null ? c.avg_hr + 'bpm' : '—'}</td>
+          <td ${TD}>${c.max_hr != null ? c.max_hr + 'bpm' : '—'}</td>
+          <td ${TD}>${c.avg_cadence != null ? c.avg_cadence + 'spm' : '—'}</td>
         </tr>`).join('');
       const dc = a.decoupling_pct != null
         ? `<span style="margin-left:12px;font-size:11px;color:${a.decoupling_pct <= 5 ? 'var(--good)' : 'var(--warn)'};">Decoupling ${a.decoupling_pct > 0 ? '+' : ''}${a.decoupling_pct}% ${a.decoupling_pct <= 5 ? '✓' : '↑'}</span>`
@@ -2055,7 +2057,7 @@ function renderActivity(live, wxMap) {
         <div style="margin-top:10px;">
           <div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--signal);margin-bottom:5px;font-weight:600;">Lap Splits${dc}</div>
           <table style="width:100%;border-collapse:collapse;background:var(--panel-raised);border:1px solid var(--line);border-radius:3px;">
-            <thead><tr><th ${TH}>Segment</th><th ${TH}>Pace</th><th ${TH}>Avg HR</th></tr></thead>
+            <thead><tr><th ${TH}>Segment</th><th ${TH}>Pace</th><th ${TH}>Avg HR</th><th ${TH}>Max HR</th><th ${TH}>Cadence</th></tr></thead>
             <tbody>${rows}</tbody>
           </table>
         </div>`;
