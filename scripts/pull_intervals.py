@@ -218,11 +218,15 @@ def _streams_km_chunks(streams: dict, chunk_km: int = 5) -> list | None:
         chunks, buf_start, next_bdry = [], 0, chunk_km * 1000
 
         def flush(i0, i1):
-            dist = d[i1] - d[i0]; dur = t[i1] - t[i0]
-            if dist < 500 or dur < 1:
+            dist = d[i1] - d[i0]
+            if dist < 500:
                 return None
-            pace = pace_from_speed(dist / dur)
-            if pace is None or pace > 10.0:   # skip near-stopped fragments
+            # moving time only — exclude seconds where velocity < 1.0 m/s (stopped/walking)
+            moving_secs = sum(1 for j in range(i0, i1) if vel[j] >= 1.0)
+            if moving_secs < 10:
+                return None
+            pace = pace_from_speed(dist / moving_secs)
+            if pace is None or pace > 10.0:
                 return None
             avg_hr = round(sum(hr[i0:i1]) / (i1 - i0)) if any(hr) else None
             return {
