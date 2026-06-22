@@ -1859,7 +1859,18 @@ function renderReadiness(live) {
   document.getElementById('readiness-date-label').textContent =
     `· ${today.toLocaleDateString('en-AU', {weekday:'short', day:'numeric', month:'short'})}`;
 
-  // Score each signal (0 = bad, 1 = ok, 2 = good)
+  // ── Step 1: Check yesterday's training load (overrides wellness) ──
+  const recentActs = live.recent_activities || [];
+  const nowDate = new Date();
+  const yesterdayStr = new Date(nowDate - 86400000).toISOString().slice(0, 10);
+  const todayStr = nowDate.toISOString().slice(0, 10);
+  const yesterdayRuns = recentActs.filter(a => a.date === yesterdayStr && a.type === 'Run');
+  const yesterdayDist = yesterdayRuns.reduce((s, a) => s + (a.dist_km || 0), 0);
+  const yesterdayMaxHR = Math.max(0, ...yesterdayRuns.map(a => a.avg_hr || 0));
+  const isLongRunDay = yesterdayDist >= 18;
+  const isQualityDay = yesterdayMaxHR >= 155 && yesterdayDist >= 6;
+
+  // ── Step 2: Wellness signals (0 = bad, 1 = ok, 2 = good) ──
   const signals = [];
 
   const hrv = t.hrv_7d_avg;
@@ -1882,12 +1893,30 @@ function renderReadiness(live) {
   if (rhr != null) { rhrScore = rhr <= 42 ? 2 : rhr <= 48 ? 1 : 0; }
   signals.push(rhrScore);
 
-  const avg = signals.reduce((a, b) => a + b, 0) / signals.length;
-  const status = avg >= 1.6 ? 'ready' : avg >= 0.9 ? 'moderate' : 'recover';
-  const statusLabel = { ready: 'READY TO TRAIN', moderate: 'MODERATE', recover: 'PRIORITISE RECOVERY' }[status];
+  const wellnessAvg = signals.reduce((a, b) => a + b, 0) / signals.length;
 
-  // Build plain-English lines
+  // ── Step 3: Final status — training load wins over wellness ──
+  let status, statusLabel;
+  if (isLongRunDay) {
+    status = 'recover';
+    statusLabel = 'EASY OR REST ONLY';
+  } else if (isQualityDay) {
+    status = 'moderate';
+    statusLabel = 'EASY DAY';
+  } else {
+    status = wellnessAvg >= 1.6 ? 'ready' : wellnessAvg >= 0.9 ? 'moderate' : 'recover';
+    statusLabel = { ready: 'READY TO TRAIN', moderate: 'MODERATE', recover: 'PRIORITISE RECOVERY' }[status];
+  }
+
+  // ── Step 4: Build plain-English commentary ──
   const lines = [];
+
+  // Lead with yesterday's session context if it's driving the call
+  if (isLongRunDay) {
+    lines.push(`Long run ${yesterdayDist.toFixed(1)}km yesterday — legs need easy movement or rest today regardless of overnight metrics.`);
+  } else if (isQualityDay) {
+    lines.push(`Quality session yesterday (avg HR ${yesterdayMaxHR}bpm, ${yesterdayDist.toFixed(1)}km) — keep today easy to absorb the stimulus.`);
+  }
 
   if (hrv != null) {
     const hrvText = hrv >= 75 ? `HRV strong at ${hrv}ms` : hrv >= 60 ? `HRV at ${hrv}ms — within normal range` : `HRV suppressed at ${hrv}ms — body still adapting`;
@@ -1905,7 +1934,7 @@ function renderReadiness(live) {
   }
 
   if (bb != null) {
-    const bbText = bb >= 70 ? `Body battery high at ${bb} — well recovered.`
+    const bbText = bb >= 70 ? `Body battery high at ${bb} — well recovered overnight.`
       : bb >= 40 ? `Body battery moderate at ${bb}.`
       : `Body battery low at ${bb} — cumulative fatigue showing.`;
     lines.push(bbText);
@@ -1918,11 +1947,11 @@ function renderReadiness(live) {
     lines.push(rhrText);
   }
 
-  // Training recommendation
+  // Closing recommendation
   const rec = {
-    ready:    'All systems green — good day for quality work or a long run.',
-    moderate: 'Keep effort honest today. Easy or moderate sessions fine; hold off on a hard session if flat.',
-    recover:  'Back off today. Easy movement only — protect the next hard session.',
+    ready:    'All systems green — proceed with the planned session.',
+    moderate: 'Keep effort honest today. Easy or moderate session fine; hold off on anything hard.',
+    recover:  'Back off today. Easy movement only — protect the next quality session.',
   }[status];
   lines.push(rec);
 
