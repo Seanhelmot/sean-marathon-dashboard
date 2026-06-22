@@ -595,6 +595,7 @@ def pull_data(athlete_id: str, api_key: str):
             "vo2max_note":   "lab-tested 58.4 (2022)",
             "ctl":           round(ctl, 1) if ctl else None,
             "atl":           round(atl, 1) if atl else None,
+            "tsb":           round(ctl - atl, 1) if (ctl and atl) else None,
         },
         "this_week_days":    this_week_days,
         "weeks":             weeks_out,

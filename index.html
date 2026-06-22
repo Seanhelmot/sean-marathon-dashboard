@@ -237,6 +237,13 @@
       </div>
     </div>
 
+    <!-- Fitness load tiles (CTL / ATL / TSB) -->
+    <div class="card" style="margin-bottom:18px;" id="fitness-load-card">
+      <h2>Fitness Load <span class="accent">· from intervals.icu</span></h2>
+      <div id="fitness-load-tiles" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px;"></div>
+      <div class="chart-foot">CTL (Fitness) = 42-day training load average. ATL (Fatigue) = 7-day load average. TSB (Form) = CTL − ATL. Positive TSB = fresh. Negative TSB = fatigued. Racing well typically happens between TSB −10 and +5.</div>
+    </div>
+
     <!-- Performance sparkline charts -->
     <div class="grid grid-3" style="gap:14px;margin-bottom:14px;">
       <div class="card">
@@ -1488,6 +1495,27 @@ function renderPerformanceTab(live) {
   const latRHR  = rhrPts.length ? rhrPts[rhrPts.length-1].v : (live.today?.rhr || null);
   const latSleep = sleepPts.length ? sleepPts[sleepPts.length-1].v : (live.today?.sleep_score || null);
 
+  // ── Fitness load tiles (CTL / ATL / TSB) ────────────────────────
+  (function() {
+    const t = live.today || {};
+    const ctl = t.ctl, atl = t.atl;
+    const tsb = t.tsb != null ? t.tsb : (ctl != null && atl != null ? Math.round((ctl - atl) * 10) / 10 : null);
+    const tsbColor = tsb == null ? 'var(--slate)' : tsb > 5 ? 'var(--good)' : tsb > -10 ? 'var(--warn)' : 'var(--bad)';
+    const tsbDesc  = tsb == null ? '—' : tsb > 5 ? 'Fresh — good to race or quality' : tsb > -5 ? 'Balanced — normal training' : tsb > -15 ? 'Moderate fatigue — train carefully' : tsb > -25 ? 'High fatigue — respect easy days' : 'Very high fatigue — recovery priority';
+    const el = document.getElementById('fitness-load-tiles');
+    if (!el) return;
+    const tile = (v, label, desc, color) => `
+      <div class="rmtile" style="min-width:140px;flex:1;">
+        <div class="rv">${v ?? '—'}</div>
+        <div class="rl">${label}</div>
+        <div class="rs" style="color:${color}">${desc}</div>
+      </div>`;
+    el.innerHTML =
+      tile(ctl != null ? Math.round(ctl) : null, 'Fitness (CTL)', 'training load base', 'var(--signal)') +
+      tile(atl != null ? Math.round(atl) : null, 'Fatigue (ATL)', 'recent load', atl > ctl * 1.3 ? 'var(--bad)' : 'var(--warn)') +
+      tile(tsb != null ? (tsb > 0 ? '+' : '') + tsb : null, 'Form (TSB)', tsbDesc, tsbColor);
+  })();
+
   // ── Observational summary ────────────────────────────────────────
   (function() {
     const sentences = [];
@@ -1526,9 +1554,20 @@ function renderPerformanceTab(live) {
       if (delta > 3) sentences.push(`HRV has risen recently (avg ${Math.round(avgR)}ms vs ${Math.round(avgO)}ms a week ago) — recovery is tracking well.`);
       else if (delta < -3) sentences.push(`HRV has dipped recently (avg ${Math.round(avgR)}ms vs ${Math.round(avgO)}ms a week ago) — ensure adequate recovery between sessions.`);
     }
+    // TSB / load context
+    const t2 = live.today || {};
+    const ctl2 = t2.ctl, atl2 = t2.atl;
+    const tsb2 = t2.tsb != null ? t2.tsb : (ctl2 != null && atl2 != null ? Math.round((ctl2 - atl2) * 10) / 10 : null);
+    if (tsb2 != null) {
+      if      (tsb2 > 5)   sentences.push(`Form (TSB +${tsb2}) is positive — fitness base of ${Math.round(ctl2)} CTL with fatigue well managed.`);
+      else if (tsb2 > -10) sentences.push(`Form (TSB ${tsb2}) is balanced — CTL ${Math.round(ctl2)}, ATL ${Math.round(atl2)}. Load is sustainable.`);
+      else if (tsb2 > -20) sentences.push(`Form (TSB ${tsb2}) shows meaningful fatigue — CTL ${Math.round(ctl2)} vs ATL ${Math.round(atl2)}. Honour the easy days.`);
+      else                 sentences.push(`Form (TSB ${tsb2}) is deep into fatigue territory — ATL ${Math.round(atl2)} significantly exceeds CTL ${Math.round(ctl2)}. Recovery is the priority.`);
+    }
+
     // Overall verdict
-    const positives = sentences.filter(s => /respond|solid|improv|good|right direction|holding|within/.test(s)).length;
-    const concerns  = sentences.filter(s => /dip|slow|above 5|fatigue|drift/.test(s)).length;
+    const positives = sentences.filter(s => /respond|solid|improv|good|right direction|holding|within|positive|sustainable/.test(s)).length;
+    const concerns  = sentences.filter(s => /dip|slow|above 5|fatigue|drift|priority/.test(s)).length;
     if (concerns === 0 && positives >= 2) sentences.push(`Overall picture looks positive — training is producing the right adaptations for Melbourne.`);
     else if (concerns >= 2) sentences.push(`A few metrics worth keeping an eye on — consider whether load or recovery balance needs adjusting.`);
 
@@ -1859,105 +1898,152 @@ function renderReadiness(live) {
   document.getElementById('readiness-date-label').textContent =
     `· ${today.toLocaleDateString('en-AU', {weekday:'short', day:'numeric', month:'short'})}`;
 
-  // ── Step 1: Check yesterday's training load (overrides wellness) ──
+  // ── Signals ──────────────────────────────────────────────────────
+  const ctl = t.ctl;
+  const atl = t.atl;
+  const tsb = t.tsb != null ? t.tsb : (ctl != null && atl != null ? Math.round((ctl - atl) * 10) / 10 : null);
+
+  const hrv = t.hrv_7d_avg;
+  const sleep = t.sleep_score;
+  const bb = t.body_battery;
+  const rhr = t.rhr;
+
+  // Yesterday's session from recent activities
   const recentActs = live.recent_activities || [];
   const nowDate = new Date();
   const yesterdayStr = new Date(nowDate - 86400000).toISOString().slice(0, 10);
-  const todayStr = nowDate.toISOString().slice(0, 10);
-  const yesterdayRuns = recentActs.filter(a => a.date === yesterdayStr && a.type === 'Run');
-  const yesterdayDist = yesterdayRuns.reduce((s, a) => s + (a.dist_km || 0), 0);
-  const yesterdayMaxHR = Math.max(0, ...yesterdayRuns.map(a => a.avg_hr || 0));
-  const isLongRunDay = yesterdayDist >= 18;
-  const isQualityDay = yesterdayMaxHR >= 155 && yesterdayDist >= 6;
+  const yRuns = recentActs.filter(a => a.date === yesterdayStr);
+  const yDist = yRuns.reduce((s, a) => s + (a.dist_km || 0), 0);
+  const yMaxHR = Math.max(0, ...yRuns.map(a => a.avg_hr || 0));
+  const yIsLong    = yDist >= 18;
+  const yIsQuality = yMaxHR >= 152 && yDist >= 6;
 
-  // ── Step 2: Wellness signals (0 = bad, 1 = ok, 2 = good) ──
-  const signals = [];
+  // ── Readiness score (0–100) ───────────────────────────────────────
+  // TSB is the primary load signal; wellness modifies it; yesterday caps it.
+  let score = 60; // baseline: moderate
 
-  const hrv = t.hrv_7d_avg;
-  let hrvScore = 1;
-  if (hrv != null) { hrvScore = hrv >= 75 ? 2 : hrv >= 60 ? 1 : 0; }
-  signals.push(hrvScore);
-
-  const sleep = t.sleep_score;
-  let sleepScore = 1;
-  if (sleep != null) { sleepScore = sleep >= 80 ? 2 : sleep >= 65 ? 1 : 0; }
-  signals.push(sleepScore);
-
-  const bb = t.body_battery;
-  let bbScore = 1;
-  if (bb != null) { bbScore = bb >= 70 ? 2 : bb >= 40 ? 1 : 0; }
-  signals.push(bbScore);
-
-  const rhr = t.rhr;
-  let rhrScore = 1;
-  if (rhr != null) { rhrScore = rhr <= 42 ? 2 : rhr <= 48 ? 1 : 0; }
-  signals.push(rhrScore);
-
-  const wellnessAvg = signals.reduce((a, b) => a + b, 0) / signals.length;
-
-  // ── Step 3: Final status — training load wins over wellness ──
-  let status, statusLabel;
-  if (isLongRunDay) {
-    status = 'recover';
-    statusLabel = 'EASY OR REST ONLY';
-  } else if (isQualityDay) {
-    status = 'moderate';
-    statusLabel = 'EASY DAY';
-  } else {
-    status = wellnessAvg >= 1.6 ? 'ready' : wellnessAvg >= 0.9 ? 'moderate' : 'recover';
-    statusLabel = { ready: 'READY TO TRAIN', moderate: 'MODERATE', recover: 'PRIORITISE RECOVERY' }[status];
+  // TSB contribution (±30 pts) — this is intervals.icu's own fatigue signal
+  if (tsb != null) {
+    if      (tsb >  5)  score += 30;
+    else if (tsb > -5)  score += 20;
+    else if (tsb > -15) score += 5;
+    else if (tsb > -25) score -= 10;
+    else                score -= 25;
   }
 
-  // ── Step 4: Build plain-English commentary ──
+  // HRV contribution (±15 pts)
+  if (hrv != null) {
+    if      (hrv >= 75) score += 15;
+    else if (hrv >= 60) score += 5;
+    else                score -= 10;
+  }
+
+  // Sleep contribution (±10 pts)
+  if (sleep != null) {
+    if      (sleep >= 80) score += 10;
+    else if (sleep >= 65) score += 0;
+    else                  score -= 10;
+  }
+
+  // RHR contribution (±10 pts)
+  if (rhr != null) {
+    if      (rhr <= 42) score += 10;
+    else if (rhr <= 48) score += 0;
+    else                score -= 10;
+  }
+
+  // Body battery contribution (±5 pts)
+  if (bb != null) {
+    if      (bb >= 70) score += 5;
+    else if (bb >= 40) score += 0;
+    else               score -= 5;
+  }
+
+  // Yesterday caps the ceiling: long run → max 35, quality → max 55
+  if (yIsLong)         score = Math.min(score, 35);
+  else if (yIsQuality) score = Math.min(score, 55);
+
+  score = Math.max(0, Math.min(100, score));
+
+  // ── Status label ─────────────────────────────────────────────────
+  let status, statusLabel;
+  if      (score >= 70) { status = 'ready';    statusLabel = 'READY TO TRAIN'; }
+  else if (score >= 45) { status = 'moderate'; statusLabel = 'EASY DAY'; }
+  else                  { status = 'recover';  statusLabel = 'PRIORITISE RECOVERY'; }
+
+  // ── Plain-English commentary ──────────────────────────────────────
   const lines = [];
 
-  // Lead with yesterday's session context if it's driving the call
-  if (isLongRunDay) {
-    lines.push(`Long run ${yesterdayDist.toFixed(1)}km yesterday — legs need easy movement or rest today regardless of overnight metrics.`);
-  } else if (isQualityDay) {
-    lines.push(`Quality session yesterday (avg HR ${yesterdayMaxHR}bpm, ${yesterdayDist.toFixed(1)}km) — keep today easy to absorb the stimulus.`);
+  // Lead with the primary driver
+  if (yIsLong) {
+    lines.push(`Long run ${yDist.toFixed(0)}km yesterday — training load is high regardless of overnight metrics.`);
+  } else if (yIsQuality) {
+    lines.push(`Quality session yesterday (avg HR ${yMaxHR}bpm, ${yDist.toFixed(1)}km) — keep today easy to absorb the adaptation.`);
   }
 
+  // TSB — the core load signal from intervals.icu
+  if (tsb != null) {
+    if      (tsb >  5)  lines.push(`Form (TSB +${tsb}) is positive — well rested relative to fitness.`);
+    else if (tsb > -5)  lines.push(`Form (TSB ${tsb}) is neutral — balanced load, good to train.`);
+    else if (tsb > -15) lines.push(`Form (TSB ${tsb}) — moderate fatigue accumulation; train but manage effort.`);
+    else if (tsb > -25) lines.push(`Form (TSB ${tsb}) — meaningful fatigue load. Respect the easy days.`);
+    else                lines.push(`Form (TSB ${tsb}) — high fatigue. Recovery is the priority today.`);
+  }
+
+  // HRV
   if (hrv != null) {
-    const hrvText = hrv >= 75 ? `HRV strong at ${hrv}ms` : hrv >= 60 ? `HRV at ${hrv}ms — within normal range` : `HRV suppressed at ${hrv}ms — body still adapting`;
-    const statusNote = t.hrv_status ? ` (${t.hrv_status.charAt(0) + t.hrv_status.slice(1).toLowerCase()})` : '';
+    const hrvText = hrv >= 75 ? `HRV solid at ${hrv}ms`
+      : hrv >= 60 ? `HRV at ${hrv}ms — within normal range`
+      : `HRV suppressed at ${hrv}ms — nervous system still recovering`;
+    const statusNote = t.hrv_status ? ` (${t.hrv_status.toLowerCase()})` : '';
     lines.push(hrvText + statusNote + '.');
   }
 
+  // Sleep
   if (sleep != null) {
-    const sleepText = sleep >= 80
+    lines.push(sleep >= 80
       ? `Sleep solid — scored ${sleep}${t.sleep_hrs ? ' over ' + t.sleep_hrs + 'hrs' : ''}.`
       : sleep >= 65
       ? `Sleep fair — scored ${sleep}${t.sleep_hrs ? ' over ' + t.sleep_hrs + 'hrs' : ''}.`
-      : `Sleep poor — scored ${sleep}${t.sleep_hrs ? ' over ' + t.sleep_hrs + 'hrs' : ''}. Factor this into effort today.`;
-    lines.push(sleepText);
+      : `Sleep poor — scored ${sleep}. Factor into effort today.`);
   }
 
+  // Body battery
   if (bb != null) {
-    const bbText = bb >= 70 ? `Body battery high at ${bb} — well recovered overnight.`
+    lines.push(bb >= 70 ? `Body battery high at ${bb}.`
       : bb >= 40 ? `Body battery moderate at ${bb}.`
-      : `Body battery low at ${bb} — cumulative fatigue showing.`;
-    lines.push(bbText);
+      : `Body battery low at ${bb} — cumulative fatigue showing.`);
   }
 
+  // RHR
   if (rhr != null) {
-    const rhrText = rhr <= 42 ? `RHR ${rhr}bpm — aerobic fitness holding.`
+    lines.push(rhr <= 42 ? `RHR ${rhr}bpm — aerobic fitness holding.`
       : rhr <= 48 ? `RHR ${rhr}bpm — normal range.`
-      : `RHR elevated at ${rhr}bpm — possible fatigue or illness signal.`;
-    lines.push(rhrText);
+      : `RHR elevated at ${rhr}bpm — possible fatigue or illness signal.`);
   }
 
   // Closing recommendation
-  const rec = {
-    ready:    'All systems green — proceed with the planned session.',
-    moderate: 'Keep effort honest today. Easy or moderate session fine; hold off on anything hard.',
-    recover:  'Back off today. Easy movement only — protect the next quality session.',
-  }[status];
-  lines.push(rec);
+  lines.push({
+    ready:    'Proceed with the planned session.',
+    moderate: 'Keep effort controlled. Easy run fine; hold off on unplanned quality.',
+    recover:  'Easy movement or rest only — protect the next hard session.',
+  }[status]);
 
   // Render
   const vo2 = t.vo2max_garmin;
+
+  // Scoring helpers (recalculate here so they're in scope for metrics)
+  const tsbScore  = tsb == null ? 1 : tsb > -5 ? 2 : tsb > -20 ? 1 : 0;
+  const hrvScore  = hrv == null ? 1 : hrv >= 75 ? 2 : hrv >= 60 ? 1 : 0;
+  const sleepScore = sleep == null ? 1 : sleep >= 80 ? 2 : sleep >= 65 ? 1 : 0;
+  const bbScore   = bb == null ? 1 : bb >= 70 ? 2 : bb >= 40 ? 1 : 0;
+  const rhrScore  = rhr == null ? 1 : rhr <= 42 ? 2 : rhr <= 48 ? 1 : 0;
+
+  const tsbLabel = tsb == null ? '—' : (tsb > 0 ? '+' : '') + tsb;
+  const tsbNote  = tsb == null ? '' : tsb > 5 ? 'fresh' : tsb > -5 ? 'balanced' : tsb > -20 ? 'fatigued' : 'high fatigue';
+
   const metrics = [
+    { v: tsbLabel, l: 'Form (TSB)', s: tsbScore, note2: tsbNote },
     { v: hrv  != null ? hrv+'ms'  : '—', l: 'HRV 7d avg',    s: hrvScore },
     { v: sleep != null ? String(sleep) : '—', l: 'Sleep score', s: sleepScore },
     { v: bb   != null ? String(bb)    : '—', l: 'Body battery (peak)', s: bbScore },
@@ -1977,7 +2063,7 @@ function renderReadiness(live) {
         <div class="rmtile">
           <div class="rv">${m.v}</div>
           <div class="rl">${m.l}</div>
-          <div class="rs" style="color:${m.note ? 'var(--slate)' : sigColor(m.s)}">${m.note || sigLabel(m.s)}</div>
+          <div class="rs" style="color:${m.note ? 'var(--slate)' : sigColor(m.s)}">${m.note || (m.note2 ? `<span style="color:${sigColor(m.s)}">${m.note2}</span>` : sigLabel(m.s))}</div>
         </div>`).join('')}
     </div>
   `;
