@@ -572,13 +572,7 @@ def pull_data(athlete_id: str, api_key: str):
         except Exception as e:
             print(f"Garmin body battery skipped: {e}")
 
-    # Preserve this_week_days from existing live.json
-    this_week_days = None
-    try:
-        existing = json.loads(LIVE_JSON.read_text(encoding="utf-8"))
-        this_week_days = existing.get("this_week_days")
-    except Exception:
-        pass
+    this_week_days = None  # not preserved — stale DOW matching caused wrong week's names to show
 
     from zoneinfo import ZoneInfo
     return {
