@@ -1911,7 +1911,9 @@ function renderReadiness(live) {
   // Yesterday's session from recent activities
   const recentActs = live.recent_activities || [];
   const nowDate = new Date();
-  const yesterdayStr = new Date(nowDate - 86400000).toISOString().slice(0, 10);
+  // Use local date arithmetic (not toISOString which is UTC — causes wrong day before 10am AEST)
+  const localDateStr = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  const yesterdayStr = localDateStr(new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate() - 1));
   const yRuns = recentActs.filter(a => a.date === yesterdayStr);
   const yDist = yRuns.reduce((s, a) => s + (a.dist_km || 0), 0);
   const yMaxHR = Math.max(0, ...yRuns.map(a => a.avg_hr || 0));
