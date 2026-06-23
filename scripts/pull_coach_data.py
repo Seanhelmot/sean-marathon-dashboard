@@ -31,8 +31,8 @@ ATHLETES = [
         ],
         "training_philosophy": "HR-primary, pace secondary. Aerobic base first, sharpen closer to race. Easy runs and long runs Z1-Z2 HR. Quality 1-2x per week. Long run progressive HR blocks.",
         "threshold_hr":  165,
-        "max_hr":        176,
-        "threshold_pace": "4:25",  # updated after each quality block
+        "max_hr":        177,
+        "threshold_pace": "4:22",  # derived from Jan-Feb tempo data, mid-block conservative
         "typical_week": {
             "Mon": "Rest",
             "Tue": "Easy run + drills (8-10km Z1-Z2 HR)",
