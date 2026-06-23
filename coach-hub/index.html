@@ -131,23 +131,10 @@
 <footer>Coach Hub · data pulled live from each athlete's GitHub Pages · refreshes on page load</footer>
 
 <script>
-/* ── ATHLETE ROSTER ─────────────────────────────────────────────────
-   Add each athlete here after running create_athlete.py.
-   All URLs point to the athlete's own GitHub Pages deployment.      */
-const ATHLETES = [
-  {
-    name:     'Sean Helmot',
-    live_url: 'https://seanhelmot.github.io/sean-marathon-dashboard/data/live.json',
-    plan_url: 'https://seanhelmot.github.io/sean-marathon-dashboard/data/plan.json',
-    dash_url: 'https://seanhelmot.github.io/sean-marathon-dashboard/',
-  },
-  // {
-  //   name:     'Jane Smith',
-  //   live_url: 'https://seanhelmot.github.io/jane-smith-marathon-dashboard/data/live.json',
-  //   plan_url: 'https://seanhelmot.github.io/jane-smith-marathon-dashboard/data/plan.json',
-  //   dash_url: 'https://seanhelmot.github.io/jane-smith-marathon-dashboard/',
-  // },
-];
+/* ── Data source ─────────────────────────────────────────────────────
+   All athlete data comes from a single coach.json pulled by
+   scripts/pull_coach_data.py and committed to the repo.             */
+const COACH_JSON_URL = '../data/coach.json';
 
 /* ── Helpers ──────────────────────────────────────────────────────── */
 function fmtPace(dec) {
@@ -165,45 +152,12 @@ function fmtDur(s) {
 
 const FEEL = ['','😩','😕','😐','🙂','😄'];
 
-/* ── Flag computation ─────────────────────────────────────────────── */
-function computeFlags(live) {
-  const flags = [];
-  const t = live.today || {};
-  const hrv14 = [...(live.sleep_hrv_14d || [])].sort((a,b) => a.date.localeCompare(b.date));
-
-  // HRV dropping: last 3 nights avg vs prior 3
-  if (hrv14.length >= 6) {
-    const avg = arr => arr.reduce((s,v) => s+v, 0) / arr.length;
-    const r3 = hrv14.slice(-3).map(d => d.hrv).filter(v => v != null);
-    const p3 = hrv14.slice(-6,-3).map(d => d.hrv).filter(v => v != null);
-    if (r3.length >= 2 && p3.length >= 2 && avg(r3) < avg(p3) - 5)
-      flags.push({ cls:'fc-warn', text:`HRV ↓ ${Math.round(avg(p3)-avg(r3))}ms (3d)` });
-  }
-
-  // RHR spike: today vs 7d rolling
-  const rhrVals = hrv14.slice(-7).map(d => d.rhr).filter(v => v != null);
-  if (t.rhr && rhrVals.length >= 3) {
-    const avg7 = rhrVals.reduce((s,v) => s+v, 0) / rhrVals.length;
-    if (t.rhr > avg7 + 3)
-      flags.push({ cls:'fc-warn', text:`RHR ↑${Math.round(t.rhr - avg7)}bpm` });
-  }
-
-  // Two consecutive bad sleep nights
-  const sleepRecent = hrv14.slice(-2).map(d => d.score).filter(v => v != null);
-  if (sleepRecent.length === 2 && sleepRecent.every(s => s < 65))
-    flags.push({ cls:'fc-warn', text:`Poor sleep ×2` });
-
-  // Body battery critically low
-  if (t.body_battery != null && t.body_battery < 25)
-    flags.push({ cls:'fc-bad', text:`BB ${t.body_battery}` });
-
-  // LR decoupling > 5%
-  const lastLR = (live.recent_activities || []).find(a => a.decoupling_pct != null);
-  if (lastLR?.decoupling_pct > 5)
-    flags.push({ cls:'fc-warn', text:`Decoupling +${lastLR.decoupling_pct}%` });
+/* ── Flag computation (uses coach.json athlete shape) ─────────────── */
+function computeFlags(a) {
+  const flags = (a.flags || []).map(f => ({ cls: f.cls || 'fc-warn', text: f.text }));
 
   // Training gap — no activity in 2+ days
-  const acts = live.recent_activities || [];
+  const acts = a.recent_activities || [];
   if (acts.length) {
     const today = new Date(); today.setHours(0,0,0,0);
     const lastRun = new Date(acts[0].date + 'T00:00:00');
@@ -216,108 +170,115 @@ function computeFlags(live) {
 }
 
 /* ── Activity rows ────────────────────────────────────────────────── */
-function renderActs(live) {
-  const acts = (live.recent_activities || []).slice(0, 8);
+function renderActs(a) {
+  const acts = (a.recent_activities || []).slice(0, 8);
   if (!acts.length) return '<div class="act-row" style="color:var(--slate);font-size:11.5px;">No recent activities</div>';
 
-  return acts.map(a => {
-    const date = new Date(a.date + 'T00:00:00');
+  return acts.map(act => {
+    const date = new Date(act.date + 'T00:00:00');
     const dateStr = date.toLocaleDateString('en-AU', {weekday:'short', day:'numeric', month:'short'});
 
     const tokens = [
-      a.dist_km != null   ? `${a.dist_km.toFixed(1)}km` : null,
-      a.duration_s        ? fmtDur(a.duration_s)         : null,
-      a.pace != null      ? `${fmtPace(a.pace)}/km`      : null,
-      a.avg_hr != null    ? `HR ${a.avg_hr}${a.max_hr ? '/' + a.max_hr : ''}` : null,
-      a.feel != null      ? FEEL[a.feel]                  : null,
-      a.effort != null    ? `RPE ${a.effort}`             : null,
+      act.dist_km != null ? `${act.dist_km.toFixed(1)}km` : null,
+      act.duration_s      ? fmtDur(act.duration_s)         : null,
+      act.pace != null    ? `${fmtPace(act.pace)}/km`      : null,
+      act.avg_hr != null  ? `HR ${act.avg_hr}${act.max_hr ? '/'+act.max_hr : ''}` : null,
+      act.feel != null    ? FEEL[act.feel]                  : null,
+      act.effort != null  ? `RPE ${act.effort}`             : null,
     ].filter(Boolean).join(' · ');
 
-    // Work laps / interval summary
     let lapHtml = '';
-    if (a.interval_summary?.length) {
-      // intervals.icu pre-formatted strings e.g. ["12x 4m24s 157bpm", "4x 2m3s 147bpm"]
-      const work = a.interval_summary[0];
-      const rec  = a.interval_summary[1];
-      lapHtml = `<div class="act-laps">${work}${rec ? ' · recovery: ' + rec : ''}</div>`;
-    } else if (a.work_laps?.length) {
-      const repRows = a.work_laps.map(l =>
-        `<tr><td>Rep ${l.rep}</td><td>${l.dist_km}km</td><td>${fmtPace(l.pace)}/km</td><td>${l.avg_hr ?? '—'}bpm</td><td>${l.max_hr ?? '—'}bpm</td></tr>`
+    if (act.interval_summary?.length) {
+      const work = act.interval_summary[0], rec = act.interval_summary[1];
+      lapHtml = `<div class="act-laps">${work}${rec ? ' · rec: '+rec : ''}</div>`;
+    } else if (act.work_laps?.length) {
+      const rows = act.work_laps.map(l =>
+        `<tr><td>Rep ${l.rep}</td><td>${l.dist_km}km</td><td>${fmtPace(l.pace)}/km</td><td>${l.avg_hr??'—'}bpm</td><td>${l.max_hr??'—'}bpm</td></tr>`
       ).join('');
-      lapHtml = `<table class="lap-table">
-        <thead><tr><th>Rep</th><th>Dist</th><th>Pace</th><th>Avg HR</th><th>Max HR</th></tr></thead>
-        <tbody>${repRows}</tbody>
-      </table>`;
-    } else if (a.km_chunks?.length) {
-      const dc = a.decoupling_pct != null
-        ? `<span style="color:${a.decoupling_pct<=5?'var(--good)':'var(--warn)'}"> · Decoupling ${a.decoupling_pct>0?'+':''}${a.decoupling_pct}%</span>` : '';
-      const chunkRows = a.km_chunks.map(c =>
-        `<tr><td>${c.label}</td><td>${fmtPace(c.pace)}/km</td><td>${c.avg_hr ?? '—'}bpm</td></tr>`
+      lapHtml = `<table class="lap-table"><thead><tr><th>Rep</th><th>Dist</th><th>Pace</th><th>Avg HR</th><th>Max HR</th></tr></thead><tbody>${rows}</tbody></table>`;
+    } else if (act.km_chunks?.length) {
+      const dc = act.decoupling_pct != null
+        ? `<span style="color:${act.decoupling_pct<=5?'var(--good)':'var(--warn)'}"> · Decoupling ${act.decoupling_pct>0?'+':''}${act.decoupling_pct}%</span>` : '';
+      const rows = act.km_chunks.map(c =>
+        `<tr><td>${c.label}</td><td>${fmtPace(c.pace)}/km</td><td>${c.avg_hr??'—'}bpm</td></tr>`
       ).join('');
-      lapHtml = `<div style="font-size:9.5px;color:var(--signal);text-transform:uppercase;letter-spacing:.06em;margin-top:5px;font-family:'IBM Plex Mono',monospace;">5km Splits${dc}</div>
-      <table class="lap-table">
-        <thead><tr><th>Segment</th><th>Pace</th><th>Avg HR</th></tr></thead>
-        <tbody>${chunkRows}</tbody>
-      </table>`;
+      lapHtml = `<div style="font-size:9.5px;color:var(--signal);text-transform:uppercase;letter-spacing:.06em;margin-top:5px;">5km Splits${dc}</div>
+        <table class="lap-table"><thead><tr><th>Segment</th><th>Pace</th><th>Avg HR</th></tr></thead><tbody>${rows}</tbody></table>`;
     }
 
     return `<div class="act-row">
-      <div class="act-top">
-        <span class="act-name">${a.name}</span>
-        <span class="act-date">${dateStr}</span>
-      </div>
-      <div class="act-stats">${tokens}</div>
-      ${lapHtml}
+      <div class="act-top"><span class="act-name">${act.name}</span><span class="act-date">${dateStr}</span></div>
+      <div class="act-stats">${tokens}</div>${lapHtml}
     </div>`;
   }).join('');
 }
 
-/* ── Build one athlete card ───────────────────────────────────────── */
-function buildCard(id, athlete, live, plan) {
-  const t = live.today || {};
-  const wk = live.current_week;
-  const total = plan.build_weeks;
-  const raceDate = plan.race_date ? new Date(plan.race_date) : null;
-  const daysToRace = raceDate ? Math.round((raceDate - new Date()) / 86400000) : null;
+/* ── Upcoming sessions ────────────────────────────────────────────── */
+function renderUpcoming(a) {
+  const upcoming = (a.upcoming || []).slice(0, 5);
+  if (!upcoming.length) return '';
+  const rows = upcoming.map(u => {
+    const d = new Date(u.date + 'T00:00:00');
+    const ds = d.toLocaleDateString('en-AU', {weekday:'short', day:'numeric', month:'short'});
+    const km = u.distance_m ? `${(u.distance_m/1000).toFixed(0)}km` : '';
+    return `<div class="act-row">
+      <div class="act-top"><span class="act-name">${u.name}</span><span class="act-date">${ds}${km?' · '+km:''}</span></div>
+    </div>`;
+  }).join('');
+  return `<div style="border-top:1px solid var(--line);margin-top:4px;padding-top:4px;">
+    <div style="font-size:9.5px;letter-spacing:.08em;color:var(--signal);text-transform:uppercase;padding:6px 12px 2px;">Upcoming</div>
+    ${rows}
+  </div>`;
+}
 
-  const thisWkData = (live.weeks || []).find(w => w.wk === wk);
-  const thisWkKm = thisWkData?.actual_km != null ? Math.round(thisWkData.actual_km) + 'km' : '—';
-  const planKm = (plan.weeks || []).find(w => w.wk === wk)?.plan_km;
+/* ── Build one athlete card (coach.json athlete shape) ────────────── */
+function buildCard(id, a) {
+  const h   = a.health  || {};
+  const fit = a.fitness || {};
 
-  const qualWeeks = (live.weeks || []).filter(w => w.quality?.pace_min_per_km);
-  const latestThresh = qualWeeks.length ? qualWeeks[qualWeeks.length-1].quality.pace_min_per_km : null;
+  const daysToRace = a.days_to_race;
+  const raceMeta   = a.race ? `${a.race}${daysToRace != null ? ' · ' + daysToRace + 'd' : ''}` : '—';
 
-  const lastLR = (live.recent_activities || []).find(a => a.decoupling_pct != null);
-  const decouple = lastLR?.decoupling_pct;
-
-  // Stale check
+  // Stale check using generated_at from coach.json root (set per-athlete below)
   const staleHtml = (() => {
-    if (!live.generated_at) return '';
-    const ago = Math.round((Date.now() - new Date(live.generated_at)) / 60000);
+    if (!a._generated_at) return '';
+    const ago = Math.round((Date.now() - new Date(a._generated_at)) / 60000);
     if (ago < 120) return '';
     return `<span class="stale">⚠ ${ago < 1440 ? Math.round(ago/60)+'h' : Math.round(ago/1440)+'d'} stale</span>`;
   })();
 
   // Readiness chips
-  const chipHRV = t.hrv_7d_avg != null
-    ? `<span class="chip ${t.hrv_7d_avg>=75?'ch-green':t.hrv_7d_avg>=60?'ch-amber':'ch-red'}">HRV ${t.hrv_7d_avg}ms</span>` : '';
-  const chipSleep = t.sleep_score != null
-    ? `<span class="chip ${t.sleep_score>=80?'ch-green':t.sleep_score>=65?'ch-amber':'ch-red'}">Sleep ${t.sleep_score}</span>` : '';
-  const chipBB = t.body_battery != null
-    ? `<span class="chip ${t.body_battery>=60?'ch-green':t.body_battery>=30?'ch-amber':'ch-red'}">BB ${t.body_battery}</span>` : '';
-  const chipRHR = t.rhr != null
-    ? `<span class="chip ch-cyan">RHR ${t.rhr}</span>` : '';
+  const chipHRV   = h.hrv_7d_avg  != null ? `<span class="chip ${h.hrv_7d_avg>=75?'ch-green':h.hrv_7d_avg>=60?'ch-amber':'ch-red'}">HRV ${h.hrv_7d_avg}ms</span>` : '';
+  const chipSleep = h.sleep_score != null ? `<span class="chip ${h.sleep_score>=80?'ch-green':h.sleep_score>=65?'ch-amber':'ch-red'}">Sleep ${h.sleep_score}</span>` : '';
+  const chipRHR   = h.rhr         != null ? `<span class="chip ch-cyan">RHR ${h.rhr}</span>` : '';
+
+  // TSB chip
+  const tsb = fit.tsb;
+  const tsbColor = tsb == null ? 'ch-amber' : tsb > 5 ? 'ch-green' : tsb > -10 ? 'ch-amber' : 'ch-red';
+  const chipTSB = tsb != null ? `<span class="chip ${tsbColor}">TSB ${tsb > 0 ? '+' : ''}${tsb.toFixed(1)}</span>` : '';
 
   // Flags
-  const flags = computeFlags(live);
+  const flags = computeFlags(a);
   const flagsHtml = flags.length
     ? `<div class="flag-row">${flags.map(f=>`<span class="flag-chip ${f.cls}">⚠ ${f.text}</span>`).join('')}</div>` : '';
 
   // Stat tiles
-  const st = (v,l) => `<div class="stile"><div class="v">${v}</div><div class="l">${l}</div></div>`;
+  const st = (v, l) => `<div class="stile"><div class="v">${v}</div><div class="l">${l}</div></div>`;
+  const ctlStr = fit.ctl != null ? fit.ctl.toFixed(1) : '—';
+  const atlStr = fit.atl != null ? fit.atl.toFixed(1) : '—';
 
-  const actsHtml = renderActs(live);
-  const actCount = (live.recent_activities||[]).length;
+  // Race predictions
+  const preds = a.race_predictions || {};
+  const predHtml = (preds['10k'] || preds['marathon'])
+    ? `<div style="font-size:10.5px;color:var(--slate);margin-top:4px;">
+        ${preds['10k'] ? `10k ${preds['10k']}` : ''}
+        ${preds['10k'] && preds['marathon'] ? ' · ' : ''}
+        ${preds['marathon'] ? `Mara ${preds['marathon']}` : ''}
+       </div>` : '';
+
+  const actsHtml     = renderActs(a);
+  const upcomingHtml = renderUpcoming(a);
+  const actCount     = (a.recent_activities || []).length;
 
   const cardEl = document.createElement('div');
   cardEl.className = 'acard' + (flags.length ? ' flagged' : '');
@@ -325,18 +286,17 @@ function buildCard(id, athlete, live, plan) {
   cardEl.innerHTML = `
     <div class="acard-head" onclick="toggleActs(${id})">
       <div class="name-row">
-        <span class="aname">${plan.athlete || athlete.name}</span>
+        <span class="aname">${a.name}</span>
         ${staleHtml}
       </div>
-      <div class="ameta">${plan.race||''} · W${wk}/${total}${daysToRace!=null?' · '+daysToRace+'d to race':''}</div>
+      <div class="ameta">${raceMeta}</div>
+      ${predHtml}
       ${flagsHtml}
-      <div class="chip-row">
-        ${chipHRV}${chipSleep}${chipBB}${chipRHR}
-      </div>
+      <div class="chip-row">${chipHRV}${chipSleep}${chipRHR}${chipTSB}</div>
       <div class="stat-grid">
-        ${st(thisWkKm+(planKm?' / '+planKm+'km':''), 'This week')}
-        ${st(latestThresh ? fmtPace(latestThresh)+'/km' : '—', 'Thresh pace')}
-        ${st(decouple!=null?(decouple>0?'+':'')+decouple+'%':'—', 'LR decouple')}
+        ${st(ctlStr, 'CTL (fitness)')}
+        ${st(atlStr, 'ATL (fatigue)')}
+        ${st(tsb != null ? (tsb>0?'+':'')+tsb.toFixed(1) : '—', 'TSB (form)')}
       </div>
     </div>
     <button class="toggle-bar open" id="toggle-${id}" onclick="toggleActs(${id})">
@@ -345,8 +305,8 @@ function buildCard(id, athlete, live, plan) {
     </button>
     <div class="acts-panel open" id="acts-${id}">
       <div style="padding-bottom:4px;">${actsHtml}</div>
+      ${upcomingHtml}
     </div>
-    <a class="dash-link" href="${athlete.dash_url}" target="_blank" rel="noopener">Open full dashboard →</a>
   `;
   return { el: cardEl, flagCount: flags.length };
 }
@@ -364,22 +324,24 @@ async function init() {
   const grid = document.getElementById('athlete-grid');
   grid.innerHTML = '';
 
-  const results = await Promise.all(ATHLETES.map(async (athlete, id) => {
-    try {
-      const [live, plan] = await Promise.all([
-        fetch(athlete.live_url, {cache:'no-store'}).then(r => { if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }),
-        fetch(athlete.plan_url, {cache:'no-store'}).then(r => { if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); }),
-      ]);
-      return { ok: true, ...buildCard(id, athlete, live, plan) };
-    } catch(e) {
-      const div = document.createElement('div');
-      div.className = 'error-card';
-      div.innerHTML = `<div style="font-family:'Big Shoulders Display',sans-serif;font-size:18px;font-weight:700;color:var(--bad);margin-bottom:6px;">${athlete.name}</div>
-        <div style="font-size:11.5px;color:var(--slate);margin-bottom:10px;">Could not load — ${e.message}</div>
-        <a href="${athlete.dash_url}" target="_blank" style="font-size:11.5px;color:var(--signal);">Open dashboard →</a>`;
-      return { ok: false, el: div, flagCount: 0 };
-    }
-  }));
+  let coach;
+  try {
+    coach = await fetch(COACH_JSON_URL, {cache:'no-store'}).then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    });
+  } catch(e) {
+    grid.innerHTML = `<div class="error-card" style="grid-column:1/-1;">Could not load coach.json — ${e.message}</div>`;
+    return;
+  }
+
+  const athletes = coach.athletes || [];
+  const generatedAt = coach.generated_at;
+
+  const results = athletes.map((a, id) => {
+    a._generated_at = generatedAt;
+    return buildCard(id, a);
+  });
 
   // Sort: flagged athletes first
   results.sort((a,b) => b.flagCount - a.flagCount);
@@ -389,14 +351,14 @@ async function init() {
   const totalFlags = results.reduce((s,r) => s + r.flagCount, 0);
   const flagBar = document.getElementById('flags-bar');
   if (totalFlags > 0) {
-    const flaggedAthletes = results.filter(r => r.flagCount > 0);
+    const flaggedCount = results.filter(r => r.flagCount > 0).length;
     flagBar.style.display = 'block';
-    flagBar.innerHTML = `⚠ ${totalFlags} flag${totalFlags!==1?'s':''} across ${flaggedAthletes.length} athlete${flaggedAthletes.length!==1?'s':''} — review cards below`;
+    flagBar.innerHTML = `⚠ ${totalFlags} flag${totalFlags!==1?'s':''} across ${flaggedCount} athlete${flaggedCount!==1?'s':''} — review cards below`;
   }
 
   const now = new Date().toLocaleTimeString('en-AU', {hour:'2-digit', minute:'2-digit'});
   document.getElementById('hub-sub').textContent =
-    `${ATHLETES.length} athlete${ATHLETES.length!==1?'s':''} · refreshed ${now}${totalFlags ? ' · ⚠ '+totalFlags+' flags' : ' · all clear'}`;
+    `${athletes.length} athlete${athletes.length!==1?'s':''} · refreshed ${now}${totalFlags ? ' · ⚠ '+totalFlags+' flags' : ' · all clear'}`;
 }
 
 init();
