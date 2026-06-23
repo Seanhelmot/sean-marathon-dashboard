@@ -15,350 +15,381 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--ink); color: var(--paper); font-family: 'Inter', sans-serif; min-height: 100vh; }
 
-  /* ── Header ── */
-  header { background: var(--panel); border-bottom: 1px solid var(--line); padding: 18px 32px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
-  header h1 { font-family: 'Big Shoulders Display', sans-serif; font-size: 26px; font-weight: 800; color: var(--signal); letter-spacing: .03em; }
-  header .sub { font-size: 11.5px; color: var(--slate); flex: 1; }
+  header {
+    background: var(--panel); border-bottom: 1px solid var(--line);
+    padding: 14px 32px; display: flex; align-items: center; gap: 20px;
+  }
+  header h1 { font-family: 'Big Shoulders Display', sans-serif; font-size: 22px; font-weight: 800; color: var(--signal); letter-spacing: .04em; }
+  header .sub { font-size: 11px; color: var(--slate); flex: 1; font-family: 'IBM Plex Mono', monospace; }
+  .refresh-btn { font-size: 10px; font-family: 'IBM Plex Mono', monospace; color: var(--signal); border: 1px solid var(--signal); background: transparent; padding: 3px 9px; border-radius: 3px; cursor: pointer; }
+  .refresh-btn:hover { background: rgba(0,212,255,.08); }
 
-  /* ── Flags bar ── */
-  #flags-bar { display: none; background: rgba(245,158,11,.07); border-bottom: 1px solid rgba(245,158,11,.2); padding: 10px 32px; font-size: 12px; color: var(--warn); font-family: 'IBM Plex Mono', monospace; }
-  #flags-bar span { margin-right: 20px; }
+  .roster { padding: 16px 28px 32px; display: flex; flex-direction: column; gap: 0; }
 
-  .wrap { max-width: 1200px; margin: 0 auto; padding: 24px; }
-  .section-head { font-size: 10px; font-family: 'IBM Plex Mono', monospace; text-transform: uppercase; letter-spacing: .1em; color: var(--slate); margin-bottom: 12px; margin-top: 24px; }
+  /* ── Athlete panel ── */
+  .a-panel {
+    border-bottom: 1px solid var(--line);
+  }
+  .a-panel:last-child { border-bottom: none; }
 
-  /* ── Grid — single column on narrow, up to 2 cols on wide ── */
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 14px; }
+  /* Commentary strip */
+  .a-commentary {
+    padding: 10px 16px 0;
+    font-size: 12px; line-height: 1.4;
+    font-style: italic;
+  }
+  .a-commentary.ready    { color: #86efac; }
+  .a-commentary.moderate { color: #cbd5e1; }
+  .a-commentary.recover  { color: #fcd34d; }
 
-  /* ── Athlete card ── */
-  .acard { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
-  .acard.flagged { border-color: rgba(245,158,11,.45); }
+  /* Main row */
+  .a-row {
+    display: flex; align-items: center; gap: 0;
+    padding: 10px 16px 12px;
+    cursor: pointer;
+  }
+  .a-row:hover { background: rgba(13,21,32,.6); }
 
-  .acard-head { padding: 16px 18px 12px; cursor: pointer; user-select: none; }
-  .acard-head:hover { background: var(--raised); }
+  /* Name block */
+  .a-name-block { min-width: 200px; }
+  .a-name { font-family: 'Big Shoulders Display', sans-serif; font-size: 18px; font-weight: 700; color: var(--paper); }
+  .a-race { font-size: 10px; font-family: 'IBM Plex Mono', monospace; color: var(--slate); margin-top: 2px; }
+  .a-race .days { color: var(--signal); }
 
-  .name-row { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 2px; gap: 8px; }
-  .aname { font-family: 'Big Shoulders Display', sans-serif; font-size: 19px; font-weight: 700; color: var(--paper); }
-  .stale { font-size: 9.5px; font-family: 'IBM Plex Mono', monospace; color: var(--warn); }
-  .ameta { font-size: 10.5px; color: var(--slate); margin-bottom: 11px; font-family: 'IBM Plex Mono', monospace; }
+  /* Divider line between name and metrics */
+  .a-divider { width: 1px; height: 32px; background: var(--line); margin: 0 20px; flex-shrink: 0; }
 
-  /* chips */
-  .chip-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 11px; }
-  .chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; padding: 2px 7px; border-radius: 3px; border: 1px solid; white-space: nowrap; }
-  .ch-green  { color: var(--good);   border-color: var(--good);   background: rgba(34,197,94,.08); }
-  .ch-amber  { color: var(--warn);   border-color: var(--warn);   background: rgba(245,158,11,.08); }
-  .ch-red    { color: var(--bad);    border-color: var(--bad);    background: rgba(239,68,68,.08); }
-  .ch-cyan   { color: var(--signal); border-color: var(--signal); background: rgba(0,212,255,.06); }
+  /* Metrics strip */
+  .a-metrics { display: flex; gap: 8px; align-items: center; flex: 1; flex-wrap: wrap; }
+
+  .chip {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10.5px;
+    padding: 3px 8px; border-radius: 3px; border: 1px solid; white-space: nowrap;
+  }
+  .ch-green  { color: var(--good);   border-color: rgba(34,197,94,.5);   background: rgba(34,197,94,.08); }
+  .ch-amber  { color: var(--warn);   border-color: rgba(245,158,11,.5);  background: rgba(245,158,11,.08); }
+  .ch-red    { color: var(--bad);    border-color: rgba(239,68,68,.5);   background: rgba(239,68,68,.08); }
+  .ch-cyan   { color: var(--signal); border-color: rgba(0,212,255,.35);  background: rgba(0,212,255,.06); }
   .ch-slate  { color: var(--slate);  border-color: var(--line); }
 
-  /* flag chips — more prominent */
-  .flag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
-  .flag-chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; padding: 2px 7px; border-radius: 3px; white-space: nowrap; }
-  .fc-warn { color: var(--warn); border: 1px solid var(--warn); background: rgba(245,158,11,.12); }
-  .fc-bad  { color: var(--bad);  border: 1px solid var(--bad);  background: rgba(239,68,68,.12); }
-  .fc-info { color: var(--slate); border: 1px solid var(--line); }
+  /* Flags block */
+  .a-flags { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-left: 20px; }
 
-  /* stat tiles */
-  .stat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; }
-  .stile { background: var(--raised); border: 1px solid var(--line); border-radius: 3px; padding: 7px 9px; }
-  .stile .v { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; color: var(--paper); }
-  .stile .l { font-size: 9px; color: var(--slate); text-transform: uppercase; letter-spacing: .06em; margin-top: 2px; }
-
-  /* toggle bar */
-  .toggle-bar {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 8px 18px; border-top: 1px solid var(--line);
-    font-size: 11px; color: var(--slate); cursor: pointer;
-    font-family: 'IBM Plex Mono', monospace;
-    background: transparent; width: 100%; text-align: left;
+  .flag-chip {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+    padding: 3px 8px; border-radius: 3px; border: 1px solid; white-space: nowrap;
   }
-  .toggle-bar:hover { background: var(--raised); color: var(--paper); }
-  .toggle-bar .arrow { font-size: 10px; transition: transform .2s; }
-  .toggle-bar.open .arrow { transform: rotate(180deg); }
+  .fc-red   { color: var(--bad);  border-color: rgba(239,68,68,.6);  background: rgba(239,68,68,.12); }
+  .fc-warn  { color: var(--warn); border-color: rgba(245,158,11,.6); background: rgba(245,158,11,.12); }
+  .fc-info  { color: var(--slate); border-color: var(--line); }
+  .fc-ok    { color: #4ade80; font-size: 10px; font-family: 'IBM Plex Mono', monospace; }
 
-  /* activities panel */
-  .acts-panel { display: none; border-top: 1px solid var(--line); padding: 0 18px; }
-  .acts-panel.open { display: block; }
+  /* Expand toggle */
+  .a-toggle { margin-left: 14px; font-size: 10px; color: var(--slate); font-family: 'IBM Plex Mono', monospace; flex-shrink: 0; }
 
-  .act-row { padding: 9px 0; border-bottom: 1px solid var(--line); }
+  /* Red-flagged panel gets left border */
+  .a-panel.flag-red  { border-left: 3px solid var(--bad); }
+  .a-panel.flag-warn { border-left: 3px solid var(--warn); }
+
+  /* ── Expand detail ── */
+  .a-detail { display: none; border-top: 1px solid var(--line); }
+  .a-detail.open { display: block; }
+  .a-detail-inner {
+    padding: 14px 18px 18px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  }
+  @media (max-width: 700px) { .a-detail-inner { grid-template-columns: 1fr; } }
+
+  .det-head { font-size: 9px; font-family: 'IBM Plex Mono', monospace; text-transform: uppercase; letter-spacing: .1em; color: var(--signal); margin-bottom: 8px; }
+
+  .act-row { padding: 7px 0; border-bottom: 1px solid rgba(30,45,64,.7); }
   .act-row:last-child { border-bottom: none; }
-  .act-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px; }
-  .act-name { font-size: 12px; font-weight: 600; color: var(--paper); }
+  .act-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1px; }
+  .act-name { font-size: 11.5px; font-weight: 600; color: var(--paper); }
   .act-date { font-size: 10px; color: var(--slate); font-family: 'IBM Plex Mono', monospace; }
-  .act-stats { font-size: 10.5px; color: var(--slate); font-family: 'IBM Plex Mono', monospace; margin-bottom: 2px; }
-  .act-laps  { font-size: 10px; color: var(--signal); font-family: 'IBM Plex Mono', monospace; }
+  .act-stats { font-size: 10px; color: var(--slate); font-family: 'IBM Plex Mono', monospace; }
 
-  /* lap table */
-  .lap-table { width: 100%; border-collapse: collapse; margin-top: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; }
-  .lap-table th { text-align: left; padding: 3px 8px; color: var(--slate); font-weight: 500; font-size: 9.5px; text-transform: uppercase; letter-spacing: .06em; border-bottom: 1px solid var(--line); }
-  .lap-table td { padding: 3px 8px; color: var(--paper); }
-  .lap-table tr:not(:last-child) td { border-bottom: 1px solid rgba(30,45,64,.6); }
+  .up-row { padding: 5px 0; border-bottom: 1px solid rgba(30,45,64,.7); }
+  .up-row:last-child { border-bottom: none; }
+  .up-name { font-size: 11px; color: var(--paper); font-weight: 500; }
+  .up-meta { font-size: 10px; color: var(--slate); font-family: 'IBM Plex Mono', monospace; margin-top: 1px; }
 
-  /* dash link */
-  .dash-link { display: block; text-align: center; padding: 9px; font-size: 11px; color: var(--signal); font-family: 'IBM Plex Mono', monospace; border-top: 1px solid var(--line); text-decoration: none; }
-  .dash-link:hover { background: var(--raised); }
+  .fit-tiles { display: flex; gap: 8px; margin-top: 12px; }
+  .fit-tile { background: var(--raised); border: 1px solid var(--line); border-radius: 3px; padding: 6px 12px; text-align: center; }
+  .fit-tile .fv { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; color: var(--paper); }
+  .fit-tile .fl { font-size: 8px; color: var(--slate); text-transform: uppercase; letter-spacing: .06em; margin-top: 2px; }
 
-  .error-card { border-color: var(--bad); padding: 18px; border-radius: 6px; background: var(--panel); }
-
-  .add-hint { padding: 18px 20px; border: 1px dashed var(--line); border-radius: 6px; color: var(--slate); font-size: 11.5px; line-height: 1.7; }
-  .add-hint code { font-family: 'IBM Plex Mono', monospace; background: var(--raised); padding: 2px 6px; border-radius: 3px; color: var(--signal); font-size: 11px; }
-
-  footer { text-align: center; padding: 28px; font-size: 11px; color: var(--slate); margin-top: 16px; }
+  footer { text-align: center; padding: 20px; font-size: 10px; color: var(--slate); font-family: 'IBM Plex Mono', monospace; border-top: 1px solid var(--line); }
 </style>
 </head>
 <body>
 
 <header>
   <h1>COACH HUB</h1>
-  <div class="sub" id="hub-sub">Loading athletes…</div>
+  <div class="sub" id="hub-sub">Loading…</div>
+  <button class="refresh-btn" onclick="init()">↻ Refresh</button>
 </header>
 
-<div id="flags-bar"></div>
-
-<div class="wrap">
-  <div class="section-head">Athletes</div>
-  <div class="grid" id="athlete-grid">
-    <div style="color:var(--slate);font-size:13px;padding:20px;">Fetching athlete data…</div>
-  </div>
-
-  <div class="section-head" style="margin-top:32px;">Add a new athlete</div>
-  <div class="add-hint">
-    Run <code>python scripts/create_athlete.py --name "Jane Smith" --garmin-email … --garmin-password … --github-token … --github-owner …</code>
-    then add their dashboard URL to the <code>ATHLETES</code> array at the top of this file.
-  </div>
+<div class="roster" id="roster">
+  <div style="color:var(--slate);padding:20px 0;font-size:13px;">Loading athlete data…</div>
 </div>
 
-<footer>Coach Hub · data pulled live from each athlete's GitHub Pages · refreshes on page load</footer>
+<footer>coach.json · refreshes 6am + 10am AEST</footer>
 
 <script>
-/* ── Data source ─────────────────────────────────────────────────────
-   All athlete data comes from a single coach.json pulled by
-   scripts/pull_coach_data.py and committed to the repo.             */
 const COACH_JSON_URL = '../data/coach.json';
-
-/* ── Helpers ──────────────────────────────────────────────────────── */
-function fmtPace(dec) {
-  if (dec == null) return '—';
-  const mins = Math.floor(dec);
-  const secs = String(Math.round((dec % 1) * 100)).padStart(2, '0');
-  return `${mins}:${secs}`;
-}
+const FEEL = ['','😩','😕','😐','🙂','😄'];
 
 function fmtDur(s) {
   if (!s) return '';
-  const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
+  const h = Math.floor(s/3600), m = Math.floor((s%3600)/60);
   return h > 0 ? `${h}h${m}m` : `${m}m`;
 }
+function fmtPace(dec) {
+  if (dec == null) return '—';
+  const mins = Math.floor(dec);
+  const secs = String(Math.round((dec%1)*100)).padStart(2,'0');
+  return `${mins}:${secs}`;
+}
+function localDateStr(d) {
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
 
-const FEEL = ['','😩','😕','😐','🙂','😄'];
-
-/* ── Flag computation (uses coach.json athlete shape) ─────────────── */
-function computeFlags(a) {
-  const flags = (a.flags || []).map(f => ({ cls: f.cls || 'fc-warn', text: f.text }));
-
-  // Training gap — no activity in 2+ days
+/* ── 1-sentence readiness commentary ── */
+function buildCommentary(a) {
+  const h   = a.health  || {};
+  const fit = a.fitness || {};
   const acts = a.recent_activities || [];
-  if (acts.length) {
+  const tsb  = fit.tsb;
+
+  // Check yesterday's load
+  const today = new Date(); today.setHours(0,0,0,0);
+  const yday = localDateStr(new Date(today.getFullYear(), today.getMonth(), today.getDate()-1));
+  const yRuns = acts.filter(x => x.date === yday);
+  const yDist = yRuns.reduce((s,x) => s+(x.dist_km||0), 0);
+  const yMaxHR = Math.max(0, ...yRuns.map(x => x.avg_hr||0));
+  const yLong    = yDist >= 18;
+  const yQuality = yMaxHR >= 150 && yDist >= 5;
+
+  // Score
+  let score = 60;
+  if (tsb != null) {
+    if      (tsb >  5)  score += 30;
+    else if (tsb > -5)  score += 20;
+    else if (tsb > -15) score += 5;
+    else if (tsb > -25) score -= 10;
+    else                score -= 25;
+  }
+  if (h.hrv_7d_avg != null) {
+    if      (h.hrv_7d_avg >= 75) score += 15;
+    else if (h.hrv_7d_avg >= 55) score += 5;
+    else                         score -= 10;
+  }
+  if (h.sleep_score != null) {
+    if (h.sleep_score >= 80) score += 10;
+    else if (h.sleep_score < 65) score -= 10;
+  }
+  if (h.rhr != null && h.rhr_7d_avg != null) {
+    const delta = h.rhr - h.rhr_7d_avg;
+    if (delta <= -1) score += 10;
+    else if (delta > 2) score -= 10;
+  }
+  if (yLong)    score = Math.min(score, 35);
+  else if (yQuality) score = Math.min(score, 55);
+  score = Math.max(0, Math.min(100, score));
+
+  const status = score >= 70 ? 'ready' : score >= 45 ? 'moderate' : 'recover';
+
+  // Build single sentence
+  let sentence;
+  const tsbStr = tsb != null ? `TSB ${tsb>0?'+':''}${tsb.toFixed(1)}` : null;
+  const hrvStr = h.hrv_7d_avg != null ? `HRV ${h.hrv_7d_avg}ms` : null;
+
+  if (yLong) {
+    sentence = `Long run ${yDist.toFixed(0)}km yesterday — high load, keep today very easy.`;
+  } else if (yQuality) {
+    sentence = `Quality session yesterday — today should be easy${tsbStr ? ` (${tsbStr})` : ''}.`;
+  } else if (score >= 70) {
+    const parts = [tsbStr, hrvStr].filter(Boolean);
+    sentence = `Looking fresh${parts.length ? ` — ${parts.join(', ')}` : ''}.`;
+  } else if (score >= 45) {
+    if (tsb != null && tsb < -8) {
+      sentence = `Moderate fatigue building (${tsbStr})${hrvStr ? ` — ${hrvStr}` : ''} — respect the easy days.`;
+    } else {
+      const alerts = [];
+      if (h.hrv_7d_avg != null && h.hrv_7d_avg < 55) alerts.push(`HRV low at ${h.hrv_7d_avg}ms`);
+      if (h.sleep_score != null && h.sleep_score < 65) alerts.push(`poor sleep (${h.sleep_score})`);
+      sentence = alerts.length
+        ? `${alerts[0]} — monitor closely this week.`
+        : `Balanced load${tsbStr ? ` (${tsbStr})` : ''} — training on track.`;
+    }
+  } else {
+    // recover
+    const alerts = [];
+    if (h.hrv_7d_avg != null && h.hrv_7d_avg < 55) alerts.push(`HRV low at ${h.hrv_7d_avg}ms`);
+    if (tsb != null && tsb < -15) alerts.push(`${tsbStr}`);
+    if (h.rhr != null && h.rhr_7d_avg != null && (h.rhr - h.rhr_7d_avg) > 3) alerts.push(`RHR elevated`);
+    sentence = alerts.length
+      ? `Prioritise recovery — ${alerts.join(', ')}.`
+      : `High fatigue — prioritise recovery this week.`;
+  }
+
+  return { sentence, status };
+}
+
+/* ── Flags ── */
+function computeFlags(a) {
+  const flags = (a.flags || []).map(f => ({ cls: f.cls||'fc-warn', text: f.text }));
+  const acts = a.recent_activities || [];
+  const hasGapFlag = flags.some(f => /run|gap|training/i.test(f.text));
+  if (acts.length && !hasGapFlag) {
     const today = new Date(); today.setHours(0,0,0,0);
     const lastRun = new Date(acts[0].date + 'T00:00:00');
     const gap = Math.round((today - lastRun) / 86400000);
-    if (gap >= 2)
-      flags.push({ cls:'fc-info', text:`No run ${gap}d` });
+    if (gap >= 2) flags.push({ cls:'fc-info', text:`No run ${gap}d` });
   }
-
   return flags;
 }
 
-/* ── Activity rows ────────────────────────────────────────────────── */
-function renderActs(a) {
-  const acts = (a.recent_activities || []).slice(0, 8);
-  if (!acts.length) return '<div class="act-row" style="color:var(--slate);font-size:11.5px;">No recent activities</div>';
-
-  return acts.map(act => {
-    const date = new Date(act.date + 'T00:00:00');
-    const dateStr = date.toLocaleDateString('en-AU', {weekday:'short', day:'numeric', month:'short'});
-
-    const tokens = [
-      act.dist_km != null ? `${act.dist_km.toFixed(1)}km` : null,
-      act.duration_s      ? fmtDur(act.duration_s)         : null,
-      act.pace != null    ? `${fmtPace(act.pace)}/km`      : null,
-      act.avg_hr != null  ? `HR ${act.avg_hr}${act.max_hr ? '/'+act.max_hr : ''}` : null,
-      act.feel != null    ? FEEL[act.feel]                  : null,
-      act.effort != null  ? `RPE ${act.effort}`             : null,
-    ].filter(Boolean).join(' · ');
-
-    let lapHtml = '';
-    if (act.interval_summary?.length) {
-      const work = act.interval_summary[0], rec = act.interval_summary[1];
-      lapHtml = `<div class="act-laps">${work}${rec ? ' · rec: '+rec : ''}</div>`;
-    } else if (act.work_laps?.length) {
-      const rows = act.work_laps.map(l =>
-        `<tr><td>Rep ${l.rep}</td><td>${l.dist_km}km</td><td>${fmtPace(l.pace)}/km</td><td>${l.avg_hr??'—'}bpm</td><td>${l.max_hr??'—'}bpm</td></tr>`
-      ).join('');
-      lapHtml = `<table class="lap-table"><thead><tr><th>Rep</th><th>Dist</th><th>Pace</th><th>Avg HR</th><th>Max HR</th></tr></thead><tbody>${rows}</tbody></table>`;
-    } else if (act.km_chunks?.length) {
-      const dc = act.decoupling_pct != null
-        ? `<span style="color:${act.decoupling_pct<=5?'var(--good)':'var(--warn)'}"> · Decoupling ${act.decoupling_pct>0?'+':''}${act.decoupling_pct}%</span>` : '';
-      const rows = act.km_chunks.map(c =>
-        `<tr><td>${c.label}</td><td>${fmtPace(c.pace)}/km</td><td>${c.avg_hr??'—'}bpm</td></tr>`
-      ).join('');
-      lapHtml = `<div style="font-size:9.5px;color:var(--signal);text-transform:uppercase;letter-spacing:.06em;margin-top:5px;">5km Splits${dc}</div>
-        <table class="lap-table"><thead><tr><th>Segment</th><th>Pace</th><th>Avg HR</th></tr></thead><tbody>${rows}</tbody></table>`;
-    }
-
-    return `<div class="act-row">
-      <div class="act-top"><span class="act-name">${act.name}</span><span class="act-date">${dateStr}</span></div>
-      <div class="act-stats">${tokens}</div>${lapHtml}
-    </div>`;
-  }).join('');
-}
-
-/* ── Upcoming sessions ────────────────────────────────────────────── */
-function renderUpcoming(a) {
-  const upcoming = (a.upcoming || []).slice(0, 5);
-  if (!upcoming.length) return '';
-  const rows = upcoming.map(u => {
-    const d = new Date(u.date + 'T00:00:00');
-    const ds = d.toLocaleDateString('en-AU', {weekday:'short', day:'numeric', month:'short'});
-    const km = u.distance_m ? `${(u.distance_m/1000).toFixed(0)}km` : '';
-    return `<div class="act-row">
-      <div class="act-top"><span class="act-name">${u.name}</span><span class="act-date">${ds}${km?' · '+km:''}</span></div>
-    </div>`;
-  }).join('');
-  return `<div style="border-top:1px solid var(--line);margin-top:4px;padding-top:4px;">
-    <div style="font-size:9.5px;letter-spacing:.08em;color:var(--signal);text-transform:uppercase;padding:6px 12px 2px;">Upcoming</div>
-    ${rows}
-  </div>`;
-}
-
-/* ── Build one athlete card (coach.json athlete shape) ────────────── */
-function buildCard(id, a) {
+/* ── Build panel ── */
+function buildPanel(a, idx) {
   const h   = a.health  || {};
   const fit = a.fitness || {};
-
-  const daysToRace = a.days_to_race;
-  const raceMeta   = a.race ? `${a.race}${daysToRace != null ? ' · ' + daysToRace + 'd' : ''}` : '—';
-
-  // Stale check using generated_at from coach.json root (set per-athlete below)
-  const staleHtml = (() => {
-    if (!a._generated_at) return '';
-    const ago = Math.round((Date.now() - new Date(a._generated_at)) / 60000);
-    if (ago < 120) return '';
-    return `<span class="stale">⚠ ${ago < 1440 ? Math.round(ago/60)+'h' : Math.round(ago/1440)+'d'} stale</span>`;
-  })();
-
-  // Readiness chips
-  const chipHRV   = h.hrv_7d_avg  != null ? `<span class="chip ${h.hrv_7d_avg>=75?'ch-green':h.hrv_7d_avg>=60?'ch-amber':'ch-red'}">HRV ${h.hrv_7d_avg}ms</span>` : '';
-  const chipSleep = h.sleep_score != null ? `<span class="chip ${h.sleep_score>=80?'ch-green':h.sleep_score>=65?'ch-amber':'ch-red'}">Sleep ${h.sleep_score}</span>` : '';
-  const chipRHR   = h.rhr         != null ? `<span class="chip ch-cyan">RHR ${h.rhr}</span>` : '';
-
-  // TSB chip
-  const tsb = fit.tsb;
-  const tsbColor = tsb == null ? 'ch-amber' : tsb > 5 ? 'ch-green' : tsb > -10 ? 'ch-amber' : 'ch-red';
-  const chipTSB = tsb != null ? `<span class="chip ${tsbColor}">TSB ${tsb > 0 ? '+' : ''}${tsb.toFixed(1)}</span>` : '';
-
-  // Flags
+  const { sentence, status } = buildCommentary(a);
   const flags = computeFlags(a);
+
+  // Race line
+  const raceParts = [];
+  if (a.race) raceParts.push(a.race);
+  if (a.days_to_race != null) raceParts.push(`<span class="days">${a.days_to_race}d</span>`);
+  const raceLine = raceParts.join(' · ');
+
+  // Metric chips
+  const chips = [];
+  const tsb = fit.tsb;
+  if (tsb != null) chips.push(`<span class="chip ${tsb>5?'ch-green':tsb>-10?'ch-amber':'ch-red'}">TSB ${tsb>0?'+':''}${tsb.toFixed(1)}</span>`);
+  if (h.hrv_7d_avg  != null) chips.push(`<span class="chip ${h.hrv_7d_avg>=75?'ch-green':h.hrv_7d_avg>=55?'ch-amber':'ch-red'}">HRV ${h.hrv_7d_avg}ms</span>`);
+  if (h.sleep_score != null) chips.push(`<span class="chip ${h.sleep_score>=80?'ch-green':h.sleep_score>=65?'ch-amber':'ch-red'}">Sleep ${h.sleep_score}</span>`);
+  if (h.rhr != null) {
+    const d = h.rhr_delta != null ? h.rhr_delta : (h.rhr_7d_avg != null ? h.rhr - h.rhr_7d_avg : 0);
+    chips.push(`<span class="chip ${d>3?'ch-red':d<-1?'ch-green':'ch-cyan'}">RHR ${h.rhr}${d>1?` ▲${d.toFixed(0)}`:d<-1?` ▼${Math.abs(d).toFixed(0)}`:''}</span>`);
+  }
+  if (fit.ctl != null) chips.push(`<span class="chip ch-slate">CTL ${fit.ctl.toFixed(0)}</span>`);
+  if (fit.atl != null) chips.push(`<span class="chip ch-slate">ATL ${fit.atl.toFixed(0)}</span>`);
+
+  // Flags HTML
+  const hasBad  = flags.some(f => f.cls === 'fc-bad'  || f.cls === 'fc-red');
+  const hasWarn = flags.some(f => f.cls === 'fc-warn');
   const flagsHtml = flags.length
-    ? `<div class="flag-row">${flags.map(f=>`<span class="flag-chip ${f.cls}">⚠ ${f.text}</span>`).join('')}</div>` : '';
+    ? flags.map(f => `<span class="flag-chip ${f.cls}">⚠ ${f.text}</span>`).join('')
+    : `<span class="fc-ok">✓ clear</span>`;
 
-  // Stat tiles
-  const st = (v, l) => `<div class="stile"><div class="v">${v}</div><div class="l">${l}</div></div>`;
-  const ctlStr = fit.ctl != null ? fit.ctl.toFixed(1) : '—';
-  const atlStr = fit.atl != null ? fit.atl.toFixed(1) : '—';
+  const panelCls = hasBad ? 'a-panel flag-red' : hasWarn ? 'a-panel flag-warn' : 'a-panel';
 
-  // Race predictions
+  // Activities
+  const acts = (a.recent_activities||[]).slice(0,6);
+  const actRows = acts.length
+    ? acts.map(act => {
+        const d = new Date(act.date+'T00:00:00');
+        const ds = d.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short'});
+        const tokens = [
+          act.dist_km  != null ? `${act.dist_km.toFixed(1)}km` : null,
+          act.duration_s ? fmtDur(act.duration_s) : null,
+          act.pace     != null ? `${fmtPace(act.pace)}/km` : null,
+          act.avg_hr   != null ? `HR ${act.avg_hr}` : null,
+          act.feel     != null ? FEEL[act.feel] : null,
+        ].filter(Boolean).join(' · ');
+        return `<div class="act-row">
+          <div class="act-top"><span class="act-name">${act.name}</span><span class="act-date">${ds}</span></div>
+          <div class="act-stats">${tokens}</div>
+        </div>`;
+      }).join('')
+    : '<div style="color:var(--slate);font-size:11px;">No recent activities</div>';
+
+  // Upcoming
+  const upcoming = (a.upcoming||[]).slice(0,6);
+  const upRows = upcoming.length
+    ? upcoming.map(u => {
+        const d = new Date(u.date+'T00:00:00');
+        const ds = d.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short'});
+        const km = u.distance_m ? ` · ${(u.distance_m/1000).toFixed(0)}km` : '';
+        return `<div class="up-row"><div class="up-name">${u.name}</div><div class="up-meta">${ds}${km}</div></div>`;
+      }).join('')
+    : '<div style="color:var(--slate);font-size:11px;">No upcoming sessions</div>';
+
   const preds = a.race_predictions || {};
-  const predHtml = (preds['10k'] || preds['marathon'])
-    ? `<div style="font-size:10.5px;color:var(--slate);margin-top:4px;">
-        ${preds['10k'] ? `10k ${preds['10k']}` : ''}
-        ${preds['10k'] && preds['marathon'] ? ' · ' : ''}
-        ${preds['marathon'] ? `Mara ${preds['marathon']}` : ''}
-       </div>` : '';
+  const predStr = [preds['10k']?`10k ${preds['10k']}`:null, preds['marathon']?`Mara ${preds['marathon']}`:null].filter(Boolean).join(' · ');
 
-  const actsHtml     = renderActs(a);
-  const upcomingHtml = renderUpcoming(a);
-  const actCount     = (a.recent_activities || []).length;
+  const div = document.createElement('div');
+  div.className = panelCls;
+  div.innerHTML = `
+    <div class="a-commentary ${status}">${sentence}</div>
+    <div class="a-row" onclick="toggleDetail(${idx})">
+      <div class="a-name-block">
+        <div class="a-name">${a.name}</div>
+        <div class="a-race">${raceLine || '&mdash;'}</div>
+      </div>
+      <div class="a-divider"></div>
+      <div class="a-metrics">${chips.join('')}</div>
+      <div class="a-flags">${flagsHtml}</div>
+      <div class="a-toggle" id="toggle-${idx}">▼ details</div>
+    </div>
+    <div class="a-detail" id="detail-${idx}">
+      <div class="a-detail-inner">
+        <div>
+          <div class="det-head">Recent Activities</div>
+          ${actRows}
+        </div>
+        <div>
+          <div class="det-head">Upcoming Sessions</div>
+          ${upRows}
+          ${predStr ? `<div style="margin-top:12px;font-size:10px;color:var(--slate);font-family:'IBM Plex Mono',monospace;">Predictions: ${predStr}</div>` : ''}
+          <div class="fit-tiles">
+            ${fit.ctl!=null?`<div class="fit-tile"><div class="fv">${fit.ctl.toFixed(1)}</div><div class="fl">CTL</div></div>`:''}
+            ${fit.atl!=null?`<div class="fit-tile"><div class="fv">${fit.atl.toFixed(1)}</div><div class="fl">ATL</div></div>`:''}
+            ${tsb!=null?`<div class="fit-tile"><div class="fv">${tsb>0?'+':''}${tsb.toFixed(1)}</div><div class="fl">TSB</div></div>`:''}
+          </div>
+        </div>
+      </div>
+    </div>`;
 
-  const cardEl = document.createElement('div');
-  cardEl.className = 'acard' + (flags.length ? ' flagged' : '');
-  cardEl.id = `card-${id}`;
-  cardEl.innerHTML = `
-    <div class="acard-head" onclick="toggleActs(${id})">
-      <div class="name-row">
-        <span class="aname">${a.name}</span>
-        ${staleHtml}
-      </div>
-      <div class="ameta">${raceMeta}</div>
-      ${predHtml}
-      ${flagsHtml}
-      <div class="chip-row">${chipHRV}${chipSleep}${chipRHR}${chipTSB}</div>
-      <div class="stat-grid">
-        ${st(ctlStr, 'CTL (fitness)')}
-        ${st(atlStr, 'ATL (fatigue)')}
-        ${st(tsb != null ? (tsb>0?'+':'')+tsb.toFixed(1) : '—', 'TSB (form)')}
-      </div>
-    </div>
-    <button class="toggle-bar open" id="toggle-${id}" onclick="toggleActs(${id})">
-      <span>▾ Activities (last ${Math.min(actCount,8)})</span>
-      <span class="arrow">▾</span>
-    </button>
-    <div class="acts-panel open" id="acts-${id}">
-      <div style="padding-bottom:4px;">${actsHtml}</div>
-      ${upcomingHtml}
-    </div>
-  `;
-  return { el: cardEl, flagCount: flags.length };
+  return { div, flagScore: hasBad ? 2 : hasWarn ? 1 : 0 };
 }
 
-function toggleActs(id) {
-  const panel = document.getElementById(`acts-${id}`);
-  const btn   = document.getElementById(`toggle-${id}`);
-  const open  = panel.classList.toggle('open');
-  btn.classList.toggle('open', open);
-  event.stopPropagation();
+function toggleDetail(idx) {
+  const det = document.getElementById(`detail-${idx}`);
+  const tog = document.getElementById(`toggle-${idx}`);
+  const open = det.classList.toggle('open');
+  tog.textContent = open ? '▲ hide' : '▼ details';
 }
 
-/* ── Main ─────────────────────────────────────────────────────────── */
 async function init() {
-  const grid = document.getElementById('athlete-grid');
-  grid.innerHTML = '';
+  document.getElementById('hub-sub').textContent = 'Loading…';
+  document.getElementById('roster').innerHTML = '<div style="color:var(--slate);padding:20px 0;font-size:13px;">Fetching…</div>';
 
   let coach;
   try {
     coach = await fetch(COACH_JSON_URL, {cache:'no-store'}).then(r => {
-      if (!r.ok) throw new Error('HTTP ' + r.status);
+      if (!r.ok) throw new Error('HTTP '+r.status);
       return r.json();
     });
   } catch(e) {
-    grid.innerHTML = `<div class="error-card" style="grid-column:1/-1;">Could not load coach.json — ${e.message}</div>`;
+    document.getElementById('roster').innerHTML = `<div style="color:var(--bad);padding:20px 0;">Could not load coach.json — ${e.message}</div>`;
     return;
   }
 
   const athletes = coach.athletes || [];
-  const generatedAt = coach.generated_at;
+  const panels = athletes.map((a, idx) => buildPanel(a, idx));
+  panels.sort((a,b) => b.flagScore - a.flagScore);
 
-  const results = athletes.map((a, id) => {
-    a._generated_at = generatedAt;
-    return buildCard(id, a);
-  });
+  const roster = document.getElementById('roster');
+  roster.innerHTML = '';
+  panels.forEach(p => roster.appendChild(p.div));
 
-  // Sort: flagged athletes first
-  results.sort((a,b) => b.flagCount - a.flagCount);
-  results.forEach(r => grid.appendChild(r.el));
-
-  // Flags summary bar
-  const totalFlags = results.reduce((s,r) => s + r.flagCount, 0);
-  const flagBar = document.getElementById('flags-bar');
-  if (totalFlags > 0) {
-    const flaggedCount = results.filter(r => r.flagCount > 0).length;
-    flagBar.style.display = 'block';
-    flagBar.innerHTML = `⚠ ${totalFlags} flag${totalFlags!==1?'s':''} across ${flaggedCount} athlete${flaggedCount!==1?'s':''} — review cards below`;
-  }
-
-  const now = new Date().toLocaleTimeString('en-AU', {hour:'2-digit', minute:'2-digit'});
+  const totalFlags = panels.filter(p => p.flagScore > 0).length;
+  const now = new Date().toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'});
   document.getElementById('hub-sub').textContent =
-    `${athletes.length} athlete${athletes.length!==1?'s':''} · refreshed ${now}${totalFlags ? ' · ⚠ '+totalFlags+' flags' : ' · all clear'}`;
+    `${athletes.length} athletes · ${now}${totalFlags ? ` · ⚠ ${totalFlags} flagged` : ' · all clear'}`;
 }
 
 init();
