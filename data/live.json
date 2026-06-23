@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-06-23T21:44:31+10:00",
+  "generated_at": "2026-06-24T09:38:47+10:00",
   "current_week": 7,
   "today": {
-    "rhr": 40,
-    "hrv_7d_avg": 76,
+    "rhr": 39,
+    "hrv_7d_avg": 78,
     "hrv_status": null,
-    "sleep_score": 92.0,
-    "sleep_hrs": 7.7,
-    "body_battery": 99,
+    "sleep_score": 80.0,
+    "sleep_hrs": 7.5,
+    "body_battery": 94,
     "vo2max_garmin": 52,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 46.4,
-    "atl": 55.0,
-    "tsb": -8.6
+    "ctl": 45.5,
+    "atl": 49.6,
+    "tsb": -4.1
   },
   "this_week_days": null,
   "weeks": [
@@ -299,8 +299,8 @@
           "dist_km": 12.2,
           "avg_hr": 122,
           "pace": 5.38,
-          "feel": 3,
-          "effort": 6.0,
+          "feel": null,
+          "effort": null,
           "decoupling_pct": null,
           "_main_dist": 12.210139999999999
         }
@@ -374,10 +374,23 @@
     },
     {
       "wk": 7,
-      "actual_km": 12.0,
+      "actual_km": 24.0,
       "partial": true,
-      "quality": null,
+      "quality": {
+        "pace_min_per_km": 6.37,
+        "avg_hr": 155,
+        "work_intervals_only": true
+      },
       "days": {
+        "2026-06-24": {
+          "dist_km": 12.0,
+          "avg_hr": 131,
+          "pace": 5.32,
+          "feel": 2,
+          "effort": 2.0,
+          "decoupling_pct": null,
+          "_main_dist": 2.81551
+        },
         "2026-06-23": {
           "dist_km": 12.0,
           "avg_hr": 116,
@@ -391,12 +404,6 @@
     }
   ],
   "sleep_hrv_14d": [
-    {
-      "date": "2026-06-10",
-      "score": 87.0,
-      "hrv": 89.0,
-      "rhr": 40
-    },
     {
       "date": "2026-06-11",
       "score": 93.0,
@@ -474,9 +481,99 @@
       "score": 92.0,
       "hrv": 85.0,
       "rhr": 40
+    },
+    {
+      "date": "2026-06-24",
+      "score": 80.0,
+      "hrv": 76.0,
+      "rhr": 39
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-06-24",
+      "start_local": "2026-06-24T08:17",
+      "name": "W7 Wed — Warm Up + Strides",
+      "dist_km": 2.82,
+      "duration_s": 934,
+      "avg_hr": 131,
+      "max_hr": 141,
+      "pace": 5.32,
+      "feel": 2,
+      "effort": 2.0,
+      "elevation_gain": 29.852982,
+      "avg_cadence": 167,
+      "interval_summary": [
+        "1x 17m28s 130bpm"
+      ]
+    },
+    {
+      "date": "2026-06-24",
+      "start_local": "2026-06-24T07:48",
+      "name": "W7 Wed — Light Threshold 3x1600m",
+      "dist_km": 5.84,
+      "duration_s": 1555,
+      "avg_hr": 154,
+      "max_hr": 166,
+      "pace": 4.26,
+      "feel": 2,
+      "effort": 7.0,
+      "elevation_gain": 33.344913,
+      "avg_cadence": 179,
+      "interval_summary": [
+        "3x 6m37s 155bpm",
+        "3x 2m1s 147bpm"
+      ],
+      "work_laps": [
+        {
+          "rep": 1,
+          "dist_km": 1.61,
+          "pace": 4.15,
+          "avg_hr": 149,
+          "max_hr": 158,
+          "avg_cadence": 180
+        },
+        {
+          "rep": 2,
+          "dist_km": 1.59,
+          "pace": 4.12,
+          "avg_hr": 158,
+          "max_hr": 163,
+          "avg_cadence": 183
+        },
+        {
+          "rep": 3,
+          "dist_km": 1.59,
+          "pace": 4.07,
+          "avg_hr": 161,
+          "max_hr": 165,
+          "avg_cadence": 183
+        }
+      ]
+    },
+    {
+      "date": "2026-06-24",
+      "start_local": "2026-06-24T07:19",
+      "name": "W7 Wed — Cool Down",
+      "dist_km": 3.35,
+      "duration_s": 1121,
+      "avg_hr": 115,
+      "max_hr": 128,
+      "pace": 5.34,
+      "feel": 2,
+      "effort": 2.0,
+      "elevation_gain": 34.429195,
+      "avg_cadence": 165,
+      "interval_summary": [
+        "1x 24m17s 116bpm",
+        "1x 10s 94bpm",
+        "1x 38s 102bpm",
+        "1x 13s 101bpm",
+        "1x 61s 90bpm",
+        "1x 13s 87bpm",
+        "1x 75s 88bpm"
+      ]
+    },
     {
       "date": "2026-06-23",
       "start_local": "2026-06-23T06:06",
@@ -987,27 +1084,6 @@
         "1x 55s 91bpm",
         "2x 40s 104bpm",
         "2x 14s 99bpm"
-      ]
-    },
-    {
-      "date": "2026-06-09",
-      "start_local": "2026-06-09T06:00",
-      "name": "Easy + neuro",
-      "dist_km": 12.21,
-      "duration_s": 4124,
-      "avg_hr": 122,
-      "max_hr": 146,
-      "pace": 5.38,
-      "feel": 3,
-      "effort": 6.0,
-      "elevation_gain": 77.44032,
-      "avg_cadence": 166,
-      "interval_summary": [
-        "1x 10m31s 112bpm",
-        "3x 24s 115bpm",
-        "1x 76s 117bpm",
-        "1x 2m7s 115bpm",
-        "1x 1h11m 124bpm"
       ]
     }
   ]
