@@ -25,50 +25,42 @@
   .refresh-btn { font-size: 10px; font-family: 'IBM Plex Mono', monospace; color: var(--signal); border: 1px solid var(--signal); background: transparent; padding: 3px 9px; border-radius: 3px; cursor: pointer; }
   .refresh-btn:hover { background: rgba(0,212,255,.08); }
 
-  /* ── Tile list ── */
+  /* ── Tile grid ── */
   .roster {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    padding: 10px 16px 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    padding: 12px 16px 20px;
   }
+  @media (max-width: 1100px) { .roster { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 750px)  { .roster { grid-template-columns: repeat(2, 1fr); } }
 
-  /* ── Tile (horizontal row) ── */
+  /* ── Tile ── */
   .tile {
     background: var(--panel);
     border: 2px solid var(--line);
     border-radius: 4px;
-    padding: 9px 14px;
+    padding: 10px 11px 9px;
     cursor: pointer;
-    display: grid;
-    grid-template-columns: 170px 210px 1fr 230px;
-    align-items: center;
-    gap: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
     overflow: hidden;
     transition: background .12s, border-color .12s;
   }
   .tile:hover { background: var(--raised); }
-  @media (max-width: 1100px) { .tile { grid-template-columns: 160px 190px 1fr; } .t-gauge-wrap { display: none; } }
-  @media (max-width: 700px)  { .tile { grid-template-columns: 140px 1fr; } .t-status { display: none; } }
   .tile.tl-green { border-color: var(--good); box-shadow: 0 0 0 1px rgba(34,197,94,.2); }
   .tile.tl-amber { border-color: var(--warn); box-shadow: 0 0 0 1px rgba(245,158,11,.2); }
   .tile.tl-red   { border-color: var(--bad);  box-shadow: 0 0 0 1px rgba(239,68,68,.2); }
 
-  /* Tile sections */
-  .t-identity { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-  .t-status   { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-  .t-middle   { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-  .t-gauge-wrap { min-width: 0; }
-  .t-gauge-wrap .t-gauges { margin-top: 0; }
-
   /* Tile header */
-  .t-head { display: flex; align-items: center; gap: 6px; }
-  .t-dot  { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .t-head { display: flex; align-items: baseline; gap: 6px; }
+  .t-dot  { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-bottom: -1px; }
   .t-dot.tl-green { background: var(--good); }
   .t-dot.tl-amber  { background: var(--warn); }
   .t-dot.tl-red   { background: var(--bad);  }
-  .t-name { font-family: 'Big Shoulders Display', sans-serif; font-size: 16px; font-weight: 700; color: var(--paper); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .t-race { font-size: 10px; font-family: 'IBM Plex Mono', monospace; color: var(--slate); white-space: nowrap; }
+  .t-name { font-family: 'Big Shoulders Display', sans-serif; font-size: 16px; font-weight: 700; color: var(--paper); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .t-race { font-size: 10px; font-family: 'IBM Plex Mono', monospace; color: var(--slate); white-space: nowrap; flex-shrink: 0; }
   .t-race .days { color: var(--signal); }
 
   /* Metrics row */
@@ -97,6 +89,9 @@
   .t-gauge { height: 8px; border-radius: 4px; overflow: hidden; display: flex; position: relative; }
   .t-gauge-seg { height: 100%; }
   .t-gauge-dot { position: absolute; top: 50%; transform: translate(-50%,-50%); width: 8px; height: 8px; border-radius: 50%; background: #fff; border: 1.5px solid #222; z-index: 2; }
+
+  /* Sparkline chart */
+  .t-spark { margin-top: 4px; width: 100%; display: block; overflow: visible; }
 
   /* RAG status line */
   .t-rag { font-size: 10px; font-family: 'IBM Plex Mono', monospace; display: flex; align-items: baseline; gap: 5px; }
@@ -429,6 +424,61 @@ function miniGauges(a) {
     </div>`).join('')}</div>`;
 }
 
+function buildSparkline(a) {
+  const W = 28;
+  const raw = (a.wellness_60d || []).slice(-W);
+  if (raw.length < 4) return '';
+
+  const H = 58, PAD = 3;
+  const n = raw.length;
+
+  // HRV range
+  const hrvVals = raw.map(d => d.hrv).filter(v => v != null);
+  const rhrVals = raw.map(d => d.rhr).filter(v => v != null);
+  if (!hrvVals.length || !rhrVals.length) return '';
+
+  const hrvMu  = hrvVals.reduce((s,v)=>s+v,0)/hrvVals.length;
+  const hrvSd  = Math.sqrt(hrvVals.reduce((s,v)=>s+(v-hrvMu)**2,0)/hrvVals.length) || 1;
+  const hrvMin = Math.min(...hrvVals) - 4;
+  const hrvMax = Math.max(...hrvVals) + 4;
+
+  const rhrMin = Math.min(...rhrVals) - 2;
+  const rhrMax = Math.max(...rhrVals) + 2;
+
+  function xp(i) { return PAD + (i / (n-1)) * (100 - 2*PAD); }
+  function yHrv(v) { return H - PAD - ((v - hrvMin)/(hrvMax - hrvMin)) * (H - 2*PAD); }
+  function yRhr(v) { return H - PAD - ((v - rhrMin)/(rhrMax - rhrMin)) * (H - 2*PAD); }
+
+  // Baseline shading band (HRV mean ± 1SD)
+  const bandLo = Math.max(hrvMin, hrvMu - hrvSd);
+  const bandHi = Math.min(hrvMax, hrvMu + hrvSd);
+  const shadeY1 = yHrv(bandHi).toFixed(1);
+  const shadeY2 = yHrv(bandLo).toFixed(1);
+  const shadeH  = (shadeY2 - shadeY1).toFixed(1);
+
+  // Build polyline points
+  const hrvPts = raw.map((d,i) => d.hrv != null ? `${xp(i).toFixed(1)},${yHrv(d.hrv).toFixed(1)}` : null).filter(Boolean).join(' ');
+  const rhrPts = raw.map((d,i) => d.rhr != null ? `${xp(i).toFixed(1)},${yRhr(d.rhr).toFixed(1)}` : null).filter(Boolean).join(' ');
+
+  // Date tick labels — start and end
+  const d0 = raw[0].date ? raw[0].date.slice(5) : '';
+  const d1 = raw[raw.length-1].date ? raw[raw.length-1].date.slice(5) : '';
+
+  return `<svg class="t-spark" viewBox="0 0 100 ${H+10}" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- baseline shading -->
+    <rect x="${PAD}" y="${shadeY1}" width="${100-2*PAD}" height="${shadeH}" fill="rgba(34,197,94,0.10)"/>
+    <!-- mean line -->
+    <line x1="${PAD}" y1="${yHrv(hrvMu).toFixed(1)}" x2="${100-PAD}" y2="${yHrv(hrvMu).toFixed(1)}" stroke="rgba(34,197,94,0.25)" stroke-width="0.4" stroke-dasharray="1.5,1.5"/>
+    <!-- HRV line -->
+    <polyline points="${hrvPts}" fill="none" stroke="#22c55e" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
+    <!-- RHR line (own scale) -->
+    <polyline points="${rhrPts}" fill="none" stroke="#f87171" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
+    <!-- date labels -->
+    <text x="${PAD}" y="${H+8}" font-size="4.5" fill="#6b8299" font-family="monospace">${d0}</text>
+    <text x="${100-PAD}" y="${H+8}" font-size="4.5" fill="#6b8299" font-family="monospace" text-anchor="end">${d1}</text>
+  </svg>`;
+}
+
 function buildTile(a, idx) {
   const h   = a.health  || {};
   const fit = a.fitness || {};
@@ -482,19 +532,16 @@ function buildTile(a, idx) {
   const { word, reason } = ragLabel(a, flags, status, tl);
 
   div.innerHTML = `
-    <div class="t-identity">
-      <div class="t-head"><div class="t-dot ${tl}"></div><div class="t-name">${a.name}</div></div>
+    <div class="t-head">
+      <div class="t-dot ${tl}"></div>
+      <div class="t-name">${a.name}</div>
       <div class="t-race">${raceHtml}</div>
     </div>
-    <div class="t-status">
-      <div class="t-rag"><span class="t-rag-word">${word}</span><span class="t-rag-reason">· ${reason}</span></div>
-      ${flagHtml}
-    </div>
-    <div class="t-middle">
-      <div class="t-commentary ${status}">${sentence}</div>
-      <div class="t-metrics">${mets.join('')}</div>
-    </div>
-    <div class="t-gauge-wrap">${miniGauges(a)}</div>`;
+    <div class="t-rag"><span class="t-rag-word">${word}</span><span class="t-rag-reason">· ${reason}</span></div>
+    <div class="t-commentary ${status}">${sentence}</div>
+    <div class="t-metrics">${mets.join('')}</div>
+    ${buildSparkline(a)}
+    ${miniGauges(a)}`;
 
   return { div, tl, flagScore: tl === 'tl-red' ? 2 : tl === 'tl-amber' ? 1 : 0 };
 }
