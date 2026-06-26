@@ -8,14 +8,13 @@ Usage:
 """
 
 import json, os, requests
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).parent.parent
 OUT_FILE  = REPO_ROOT / "data" / "coach.json"
 
-API_KEY_DEFAULT = "6123b5w739ctaytjstmw7kmn6"
-API_KEY = os.environ.get("INTERVALS_API_KEY", API_KEY_DEFAULT).strip()
+API_KEY = os.environ.get("INTERVALS_API_KEY", "6123b5w739ctaytjstmw7kmn6").strip()
 AUTH    = ("API_KEY", API_KEY)
 BASE    = "https://intervals.icu/api/v1/athlete"
 
@@ -72,24 +71,70 @@ ATHLETES = [
         "training_philosophy": "",
         "threshold_hr":  163,
         "max_hr":        180,
-        "threshold_pace": None,
+        "threshold_pace": "4:10",
         "typical_week": {},
     },
     {
         "id":    "i620736",
         "name":  "Rohan Cooper",
+        "races": [
+            {"name": "Lakeside 10K",       "date": "2026-07-26"},
+            {"name": "Melbourne Marathon",  "date": "2026-09-20"},
+        ],
+        "training_philosophy": "",
+        "threshold_hr":  162,
+        "max_hr":        170,
+        "threshold_pace": "4:05",
+        "typical_week": {},
+    },
+    {
+        "id":    "i622562",
+        "name":  "Matt W",
         "races": [],
         "training_philosophy": "",
-        "threshold_hr":  161,
-        "max_hr":        178,
+        "threshold_hr":  None,
+        "max_hr":        None,
         "threshold_pace": None,
         "typical_week": {},
     },
+    {
+        "id":    "i622855",
+        "name":  "Tim L",
+        "races": [],
+        "training_philosophy": "",
+        "threshold_hr":  None,
+        "max_hr":        None,
+        "threshold_pace": None,
+        "typical_week": {},
+    },
+    {
+        "id":    "i621769",
+        "name":  "Simon Walker",
+        "races": [
+            {"name": "Virtual Half Marathon", "date": "2026-07-01"},
+            {"name": "Lakeside 10K",          "date": "2026-07-26"},
+            {"name": "Melbourne Marathon",     "date": "2026-10-11"},
+        ],
+        "training_philosophy": "Triathlon background. Runs 5 days/week. HR-capped easy running, threshold work 1-2x/week. Strong aerobic base from multi-sport history.",
+        "threshold_hr":  145,
+        "max_hr":        160,
+        "threshold_pace": "4:45",
+        "typical_week": {
+            "Mon": "Rest",
+            "Tue": "Easy run (Z1-Z2 HR)",
+            "Wed": "Quality session (threshold or CV intervals)",
+            "Thu": "Easy run (Z1-Z2 HR)",
+            "Fri": "Easy run (Z1-Z2 HR)",
+            "Sat": "Easy run or fartlek",
+            "Sun": "Long run (easy/mod HR)",
+        },
+    },
 ]
 
-TODAY     = date.today()
-WEEK_AGO  = TODAY - timedelta(7)
-TWO_WEEKS = TODAY - timedelta(14)
+TODAY       = date.today()
+WEEK_AGO    = TODAY - timedelta(7)
+TWO_WEEKS   = TODAY - timedelta(14)
+SIXTY_DAYS  = TODAY - timedelta(60)
 
 def get(path, params=None):
     r = requests.get(f"{BASE}/{path}", auth=AUTH, params=params, timeout=20)
@@ -117,9 +162,9 @@ def pull_athlete(a):
     # Profile
     profile = get(aid) or {}
 
-    # Wellness — last 14 days
+    # Wellness — last 60 days (for HRV4Training-style baseline)
     wellness = get(f"{aid}/wellness", {
-        "oldest": str(TWO_WEEKS), "newest": str(TODAY)
+        "oldest": str(SIXTY_DAYS), "newest": str(TODAY)
     }) or []
 
     # Sort wellness by date
@@ -128,6 +173,16 @@ def pull_athlete(a):
     # Compute 7-day HRV avg
     hrv_vals = [w["hrv"] for w in wellness[-7:] if w.get("hrv")]
     hrv_7d   = round(sum(hrv_vals) / len(hrv_vals)) if hrv_vals else None
+
+    # HRV4Training 60-day baseline: mean + SD for gauge bar normalisation
+    hrv_60d_vals = [w["hrv"] for w in wellness if w.get("hrv")]
+    hrv_60d_baseline = None
+    hrv_60d_sd       = None
+    if len(hrv_60d_vals) >= 7:
+        _mu = sum(hrv_60d_vals) / len(hrv_60d_vals)
+        _sd = (sum((v - _mu) ** 2 for v in hrv_60d_vals) / len(hrv_60d_vals)) ** 0.5
+        hrv_60d_baseline = round(_mu, 1)
+        hrv_60d_sd       = round(_sd, 1)
 
     # Today's wellness
     today_w  = next((w for w in reversed(wellness) if w["id"] == str(TODAY)), None) or \
@@ -382,16 +437,20 @@ def pull_athlete(a):
         "training_philosophy":  a.get("training_philosophy"),
         "typical_week":         a.get("typical_week"),
         "health": {
-            "rhr":         rhr,
-            "rhr_7d_avg":  rhr_7d,
-            "rhr_delta":   rhr_delta,
-            "hrv_today":   hrv_today,
-            "hrv_7d_avg":  hrv_7d,
-            "hrv_trend":   hrv_trend,
-            "sleep_score": sleep_score,
-            "sleep_hrs":   sleep_hrs,
-            "vo2max":      vo2max,
-            "weight":      weight,
+            "wellness_date":    today_w.get("id"),
+            "rhr":              rhr,
+            "rhr_7d_avg":       rhr_7d,
+            "rhr_delta":        rhr_delta,
+            "hrv_today":        hrv_today,
+            "hrv_7d_avg":       hrv_7d,
+            "hrv_60d_baseline": hrv_60d_baseline,
+            "hrv_60d_sd":       hrv_60d_sd,
+            "hrv_60d_n":        len(hrv_60d_vals),
+            "hrv_trend":        hrv_trend,
+            "sleep_score":      sleep_score,
+            "sleep_hrs":        sleep_hrs,
+            "vo2max":           vo2max,
+            "weight":           weight,
         },
         "fitness": {
             "ctl":       round(ctl, 1) if ctl else None,
@@ -401,7 +460,7 @@ def pull_athlete(a):
             "atl_trend": atl_trend,
             "tsb_trend": tsb_trend,
         },
-        "wellness_14d": [
+        "wellness_60d": [
             {
                 "date":        w["id"],
                 "rhr":         w.get("restingHR"),
@@ -433,7 +492,7 @@ def main():
             })
 
     out = {
-        "generated_at": TODAY.isoformat(),
+        "generated_at": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
         "athletes":     athletes_data,
     }
     OUT_FILE.write_text(json.dumps(out, indent=2), encoding="utf-8")

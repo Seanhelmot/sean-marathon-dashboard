@@ -13,113 +13,174 @@
     --good:   #22c55e; --warn:   #f59e0b; --bad:    #ef4444;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--ink); color: var(--paper); font-family: 'Inter', sans-serif; min-height: 100vh; }
+  body { background: var(--ink); color: var(--paper); font-family: 'Inter', sans-serif; min-height: 100vh; overflow-y: scroll; }
 
+  /* ── Header ── */
   header {
     background: var(--panel); border-bottom: 1px solid var(--line);
-    padding: 14px 32px; display: flex; align-items: center; gap: 20px;
+    padding: 10px 20px; display: flex; align-items: center; gap: 16px; position: sticky; top: 0; z-index: 10;
   }
-  header h1 { font-family: 'Big Shoulders Display', sans-serif; font-size: 22px; font-weight: 800; color: var(--signal); letter-spacing: .04em; }
+  header h1 { font-family: 'Big Shoulders Display', sans-serif; font-size: 20px; font-weight: 800; color: var(--signal); letter-spacing: .04em; }
   header .sub { font-size: 11px; color: var(--slate); flex: 1; font-family: 'IBM Plex Mono', monospace; }
   .refresh-btn { font-size: 10px; font-family: 'IBM Plex Mono', monospace; color: var(--signal); border: 1px solid var(--signal); background: transparent; padding: 3px 9px; border-radius: 3px; cursor: pointer; }
   .refresh-btn:hover { background: rgba(0,212,255,.08); }
 
-  .roster { padding: 16px 28px 32px; display: flex; flex-direction: column; gap: 0; }
-
-  /* ── Athlete panel ── */
-  .a-panel {
-    border-bottom: 1px solid var(--line);
+  /* ── Tile list ── */
+  .roster {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px 16px 20px;
   }
-  .a-panel:last-child { border-bottom: none; }
 
-  /* Commentary strip */
-  .a-commentary {
-    padding: 10px 16px 0;
-    font-size: 12px; line-height: 1.4;
-    font-style: italic;
-  }
-  .a-commentary.ready    { color: #86efac; }
-  .a-commentary.moderate { color: #cbd5e1; }
-  .a-commentary.recover  { color: #fcd34d; }
-
-  /* Main row */
-  .a-row {
-    display: flex; align-items: center; gap: 0;
-    padding: 10px 16px 12px;
+  /* ── Tile (horizontal row) ── */
+  .tile {
+    background: var(--panel);
+    border: 2px solid var(--line);
+    border-radius: 4px;
+    padding: 9px 14px;
     cursor: pointer;
+    display: grid;
+    grid-template-columns: 170px 210px 1fr 230px;
+    align-items: center;
+    gap: 0 16px;
+    overflow: hidden;
+    transition: background .12s, border-color .12s;
   }
-  .a-row:hover { background: rgba(13,21,32,.6); }
+  .tile:hover { background: var(--raised); }
+  @media (max-width: 1100px) { .tile { grid-template-columns: 160px 190px 1fr; } .t-gauge-wrap { display: none; } }
+  @media (max-width: 700px)  { .tile { grid-template-columns: 140px 1fr; } .t-status { display: none; } }
+  .tile.tl-green { border-color: var(--good); box-shadow: 0 0 0 1px rgba(34,197,94,.2); }
+  .tile.tl-amber { border-color: var(--warn); box-shadow: 0 0 0 1px rgba(245,158,11,.2); }
+  .tile.tl-red   { border-color: var(--bad);  box-shadow: 0 0 0 1px rgba(239,68,68,.2); }
 
-  /* Name block */
-  .a-name-block { min-width: 200px; }
-  .a-name { font-family: 'Big Shoulders Display', sans-serif; font-size: 18px; font-weight: 700; color: var(--paper); }
-  .a-race { font-size: 10px; font-family: 'IBM Plex Mono', monospace; color: var(--slate); margin-top: 2px; }
-  .a-race .days { color: var(--signal); }
+  /* Tile sections */
+  .t-identity { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .t-status   { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .t-middle   { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .t-gauge-wrap { min-width: 0; }
+  .t-gauge-wrap .t-gauges { margin-top: 0; }
 
-  /* Divider line between name and metrics */
-  .a-divider { width: 1px; height: 32px; background: var(--line); margin: 0 20px; flex-shrink: 0; }
+  /* Tile header */
+  .t-head { display: flex; align-items: center; gap: 6px; }
+  .t-dot  { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .t-dot.tl-green { background: var(--good); }
+  .t-dot.tl-amber  { background: var(--warn); }
+  .t-dot.tl-red   { background: var(--bad);  }
+  .t-name { font-family: 'Big Shoulders Display', sans-serif; font-size: 16px; font-weight: 700; color: var(--paper); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .t-race { font-size: 10px; font-family: 'IBM Plex Mono', monospace; color: var(--slate); white-space: nowrap; }
+  .t-race .days { color: var(--signal); }
 
-  /* Metrics strip */
-  .a-metrics { display: flex; gap: 8px; align-items: center; flex: 1; flex-wrap: wrap; }
-
-  .chip {
-    font-family: 'IBM Plex Mono', monospace; font-size: 10.5px;
-    padding: 3px 8px; border-radius: 3px; border: 1px solid; white-space: nowrap;
+  /* Metrics row */
+  .t-metrics { display: flex; font-family: 'IBM Plex Mono', monospace; font-size: 10px; flex-wrap: wrap; gap: 4px; }
+  .t-met {
+    position: relative; padding: 10px 6px 3px; border-radius: 2px; border: 1px solid; white-space: nowrap; display: inline-flex; flex-direction: column; align-items: center;
   }
-  .ch-green  { color: var(--good);   border-color: rgba(34,197,94,.5);   background: rgba(34,197,94,.08); }
-  .ch-amber  { color: var(--warn);   border-color: rgba(245,158,11,.5);  background: rgba(245,158,11,.08); }
-  .ch-red    { color: var(--bad);    border-color: rgba(239,68,68,.5);   background: rgba(239,68,68,.08); }
-  .ch-cyan   { color: var(--signal); border-color: rgba(0,212,255,.35);  background: rgba(0,212,255,.06); }
-  .ch-slate  { color: var(--slate);  border-color: var(--line); }
+  .t-met-src { position: absolute; top: 2px; right: 4px; font-size: 7px; color: var(--slate); letter-spacing: .02em; font-weight: 400; }
+  .tm-green { color: var(--good);   border-color: rgba(34,197,94,.4);   background: rgba(34,197,94,.07); }
+  .tm-amber { color: var(--warn);   border-color: rgba(245,158,11,.4);  background: rgba(245,158,11,.07); }
+  .tm-red   { color: var(--bad);    border-color: rgba(239,68,68,.4);   background: rgba(239,68,68,.07); }
+  .tm-cyan  { color: var(--signal); border-color: rgba(0,212,255,.3);   background: rgba(0,212,255,.05); }
+  .tm-slate { color: var(--slate);  border-color: var(--line); }
 
-  /* Flags block */
-  .a-flags { display: flex; gap: 6px; flex-wrap: nowrap; align-items: center; min-width: 220px; flex-shrink: 0; }
+  /* Flag row */
+  .t-flag { font-size: 10px; font-family: 'IBM Plex Mono', monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .t-flag.fl-red   { color: var(--bad); }
+  .t-flag.fl-amber { color: var(--warn); }
+  .t-flag.fl-ok    { color: #4ade80; }
+  .t-flag.fl-info  { color: var(--slate); }
 
-  .flag-chip {
-    font-family: 'IBM Plex Mono', monospace; font-size: 10px;
-    padding: 3px 8px; border-radius: 3px; border: 1px solid; white-space: nowrap;
+  /* Mini gauges — side by side */
+  .t-gauges { display: flex; gap: 6px; margin-top: 2px; }
+  .t-gauge-col { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+  .t-gauge-lbl { font-size: 8px; font-family: 'IBM Plex Mono', monospace; color: var(--slate); text-transform: uppercase; letter-spacing: .05em; }
+  .t-gauge { height: 8px; border-radius: 4px; overflow: hidden; display: flex; position: relative; }
+  .t-gauge-seg { height: 100%; }
+  .t-gauge-dot { position: absolute; top: 50%; transform: translate(-50%,-50%); width: 8px; height: 8px; border-radius: 50%; background: #fff; border: 1.5px solid #222; z-index: 2; }
+
+  /* RAG status line */
+  .t-rag { font-size: 10px; font-family: 'IBM Plex Mono', monospace; display: flex; align-items: baseline; gap: 5px; }
+  .t-rag-word { font-weight: 600; letter-spacing: .06em; }
+  .tl-red  .t-rag-word { color: var(--bad); }
+  .tl-amber .t-rag-word { color: var(--warn); }
+  .tl-green .t-rag-word { color: var(--good); }
+  .t-rag-reason { color: var(--slate); font-size: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* Commentary line */
+  .t-commentary { font-size: 10px; color: var(--slate); line-height: 1.3; font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .t-commentary.ready    { color: #86efac; }
+  .t-commentary.moderate { color: #cbd5e1; }
+  .t-commentary.recover  { color: #fcd34d; }
+
+  /* ── Modal ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(6,11,18,.85);
+    z-index: 100; align-items: flex-start; justify-content: center; padding: 40px 20px;
+    overflow-y: auto;
   }
-  .fc-red   { color: var(--bad);  border-color: rgba(239,68,68,.6);  background: rgba(239,68,68,.12); }
-  .fc-warn  { color: var(--warn); border-color: rgba(245,158,11,.6); background: rgba(245,158,11,.12); }
-  .fc-info  { color: var(--slate); border-color: var(--line); }
-  .fc-ok    { color: #4ade80; font-size: 10px; font-family: 'IBM Plex Mono', monospace; }
-
-  /* Expand toggle */
-  .a-toggle { margin-left: 14px; font-size: 10px; color: var(--slate); font-family: 'IBM Plex Mono', monospace; flex-shrink: 0; }
-
-  /* Red-flagged panel gets left border */
-  .a-panel.flag-red  { border-left: 3px solid var(--bad); }
-  .a-panel.flag-warn { border-left: 3px solid var(--warn); }
-
-  /* ── Expand detail ── */
-  .a-detail { display: none; border-top: 1px solid var(--line); }
-  .a-detail.open { display: block; }
-  .a-detail-inner {
-    padding: 14px 18px 18px;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+    width: 100%; max-width: 860px; padding: 0; overflow: hidden;
   }
-  @media (max-width: 700px) { .a-detail-inner { grid-template-columns: 1fr; } }
+  .modal-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 14px 20px; border-bottom: 1px solid var(--line);
+  }
+  .modal-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .modal-dot.tl-green { background: var(--good); }
+  .modal-dot.tl-amber  { background: var(--warn); }
+  .modal-dot.tl-red   { background: var(--bad);  }
+  .modal-name { font-family: 'Big Shoulders Display', sans-serif; font-size: 22px; font-weight: 800; color: var(--paper); flex: 1; }
+  .modal-close { font-size: 18px; color: var(--slate); cursor: pointer; line-height: 1; padding: 0 4px; }
+  .modal-close:hover { color: var(--paper); }
+  .modal-body { padding: 16px 20px 20px; }
+
+  .modal-commentary { padding: 10px 20px; border-bottom: 1px solid var(--line); font-size: 12px; font-style: italic; line-height: 1.4; }
+  .modal-commentary.ready    { color: #86efac; }
+  .modal-commentary.moderate { color: #cbd5e1; }
+  .modal-commentary.recover  { color: #fcd34d; }
+
+  .modal-flags { padding: 8px 20px; border-bottom: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 6px; }
+  .flag-chip { font-family: 'IBM Plex Mono', monospace; font-size: 10px; padding: 3px 8px; border-radius: 3px; border: 1px solid; white-space: nowrap; }
+  .fc-red  { color: var(--bad);  border-color: rgba(239,68,68,.6);  background: rgba(239,68,68,.12); }
+  .fc-warn { color: var(--warn); border-color: rgba(245,158,11,.6); background: rgba(245,158,11,.12); }
+  .fc-info { color: var(--slate); border-color: var(--line); }
+  .fc-ok   { color: #4ade80; font-family: 'IBM Plex Mono', monospace; font-size: 10px; }
 
   .det-head { font-size: 9px; font-family: 'IBM Plex Mono', monospace; text-transform: uppercase; letter-spacing: .1em; color: var(--signal); margin-bottom: 8px; }
 
-  .act-row { padding: 7px 0; border-bottom: 1px solid rgba(30,45,64,.7); }
-  .act-row:last-child { border-bottom: none; }
-  .act-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1px; }
-  .act-name { font-size: 11.5px; font-weight: 600; color: var(--paper); }
-  .act-date { font-size: 10px; color: var(--slate); font-family: 'IBM Plex Mono', monospace; }
-  .act-stats { font-size: 10px; color: var(--slate); font-family: 'IBM Plex Mono', monospace; }
-
-  .up-row { padding: 5px 0; border-bottom: 1px solid rgba(30,45,64,.7); }
-  .up-row:last-child { border-bottom: none; }
-  .up-name { font-size: 11px; color: var(--paper); font-weight: 500; }
-  .up-meta { font-size: 10px; color: var(--slate); font-family: 'IBM Plex Mono', monospace; margin-top: 1px; }
+  /* Paired activity table */
+  .act-table { width: 100%; border-collapse: collapse; font-size: 10px; font-family: 'IBM Plex Mono', monospace; }
+  .act-table thead th { font-size: 9px; text-transform: uppercase; letter-spacing: .1em; color: var(--signal); padding: 0 8px 6px 0; text-align: left; border-bottom: 1px solid var(--line); }
+  .act-table tbody tr { border-bottom: 1px solid rgba(30,45,64,.6); }
+  .act-table tbody tr:last-child { border-bottom: none; }
+  .act-table td { padding: 5px 8px 5px 0; vertical-align: top; }
+  .act-table td:last-child { padding-right: 0; }
+  .td-name { font-size: 10.5px; font-weight: 600; color: var(--paper); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; }
+  .td-date { color: var(--slate); white-space: nowrap; }
+  .td-stats { color: var(--slate); white-space: nowrap; }
+  .td-div { width: 1px; background: var(--line); padding: 0; }
+  .td-uname { font-size: 10.5px; color: var(--paper); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 160px; padding-left: 12px !important; }
+  .td-umeta { color: var(--slate); white-space: nowrap; padding-left: 12px !important; }
 
   .fit-tiles { display: flex; gap: 8px; margin-top: 12px; }
   .fit-tile { background: var(--raised); border: 1px solid var(--line); border-radius: 3px; padding: 6px 12px; text-align: center; }
   .fit-tile .fv { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; color: var(--paper); }
   .fit-tile .fl { font-size: 8px; color: var(--slate); text-transform: uppercase; letter-spacing: .06em; margin-top: 2px; }
 
-  footer { text-align: center; padding: 20px; font-size: 10px; color: var(--slate); font-family: 'IBM Plex Mono', monospace; border-top: 1px solid var(--line); }
+  /* Full gauge strip in modal */
+  .gauge-strip { display: flex; flex-direction: column; gap: 7px; padding: 12px 20px; border-bottom: 1px solid var(--line); }
+  .gauge-row { display: flex; align-items: center; gap: 8px; }
+  .gauge-lbl { font-size: 10px; font-weight: 600; color: var(--slate); text-transform: uppercase; letter-spacing: .06em; width: 36px; flex-shrink: 0; }
+  .gauge-bar { flex: 1; height: 10px; border-radius: 5px; overflow: hidden; display: flex; position: relative; }
+  .gauge-seg { height: 100%; }
+  .gauge-marker { position: absolute; top: 50%; transform: translate(-50%,-50%); width: 8px; height: 8px; border-radius: 50%; background: #fff; border: 2px solid #333; z-index: 2; }
+  .gauge-val { font-size: 10px; font-family: 'IBM Plex Mono', monospace; color: var(--slate); width: 130px; flex-shrink: 0; }
+  .gv-good { color: #1D9E75; } .gv-warn { color: #BA7517; } .gv-bad { color: #D85A30; }
+  .gauge-n { font-size: 9px; color: var(--slate); }
+
+  footer { text-align: center; padding: 14px; font-size: 10px; color: var(--slate); font-family: 'IBM Plex Mono', monospace; border-top: 1px solid var(--line); }
 </style>
 </head>
 <body>
@@ -127,17 +188,32 @@
 <header>
   <h1>COACH HUB</h1>
   <div class="sub" id="hub-sub">Loading…</div>
-  <button class="refresh-btn" onclick="init()">↻ Refresh</button>
+  <button class="refresh-btn" id="refresh-btn" onclick="liveRefresh()">↻ Refresh</button>
 </header>
 
 <div class="roster" id="roster">
-  <div style="color:var(--slate);padding:20px 0;font-size:13px;">Loading athlete data…</div>
+  <div style="color:var(--slate);padding:20px 0;font-size:13px;grid-column:1/-1;">Loading athlete data…</div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal-inner">
+    <div class="modal-header">
+      <div class="modal-dot" id="m-dot"></div>
+      <div class="modal-name" id="m-name"></div>
+      <div style="font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--slate);flex:1;" id="m-race"></div>
+      <span class="modal-close" onclick="closeModalDirect()">✕</span>
+    </div>
+    <div class="modal-commentary" id="m-commentary"></div>
+    <div class="modal-flags" id="m-flags"></div>
+    <div class="gauge-strip" id="m-gauges"></div>
+    <div class="modal-body" id="m-body"></div>
+  </div>
 </div>
 
 <footer>coach.json · refreshes 6am + 10am AEST</footer>
 
 <script>
-const COACH_JSON_URL = '../data/coach.json';
 const FEEL = ['','😩','😕','😐','🙂','😄'];
 
 function fmtDur(s) {
@@ -155,14 +231,12 @@ function localDateStr(d) {
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
 
-/* ── 1-sentence readiness commentary ── */
 function buildCommentary(a) {
   const h   = a.health  || {};
   const fit = a.fitness || {};
   const acts = a.recent_activities || [];
   const tsb  = fit.tsb;
 
-  // Check yesterday's load
   const today = new Date(); today.setHours(0,0,0,0);
   const yday = localDateStr(new Date(today.getFullYear(), today.getMonth(), today.getDate()-1));
   const yRuns = acts.filter(x => x.date === yday);
@@ -171,7 +245,6 @@ function buildCommentary(a) {
   const yLong    = yDist >= 18;
   const yQuality = yMaxHR >= 150 && yDist >= 5;
 
-  // Score
   let score = 60;
   if (tsb != null) {
     if      (tsb >  5)  score += 30;
@@ -200,46 +273,52 @@ function buildCommentary(a) {
 
   const status = score >= 70 ? 'ready' : score >= 45 ? 'moderate' : 'recover';
 
-  // Build single sentence
   let sentence;
-  const tsbStr = tsb != null ? `TSB ${tsb>0?'+':''}${tsb.toFixed(1)}` : null;
-  const hrvStr = h.hrv_7d_avg != null ? `HRV ${h.hrv_7d_avg}ms` : null;
+  const wDate2  = h.wellness_date;
+  const todStr2 = localDateStr(new Date()), ydStr2 = localDateStr(new Date(Date.now()-86400000));
+  const tsbRef  = wDate2 === todStr2 ? "Today's" : wDate2 === ydStr2 ? "Yesterday's" : "Current";
+  const hrvRef  = h.hrv_7d_avg != null ? '7d avg' : null;
+  const tsbStr  = tsb != null ? `${tsbRef} TSB ${tsb>0?'+':''}${tsb.toFixed(1)}` : null;
+  const hrvStr  = h.hrv_7d_avg != null ? `7d avg HRV ${h.hrv_7d_avg}ms` : null;
 
   if (yLong) {
-    sentence = `Long run ${yDist.toFixed(0)}km yesterday — high load, keep today very easy.`;
+    sentence = `Long run ${yDist.toFixed(0)}km yesterday — keep today very easy.`;
   } else if (yQuality) {
-    sentence = `Quality session yesterday — today should be easy${tsbStr ? ` (${tsbStr})` : ''}.`;
+    sentence = `Quality session yesterday — easy today${tsbStr ? ` (${tsbStr})` : ''}.`;
   } else if (score >= 70) {
     const parts = [tsbStr, hrvStr].filter(Boolean);
     sentence = `Looking fresh${parts.length ? ` — ${parts.join(', ')}` : ''}.`;
   } else if (score >= 45) {
-    if (tsb != null && tsb < -8) {
-      sentence = `Moderate fatigue building (${tsbStr})${hrvStr ? ` — ${hrvStr}` : ''} — respect the easy days.`;
+    const noWellness = h.hrv_7d_avg == null && h.sleep_score == null;
+    const atlRising  = fit.atl_trend != null && fit.ctl_trend != null && fit.atl_trend > fit.ctl_trend + 1;
+    if (noWellness) {
+      const loadNote = atlRising ? ` Acute load rising (ATL +${fit.atl_trend.toFixed(1)}) — watch for fatigue.` : ` Training looks consistent${tsbStr ? ` (${tsbStr})` : ''}.`;
+      sentence = `No HRV or sleep syncing — can't assess readiness properly.${loadNote}`;
+    } else if (tsb != null && tsb < -8) {
+      sentence = `Moderate fatigue (${tsbStr})${hrvStr ? ` — ${hrvStr}` : ''} — respect easy days.`;
     } else {
       const alerts = [];
       if (h.hrv_7d_avg != null && h.hrv_7d_avg < 55) alerts.push(`HRV low at ${h.hrv_7d_avg}ms`);
       if (h.sleep_score != null && h.sleep_score < 65) alerts.push(`poor sleep (${h.sleep_score})`);
       sentence = alerts.length
-        ? `${alerts[0]} — monitor closely this week.`
+        ? `${alerts[0]} — monitor closely.`
         : `Balanced load${tsbStr ? ` (${tsbStr})` : ''} — training on track.`;
     }
   } else {
-    // recover
     const alerts = [];
     if (h.hrv_7d_avg != null && h.hrv_7d_avg < 55) alerts.push(`HRV low at ${h.hrv_7d_avg}ms`);
     if (tsb != null && tsb < -15) alerts.push(`${tsbStr}`);
     if (h.rhr != null && h.rhr_7d_avg != null && (h.rhr - h.rhr_7d_avg) > 3) alerts.push(`RHR elevated`);
     sentence = alerts.length
       ? `Prioritise recovery — ${alerts.join(', ')}.`
-      : `High fatigue — prioritise recovery this week.`;
+      : `High fatigue — prioritise recovery.`;
   }
 
-  return { sentence, status };
+  return { sentence, status, score };
 }
 
-/* ── Flags ── */
 function computeFlags(a) {
-  const flags = (a.flags || []).map(f => ({ cls: f.cls||'fc-warn', text: f.text }));
+  const flags = (a.flags || []).map(f => ({ cls: f.cls || (f.level === 'red' ? 'fc-red' : f.level === 'amber' ? 'fc-warn' : 'fc-info'), text: f.text }));
   const acts = a.recent_activities || [];
   const hasGapFlag = flags.some(f => /run|gap|training/i.test(f.text));
   if (acts.length && !hasGapFlag) {
@@ -251,146 +330,440 @@ function computeFlags(a) {
   return flags;
 }
 
-/* ── Build panel ── */
-function buildPanel(a, idx) {
+function trafficLight(a, flags, status) {
+  const hasRed  = flags.some(f => f.cls === 'fc-red');
+  const hasWarn = flags.some(f => f.cls === 'fc-warn');
+  if (hasRed  || status === 'recover')  return 'tl-red';
+  if (hasWarn || status === 'moderate') return 'tl-amber';
+  return 'tl-green';
+}
+
+function ragLabel(a, flags, status, tl) {
+  const fit = a.fitness || {};
+  const h   = a.health  || {};
+  const tsb = fit.tsb;
+
+  const word = tl === 'tl-red' ? 'RED' : tl === 'tl-amber' ? 'AMBER' : 'GREEN';
+
+  const redFlag  = flags.find(f => f.cls === 'fc-red');
+  const warnFlag = flags.find(f => f.cls === 'fc-warn');
+  const topFlag  = redFlag || warnFlag;
+
+  let reason;
+  if (topFlag) {
+    reason = topFlag.text;
+  } else if (tl === 'tl-red') {
+    reason = tsb != null && tsb < -20 ? `high fatigue (TSB ${tsb})` : 'recovery needed';
+  } else if (tl === 'tl-amber') {
+    const noWellness = h.hrv_7d_avg == null && h.sleep_score == null;
+    const atlRising  = fit.atl_trend != null && fit.ctl_trend != null && fit.atl_trend > fit.ctl_trend + 1;
+    if (noWellness && atlRising) reason = `no HRV/sleep data · load building (ATL +${fit.atl_trend?.toFixed(1)})`;
+    else if (noWellness)         reason = `no HRV or sleep data — can't confirm readiness`;
+    else if (tsb != null && tsb < -10) reason = `building fatigue (TSB ${tsb.toFixed(1)})`;
+    else if (h.hrv_7d_avg != null && h.hrv_7d_avg < 55) reason = `HRV low (${h.hrv_7d_avg}ms)`;
+    else if (h.sleep_score != null && h.sleep_score < 65) reason = `poor sleep (${h.sleep_score})`;
+    else if (atlRising)          reason = `acute load rising faster than fitness`;
+    else                         reason = `borderline readiness — monitor`;
+  } else {
+    if (tsb != null && tsb > 5)  reason = `fresh (TSB +${tsb.toFixed(1)})`;
+    else if (tsb != null)        reason = `TSB ${tsb.toFixed(1)} · optimal`;
+    else                         reason = 'all clear';
+  }
+
+  return { word, reason };
+}
+
+function miniGauges(a) {
+  const fit = a.fitness || {};
+  const h   = a.health  || {};
+  const tsb = fit.tsb;
+  const pct = (v, lo, hi) => Math.max(0, Math.min(100, (v - lo) / (hi - lo) * 100));
+  const rows = [];
+
+  // TSB bar
+  if (tsb != null) {
+    const TSB_MIN = -40, TSB_MAX = 25;
+    const segs = [
+      { to: -30, c: '#E24B4A' }, { to: -10, c: '#EF9F27' },
+      { to:   5, c: '#97C459' }, { to:  15, c: '#5DCAA5' }, { to: 25, c: '#378ADD' },
+    ];
+    let html = '', prev = TSB_MIN;
+    segs.forEach(s => {
+      const w = pct(Math.min(s.to, TSB_MAX), TSB_MIN, TSB_MAX) - pct(prev, TSB_MIN, TSB_MAX);
+      html += `<div class="t-gauge-seg" style="width:${w.toFixed(2)}%;background:${s.c}"></div>`;
+      prev = s.to;
+    });
+    const tsbSrc = (function() { const w = a.health && a.health.wellness_date; const t = localDateStr(new Date()), y = localDateStr(new Date(Date.now()-86400000)); return w===t?'today':w===y?'yst':w?w.slice(5):''; })();
+    rows.push({ lbl: `TSB · ${tsbSrc}`, html, pos: pct(tsb, TSB_MIN, TSB_MAX).toFixed(1) });
+  }
+
+  // HRV bar
+  const cur = h.hrv_today != null ? h.hrv_today : h.hrv_7d_avg;
+  let bl = h.hrv_60d_baseline, sd = h.hrv_60d_sd;
+  if ((bl == null || sd == null) && Array.isArray(a.wellness_60d)) {
+    const vals = a.wellness_60d.map(w => w.hrv).filter(v => v != null);
+    if (vals.length >= 3) {
+      const mu = vals.reduce((s, v) => s + v, 0) / vals.length;
+      bl = mu;
+      sd = Math.sqrt(vals.reduce((s, v) => s + (v - mu) ** 2, 0) / vals.length) || 1;
+    }
+  }
+  if (cur != null && bl != null && sd != null && sd > 0) {
+    const rangeMin = bl - 3.5 * sd, rangeMax = bl + 2.5 * sd;
+    const lo2 = pct(bl-2*sd, rangeMin, rangeMax), lo1 = pct(bl-sd, rangeMin, rangeMax);
+    const hi1 = pct(bl+sd, rangeMin, rangeMax), hi2 = pct(bl+2*sd, rangeMin, rangeMax);
+    let html = '';
+    [{ w: lo2, c: '#E24B4A' }, { w: lo1-lo2, c: '#EF9F27' }, { w: hi1-lo1, c: '#97C459' },
+     { w: hi2-hi1, c: '#5DCAA5' }, { w: 100-hi2, c: '#378ADD' }].forEach(s => {
+      html += `<div class="t-gauge-seg" style="width:${Math.max(0,s.w).toFixed(2)}%;background:${s.c}"></div>`;
+    });
+    const hrvSrcLbl = h.hrv_today != null ? (function(){ const w=h.wellness_date,t=localDateStr(new Date()),y=localDateStr(new Date(Date.now()-86400000)); return w===t?'today':w===y?'yst':w?w.slice(5):''; })() : '7d avg';
+    rows.push({ lbl: `HRV · ${hrvSrcLbl} vs 60d`, html, pos: pct(cur, rangeMin, rangeMax).toFixed(1) });
+  }
+
+  if (!rows.length) return '';
+  return `<div class="t-gauges">${rows.map(r => `
+    <div class="t-gauge-col">
+      <span class="t-gauge-lbl">${r.lbl}</span>
+      <div class="t-gauge">${r.html}<div class="t-gauge-dot" style="left:${r.pos}%"></div></div>
+    </div>`).join('')}</div>`;
+}
+
+function buildTile(a, idx) {
   const h   = a.health  || {};
   const fit = a.fitness || {};
   const { sentence, status } = buildCommentary(a);
   const flags = computeFlags(a);
+  const tl = trafficLight(a, flags, status);
 
-  // Race line
-  const raceParts = [];
-  if (a.race) raceParts.push(a.race);
-  if (a.days_to_race != null) raceParts.push(`<span class="days">${a.days_to_race}d</span>`);
-  const raceLine = raceParts.join(' · ');
+  // Race
+  const raceHtml = a.race
+    ? `${a.race} · <span class="days">${a.days_to_race}d</span>`
+    : '&mdash;';
 
-  // Metric chips
-  const chips = [];
+  // Metrics
   const tsb = fit.tsb;
-  if (tsb != null) chips.push(`<span class="chip ${tsb>5?'ch-green':tsb>-10?'ch-amber':'ch-red'}">TSB ${tsb>0?'+':''}${tsb.toFixed(1)}</span>`);
-  if (h.hrv_7d_avg  != null) chips.push(`<span class="chip ${h.hrv_7d_avg>=75?'ch-green':h.hrv_7d_avg>=55?'ch-amber':'ch-red'}">HRV ${h.hrv_7d_avg}ms</span>`);
-  if (h.sleep_score != null) chips.push(`<span class="chip ${h.sleep_score>=80?'ch-green':h.sleep_score>=65?'ch-amber':'ch-red'}">Sleep ${h.sleep_score}</span>`);
+  const mets = [];
+
+  // Wellness data age label
+  const todayStr = localDateStr(new Date());
+  const ydayStr  = localDateStr(new Date(Date.now() - 86400000));
+  const wDate    = h.wellness_date;
+  const wAge     = wDate === todayStr ? '' : wDate === ydayStr ? ' yst' : wDate ? ` ${wDate.slice(5)}` : '';
+
+  function chip(cls, src, val) {
+    return `<span class="t-met ${cls}"><span class="t-met-src">${src}</span>${val}</span>`;
+  }
+
+  const wSrc = wDate === todayStr ? 'today' : wDate === ydayStr ? 'yst' : wDate ? wDate.slice(5) : '?';
+
+  if (tsb != null) mets.push(chip(tsb>5?'tm-green':tsb>-10?'tm-amber':'tm-red', wSrc, `TSB ${tsb>0?'+':''}${tsb.toFixed(1)}`));
+
+  const hrvDisplay = h.hrv_today != null ? h.hrv_today : h.hrv_7d_avg;
+  const hrvSrc     = h.hrv_today != null ? wSrc : '7d avg';
+  if (hrvDisplay != null) mets.push(chip(hrvDisplay>=75?'tm-green':hrvDisplay>=55?'tm-amber':'tm-red', hrvSrc, `HRV ${hrvDisplay}ms`));
+
+  if (h.sleep_score != null) mets.push(chip(h.sleep_score>=80?'tm-green':h.sleep_score>=65?'tm-amber':'tm-red', wSrc, `Sleep ${h.sleep_score}`));
+
   if (h.rhr != null) {
     const d = h.rhr_delta != null ? h.rhr_delta : (h.rhr_7d_avg != null ? h.rhr - h.rhr_7d_avg : 0);
-    chips.push(`<span class="chip ${d>3?'ch-red':d<-1?'ch-green':'ch-cyan'}">RHR ${h.rhr}${d>1?` ▲${d.toFixed(0)}`:d<-1?` ▼${Math.abs(d).toFixed(0)}`:''}</span>`);
+    mets.push(chip(d>3?'tm-red':d<-1?'tm-green':'tm-cyan', wSrc, `RHR ${h.rhr}`));
   }
-  if (fit.ctl != null) chips.push(`<span class="chip ch-slate">CTL ${fit.ctl.toFixed(0)}</span>`);
-  if (fit.atl != null) chips.push(`<span class="chip ch-slate">ATL ${fit.atl.toFixed(0)}</span>`);
 
-  // Flags HTML
-  const hasBad  = flags.some(f => f.cls === 'fc-bad'  || f.cls === 'fc-red');
-  const hasWarn = flags.some(f => f.cls === 'fc-warn');
-  const flagsHtml = flags.length
+  // Top flag
+  const topFlag = flags.find(f => f.cls === 'fc-red') || flags.find(f => f.cls === 'fc-warn') || flags[0];
+  const flagHtml = topFlag
+    ? `<div class="t-flag ${topFlag.cls==='fc-red'?'fl-red':topFlag.cls==='fc-warn'?'fl-amber':'fl-info'}">⚠ ${topFlag.text}</div>`
+    : `<div class="t-flag fl-ok">✓ clear</div>`;
+
+  const div = document.createElement('div');
+  div.className = `tile ${tl}`;
+  div.onclick = () => openModal(idx);
+  const { word, reason } = ragLabel(a, flags, status, tl);
+
+  div.innerHTML = `
+    <div class="t-identity">
+      <div class="t-head"><div class="t-dot ${tl}"></div><div class="t-name">${a.name}</div></div>
+      <div class="t-race">${raceHtml}</div>
+    </div>
+    <div class="t-status">
+      <div class="t-rag"><span class="t-rag-word">${word}</span><span class="t-rag-reason">· ${reason}</span></div>
+      ${flagHtml}
+    </div>
+    <div class="t-middle">
+      <div class="t-commentary ${status}">${sentence}</div>
+      <div class="t-metrics">${mets.join('')}</div>
+    </div>
+    <div class="t-gauge-wrap">${miniGauges(a)}</div>`;
+
+  return { div, tl, flagScore: tl === 'tl-red' ? 2 : tl === 'tl-amber' ? 1 : 0 };
+}
+
+/* ── Full gauge strip for modal ── */
+function buildGaugeStrip(a) {
+  const h   = a.health  || {};
+  const fit = a.fitness || {};
+  const tsb = fit.tsb;
+  function pct(v, lo, hi) { return Math.max(0, Math.min(100, (v - lo) / (hi - lo) * 100)); }
+
+  const TSB_MIN = -40, TSB_MAX = 25;
+  const tsbSegs = [
+    { to: -30, c: '#E24B4A' }, { to: -10, c: '#EF9F27' },
+    { to:   5, c: '#97C459' }, { to:  15, c: '#5DCAA5' }, { to: 25, c: '#378ADD' },
+  ];
+  let tsbHtml = '', prev = TSB_MIN;
+  tsbSegs.forEach(s => {
+    const w = pct(Math.min(s.to, TSB_MAX), TSB_MIN, TSB_MAX) - pct(prev, TSB_MIN, TSB_MAX);
+    tsbHtml += `<div class="gauge-seg" style="width:${w.toFixed(2)}%;background:${s.c}"></div>`;
+    prev = s.to;
+  });
+  const tsbPos = tsb != null ? pct(tsb, TSB_MIN, TSB_MAX).toFixed(1) : null;
+  let tsbLabel = '', tsbCls = '';
+  if (tsb != null) {
+    if      (tsb < -30) { tsbLabel = 'very fatigued'; tsbCls = 'gv-bad'; }
+    else if (tsb < -10) { tsbLabel = 'building';      tsbCls = 'gv-warn'; }
+    else if (tsb <=  5) { tsbLabel = 'optimal';       tsbCls = ''; }
+    else if (tsb <= 15) { tsbLabel = 'fresh';         tsbCls = 'gv-good'; }
+    else                { tsbLabel = 'very fresh';    tsbCls = 'gv-good'; }
+  }
+
+  const cur = h.hrv_today != null ? h.hrv_today : h.hrv_7d_avg;
+  let bl = h.hrv_60d_baseline, sd = h.hrv_60d_sd, n = h.hrv_60d_n || 0;
+  if ((bl == null || sd == null) && Array.isArray(a.wellness_60d)) {
+    const vals = a.wellness_60d.map(w => w.hrv).filter(v => v != null);
+    if (vals.length >= 3) {
+      const mu = vals.reduce((s, v) => s + v, 0) / vals.length;
+      const sigma = Math.sqrt(vals.reduce((s, v) => s + (v - mu) ** 2, 0) / vals.length);
+      bl = Math.round(mu * 10) / 10;
+      sd = Math.round(sigma * 10) / 10 || 1;
+      n  = vals.length;
+    }
+  }
+  let hrvHtml = '', hrvPos = null, hrvLabel = '', hrvCls = '', devStr = '';
+  if (bl != null && sd != null && sd > 0 && cur != null) {
+    const rangeMin = bl - 3.5 * sd, rangeMax = bl + 2.5 * sd;
+    const p = v => pct(v, rangeMin, rangeMax);
+    const lo2 = p(bl-2*sd), lo1 = p(bl-sd), hi1 = p(bl+sd), hi2 = p(bl+2*sd);
+    [{ w: lo2, c: '#E24B4A' }, { w: lo1-lo2, c: '#EF9F27' }, { w: hi1-lo1, c: '#97C459' },
+     { w: hi2-hi1, c: '#5DCAA5' }, { w: 100-hi2, c: '#378ADD' }].forEach(s => {
+      hrvHtml += `<div class="gauge-seg" style="width:${Math.max(0,s.w).toFixed(2)}%;background:${s.c}"></div>`;
+    });
+    hrvPos = p(cur).toFixed(1);
+    const dev = Math.round((cur - bl) / bl * 100);
+    devStr = `${dev>0?'+':''}${dev}%`;
+    const z = (cur - bl) / sd;
+    if      (z < -2) { hrvLabel = 'suppressed';  hrvCls = 'gv-bad'; }
+    else if (z < -1) { hrvLabel = 'below norm';  hrvCls = 'gv-warn'; }
+    else if (z >  2) { hrvLabel = 'elevated';    hrvCls = 'gv-good'; }
+    else if (z >  1) { hrvLabel = 'above norm';  hrvCls = 'gv-good'; }
+    else             { hrvLabel = 'normal';       hrvCls = 'gv-good'; }
+  }
+
+  const tsbRow = tsbPos != null ? `
+    <div class="gauge-row">
+      <span class="gauge-lbl">TSB</span>
+      <div class="gauge-bar">${tsbHtml}<div class="gauge-marker" style="left:${tsbPos}%"></div></div>
+      <span class="gauge-val ${tsbCls}">${tsb>0?'+':''}${tsb.toFixed(1)} · ${tsbLabel}</span>
+    </div>` : '';
+  const nLabel = n > 0 ? ` <span class="gauge-n">(${n}d)</span>` : '';
+  const hrvRow = hrvPos != null ? `
+    <div class="gauge-row">
+      <span class="gauge-lbl">HRV${nLabel}</span>
+      <div class="gauge-bar">${hrvHtml}<div class="gauge-marker" style="left:${hrvPos}%"></div></div>
+      <span class="gauge-val ${hrvCls}">${cur}ms · ${devStr} ${hrvLabel}</span>
+    </div>` : '';
+  return tsbRow + hrvRow;
+}
+
+/* ── Modal ── */
+let _athletes = [];
+
+function openModal(idx) {
+  const a = _athletes[idx];
+  if (!a) return;
+  const h   = a.health  || {};
+  const fit = a.fitness || {};
+  const { sentence, status } = buildCommentary(a);
+  const flags = computeFlags(a);
+  const tl = trafficLight(a, flags, status);
+
+  document.getElementById('m-dot').className = `modal-dot ${tl}`;
+  document.getElementById('m-name').textContent = a.name;
+
+  const raceParts = [];
+  if (a.race) raceParts.push(a.race);
+  if (a.days_to_race != null) raceParts.push(`${a.days_to_race}d`);
+  document.getElementById('m-race').textContent = raceParts.join(' · ');
+
+  const comm = document.getElementById('m-commentary');
+  comm.textContent = sentence;
+  comm.className = `modal-commentary ${status}`;
+
+  // Flags
+  const mf = document.getElementById('m-flags');
+  mf.innerHTML = flags.length
     ? flags.map(f => `<span class="flag-chip ${f.cls}">⚠ ${f.text}</span>`).join('')
     : `<span class="fc-ok">✓ clear</span>`;
 
-  const panelCls = hasBad ? 'a-panel flag-red' : hasWarn ? 'a-panel flag-warn' : 'a-panel';
+  // Gauges
+  document.getElementById('m-gauges').innerHTML = buildGaugeStrip(a);
 
-  // Activities
-  const acts = (a.recent_activities||[]).slice(0,6);
-  const actRows = acts.length
-    ? acts.map(act => {
-        const d = new Date(act.date+'T00:00:00');
-        const ds = d.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short'});
-        const tokens = [
-          act.dist_km  != null ? `${act.dist_km.toFixed(1)}km` : null,
-          act.duration_s ? fmtDur(act.duration_s) : null,
-          act.pace     != null ? `${fmtPace(act.pace)}/km` : null,
-          act.avg_hr   != null ? `HR ${act.avg_hr}` : null,
-          act.feel     != null ? FEEL[act.feel] : null,
-        ].filter(Boolean).join(' · ');
-        return `<div class="act-row">
-          <div class="act-top"><span class="act-name">${act.name}</span><span class="act-date">${ds}</span></div>
-          <div class="act-stats">${tokens}</div>
-        </div>`;
-      }).join('')
-    : '<div style="color:var(--slate);font-size:11px;">No recent activities</div>';
-
-  // Upcoming
+  // Build paired table rows
+  const acts    = (a.recent_activities||[]).slice(0,6);
   const upcoming = (a.upcoming||[]).slice(0,6);
-  const upRows = upcoming.length
-    ? upcoming.map(u => {
-        const d = new Date(u.date+'T00:00:00');
-        const ds = d.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short'});
-        const km = u.distance_m ? ` · ${(u.distance_m/1000).toFixed(0)}km` : '';
-        return `<div class="up-row"><div class="up-name">${u.name}</div><div class="up-meta">${ds}${km}</div></div>`;
-      }).join('')
-    : '<div style="color:var(--slate);font-size:11px;">No upcoming sessions</div>';
+  const rowCount = Math.max(acts.length, upcoming.length, 1);
+
+  const tableRows = Array.from({length: rowCount}, (_, i) => {
+    const act = acts[i];
+    const u   = upcoming[i];
+
+    let leftName = '', leftDate = '', leftStats = '';
+    if (act) {
+      const d = new Date(act.date+'T00:00:00');
+      leftDate = d.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short'});
+      leftName = act.name;
+      leftStats = [
+        act.dist_km  != null ? `${act.dist_km.toFixed(1)}km` : null,
+        act.duration_s ? fmtDur(act.duration_s) : null,
+        act.pace     != null ? `${fmtPace(act.pace)}/km` : null,
+        act.avg_hr   != null ? `HR ${act.avg_hr}` : null,
+        act.feel     != null ? FEEL[act.feel] : null,
+      ].filter(Boolean).join(' · ');
+    }
+
+    let rightName = '', rightMeta = '';
+    if (u) {
+      const d = new Date(u.date+'T00:00:00');
+      rightMeta = d.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short'})
+                + (u.distance_m ? ` · ${(u.distance_m/1000).toFixed(0)}km` : '');
+      rightName = u.name;
+    }
+
+    return `<tr>
+      <td class="td-name">${leftName}</td>
+      <td class="td-date">${leftDate}</td>
+      <td class="td-stats">${leftStats}</td>
+      <td class="td-div"></td>
+      <td class="td-uname">${rightName}</td>
+      <td class="td-umeta">${rightMeta}</td>
+    </tr>`;
+  }).join('');
 
   const preds = a.race_predictions || {};
-  const predStr = [preds['10k']?`10k ${preds['10k']}`:null, preds['marathon']?`Mara ${preds['marathon']}`:null].filter(Boolean).join(' · ');
+  const predStr = [preds['10k']?`10K ${preds['10k']}`:null, preds['half']?`HM ${preds['half']}`:null, preds['marathon']?`Mara ${preds['marathon']}`:null].filter(Boolean).join(' · ');
+  const tsb = fit.tsb;
 
-  const div = document.createElement('div');
-  div.className = panelCls;
-  div.innerHTML = `
-    <div class="a-commentary ${status}">${sentence}</div>
-    <div class="a-row" onclick="toggleDetail(${idx})">
-      <div class="a-name-block">
-        <div class="a-name">${a.name}</div>
-        <div class="a-race">${raceLine || '&mdash;'}</div>
-      </div>
-      <div class="a-divider"></div>
-      <div class="a-flags">${flagsHtml}</div>
-      <div class="a-divider"></div>
-      <div class="a-metrics">${chips.join('')}</div>
-      <div class="a-toggle" id="toggle-${idx}">▼ details</div>
-    </div>
-    <div class="a-detail" id="detail-${idx}">
-      <div class="a-detail-inner">
-        <div>
-          <div class="det-head">Recent Activities</div>
-          ${actRows}
-        </div>
-        <div>
-          <div class="det-head">Upcoming Sessions</div>
-          ${upRows}
-          ${predStr ? `<div style="margin-top:12px;font-size:10px;color:var(--slate);font-family:'IBM Plex Mono',monospace;">Predictions: ${predStr}</div>` : ''}
-          <div class="fit-tiles">
-            ${fit.ctl!=null?`<div class="fit-tile"><div class="fv">${fit.ctl.toFixed(1)}</div><div class="fl">CTL</div></div>`:''}
-            ${fit.atl!=null?`<div class="fit-tile"><div class="fv">${fit.atl.toFixed(1)}</div><div class="fl">ATL</div></div>`:''}
-            ${tsb!=null?`<div class="fit-tile"><div class="fv">${tsb>0?'+':''}${tsb.toFixed(1)}</div><div class="fl">TSB</div></div>`:''}
-          </div>
+  document.getElementById('m-body').innerHTML = `
+    <div style="grid-column:1/-1;">
+      <table class="act-table">
+        <thead><tr>
+          <th colspan="3">Recent Activities</th>
+          <th class="td-div"></th>
+          <th colspan="2" style="padding-left:12px;">Upcoming Sessions</th>
+        </tr></thead>
+        <tbody>${tableRows}</tbody>
+      </table>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;flex-wrap:wrap;gap:8px;">
+        <div style="font-size:10px;color:var(--slate);font-family:'IBM Plex Mono',monospace;">${predStr ? `Predictions: ${predStr}` : ''}</div>
+        <div class="fit-tiles" style="margin-top:0;">
+          ${fit.ctl!=null?`<div class="fit-tile"><div class="fv">${fit.ctl.toFixed(1)}</div><div class="fl">CTL</div></div>`:''}
+          ${fit.atl!=null?`<div class="fit-tile"><div class="fv">${fit.atl.toFixed(1)}</div><div class="fl">ATL</div></div>`:''}
+          ${tsb!=null?`<div class="fit-tile"><div class="fv">${tsb>0?'+':''}${tsb.toFixed(1)}</div><div class="fl">TSB</div></div>`:''}
         </div>
       </div>
     </div>`;
 
-  return { div, flagScore: hasBad ? 2 : hasWarn ? 1 : 0 };
+  document.getElementById('modal-overlay').classList.add('open');
 }
 
-function toggleDetail(idx) {
-  const det = document.getElementById(`detail-${idx}`);
-  const tog = document.getElementById(`toggle-${idx}`);
-  const open = det.classList.toggle('open');
-  tog.textContent = open ? '▲ hide' : '▼ details';
+function closeModal(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
+
+/* ── Live refresh ── */
+const IS_PAGES = location.hostname.endsWith('github.io') || location.hostname.endsWith('githubusercontent.com');
+
+async function liveRefresh() {
+  const btn = document.getElementById('refresh-btn');
+  const sub = document.getElementById('hub-sub');
+  btn.disabled = true; btn.textContent = '↻ Loading…';
+
+  if (IS_PAGES) {
+    // On GitHub Pages — just reload to pick up the latest committed coach.json
+    await init();
+    btn.textContent = '↻ Refresh'; btn.disabled = false;
+    return;
+  }
+
+  sub.textContent = 'Pulling live data from intervals.icu…';
+  if (location.protocol !== 'file:') {
+    try {
+      const res = await fetch('/api/refresh', {cache:'no-store'});
+      const data = await res.json();
+      if (!data.ok) {
+        sub.textContent = 'Pull failed — ' + (data.stderr || 'unknown error');
+        btn.disabled = false; btn.textContent = '↻ Refresh';
+        return;
+      }
+    } catch(e) {
+      sub.textContent = 'Server unreachable — run serve.py first';
+      btn.disabled = false; btn.textContent = '↻ Refresh';
+      return;
+    }
+  }
+
+  btn.textContent = '↻ Refresh'; btn.disabled = false;
+  await init();
 }
 
+/* ── Init ── */
 async function init() {
   document.getElementById('hub-sub').textContent = 'Loading…';
-  document.getElementById('roster').innerHTML = '<div style="color:var(--slate);padding:20px 0;font-size:13px;">Fetching…</div>';
+  document.getElementById('roster').innerHTML = '<div style="color:var(--slate);padding:20px 0;font-size:13px;grid-column:1/-1;">Fetching…</div>';
 
   let coach;
   try {
-    coach = await fetch(COACH_JSON_URL, {cache:'no-store'}).then(r => {
+    coach = await fetch('../data/coach.json', {cache:'no-store'}).then(r => {
       if (!r.ok) throw new Error('HTTP '+r.status);
       return r.json();
     });
   } catch(e) {
-    document.getElementById('roster').innerHTML = `<div style="color:var(--bad);padding:20px 0;">Could not load coach.json — ${e.message}</div>`;
+    document.getElementById('roster').innerHTML = `<div style="color:var(--bad);padding:20px 0;grid-column:1/-1;">Could not load coach.json — ${e.message}</div>`;
     return;
   }
 
-  const athletes = coach.athletes || [];
-  const panels = athletes.map((a, idx) => buildPanel(a, idx));
-  panels.sort((a,b) => b.flagScore - a.flagScore);
+  _athletes = coach.athletes || [];
+  const tiles = _athletes.map((a, idx) => buildTile(a, idx));
+  tiles.sort((a,b) => b.flagScore - a.flagScore);
 
   const roster = document.getElementById('roster');
   roster.innerHTML = '';
-  panels.forEach(p => roster.appendChild(p.div));
+  const groups = [2, 1, 0]; // red, amber, green
+  let lastScore = null;
+  tiles.forEach(t => {
+    if (lastScore !== null && lastScore !== t.flagScore) {
+      // Insert a full-width row break between groups
+      const sep = document.createElement('div');
+      sep.style.cssText = 'grid-column:1/-1;height:0;margin:0;padding:0;';
+      roster.appendChild(sep);
+    }
+    lastScore = t.flagScore;
+    roster.appendChild(t.div);
+  });
 
-  const totalFlags = panels.filter(p => p.flagScore > 0).length;
+  const totalFlags = tiles.filter(t => t.flagScore > 0).length;
   const now = new Date().toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'});
+  let pulledStr = '';
+  if (coach.generated_at) {
+    const pulled = new Date(coach.generated_at);
+    pulledStr = ` · data pulled ${pulled.toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'})}`;
+  }
   document.getElementById('hub-sub').textContent =
-    `${athletes.length} athletes · ${now}${totalFlags ? ` · ⚠ ${totalFlags} flagged` : ' · all clear'}`;
+    `${_athletes.length} athletes · ${now}${pulledStr}${totalFlags ? ` · ⚠ ${totalFlags} flagged` : ' · all clear'}`;
 }
 
 init();

@@ -1,0 +1,36 @@
+name: Refresh Coach Data
+
+on:
+  schedule:
+    - cron: '0 20 * * *'   # 6am AEST (UTC+10)
+    - cron: '0 0 * * *'    # 10am AEST (UTC+10)
+  workflow_dispatch:         # manual trigger from GitHub Actions tab
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Pull coach data
+        env:
+          INTERVALS_API_KEY: ${{ secrets.INTERVALS_API_KEY }}
+        run: python scripts/pull_coach_data.py
+
+      - name: Commit updated coach.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/coach.json
+          git diff --cached --quiet || git commit -m "chore: refresh coach data [skip ci]"
+          git push
