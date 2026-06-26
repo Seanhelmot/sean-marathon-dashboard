@@ -91,7 +91,11 @@
   .t-gauge-dot { position: absolute; top: 50%; transform: translate(-50%,-50%); width: 8px; height: 8px; border-radius: 50%; background: #fff; border: 1.5px solid #222; z-index: 2; }
 
   /* Sparkline chart */
-  .t-spark { margin-top: 4px; width: 100%; display: block; overflow: visible; }
+  .t-spark-wrap { margin-top: 5px; }
+  .t-spark { width: 100%; height: 32px; display: block; }
+  .t-spark-legend { display: flex; gap: 8px; margin-top: 2px; }
+  .t-spark-leg { font-size: 8px; font-family: 'IBM Plex Mono', monospace; color: var(--slate); display: flex; align-items: center; gap: 3px; }
+  .t-spark-leg-line { width: 12px; height: 2px; border-radius: 1px; flex-shrink: 0; }
 
   /* RAG status line */
   .t-rag { font-size: 10px; font-family: 'IBM Plex Mono', monospace; display: flex; align-items: baseline; gap: 5px; }
@@ -429,7 +433,7 @@ function buildSparkline(a) {
   const raw = (a.wellness_60d || []).slice(-W);
   if (raw.length < 4) return '';
 
-  const H = 58, PAD = 3;
+  const H = 28, PAD = 2;
   const n = raw.length;
 
   // HRV range
@@ -464,19 +468,19 @@ function buildSparkline(a) {
   const d0 = raw[0].date ? raw[0].date.slice(5) : '';
   const d1 = raw[raw.length-1].date ? raw[raw.length-1].date.slice(5) : '';
 
-  return `<svg class="t-spark" viewBox="0 0 100 ${H+10}" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- baseline shading -->
-    <rect x="${PAD}" y="${shadeY1}" width="${100-2*PAD}" height="${shadeH}" fill="rgba(34,197,94,0.10)"/>
-    <!-- mean line -->
-    <line x1="${PAD}" y1="${yHrv(hrvMu).toFixed(1)}" x2="${100-PAD}" y2="${yHrv(hrvMu).toFixed(1)}" stroke="rgba(34,197,94,0.25)" stroke-width="0.4" stroke-dasharray="1.5,1.5"/>
-    <!-- HRV line -->
-    <polyline points="${hrvPts}" fill="none" stroke="#22c55e" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
-    <!-- RHR line (own scale) -->
-    <polyline points="${rhrPts}" fill="none" stroke="#f87171" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round"/>
-    <!-- date labels -->
-    <text x="${PAD}" y="${H+8}" font-size="4.5" fill="#6b8299" font-family="monospace">${d0}</text>
-    <text x="${100-PAD}" y="${H+8}" font-size="4.5" fill="#6b8299" font-family="monospace" text-anchor="end">${d1}</text>
-  </svg>`;
+  return `<div class="t-spark-wrap">
+    <svg class="t-spark" viewBox="0 0 100 ${H}" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="${PAD}" y="${shadeY1}" width="${100-2*PAD}" height="${shadeH}" fill="rgba(34,197,94,0.10)"/>
+      <line x1="${PAD}" y1="${yHrv(hrvMu).toFixed(1)}" x2="${100-PAD}" y2="${yHrv(hrvMu).toFixed(1)}" stroke="rgba(34,197,94,0.2)" stroke-width="0.4" stroke-dasharray="1.5,1.5"/>
+      <polyline points="${hrvPts}" fill="none" stroke="#22c55e" stroke-width="0.9" stroke-linejoin="round" stroke-linecap="round"/>
+      <polyline points="${rhrPts}" fill="none" stroke="#f87171" stroke-width="0.9" stroke-linejoin="round" stroke-linecap="round"/>
+    </svg>
+    <div class="t-spark-legend">
+      <span class="t-spark-leg"><span class="t-spark-leg-line" style="background:#22c55e"></span>HRV</span>
+      <span class="t-spark-leg"><span class="t-spark-leg-line" style="background:#f87171"></span>RHR</span>
+      <span class="t-spark-leg" style="margin-left:auto">${d0} – ${d1}</span>
+    </div>
+  </div>`;
 }
 
 function buildTile(a, idx) {
@@ -540,8 +544,8 @@ function buildTile(a, idx) {
     <div class="t-rag"><span class="t-rag-word">${word}</span><span class="t-rag-reason">· ${reason}</span></div>
     <div class="t-commentary ${status}">${sentence}</div>
     <div class="t-metrics">${mets.join('')}</div>
-    ${buildSparkline(a)}
-    ${miniGauges(a)}`;
+    ${miniGauges(a)}
+    ${buildSparkline(a)}`;
 
   return { div, tl, flagScore: tl === 'tl-red' ? 2 : tl === 'tl-amber' ? 1 : 0 };
 }
