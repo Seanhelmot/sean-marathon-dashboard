@@ -28,8 +28,20 @@ jobs:
         run: python scripts/pull_coach_data.py
 
       - name: Inject PAT into coach hub
+        env:
+          COACH_HUB_PAT: ${{ vars.COACH_HUB_PAT }}
         run: |
-          sed -i "s|atob('[^']*')|atob('$(echo -n '${{ vars.COACH_HUB_PAT }}' | base64 -w 0)')|" coach-hub/index.html
+          python3 - <<'EOF'
+          import base64, os
+          pat = os.environ['COACH_HUB_PAT']
+          encoded = base64.b64encode(pat.encode()).decode()
+          with open('coach-hub/index.html', 'r') as f:
+              html = f.read()
+          html = html.replace("atob('COACH_HUB_PAT_PLACEHOLDER')", f"atob('{encoded}')")
+          with open('coach-hub/index.html', 'w') as f:
+              f.write(html)
+          print(f'PAT injected ({len(pat)} chars)')
+          EOF
 
       - name: Commit updated files
         run: |
