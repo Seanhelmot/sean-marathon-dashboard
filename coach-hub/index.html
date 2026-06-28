@@ -738,15 +738,51 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDi
 /* ── Live refresh ── */
 const IS_PAGES = location.hostname.endsWith('github.io') || location.hostname.endsWith('githubusercontent.com');
 
+const GH_PAT      = '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';
+const GH_REPO     = 'seanhelmot/sean-marathon-dashboard';
+const GH_WORKFLOW = 'refresh-coach-data.yml';
+
 async function liveRefresh() {
   const btn = document.getElementById('refresh-btn');
   const sub = document.getElementById('hub-sub');
-  btn.disabled = true; btn.textContent = '↻ Loading…';
+  btn.disabled = true; btn.textContent = '↻ Pulling…';
 
   if (IS_PAGES) {
-    // On GitHub Pages — just reload to pick up the latest committed coach.json
-    await init();
+    sub.textContent = 'Triggering data refresh via GitHub Actions…';
+    try {
+      // Trigger workflow_dispatch
+      const triggerRes = await fetch(
+        `https://api.github.com/repos/${GH_REPO}/actions/workflows/${GH_WORKFLOW}/dispatches`,
+        { method: 'POST', headers: { Authorization: `Bearer ${GH_PAT}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ ref: 'main' }) }
+      );
+      if (!triggerRes.ok) throw new Error(`Trigger failed: ${triggerRes.status}`);
+
+      // Poll for the run to complete (check every 5s, up to 2 min)
+      sub.textContent = 'Waiting for data pull to finish…';
+      await new Promise(r => setTimeout(r, 5000)); // give Actions a moment to queue
+      let done = false;
+      for (let i = 0; i < 24; i++) {
+        const runsRes = await fetch(
+          `https://api.github.com/repos/${GH_REPO}/actions/workflows/${GH_WORKFLOW}/runs?per_page=1`,
+          { headers: { Authorization: `Bearer ${GH_PAT}` } }
+        );
+        const runs = await runsRes.json();
+        const run = runs.workflow_runs?.[0];
+        if (run && run.status === 'completed') { done = true; break; }
+        const elapsed = (i + 1) * 5;
+        sub.textContent = `Refreshing… ${elapsed}s`;
+        await new Promise(r => setTimeout(r, 5000));
+      }
+      if (!done) { sub.textContent = 'Taking longer than usual — reload manually in a moment.'; btn.disabled = false; btn.textContent = '↻ Refresh'; return; }
+      sub.textContent = 'Done — loading fresh data…';
+      await new Promise(r => setTimeout(r, 1500));
+    } catch(e) {
+      sub.textContent = 'Refresh failed: ' + e.message;
+      btn.disabled = false; btn.textContent = '↻ Refresh';
+      return;
+    }
     btn.textContent = '↻ Refresh'; btn.disabled = false;
+    await init();
     return;
   }
 

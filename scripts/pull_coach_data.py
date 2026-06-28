@@ -90,6 +90,18 @@ ATHLETES = [
     {
         "id":    "i622562",
         "name":  "Matt W",
+        "races": [
+            {"name": "Lakeside 10K", "date": "2026-07-26"},
+        ],
+        "training_philosophy": "",
+        "threshold_hr":  165,
+        "max_hr":        183,
+        "threshold_pace": "4:38",
+        "typical_week": {},
+    },
+    {
+        "id":    "i622855",
+        "name":  "Tim L",
         "races": [],
         "training_philosophy": "",
         "threshold_hr":  None,
@@ -98,8 +110,8 @@ ATHLETES = [
         "typical_week": {},
     },
     {
-        "id":    "i622855",
-        "name":  "Tim L",
+        "id":    "i624875",
+        "name":  "Annette",
         "races": [],
         "training_philosophy": "",
         "threshold_hr":  None,
@@ -118,7 +130,7 @@ ATHLETES = [
         "training_philosophy": "Triathlon background. Runs 5 days/week. HR-capped easy running, threshold work 1-2x/week. Strong aerobic base from multi-sport history.",
         "threshold_hr":  145,
         "max_hr":        160,
-        "threshold_pace": "4:45",
+        "threshold_pace": "4:38",
         "typical_week": {
             "Mon": "Rest",
             "Tue": "Easy run (Z1-Z2 HR)",
