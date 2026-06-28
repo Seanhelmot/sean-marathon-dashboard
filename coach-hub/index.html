@@ -49,6 +49,8 @@
     transition: background .12s, border-color .12s;
   }
   .tile:hover { background: var(--raised); }
+  .tile.tl-pending { border-color: var(--line); border-style: dashed; cursor: default; opacity: .55; }
+  .tile.tl-pending:hover { background: var(--panel); }
   .tile.tl-green { border-color: var(--good); box-shadow: 0 0 0 1px rgba(34,197,94,.2); }
   .tile.tl-amber { border-color: var(--warn); box-shadow: 0 0 0 1px rgba(245,158,11,.2); }
   .tile.tl-red   { border-color: var(--bad);  box-shadow: 0 0 0 1px rgba(239,68,68,.2); }
@@ -840,6 +842,21 @@ async function init() {
     }
     lastScore = t.flagScore;
     roster.appendChild(t.div);
+  });
+
+  // Placeholder tiles for athletes not yet on intervals.icu
+  const PENDING = ['Aidan B', 'Brad P', 'Sam M', 'Mark M'];
+  PENDING.forEach(name => {
+    const d = document.createElement('div');
+    d.className = 'tile tl-pending';
+    d.innerHTML = `
+      <div class="t-head">
+        <div class="t-dot" style="background:var(--slate);opacity:.4"></div>
+        <div class="t-name" style="color:var(--slate)">${name}</div>
+        <div class="t-race" style="color:var(--slate)">—</div>
+      </div>
+      <div class="t-rag" style="color:var(--slate);font-size:11px">Pending · migrating to intervals.icu</div>`;
+    roster.appendChild(d);
   });
 
   const totalFlags = tiles.filter(t => t.flagScore > 0).length;
