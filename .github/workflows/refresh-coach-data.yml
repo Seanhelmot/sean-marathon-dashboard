@@ -27,10 +27,14 @@ jobs:
           INTERVALS_API_KEY: ${{ secrets.INTERVALS_API_KEY }}
         run: python scripts/pull_coach_data.py
 
-      - name: Commit updated coach.json
+      - name: Inject PAT into coach hub
+        run: |
+          sed -i "s|atob('[^']*')|atob('$(echo -n '${{ vars.COACH_HUB_PAT }}' | base64 -w 0)')|" coach-hub/index.html
+
+      - name: Commit updated files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/coach.json
+          git add data/coach.json coach-hub/index.html
           git diff --cached --quiet || git commit -m "chore: refresh coach data [skip ci]"
           git push
