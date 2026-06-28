@@ -141,6 +141,16 @@ ATHLETES = [
             "Sun": "Long run (easy/mod HR)",
         },
     },
+    {
+        "id":    "i625671",
+        "name":  "Aidan Burrell",
+        "races": [],
+        "training_philosophy": "Inexperienced runner building base fitness. Conservative pacing, HR-capped easy runs. Focus on consistency and injury prevention.",
+        "threshold_hr":  None,
+        "max_hr":        None,
+        "threshold_pace": None,
+        "typical_week": {},
+    },
 ]
 
 TODAY       = date.today()
