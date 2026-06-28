@@ -148,7 +148,7 @@ ATHLETES = [
         "training_philosophy": "Inexperienced runner building base fitness. Conservative pacing, HR-capped easy runs. Focus on consistency and injury prevention.",
         "threshold_hr":  None,
         "max_hr":        None,
-        "threshold_pace": None,
+        "threshold_pace": "4:50",
         "typical_week": {},
     },
 ]
