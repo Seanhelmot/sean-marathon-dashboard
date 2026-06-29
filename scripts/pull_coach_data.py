@@ -58,10 +58,10 @@ ATHLETES = [
         "id":    "i620570",
         "name":  "Chess",
         "races": [],
-        "training_philosophy": "",
+        "training_philosophy": "HR-capped easy runs. Joe Friel 7-zone system. LTHR 168, MaxHR 185. London Marathon 2023: 3:10 (4:27/km avg, 164 avg HR).",
         "threshold_hr":  168,
         "max_hr":        185,
-        "threshold_pace": None,
+        "threshold_pace": "4:12",
         "typical_week": {},
     },
     {
