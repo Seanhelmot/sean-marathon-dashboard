@@ -142,6 +142,16 @@ ATHLETES = [
         },
     },
     {
+        "id":    "i620541",
+        "name":  "Brad P",
+        "races": [],
+        "training_philosophy": "",
+        "threshold_hr":  None,
+        "max_hr":        None,
+        "threshold_pace": None,
+        "typical_week": {},
+    },
+    {
         "id":    "i624989",
         "name":  "Mark M",
         "races": [],
