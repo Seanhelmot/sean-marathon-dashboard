@@ -142,6 +142,16 @@ ATHLETES = [
         },
     },
     {
+        "id":    "i624989",
+        "name":  "Mark M",
+        "races": [],
+        "training_philosophy": "",
+        "threshold_hr":  None,
+        "max_hr":        None,
+        "threshold_pace": None,
+        "typical_week": {},
+    },
+    {
         "id":    "i625671",
         "name":  "Aidan Burrell",
         "races": [],
