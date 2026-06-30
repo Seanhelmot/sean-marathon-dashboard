@@ -123,9 +123,8 @@ ATHLETES = [
         "id":    "i621769",
         "name":  "Simon Walker",
         "races": [
-            {"name": "Virtual Half Marathon", "date": "2026-07-01"},
-            {"name": "Lakeside 10K",          "date": "2026-07-26"},
-            {"name": "Melbourne Marathon",     "date": "2026-10-11"},
+            {"name": "Lakeside 10K",     "date": "2026-07-26"},
+            {"name": "Sydney Marathon",  "date": "2026-08-30"},
         ],
         "training_philosophy": "Triathlon background. Runs 5 days/week. HR-capped easy running, threshold work 1-2x/week. Strong aerobic base from multi-sport history.",
         "threshold_hr":  145,
@@ -154,6 +153,16 @@ ATHLETES = [
     {
         "id":    "i624989",
         "name":  "Mark M",
+        "races": [],
+        "training_philosophy": "",
+        "threshold_hr":  None,
+        "max_hr":        None,
+        "threshold_pace": None,
+        "typical_week": {},
+    },
+    {
+        "id":    "i621545",
+        "name":  "Sam",
         "races": [],
         "training_philosophy": "",
         "threshold_hr":  None,
