@@ -215,7 +215,7 @@ def pull_athlete(a):
 
     # Wellness — last 60 days (for HRV4Training-style baseline)
     wellness = get(f"{aid}/wellness", {
-        "oldest": str(SIXTY_DAYS), "newest": str(TODAY)
+        "oldest": str(SIXTY_DAYS), "newest": str(TODAY + timedelta(1))
     }) or []
 
     # Sort wellness by date
@@ -273,7 +273,7 @@ def pull_athlete(a):
 
     # Recent activities — last 14 days
     acts_raw = get(f"{aid}/activities", {
-        "oldest": str(TWO_WEEKS), "newest": str(TODAY)
+        "oldest": str(TWO_WEEKS), "newest": str(TODAY + timedelta(1))
     }) or []
 
     activities = []
