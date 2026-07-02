@@ -740,9 +740,17 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDi
 /* ── Live refresh ── */
 const IS_PAGES = location.hostname.endsWith('github.io') || location.hostname.endsWith('githubusercontent.com');
 
-const GH_PAT      = atob('Z2hwX3k3cVlQZGNwaDJMUkRPbHcxdExRRXZteGxCc3VsTjJOREFuQQ==');
 const GH_REPO     = 'seanhelmot/sean-marathon-dashboard';
 const GH_WORKFLOW = 'refresh-coach-data.yml';
+
+function getGHPAT() {
+  let pat = localStorage.getItem('gh_pat');
+  if (!pat) {
+    pat = prompt('Enter your GitHub Personal Access Token (classic, workflow scope):\n\nThis is stored only in your browser — never sent anywhere except GitHub API.');
+    if (pat) localStorage.setItem('gh_pat', pat.trim());
+  }
+  return pat ? pat.trim() : null;
+}
 
 async function liveRefresh() {
   const btn = document.getElementById('refresh-btn');
@@ -750,6 +758,8 @@ async function liveRefresh() {
   btn.disabled = true; btn.textContent = '↻ Pulling…';
 
   if (IS_PAGES) {
+    const GH_PAT = getGHPAT();
+    if (!GH_PAT) { sub.textContent = 'No token provided.'; btn.disabled = false; btn.textContent = '↻ Refresh'; return; }
     sub.textContent = 'Triggering data refresh via GitHub Actions…';
     try {
       // Trigger workflow_dispatch
@@ -757,7 +767,7 @@ async function liveRefresh() {
         `https://api.github.com/repos/${GH_REPO}/actions/workflows/${GH_WORKFLOW}/dispatches`,
         { method: 'POST', headers: { Authorization: `Bearer ${GH_PAT}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ ref: 'main' }) }
       );
-      if (!triggerRes.ok) throw new Error(`Trigger failed: ${triggerRes.status}`);
+      if (!triggerRes.ok) { if (triggerRes.status === 401) localStorage.removeItem('gh_pat'); throw new Error(`Trigger failed: ${triggerRes.status}`); }
 
       // Poll for the run to complete (check every 5s, up to 2 min)
       sub.textContent = 'Waiting for data pull to finish…';
