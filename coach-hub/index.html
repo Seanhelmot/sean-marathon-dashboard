@@ -255,9 +255,17 @@ function buildCommentary(a) {
     else                score -= 25;
   }
   if (h.hrv_7d_avg != null) {
-    if      (h.hrv_7d_avg >= 75) score += 15;
-    else if (h.hrv_7d_avg >= 55) score += 5;
-    else                         score -= 10;
+    if (h.hrv_60d_baseline != null && h.hrv_60d_sd != null) {
+      const sd = h.hrv_60d_sd || 1;
+      const diff = h.hrv_7d_avg - h.hrv_60d_baseline;
+      if      (diff >= sd)       score += 15;  // above baseline = fresh
+      else if (diff >= -sd)      score += 5;   // within normal range
+      else                       score -= 10;  // below baseline = suppressed
+    } else {
+      if      (h.hrv_7d_avg >= 75) score += 15;
+      else if (h.hrv_7d_avg >= 55) score += 5;
+      else                         score -= 10;
+    }
   }
   if (h.sleep_score != null) {
     if (h.sleep_score >= 80) score += 10;
