@@ -489,6 +489,7 @@ def pull_athlete(a):
         "race_predictions_method": pred_method,
         "training_philosophy":  a.get("training_philosophy"),
         "typical_week":         a.get("typical_week"),
+        "max_hr":               a.get("max_hr"),
         "health": {
             "wellness_date":    today_w.get("id"),
             "rhr":              rhr,

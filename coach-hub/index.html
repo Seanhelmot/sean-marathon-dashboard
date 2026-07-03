@@ -244,7 +244,8 @@ function buildCommentary(a) {
   const yDist = yRuns.reduce((s,x) => s+(x.dist_km||0), 0);
   const yMaxHR = Math.max(0, ...yRuns.map(x => x.avg_hr||0));
   const yLong    = yDist >= 18;
-  const yQuality = yMaxHR >= 150 && yDist >= 5;
+  const qualityHRThresh = a.max_hr ? Math.round(a.max_hr * 0.85) : 150;
+  const yQuality = yMaxHR >= qualityHRThresh && yDist >= 5;
 
   let score = 60;
   if (tsb != null) {
