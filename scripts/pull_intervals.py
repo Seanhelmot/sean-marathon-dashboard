@@ -337,7 +337,7 @@ def pull_data(athlete_id: str, api_key: str):
     # ── Activities list ──────────────────────────────────────────────────────
     acts_raw = icu_get("activities", athlete_id, api_key, params={
         "oldest": iso(oldest_act),
-        "newest": iso(today),
+        "newest": iso(today + timedelta(days=1)),
     })
 
     week_buckets: dict[int, dict] = {}
@@ -480,12 +480,20 @@ def pull_data(athlete_id: str, api_key: str):
 
         # ── Quality session — weekly bucket ──────────────────────────────────
         if is_quality and bucket["quality"] is None:
-            if is_recent and interval_summary:
-                q_pace = parse_interval_summary_pace(interval_summary)
-                q_hr   = parse_interval_summary_hr(interval_summary)
-            else:
-                q_pace = None
-                q_hr   = None
+            # Use stream-derived work laps for pace — accurate regardless of rep distance.
+            # interval_summary approach is broken: it parses rep time as pace (only valid
+            # for 1km autolap reps; gives garbage for 2km, mile, etc. reps).
+            q_pace = None
+            q_hr   = None
+            if is_recent and 'work_laps_detail' in dir() and work_laps_detail:
+                lap_paces = [l["pace"] for l in work_laps_detail if l.get("pace")]
+                lap_hrs   = [l["avg_hr"] for l in work_laps_detail if l.get("avg_hr")]
+                if lap_paces:
+                    lap_paces_sorted = sorted(lap_paces)
+                    mid = len(lap_paces_sorted) // 2
+                    q_pace = lap_paces_sorted[mid]  # median pace
+                if lap_hrs:
+                    q_hr = round(sum(lap_hrs) / len(lap_hrs))
             bucket["quality"] = {
                 "pace_min_per_km":    q_pace if q_pace else pace_from_speed(speed),
                 "avg_hr":             q_hr   if q_hr   else int(avg_hr),
@@ -513,7 +521,7 @@ def pull_data(athlete_id: str, api_key: str):
     # ── Wellness ─────────────────────────────────────────────────────────────
     wellness_raw = icu_get("wellness", athlete_id, api_key, params={
         "oldest": iso(oldest_wl),
-        "newest": iso(today),
+        "newest": iso(today + timedelta(days=1)),
     })
     # Wellness returns list sorted oldest→newest
     wellness_by_date = {w["id"]: w for w in wellness_raw} if isinstance(wellness_raw, list) else {}
