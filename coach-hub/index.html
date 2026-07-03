@@ -299,7 +299,8 @@ function buildCommentary(a) {
       sentence = `Moderate fatigue (${tsbStr})${hrvStr ? ` — ${hrvStr}` : ''} — respect easy days.`;
     } else {
       const alerts = [];
-      if (h.hrv_7d_avg != null && h.hrv_7d_avg < 55) alerts.push(`HRV low at ${h.hrv_7d_avg}ms`);
+      const hrvLowThresh = h.hrv_60d_baseline != null ? h.hrv_60d_baseline - (h.hrv_60d_sd || 5) : 55;
+      if (h.hrv_7d_avg != null && h.hrv_7d_avg < hrvLowThresh) alerts.push(`HRV low at ${h.hrv_7d_avg}ms`);
       if (h.sleep_score != null && h.sleep_score < 65) alerts.push(`poor sleep (${h.sleep_score})`);
       sentence = alerts.length
         ? `${alerts[0]} — monitor closely.`
@@ -307,7 +308,8 @@ function buildCommentary(a) {
     }
   } else {
     const alerts = [];
-    if (h.hrv_7d_avg != null && h.hrv_7d_avg < 55) alerts.push(`HRV low at ${h.hrv_7d_avg}ms`);
+    const hrvLowThresh2 = h.hrv_60d_baseline != null ? h.hrv_60d_baseline - (h.hrv_60d_sd || 5) : 55;
+    if (h.hrv_7d_avg != null && h.hrv_7d_avg < hrvLowThresh2) alerts.push(`HRV low at ${h.hrv_7d_avg}ms`);
     if (tsb != null && tsb < -15) alerts.push(`${tsbStr}`);
     if (h.rhr != null && h.rhr_7d_avg != null && (h.rhr - h.rhr_7d_avg) > 3) alerts.push(`RHR elevated`);
     sentence = alerts.length
@@ -361,7 +363,7 @@ function ragLabel(a, flags, status, tl) {
     if (noWellness && atlRising) reason = `no HRV/sleep data · load building (ATL +${fit.atl_trend?.toFixed(1)})`;
     else if (noWellness)         reason = `no HRV or sleep data — can't confirm readiness`;
     else if (tsb != null && tsb < -10) reason = `building fatigue (TSB ${tsb.toFixed(1)})`;
-    else if (h.hrv_7d_avg != null && h.hrv_7d_avg < 55) reason = `HRV low (${h.hrv_7d_avg}ms)`;
+    else if (h.hrv_7d_avg != null && h.hrv_7d_avg < (h.hrv_60d_baseline != null ? h.hrv_60d_baseline - (h.hrv_60d_sd || 5) : 55)) reason = `HRV low (${h.hrv_7d_avg}ms)`;
     else if (h.sleep_score != null && h.sleep_score < 65) reason = `poor sleep (${h.sleep_score})`;
     else if (atlRising)          reason = `acute load rising faster than fitness`;
     else                         reason = `borderline readiness — monitor`;
