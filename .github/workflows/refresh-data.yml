@@ -50,5 +50,6 @@ jobs:
             echo "No changes to live.json — skipping commit."
           else
             git commit -m "chore: refresh live data $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git pull --rebase
             git push
           fi
