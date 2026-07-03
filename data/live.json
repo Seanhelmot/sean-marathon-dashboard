@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-07-03T21:03:56+10:00",
+  "generated_at": "2026-07-04T09:39:55+10:00",
   "current_week": 8,
   "today": {
-    "rhr": 39,
-    "hrv_7d_avg": 77,
+    "rhr": 40,
+    "hrv_7d_avg": 79,
     "hrv_status": null,
-    "sleep_score": 88.0,
-    "sleep_hrs": 9.1,
-    "body_battery": null,
+    "sleep_score": 87.0,
+    "sleep_hrs": 8.1,
+    "body_battery": 100,
     "vo2max_garmin": 52,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 45.0,
-    "atl": 45.1,
-    "tsb": -0.1
+    "ctl": 44.7,
+    "atl": 43.2,
+    "tsb": 1.5
   },
   "this_week_days": null,
   "weeks": [
@@ -338,8 +338,8 @@
           "dist_km": 9.5,
           "avg_hr": 120,
           "pace": 5.35,
-          "feel": 2,
-          "effort": 2.0,
+          "feel": null,
+          "effort": null,
           "decoupling_pct": null,
           "_main_dist": 9.518040000000001
         },
@@ -440,7 +440,7 @@
     },
     {
       "wk": 8,
-      "actual_km": 45.8,
+      "actual_km": 54.0,
       "partial": true,
       "quality": {
         "pace_min_per_km": 4.07,
@@ -448,6 +448,15 @@
         "work_intervals_only": true
       },
       "days": {
+        "2026-07-04": {
+          "dist_km": 8.2,
+          "avg_hr": 127,
+          "pace": 5.16,
+          "feel": 2,
+          "effort": 2.0,
+          "decoupling_pct": null,
+          "_main_dist": 8.174949999999999
+        },
         "2026-07-03": {
           "dist_km": 12.0,
           "avg_hr": 124,
@@ -488,12 +497,6 @@
     }
   ],
   "sleep_hrv_14d": [
-    {
-      "date": "2026-06-20",
-      "score": 79.0,
-      "hrv": 68.0,
-      "rhr": 42
-    },
     {
       "date": "2026-06-21",
       "score": 82.0,
@@ -571,9 +574,32 @@
       "score": 88.0,
       "hrv": 84.0,
       "rhr": 39
+    },
+    {
+      "date": "2026-07-04",
+      "score": 87.0,
+      "hrv": 82.0,
+      "rhr": 40
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-07-04",
+      "start_local": "2026-07-04T07:31",
+      "name": "Easy",
+      "dist_km": 8.17,
+      "duration_s": 2585,
+      "avg_hr": 127,
+      "max_hr": 155,
+      "pace": 5.16,
+      "feel": 2,
+      "effort": 2.0,
+      "elevation_gain": 80.40797,
+      "avg_cadence": 170,
+      "interval_summary": [
+        "1x 54m33s 126bpm"
+      ]
+    },
     {
       "date": "2026-07-03",
       "start_local": "2026-07-03T08:06",
@@ -1031,31 +1057,6 @@
         "1x 28m57s 115bpm",
         "1x 19m15s 129bpm",
         "1x 2s 125bpm"
-      ]
-    },
-    {
-      "date": "2026-06-19",
-      "start_local": "2026-06-19T07:28",
-      "name": "Easy + Hill Sprint",
-      "dist_km": 9.52,
-      "duration_s": 3188,
-      "avg_hr": 120,
-      "max_hr": 132,
-      "pace": 5.35,
-      "feel": 2,
-      "effort": 2.0,
-      "elevation_gain": 44.314747,
-      "avg_cadence": 165,
-      "interval_summary": [
-        "1x 58m12s 120bpm",
-        "1x 62s 109bpm",
-        "1x 14s 95bpm",
-        "1x 36s 114bpm",
-        "1x 17s 117bpm",
-        "1x 1m58s 122bpm",
-        "1x 90s 102bpm",
-        "1x 1m49s 105bpm",
-        "1x 20s 103bpm"
       ]
     }
   ]
