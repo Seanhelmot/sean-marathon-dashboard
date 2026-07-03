@@ -474,7 +474,7 @@ def pull_data(athlete_id: str, api_key: str):
                 d = bucket["days"][day_key]
                 if feel   is not None: d["feel"]           = int(feel)
                 if effort is not None: d["effort"]         = float(effort)
-                if decouple is not None: d["decoupling_pct"] = round(float(decouple), 1)
+                if decouple_final is not None: d["decoupling_pct"] = decouple_final
 
             recent_activities.append(entry)
 
