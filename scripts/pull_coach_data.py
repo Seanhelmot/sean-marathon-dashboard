@@ -323,9 +323,11 @@ def pull_athlete(a):
     elif rhr_delta and rhr_delta > 3:
         flags.append({"level": "amber", "text": f"RHR +{rhr_delta}bpm above 7d avg"})
 
-    if hrv_trend is not None and hrv_trend < -5:
+    hrv_red_thresh   = -(hrv_60d_sd * 1.0) if hrv_60d_sd else -5
+    hrv_amber_thresh = -(hrv_60d_sd * 0.5) if hrv_60d_sd else -2
+    if hrv_trend is not None and hrv_trend < hrv_red_thresh:
         flags.append({"level": "red",   "text": f"HRV dropping {hrv_trend}ms (3d trend)"})
-    elif hrv_trend is not None and hrv_trend < -2:
+    elif hrv_trend is not None and hrv_trend < hrv_amber_thresh:
         flags.append({"level": "amber", "text": f"HRV dropping {hrv_trend}ms (3d trend)"})
 
     recent_sleep = [w["sleepScore"] for w in wellness[-2:] if w.get("sleepScore")]
