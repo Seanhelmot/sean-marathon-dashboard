@@ -527,7 +527,13 @@ function buildTile(a, idx) {
 
   const hrvDisplay = h.hrv_today != null ? h.hrv_today : h.hrv_7d_avg;
   const hrvSrc     = h.hrv_today != null ? wSrc : '7d avg';
-  if (hrvDisplay != null) mets.push(chip(hrvDisplay>=75?'tm-green':hrvDisplay>=55?'tm-amber':'tm-red', hrvSrc, `HRV ${hrvDisplay}ms`));
+  if (hrvDisplay != null) {
+    const hrvBl = h.hrv_60d_baseline, hrvSd = h.hrv_60d_sd || 5;
+    const hrvCls = hrvBl != null
+      ? (hrvDisplay >= hrvBl + hrvSd ? 'tm-green' : hrvDisplay >= hrvBl - hrvSd ? 'tm-amber' : 'tm-red')
+      : (hrvDisplay >= 75 ? 'tm-green' : hrvDisplay >= 55 ? 'tm-amber' : 'tm-red');
+    mets.push(chip(hrvCls, hrvSrc, `HRV ${hrvDisplay}ms`));
+  }
 
   if (h.sleep_score != null) mets.push(chip(h.sleep_score>=80?'tm-green':h.sleep_score>=65?'tm-amber':'tm-red', wSrc, `Sleep ${h.sleep_score}`));
 
