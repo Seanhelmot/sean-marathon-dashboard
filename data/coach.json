@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-04T01:12:56",
+  "generated_at": "2026-07-04T09:09:53",
   "athletes": [
     {
       "id": "i445042",
@@ -852,16 +852,16 @@
           "name": "Gold Coast Marathon",
           "date": "2026-07-05",
           "days_away": 1,
-          "predicted_time": "4:20:42"
+          "predicted_time": "3:55:23"
         }
       ],
       "race_predictions": {
-        "5k": "27:10",
-        "10k": "56:40",
-        "half": "2:05:02",
-        "marathon": "4:20:42"
+        "5k": "24:32",
+        "10k": "51:09",
+        "half": "1:52:54",
+        "marathon": "3:55:23"
       },
-      "race_predictions_method": "threshold pace",
+      "race_predictions_method": "threshold pace + VO2max",
       "training_philosophy": "HR-capped easy runs, explicit pace targets for quality. Joe Friel 7-zone system. LTHR 180, MaxHR 197.",
       "typical_week": {},
       "max_hr": 197,
@@ -878,7 +878,7 @@
         "hrv_trend": -1.7,
         "sleep_score": 74.0,
         "sleep_hrs": 8.7,
-        "vo2max": null,
+        "vo2max": 49.0,
         "weight": null
       },
       "fitness": {
@@ -1451,6 +1451,20 @@
       ],
       "recent_activities": [
         {
+          "date": "2026-07-04",
+          "name": "Gold Coast - Shakeout 2km",
+          "type": "Run",
+          "dist_km": 2.0,
+          "duration_s": 783,
+          "pace": 6.3,
+          "avg_hr": 138,
+          "max_hr": 154,
+          "feel": null,
+          "effort": null,
+          "ctl": 46.899235,
+          "atl": 40.457455
+        },
+        {
           "date": "2026-07-02",
           "name": "Melbourne - Shakeout + strides 4km",
           "type": "Run",
@@ -1614,12 +1628,12 @@
       "days_to_race": null,
       "races": [],
       "race_predictions": {
-        "5k": "20:23",
-        "10k": "42:30",
-        "half": "1:33:47",
-        "marathon": "3:15:31"
+        "5k": "21:04",
+        "10k": "43:57",
+        "half": "1:36:59",
+        "marathon": "3:22:13"
       },
-      "race_predictions_method": "threshold pace",
+      "race_predictions_method": "threshold pace + VO2max",
       "training_philosophy": "HR-capped easy runs. Joe Friel 7-zone system. LTHR 170, MaxHR 188. London Marathon 2023: 3:10 (4:27/km avg, 164 avg HR).",
       "typical_week": {},
       "max_hr": 188,
@@ -1636,16 +1650,16 @@
         "hrv_trend": -0.7,
         "sleep_score": 79.0,
         "sleep_hrs": 6.8,
-        "vo2max": null,
+        "vo2max": 56.0,
         "weight": null
       },
       "fitness": {
-        "ctl": 39.3,
-        "atl": 30.6,
-        "tsb": 8.7,
-        "ctl_trend": -3.7,
-        "atl_trend": -23.7,
-        "tsb_trend": 20.0
+        "ctl": 39.4,
+        "atl": 30.9,
+        "tsb": 8.5,
+        "ctl_trend": -3.6,
+        "atl_trend": -23.4,
+        "tsb_trend": 19.8
       },
       "wellness_60d": [
         {
@@ -2194,8 +2208,8 @@
           "hrv": 64.0,
           "sleep_score": 79.0,
           "sleep_hrs": 6.8,
-          "ctl": 39.3,
-          "atl": 30.6
+          "ctl": 39.4,
+          "atl": 30.9
         },
         {
           "date": "2026-07-05",
@@ -2203,11 +2217,25 @@
           "hrv": null,
           "sleep_score": null,
           "sleep_hrs": null,
-          "ctl": 38.4,
-          "atl": 26.6
+          "ctl": 38.5,
+          "atl": 26.8
         }
       ],
       "recent_activities": [
+        {
+          "date": "2026-07-04",
+          "name": "Gisborne Running",
+          "type": "Run",
+          "dist_km": 6.0,
+          "duration_s": 1960,
+          "pace": 5.26,
+          "avg_hr": 132,
+          "max_hr": 157,
+          "feel": null,
+          "effort": null,
+          "ctl": 39.395866,
+          "atl": 30.909422
+        },
         {
           "date": "2026-06-29",
           "name": "Badung Running",
@@ -2333,20 +2361,6 @@
           "effort": null,
           "ctl": 41.10489,
           "atl": 51.59639
-        },
-        {
-          "date": "2026-06-21",
-          "name": "Gisborne - 6 x 4' Thresh / 2' Easy",
-          "type": "Run",
-          "dist_km": 8.2,
-          "duration_s": 2160,
-          "pace": 4.24,
-          "avg_hr": 163,
-          "max_hr": 181,
-          "feel": 3,
-          "effort": null,
-          "ctl": 41.10489,
-          "atl": 51.59639
         }
       ],
       "upcoming": [
@@ -2399,12 +2413,7 @@
           "distance_m": 8000.0
         }
       ],
-      "flags": [
-        {
-          "level": "amber",
-          "text": "No run in 5 days"
-        }
-      ]
+      "flags": []
     },
     {
       "id": "i619779",
@@ -2414,12 +2423,12 @@
       "days_to_race": null,
       "races": [],
       "race_predictions": {
-        "5k": "19:59",
-        "10k": "41:40",
-        "half": "1:31:56",
-        "marathon": "3:11:41"
+        "5k": "20:52",
+        "10k": "43:32",
+        "half": "1:36:04",
+        "marathon": "3:20:18"
       },
-      "race_predictions_method": "threshold pace",
+      "race_predictions_method": "threshold pace + VO2max",
       "training_philosophy": "",
       "typical_week": {},
       "max_hr": 180,
@@ -2436,16 +2445,16 @@
         "hrv_trend": -1.0,
         "sleep_score": 71.0,
         "sleep_hrs": 7.2,
-        "vo2max": null,
-        "weight": null
+        "vo2max": 56.0,
+        "weight": 84.519
       },
       "fitness": {
-        "ctl": 48.2,
-        "atl": 52.3,
-        "tsb": -4.1,
-        "ctl_trend": 2.1,
-        "atl_trend": 5.7,
-        "tsb_trend": -3.6
+        "ctl": 48.5,
+        "atl": 54.0,
+        "tsb": -5.5,
+        "ctl_trend": 2.4,
+        "atl_trend": 7.4,
+        "tsb_trend": -5.0
       },
       "wellness_60d": [
         {
@@ -2994,8 +3003,8 @@
           "hrv": 56.0,
           "sleep_score": 71.0,
           "sleep_hrs": 7.2,
-          "ctl": 48.2,
-          "atl": 52.3
+          "ctl": 48.5,
+          "atl": 54.0
         },
         {
           "date": "2026-07-05",
@@ -3003,11 +3012,25 @@
           "hrv": null,
           "sleep_score": null,
           "sleep_hrs": null,
-          "ctl": 50.2,
-          "atl": 63.3
+          "ctl": 50.5,
+          "atl": 64.8
         }
       ],
       "recent_activities": [
+        {
+          "date": "2026-07-04",
+          "name": "Melbourne Running",
+          "type": "Run",
+          "dist_km": 7.5,
+          "duration_s": 2825,
+          "pace": 6.15,
+          "avg_hr": 120,
+          "max_hr": 156,
+          "feel": 3,
+          "effort": null,
+          "ctl": 48.51085,
+          "atl": 54.01677
+        },
         {
           "date": "2026-07-03",
           "name": "Melbourne Running",
@@ -3077,20 +3100,6 @@
           "effort": null,
           "ctl": 49.08101,
           "atl": 63.39817
-        },
-        {
-          "date": "2026-06-27",
-          "name": "Sat -- Easy",
-          "type": "Run",
-          "dist_km": 8.0,
-          "duration_s": 2421,
-          "pace": 5.02,
-          "avg_hr": null,
-          "max_hr": null,
-          "feel": null,
-          "effort": null,
-          "ctl": 46.09515,
-          "atl": 46.567165
         }
       ],
       "upcoming": [
@@ -6237,22 +6246,22 @@
           "name": "Lakeside 10K",
           "date": "2026-07-26",
           "days_away": 22,
-          "predicted_time": "46:20"
+          "predicted_time": "45:55"
         },
         {
           "name": "Sydney Marathon",
           "date": "2026-08-30",
           "days_away": 57,
-          "predicted_time": "3:33:10"
+          "predicted_time": "3:31:17"
         }
       ],
       "race_predictions": {
-        "5k": "22:13",
-        "10k": "46:20",
-        "half": "1:42:14",
-        "marathon": "3:33:10"
+        "5k": "22:01",
+        "10k": "45:55",
+        "half": "1:41:20",
+        "marathon": "3:31:17"
       },
-      "race_predictions_method": "threshold pace",
+      "race_predictions_method": "threshold pace + VO2max",
       "training_philosophy": "Triathlon background. Runs 5 days/week. HR-capped easy running, threshold work 1-2x/week. Strong aerobic base from multi-sport history.",
       "typical_week": {
         "Mon": "Rest",
@@ -6266,9 +6275,9 @@
       "max_hr": 160,
       "health": {
         "wellness_date": "2026-07-04",
-        "rhr": 47,
-        "rhr_7d_avg": 44.3,
-        "rhr_delta": 2.7,
+        "rhr": 45,
+        "rhr_7d_avg": 44.0,
+        "rhr_delta": 1.0,
         "hrv_today": null,
         "hrv_7d_avg": null,
         "hrv_60d_baseline": null,
@@ -6277,16 +6286,16 @@
         "hrv_trend": null,
         "sleep_score": 60.0,
         "sleep_hrs": 6.1,
-        "vo2max": null,
+        "vo2max": 53.0,
         "weight": null
       },
       "fitness": {
-        "ctl": 49.2,
-        "atl": 63.4,
-        "tsb": -14.2,
-        "ctl_trend": 1.9,
-        "atl_trend": -9.9,
-        "tsb_trend": 11.8
+        "ctl": 50.1,
+        "atl": 68.6,
+        "tsb": -18.5,
+        "ctl_trend": 2.8,
+        "atl_trend": -4.7,
+        "tsb_trend": 7.5
       },
       "wellness_60d": [
         {
@@ -6831,12 +6840,12 @@
         },
         {
           "date": "2026-07-04",
-          "rhr": 47,
+          "rhr": 45,
           "hrv": null,
           "sleep_score": 60.0,
           "sleep_hrs": 6.1,
-          "ctl": 49.2,
-          "atl": 63.4
+          "ctl": 50.1,
+          "atl": 68.6
         },
         {
           "date": "2026-07-05",
@@ -6844,11 +6853,25 @@
           "hrv": null,
           "sleep_score": null,
           "sleep_hrs": null,
-          "ctl": 51.8,
-          "atl": 76.3
+          "ctl": 52.7,
+          "atl": 80.8
         }
       ],
       "recent_activities": [
+        {
+          "date": "2026-07-04",
+          "name": "Melbourne - Easy -- 6km",
+          "type": "Run",
+          "dist_km": 6.1,
+          "duration_s": 2070,
+          "pace": 5.37,
+          "avg_hr": 112,
+          "max_hr": 123,
+          "feel": 3,
+          "effort": null,
+          "ctl": 50.116673,
+          "atl": 68.623245
+        },
         {
           "date": "2026-07-03",
           "name": "Melbourne - Cool Down",
@@ -6946,20 +6969,6 @@
           "effort": null,
           "ctl": 48.41849,
           "atl": 66.16703
-        },
-        {
-          "date": "2026-06-30",
-          "name": "Melbourne Running",
-          "type": "Run",
-          "dist_km": 5.1,
-          "duration_s": 1712,
-          "pace": 5.49,
-          "avg_hr": 137,
-          "max_hr": 156,
-          "feel": null,
-          "effort": null,
-          "ctl": 47.970764,
-          "atl": 66.039116
         }
       ],
       "upcoming": [
@@ -7045,16 +7054,21 @@
       "race_date": null,
       "days_to_race": null,
       "races": [],
-      "race_predictions": {},
-      "race_predictions_method": null,
+      "race_predictions": {
+        "5k": "21:47",
+        "10k": "45:26",
+        "half": "1:40:17",
+        "marathon": "3:29:05"
+      },
+      "race_predictions_method": "VO2max",
       "training_philosophy": "",
       "typical_week": {},
       "max_hr": null,
       "health": {
         "wellness_date": "2026-07-04",
-        "rhr": null,
-        "rhr_7d_avg": 47.4,
-        "rhr_delta": null,
+        "rhr": 54,
+        "rhr_7d_avg": 48.5,
+        "rhr_delta": 5.5,
         "hrv_today": null,
         "hrv_7d_avg": null,
         "hrv_60d_baseline": null,
@@ -7063,16 +7077,16 @@
         "hrv_trend": null,
         "sleep_score": null,
         "sleep_hrs": null,
-        "vo2max": null,
+        "vo2max": 55.0,
         "weight": null
       },
       "fitness": {
-        "ctl": 27.3,
-        "atl": 27.7,
-        "tsb": -0.4,
-        "ctl_trend": 0.6,
-        "atl_trend": -1.2,
-        "tsb_trend": 1.9
+        "ctl": 28.0,
+        "atl": 32.0,
+        "tsb": -3.9,
+        "ctl_trend": 1.4,
+        "atl_trend": 3.0,
+        "tsb_trend": -1.6
       },
       "wellness_60d": [
         {
@@ -7617,12 +7631,12 @@
         },
         {
           "date": "2026-07-04",
-          "rhr": null,
+          "rhr": 54,
           "hrv": null,
           "sleep_score": null,
           "sleep_hrs": null,
-          "ctl": 27.3,
-          "atl": 27.7
+          "ctl": 28.0,
+          "atl": 32.0
         },
         {
           "date": "2026-07-05",
@@ -7630,11 +7644,25 @@
           "hrv": null,
           "sleep_score": null,
           "sleep_hrs": null,
-          "ctl": 26.6,
-          "atl": 24.0
+          "ctl": 27.4,
+          "atl": 27.7
         }
       ],
       "recent_activities": [
+        {
+          "date": "2026-07-04",
+          "name": "Melbourne - 50' Light HR Pro",
+          "type": "Run",
+          "dist_km": 9.7,
+          "duration_s": 3120,
+          "pace": 5.22,
+          "avg_hr": 135,
+          "max_hr": 153,
+          "feel": null,
+          "effort": null,
+          "ctl": 28.04159,
+          "atl": 31.96141
+        },
         {
           "date": "2026-07-03",
           "name": "Melbourne Running",
@@ -7760,24 +7788,15 @@
           "effort": null,
           "ctl": 26.715393,
           "atl": 29.538439
-        },
-        {
-          "date": "2026-06-25",
-          "name": "Melbourne Running",
-          "type": "Run",
-          "dist_km": 9.0,
-          "duration_s": 3001,
-          "pace": 5.34,
-          "avg_hr": 122,
-          "max_hr": 131,
-          "feel": null,
-          "effort": null,
-          "ctl": 26.877203,
-          "atl": 31.00321
         }
       ],
       "upcoming": [],
-      "flags": []
+      "flags": [
+        {
+          "level": "red",
+          "text": "RHR +5.5bpm above 7d avg"
+        }
+      ]
     },
     {
       "id": "i624989",
@@ -9353,12 +9372,12 @@
         "weight": null
       },
       "fitness": {
-        "ctl": 23.9,
-        "atl": 22.9,
-        "tsb": 1.0,
-        "ctl_trend": 0.8,
-        "atl_trend": 3.7,
-        "tsb_trend": -2.9
+        "ctl": 27.4,
+        "atl": 42.5,
+        "tsb": -15.1,
+        "ctl_trend": 4.3,
+        "atl_trend": 23.3,
+        "tsb_trend": -19.0
       },
       "wellness_60d": [
         {
@@ -9907,8 +9926,8 @@
           "hrv": null,
           "sleep_score": null,
           "sleep_hrs": null,
-          "ctl": 23.9,
-          "atl": 22.9
+          "ctl": 27.4,
+          "atl": 42.5
         },
         {
           "date": "2026-07-05",
@@ -9916,8 +9935,8 @@
           "hrv": null,
           "sleep_score": null,
           "sleep_hrs": null,
-          "ctl": 25.7,
-          "atl": 33.0
+          "ctl": 29.1,
+          "atl": 50.0
         }
       ],
       "recent_activities": [],
