@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-07-04T19:10:20+10:00",
+  "generated_at": "2026-07-05T09:41:07+10:00",
   "current_week": 8,
   "today": {
     "rhr": 40,
-    "hrv_7d_avg": 79,
+    "hrv_7d_avg": 80,
     "hrv_status": null,
-    "sleep_score": 87.0,
-    "sleep_hrs": 8.1,
+    "sleep_score": 76.0,
+    "sleep_hrs": 8.2,
     "body_battery": 100,
-    "vo2max_garmin": 52,
+    "vo2max_garmin": null,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 44.7,
-    "atl": 43.2,
-    "tsb": 1.5
+    "ctl": 47.7,
+    "atl": 60.8,
+    "tsb": -13.0
   },
   "this_week_days": null,
   "weeks": [
@@ -329,8 +329,8 @@
           "dist_km": 8.0,
           "avg_hr": 121,
           "pace": 5.35,
-          "feel": 2,
-          "effort": 2.0,
+          "feel": null,
+          "effort": null,
           "decoupling_pct": null,
           "_main_dist": 8.005
         },
@@ -441,7 +441,7 @@
     {
       "wk": 8,
       "actual_km": 54.0,
-      "partial": true,
+      "partial": false,
       "quality": {
         "pace_min_per_km": 4.07,
         "avg_hr": 163,
@@ -497,12 +497,6 @@
     }
   ],
   "sleep_hrv_14d": [
-    {
-      "date": "2026-06-21",
-      "score": 82.0,
-      "hrv": 78.0,
-      "rhr": 40
-    },
     {
       "date": "2026-06-22",
       "score": 84.0,
@@ -579,6 +573,12 @@
       "date": "2026-07-04",
       "score": 87.0,
       "hrv": 82.0,
+      "rhr": 40
+    },
+    {
+      "date": "2026-07-05",
+      "score": 76.0,
+      "hrv": 79.0,
       "rhr": 40
     }
   ],
@@ -1038,25 +1038,6 @@
       "avg_cadence": 167,
       "interval_summary": [
         "1x 64s 97bpm"
-      ]
-    },
-    {
-      "date": "2026-06-20",
-      "start_local": "2026-06-20T08:11",
-      "name": "Recov",
-      "dist_km": 8.01,
-      "duration_s": 2678,
-      "avg_hr": 121,
-      "max_hr": 140,
-      "pace": 5.35,
-      "feel": 2,
-      "effort": 2.0,
-      "elevation_gain": 29.820734,
-      "avg_cadence": 166,
-      "interval_summary": [
-        "1x 28m57s 115bpm",
-        "1x 19m15s 129bpm",
-        "1x 2s 125bpm"
       ]
     }
   ]
