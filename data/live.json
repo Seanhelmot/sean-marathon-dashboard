@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-05T09:41:07+10:00",
+  "generated_at": "2026-07-05T19:47:35+10:00",
   "current_week": 8,
   "today": {
     "rhr": 40,
@@ -8,11 +8,11 @@
     "sleep_score": 76.0,
     "sleep_hrs": 8.2,
     "body_battery": 100,
-    "vo2max_garmin": null,
+    "vo2max_garmin": 52,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 47.7,
-    "atl": 60.8,
-    "tsb": -13.0
+    "ctl": 46.9,
+    "atl": 55.7,
+    "tsb": -8.9
   },
   "this_week_days": null,
   "weeks": [
@@ -440,7 +440,7 @@
     },
     {
       "wk": 8,
-      "actual_km": 54.0,
+      "actual_km": 84.0,
       "partial": false,
       "quality": {
         "pace_min_per_km": 4.07,
@@ -448,6 +448,15 @@
         "work_intervals_only": true
       },
       "days": {
+        "2026-07-05": {
+          "dist_km": 30.0,
+          "avg_hr": 136,
+          "pace": 5.09,
+          "feel": 2,
+          "effort": 8.0,
+          "decoupling_pct": 7.2,
+          "_main_dist": 30.01868
+        },
         "2026-07-04": {
           "dist_km": 8.2,
           "avg_hr": 127,
@@ -583,6 +592,35 @@
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-07-05",
+      "start_local": "2026-07-05T07:06",
+      "name": "Yarra Boulevard LR 30km",
+      "dist_km": 30.02,
+      "duration_s": 9290,
+      "avg_hr": 136,
+      "max_hr": 157,
+      "pace": 5.09,
+      "feel": 2,
+      "effort": 8.0,
+      "elevation_gain": 420.48306,
+      "avg_cadence": 169,
+      "decoupling_pct": 7.2,
+      "interval_summary": [
+        "1x 2h47m 135bpm"
+      ],
+      "km_chunks": [
+        {
+          "label": "0.0-30.0km",
+          "dist_km": 30.02,
+          "elapsed": 10042,
+          "pace": 5.1,
+          "avg_hr": 135,
+          "max_hr": 157,
+          "avg_cadence": 85
+        }
+      ]
+    },
     {
       "date": "2026-07-04",
       "start_local": "2026-07-04T07:31",
