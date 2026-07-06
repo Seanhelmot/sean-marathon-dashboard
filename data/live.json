@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-07-07T00:07:23+10:00",
+  "generated_at": "2026-07-07T09:44:46+10:00",
   "current_week": 9,
   "today": {
-    "rhr": null,
-    "hrv_7d_avg": 78,
+    "rhr": 42,
+    "hrv_7d_avg": 79,
     "hrv_status": null,
-    "sleep_score": null,
-    "sleep_hrs": null,
-    "body_battery": null,
-    "vo2max_garmin": null,
+    "sleep_score": 88.0,
+    "sleep_hrs": 7.7,
+    "body_battery": 100,
+    "vo2max_garmin": 52,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 45.8,
-    "atl": 48.3,
-    "tsb": -2.5
+    "ctl": 45.7,
+    "atl": 47.6,
+    "tsb": -1.9
   },
   "this_week_days": null,
   "weeks": [
@@ -503,6 +503,23 @@
           "_main_dist": 10.010959999999999
         }
       }
+    },
+    {
+      "wk": 9,
+      "actual_km": 12.0,
+      "partial": true,
+      "quality": null,
+      "days": {
+        "2026-07-07": {
+          "dist_km": 12.0,
+          "avg_hr": 122,
+          "pace": 5.48,
+          "feel": 2,
+          "effort": 2.0,
+          "decoupling_pct": null,
+          "_main_dist": 12.02703
+        }
+      }
     }
   ],
   "sleep_hrv_14d": [
@@ -583,9 +600,32 @@
       "score": 76.0,
       "hrv": 71.0,
       "rhr": 41
+    },
+    {
+      "date": "2026-07-07",
+      "score": 88.0,
+      "hrv": 81.0,
+      "rhr": 42
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-07-07",
+      "start_local": "2026-07-07T06:06",
+      "name": "Easy + Drills",
+      "dist_km": 12.03,
+      "duration_s": 4187,
+      "avg_hr": 122,
+      "max_hr": 142,
+      "pace": 5.48,
+      "feel": 2,
+      "effort": 2.0,
+      "elevation_gain": 69.95469,
+      "avg_cadence": 166,
+      "interval_summary": [
+        "1x 1h27m 122bpm"
+      ]
+    },
     {
       "date": "2026-07-05",
       "start_local": "2026-07-05T07:06",
