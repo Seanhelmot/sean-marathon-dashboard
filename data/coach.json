@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-06T08:24:08",
+  "generated_at": "2026-07-06T14:07:09",
   "athletes": [
     {
       "id": "i445042",
@@ -41,9 +41,9 @@
       "max_hr": 177,
       "health": {
         "wellness_date": "2026-07-06",
-        "rhr": 44,
-        "rhr_7d_avg": 40.7,
-        "rhr_delta": 3.3,
+        "rhr": 41,
+        "rhr_7d_avg": 40.2,
+        "rhr_delta": 0.8,
         "hrv_today": 71.0,
         "hrv_7d_avg": 78,
         "hrv_60d_baseline": 77.6,
@@ -606,7 +606,7 @@
         },
         {
           "date": "2026-07-06",
-          "rhr": 44,
+          "rhr": 41,
           "hrv": 71.0,
           "sleep_score": 76.0,
           "sleep_hrs": 8.5,
@@ -831,12 +831,7 @@
           "distance_m": 32000.0
         }
       ],
-      "flags": [
-        {
-          "level": "amber",
-          "text": "RHR +3.3bpm above 7d avg"
-        }
-      ]
+      "flags": []
     },
     {
       "id": "i620475",
@@ -864,9 +859,9 @@
       "max_hr": 197,
       "health": {
         "wellness_date": "2026-07-06",
-        "rhr": 68,
-        "rhr_7d_avg": 64.8,
-        "rhr_delta": 3.2,
+        "rhr": 57,
+        "rhr_7d_avg": 63.0,
+        "rhr_delta": -6.0,
         "hrv_today": 26.0,
         "hrv_7d_avg": 28,
         "hrv_60d_baseline": 29.2,
@@ -1429,7 +1424,7 @@
         },
         {
           "date": "2026-07-06",
-          "rhr": 68,
+          "rhr": 57,
           "hrv": 26.0,
           "sleep_score": 74.0,
           "sleep_hrs": 9.4,
@@ -1597,10 +1592,6 @@
         }
       ],
       "flags": [
-        {
-          "level": "amber",
-          "text": "RHR +3.2bpm above 7d avg"
-        },
         {
           "level": "red",
           "text": "HRV dropping -3.3ms (3d trend)"
@@ -3011,8 +3002,8 @@
           "hrv": null,
           "sleep_score": null,
           "sleep_hrs": null,
-          "ctl": 50.9,
-          "atl": 64.1
+          "ctl": 50.0,
+          "atl": 59.0
         }
       ],
       "recent_activities": [
@@ -3103,36 +3094,20 @@
       ],
       "upcoming": [
         {
-          "id": 118465601,
+          "id": 120873367,
           "date": "2026-07-07",
-          "name": "Warm Up",
-          "description": "Warm Up\nPress lap when ready\n- 3km 70-76% HR\n\nDrills & Strides\n3 x Knee High, 3 x Bum Kick, 10 x Leg Swings all directions, 20\" Plyo micro jumps on toes\n\n4x\n- 80mtr\n- 80mtr walk",
-          "type": "Run",
-          "distance_m": 3640.0
-        },
-        {
-          "id": 118465603,
-          "date": "2026-07-07",
-          "name": "Threshold Reps",
-          "description": "Main set\n\nMarathon base phase. Z4 threshold reps \u2014 controlled entry on rep 1, settle before pressing.\n\n5x\n- 1km 89-92% HR\n- 400mtr 70-76% HR\n\n\u2014 Coach Helmot",
-          "type": "Run",
-          "distance_m": 7000.0
-        },
-        {
-          "id": 118465604,
-          "date": "2026-07-07",
-          "name": "Cool Down",
-          "description": "Cool Down\nPress lap when ready\n- 3km 70-76% HR",
-          "type": "Run",
-          "distance_m": 3000.0
-        },
-        {
-          "id": 118465605,
-          "date": "2026-07-08",
           "name": "Easy",
           "description": "- 8km 70-76% HR\n\n\u2014 Coach Helmot",
           "type": "Run",
           "distance_m": 8000.0
+        },
+        {
+          "id": 120873461,
+          "date": "2026-07-08",
+          "name": "MLR",
+          "description": "Pre-Lakeside sharpener phase.\n\n- 12km 70-76% HR\n\n\u2014 Coach Helmot",
+          "type": "Run",
+          "distance_m": 12000.0
         },
         {
           "id": 118465607,
@@ -3151,12 +3126,12 @@
           "distance_m": 3640.0
         },
         {
-          "id": 118465610,
+          "id": 118465603,
           "date": "2026-07-10",
-          "name": "Z4 Alternations",
-          "description": "Main set\n\nMarathon base phase. Z4 efforts, Z3 float \u2014 stay controlled, don't blow the cap.\n\n8x\n- 600mtr 89-92% HR\n- 400mtr 84-88% HR\n\n\u2014 Coach Helmot",
+          "name": "Threshold Reps",
+          "description": "Main set\n\nMarathon base phase. Z4 threshold reps \u2014 controlled entry on rep 1, settle before pressing.\n\n5x\n- 1km 89-92% HR\n- 400mtr 70-76% HR\n\n\u2014 Coach Helmot",
           "type": "Run",
-          "distance_m": 8000.0
+          "distance_m": 7000.0
         },
         {
           "id": 118465611,
@@ -7133,9 +7108,9 @@
       "max_hr": null,
       "health": {
         "wellness_date": "2026-07-06",
-        "rhr": null,
-        "rhr_7d_avg": 50.2,
-        "rhr_delta": null,
+        "rhr": 48,
+        "rhr_7d_avg": 49.8,
+        "rhr_delta": -1.8,
         "hrv_today": null,
         "hrv_7d_avg": null,
         "hrv_60d_baseline": null,
@@ -7698,7 +7673,7 @@
         },
         {
           "date": "2026-07-06",
-          "rhr": null,
+          "rhr": 48,
           "hrv": null,
           "sleep_score": null,
           "sleep_hrs": null,
@@ -8554,8 +8529,8 @@
           "hrv": null,
           "sleep_score": null,
           "sleep_hrs": null,
-          "ctl": 41.2,
-          "atl": 48.2
+          "ctl": 42.1,
+          "atl": 53.2
         }
       ],
       "recent_activities": [
@@ -8710,16 +8685,8 @@
           "distance_m": 0.0
         },
         {
-          "id": 120624026,
-          "date": "2026-07-07",
-          "name": "Easy Run (~10km)",
-          "description": "- 10km Z1 HR",
-          "type": "Run",
-          "distance_m": 10000.0
-        },
-        {
           "id": 120624022,
-          "date": "2026-07-08",
+          "date": "2026-07-07",
           "name": "Warm Up + Strides (~4km)",
           "description": "Warm Up\n\nPress lap when ready\n- 3km Z1 HR\n\nDrills & Strides\n3 x Knee High, 3 x Bum Kick, 10 x Leg Swings all directions, 20\" Plyo micro jumps on toes\n\n4x\n- 80mtr\n- 80mtr walk",
           "type": "Run",
@@ -8727,7 +8694,7 @@
         },
         {
           "id": 120624023,
-          "date": "2026-07-08",
+          "date": "2026-07-07",
           "name": "3\u00d72km Threshold (~7km)",
           "description": "Main Set\n\n3x\n- 2km Z4 HR\n- 300mtr Z1 HR\n\nFirst threshold block of the campaign. Let HR settle into Z4 \u2014 don\u2019t chase it. \u00bb Coach Helmot",
           "type": "Run",
@@ -8735,11 +8702,19 @@
         },
         {
           "id": 120624025,
-          "date": "2026-07-08",
+          "date": "2026-07-07",
           "name": "Cool Down (~3km)",
           "description": "Cool Down\n\nPress lap when ready\n- 3km Z1 HR",
           "type": "Run",
           "distance_m": 3000.0
+        },
+        {
+          "id": 120624026,
+          "date": "2026-07-08",
+          "name": "Easy Run (~10km)",
+          "description": "- 10km Z1 HR",
+          "type": "Run",
+          "distance_m": 10000.0
         },
         {
           "id": 120624028,
@@ -9621,7 +9596,7 @@
       "typical_week": {},
       "max_hr": null,
       "health": {
-        "wellness_date": "2026-07-06",
+        "wellness_date": null,
         "rhr": null,
         "rhr_7d_avg": null,
         "rhr_delta": null,
@@ -9637,600 +9612,16 @@
         "weight": null
       },
       "fitness": {
-        "ctl": 28.4,
-        "atl": 43.3,
-        "tsb": -14.9,
-        "ctl_trend": 4.9,
-        "atl_trend": 21.7,
-        "tsb_trend": -16.7
+        "ctl": null,
+        "atl": null,
+        "tsb": null,
+        "ctl_trend": null,
+        "atl_trend": null,
+        "tsb_trend": null
       },
-      "wellness_60d": [
-        {
-          "date": "2026-05-07",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 17.0,
-          "atl": 19.8
-        },
-        {
-          "date": "2026-05-08",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 16.6,
-          "atl": 17.2
-        },
-        {
-          "date": "2026-05-09",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 17.0,
-          "atl": 19.6
-        },
-        {
-          "date": "2026-05-10",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 16.6,
-          "atl": 17.0
-        },
-        {
-          "date": "2026-05-11",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 16.2,
-          "atl": 14.7
-        },
-        {
-          "date": "2026-05-12",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 17.3,
-          "atl": 21.1
-        },
-        {
-          "date": "2026-05-13",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 16.9,
-          "atl": 18.3
-        },
-        {
-          "date": "2026-05-14",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 17.7,
-          "atl": 22.3
-        },
-        {
-          "date": "2026-05-15",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 17.2,
-          "atl": 19.3
-        },
-        {
-          "date": "2026-05-16",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 19.9,
-          "atl": 34.3
-        },
-        {
-          "date": "2026-05-17",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 19.5,
-          "atl": 29.7
-        },
-        {
-          "date": "2026-05-18",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 19.9,
-          "atl": 30.6
-        },
-        {
-          "date": "2026-05-19",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 19.4,
-          "atl": 26.5
-        },
-        {
-          "date": "2026-05-20",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 18.9,
-          "atl": 23.0
-        },
-        {
-          "date": "2026-05-21",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 19.6,
-          "atl": 25.9
-        },
-        {
-          "date": "2026-05-22",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 19.1,
-          "atl": 22.5
-        },
-        {
-          "date": "2026-05-23",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 21.3,
-          "atl": 34.6
-        },
-        {
-          "date": "2026-05-24",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 20.8,
-          "atl": 30.0
-        },
-        {
-          "date": "2026-05-25",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 20.3,
-          "atl": 26.0
-        },
-        {
-          "date": "2026-05-26",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 21.0,
-          "atl": 28.8
-        },
-        {
-          "date": "2026-05-27",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 20.5,
-          "atl": 25.0
-        },
-        {
-          "date": "2026-05-28",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 21.3,
-          "atl": 29.2
-        },
-        {
-          "date": "2026-05-29",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 20.8,
-          "atl": 25.4
-        },
-        {
-          "date": "2026-05-30",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 22.9,
-          "atl": 36.8
-        },
-        {
-          "date": "2026-05-31",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 22.4,
-          "atl": 31.9
-        },
-        {
-          "date": "2026-06-01",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 23.1,
-          "atl": 34.7
-        },
-        {
-          "date": "2026-06-02",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 22.6,
-          "atl": 30.1
-        },
-        {
-          "date": "2026-06-03",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 22.1,
-          "atl": 26.1
-        },
-        {
-          "date": "2026-06-04",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 21.5,
-          "atl": 22.6
-        },
-        {
-          "date": "2026-06-05",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 21.0,
-          "atl": 19.6
-        },
-        {
-          "date": "2026-06-06",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 23.6,
-          "atl": 34.4
-        },
-        {
-          "date": "2026-06-07",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 24.5,
-          "atl": 37.8
-        },
-        {
-          "date": "2026-06-08",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 23.9,
-          "atl": 32.8
-        },
-        {
-          "date": "2026-06-09",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 23.3,
-          "atl": 28.4
-        },
-        {
-          "date": "2026-06-10",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 24.4,
-          "atl": 34.0
-        },
-        {
-          "date": "2026-06-11",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 23.9,
-          "atl": 29.4
-        },
-        {
-          "date": "2026-06-12",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 25.0,
-          "atl": 35.4
-        },
-        {
-          "date": "2026-06-13",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 24.4,
-          "atl": 30.7
-        },
-        {
-          "date": "2026-06-14",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 23.9,
-          "atl": 26.6
-        },
-        {
-          "date": "2026-06-15",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 23.3,
-          "atl": 23.0
-        },
-        {
-          "date": "2026-06-16",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 24.0,
-          "atl": 26.9
-        },
-        {
-          "date": "2026-06-17",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 24.6,
-          "atl": 29.8
-        },
-        {
-          "date": "2026-06-18",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 25.3,
-          "atl": 33.5
-        },
-        {
-          "date": "2026-06-19",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 24.7,
-          "atl": 29.0
-        },
-        {
-          "date": "2026-06-20",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 24.2,
-          "atl": 25.1
-        },
-        {
-          "date": "2026-06-21",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 23.6,
-          "atl": 21.8
-        },
-        {
-          "date": "2026-06-22",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 23.7,
-          "atl": 22.9
-        },
-        {
-          "date": "2026-06-23",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 24.5,
-          "atl": 27.4
-        },
-        {
-          "date": "2026-06-24",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 23.9,
-          "atl": 23.8
-        },
-        {
-          "date": "2026-06-25",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 24.3,
-          "atl": 25.5
-        },
-        {
-          "date": "2026-06-26",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 23.7,
-          "atl": 22.1
-        },
-        {
-          "date": "2026-06-27",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 23.1,
-          "atl": 19.2
-        },
-        {
-          "date": "2026-06-28",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 24.1,
-          "atl": 25.0
-        },
-        {
-          "date": "2026-06-29",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 23.5,
-          "atl": 21.7
-        },
-        {
-          "date": "2026-06-30",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 24.7,
-          "atl": 28.5
-        },
-        {
-          "date": "2026-07-01",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 24.1,
-          "atl": 24.7
-        },
-        {
-          "date": "2026-07-02",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 25.1,
-          "atl": 30.5
-        },
-        {
-          "date": "2026-07-03",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 24.5,
-          "atl": 26.4
-        },
-        {
-          "date": "2026-07-04",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 27.4,
-          "atl": 42.5
-        },
-        {
-          "date": "2026-07-05",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 29.1,
-          "atl": 50.0
-        },
-        {
-          "date": "2026-07-06",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 28.4,
-          "atl": 43.3
-        },
-        {
-          "date": "2026-07-07",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 28.9,
-          "atl": 44.1
-        }
-      ],
+      "wellness_60d": [],
       "recent_activities": [],
-      "upcoming": [
-        {
-          "id": 119048445,
-          "date": "2026-07-07",
-          "name": "Easy Run \u2014 40min",
-          "description": "Phase: Base Building \u2014 Week 2\n\n- 40m 5:30-5:45/km Pace\n\nEasy throughout. Notice how your body feels compared to last week \u2014 that is adaptation. Coach Helmot.",
-          "type": "Run",
-          "distance_m": 7114.6245
-        },
-        {
-          "id": 119048447,
-          "date": "2026-07-09",
-          "name": "Moderate Run \u2014 50min",
-          "description": "Phase: Base Building \u2014 Week 2\n\n- 5m Z2 Pace\n- 40m 5:05-5:20/km Pace\n- 5m Z2 Pace\n\nTry to hold the main block pace comfortably throughout. If it feels too easy, trust the process. Coach Helmot.",
-          "type": "Run",
-          "distance_m": 9393.392
-        },
-        {
-          "id": 119048448,
-          "date": "2026-07-12",
-          "name": "Long Run \u2014 80min",
-          "description": "Phase: Base Building \u2014 Week 2\n\n- 80m 5:30-5:45/km Pace\n\nRun by time. The last 20 minutes should feel the same effort as the first 20. Coach Helmot.",
-          "type": "Run",
-          "distance_m": 14229.249
-        }
-      ],
+      "upcoming": [],
       "flags": []
     }
   ]
