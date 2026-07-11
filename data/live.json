@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-11T09:32:21+10:00",
+  "generated_at": "2026-07-11T17:22:44+10:00",
   "current_week": 9,
   "today": {
     "rhr": 41,
@@ -8,11 +8,11 @@
     "sleep_score": 79.0,
     "sleep_hrs": 6.8,
     "body_battery": 97,
-    "vo2max_garmin": null,
+    "vo2max_garmin": 53,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 42.5,
-    "atl": 41.3,
-    "tsb": 1.2
+    "ctl": 42.3,
+    "atl": 39.9,
+    "tsb": 2.4
   },
   "this_week_days": null,
   "weeks": [
@@ -497,10 +497,19 @@
     },
     {
       "wk": 9,
-      "actual_km": 42.3,
+      "actual_km": 48.4,
       "partial": true,
       "quality": null,
       "days": {
+        "2026-07-11": {
+          "dist_km": 6.0,
+          "avg_hr": 118,
+          "pace": 5.27,
+          "feel": 2,
+          "effort": 2.0,
+          "decoupling_pct": null,
+          "_main_dist": 6.0096099999999995
+        },
         "2026-07-10": {
           "dist_km": 10.0,
           "avg_hr": 118,
@@ -627,6 +636,25 @@
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-07-11",
+      "start_local": "2026-07-11T08:34",
+      "name": "Easy 6km HR",
+      "dist_km": 6.01,
+      "duration_s": 1964,
+      "avg_hr": 118,
+      "max_hr": 131,
+      "pace": 5.27,
+      "feel": 2,
+      "effort": 2.0,
+      "elevation_gain": 21.29515,
+      "avg_cadence": 168,
+      "interval_summary": [
+        "1x 39m53s 116bpm",
+        "1x 9m12s 120bpm",
+        "1x 3s 126bpm"
+      ]
+    },
     {
       "date": "2026-07-10",
       "start_local": "2026-07-10T07:55",
