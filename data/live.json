@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-12T08:32:04+10:00",
+  "generated_at": "2026-07-12T17:50:34+10:00",
   "current_week": 9,
   "today": {
     "rhr": 40,
@@ -8,11 +8,11 @@
     "sleep_score": 72.0,
     "sleep_hrs": 8.9,
     "body_battery": 99,
-    "vo2max_garmin": null,
+    "vo2max_garmin": 53,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 48.0,
-    "atl": 72.9,
-    "tsb": -24.9
+    "ctl": 45.0,
+    "atl": 56.0,
+    "tsb": -10.9
   },
   "this_week_days": null,
   "weeks": [
@@ -488,10 +488,19 @@
     },
     {
       "wk": 9,
-      "actual_km": 48.4,
+      "actual_km": 81.0,
       "partial": false,
       "quality": null,
       "days": {
+        "2026-07-12": {
+          "dist_km": 32.6,
+          "avg_hr": 131,
+          "pace": 5.53,
+          "feel": 3,
+          "effort": 8.0,
+          "decoupling_pct": -0.2,
+          "_main_dist": 0.5925900000000001
+        },
         "2026-07-11": {
           "dist_km": 6.0,
           "avg_hr": 118,
@@ -627,6 +636,108 @@
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-07-12",
+      "start_local": "2026-07-12T09:51",
+      "name": "Melbourne Running",
+      "dist_km": 0.59,
+      "duration_s": 209,
+      "avg_hr": 131,
+      "max_hr": 138,
+      "pace": 5.53,
+      "feel": 2,
+      "effort": 1.0,
+      "elevation_gain": 6.37172,
+      "avg_cadence": 162,
+      "interval_summary": [
+        "1x 4m54s 130bpm"
+      ]
+    },
+    {
+      "date": "2026-07-12",
+      "start_local": "2026-07-12T07:00",
+      "name": "Easy Long Run 32km HR",
+      "dist_km": 32.02,
+      "duration_s": 9593,
+      "avg_hr": 141,
+      "max_hr": 163,
+      "pace": 5.0,
+      "feel": 3,
+      "effort": 8.0,
+      "elevation_gain": 212.87617,
+      "avg_cadence": 170,
+      "decoupling_pct": -0.2,
+      "interval_summary": [
+        "1x 43m59s 132bpm",
+        "6x 20m45s 144bpm",
+        "1x 3s 160bpm"
+      ],
+      "km_chunks": [
+        {
+          "label": "0.0-8.0km",
+          "dist_km": 8.0,
+          "elapsed": 2639,
+          "pace": 5.13,
+          "avg_hr": 132,
+          "max_hr": 142,
+          "avg_cadence": 85
+        },
+        {
+          "label": "8.0-12.0km",
+          "dist_km": 4.0,
+          "elapsed": 1443,
+          "pace": 5.06,
+          "avg_hr": 134,
+          "max_hr": 142,
+          "avg_cadence": 85
+        },
+        {
+          "label": "12.0-16.0km",
+          "dist_km": 4.0,
+          "elapsed": 1226,
+          "pace": 5.06,
+          "avg_hr": 139,
+          "max_hr": 144,
+          "avg_cadence": 85
+        },
+        {
+          "label": "16.0-20.0km",
+          "dist_km": 4.0,
+          "elapsed": 1202,
+          "pace": 5.01,
+          "avg_hr": 143,
+          "max_hr": 147,
+          "avg_cadence": 85
+        },
+        {
+          "label": "20.0-24.0km",
+          "dist_km": 4.0,
+          "elapsed": 1335,
+          "pace": 4.54,
+          "avg_hr": 143,
+          "max_hr": 152,
+          "avg_cadence": 85
+        },
+        {
+          "label": "24.0-28.0km",
+          "dist_km": 4.0,
+          "elapsed": 1126,
+          "pace": 4.41,
+          "avg_hr": 151,
+          "max_hr": 157,
+          "avg_cadence": 86
+        },
+        {
+          "label": "28.0-32.0km",
+          "dist_km": 4.0,
+          "elapsed": 1135,
+          "pace": 4.44,
+          "avg_hr": 155,
+          "max_hr": 163,
+          "avg_cadence": 86
+        }
+      ]
+    },
     {
       "date": "2026-07-11",
       "start_local": "2026-07-11T08:34",
