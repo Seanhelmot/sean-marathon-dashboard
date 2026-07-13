@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-07-13T21:42:43+10:00",
+  "generated_at": "2026-07-14T09:16:53+10:00",
   "current_week": 10,
   "today": {
-    "rhr": 41,
+    "rhr": 40,
     "hrv_7d_avg": 77,
     "hrv_status": null,
-    "sleep_score": 65.0,
-    "sleep_hrs": 8.8,
-    "body_battery": 89,
-    "vo2max_garmin": null,
+    "sleep_score": 82.0,
+    "sleep_hrs": 8.4,
+    "body_battery": 100,
+    "vo2max_garmin": 53,
     "vo2max_note": "lab-tested 58.4 (2022)",
     "ctl": 44.0,
-    "atl": 48.5,
-    "tsb": -4.6
+    "atl": 47.8,
+    "tsb": -3.8
   },
   "this_week_days": null,
   "weeks": [
@@ -530,15 +530,26 @@
           "_main_dist": 12.02703
         }
       }
+    },
+    {
+      "wk": 10,
+      "actual_km": 12.2,
+      "partial": true,
+      "quality": null,
+      "days": {
+        "2026-07-14": {
+          "dist_km": 12.2,
+          "avg_hr": 125,
+          "pace": 5.22,
+          "feel": 2,
+          "effort": 4.0,
+          "decoupling_pct": null,
+          "_main_dist": 12.1861
+        }
+      }
     }
   ],
   "sleep_hrv_14d": [
-    {
-      "date": "2026-06-30",
-      "score": 84.0,
-      "hrv": 85.0,
-      "rhr": 41
-    },
     {
       "date": "2026-07-01",
       "score": 83.0,
@@ -616,9 +627,33 @@
       "score": 65.0,
       "hrv": 74.0,
       "rhr": 41
+    },
+    {
+      "date": "2026-07-14",
+      "score": 82.0,
+      "hrv": 77.0,
+      "rhr": 40
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-07-14",
+      "start_local": "2026-07-14T06:04",
+      "name": "Easy Run 12km",
+      "dist_km": 12.19,
+      "duration_s": 3927,
+      "avg_hr": 125,
+      "max_hr": 159,
+      "pace": 5.22,
+      "feel": 2,
+      "effort": 4.0,
+      "elevation_gain": 70.18648,
+      "avg_cadence": 167,
+      "interval_summary": [
+        "1x 27m2s 115bpm",
+        "1x 1h 128bpm"
+      ]
+    },
     {
       "date": "2026-07-12",
       "start_local": "2026-07-12T09:51",
