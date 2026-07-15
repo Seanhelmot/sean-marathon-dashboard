@@ -1,30 +1,26 @@
 {
-  "generated_at": "2026-07-15T17:29:57+10:00",
+  "generated_at": "2026-07-16T09:35:20+10:00",
   "current_week": 10,
   "today": {
-    "rhr": 39,
+    "rhr": 41,
     "hrv_7d_avg": 79,
     "hrv_status": null,
-    "sleep_score": 88.0,
-    "sleep_hrs": 8.8,
-    "body_battery": 100,
+    "sleep_score": 84.0,
+    "sleep_hrs": 7.9,
+    "body_battery": 95,
     "vo2max_garmin": 53,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 44.3,
-    "atl": 49.4,
-    "tsb": -5.1
+    "ctl": 43.9,
+    "atl": 46.0,
+    "tsb": -2.2
   },
   "this_week_days": null,
   "weeks": [
     {
       "wk": 2,
-      "actual_km": 43.1,
+      "actual_km": 31.0,
       "partial": false,
-      "quality": {
-        "pace_min_per_km": 5.17,
-        "avg_hr": 142,
-        "work_intervals_only": false
-      },
+      "quality": null,
       "days": {
         "2026-05-24": {
           "dist_km": 15.0,
@@ -52,15 +48,6 @@
           "effort": null,
           "decoupling_pct": null,
           "_main_dist": 6.0068
-        },
-        "2026-05-20": {
-          "dist_km": 12.0,
-          "avg_hr": 142,
-          "pace": 5.17,
-          "feel": null,
-          "effort": null,
-          "decoupling_pct": null,
-          "_main_dist": 12.03443
         }
       }
     },
@@ -399,9 +386,9 @@
       "actual_km": 84.0,
       "partial": false,
       "quality": {
-        "pace_min_per_km": 4.07,
-        "avg_hr": 163,
-        "work_intervals_only": true
+        "pace_min_per_km": 4.24,
+        "avg_hr": 159,
+        "work_intervals_only": false
       },
       "days": {
         "2026-07-05": {
@@ -444,8 +431,8 @@
           "dist_km": 15.7,
           "avg_hr": 134,
           "pace": 5.47,
-          "feel": 2,
-          "effort": 2.0,
+          "feel": null,
+          "effort": null,
           "decoupling_pct": null,
           "_main_dist": 3.01674
         },
@@ -524,7 +511,7 @@
     },
     {
       "wk": 10,
-      "actual_km": 24.3,
+      "actual_km": 32.3,
       "partial": true,
       "quality": {
         "pace_min_per_km": 3.47,
@@ -532,6 +519,15 @@
         "work_intervals_only": true
       },
       "days": {
+        "2026-07-16": {
+          "dist_km": 8.0,
+          "avg_hr": 117,
+          "pace": 5.48,
+          "feel": 2,
+          "effort": 2.0,
+          "decoupling_pct": null,
+          "_main_dist": 8.009310000000001
+        },
         "2026-07-15": {
           "dist_km": 12.0,
           "avg_hr": 131,
@@ -554,12 +550,6 @@
     }
   ],
   "sleep_hrv_14d": [
-    {
-      "date": "2026-07-02",
-      "score": 89.0,
-      "hrv": 82.0,
-      "rhr": 40
-    },
     {
       "date": "2026-07-03",
       "score": 88.0,
@@ -637,9 +627,33 @@
       "score": 88.0,
       "hrv": 85.0,
       "rhr": 39
+    },
+    {
+      "date": "2026-07-16",
+      "score": 84.0,
+      "hrv": 84.0,
+      "rhr": 41
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-07-16",
+      "start_local": "2026-07-16T07:23",
+      "name": "Recovery Run 8km",
+      "dist_km": 8.01,
+      "duration_s": 2787,
+      "avg_hr": 117,
+      "max_hr": 132,
+      "pace": 5.48,
+      "feel": 2,
+      "effort": 2.0,
+      "elevation_gain": 30.042023,
+      "avg_cadence": 164,
+      "interval_summary": [
+        "1x 51m45s 116bpm",
+        "1x 3s 120bpm"
+      ]
+    },
     {
       "date": "2026-07-15",
       "start_local": "2026-07-15T08:25",
@@ -1079,97 +1093,6 @@
       "avg_cadence": 166,
       "interval_summary": [
         "1x 51m38s 116bpm"
-      ]
-    },
-    {
-      "date": "2026-07-01",
-      "start_local": "2026-07-01T08:43",
-      "name": "Warm Up + Strides",
-      "dist_km": 3.02,
-      "duration_s": 1048,
-      "avg_hr": 134,
-      "max_hr": 139,
-      "pace": 5.47,
-      "feel": 2,
-      "effort": 2.0,
-      "elevation_gain": 31.29259,
-      "avg_cadence": 165,
-      "interval_summary": [
-        "1x 19m18s 133bpm"
-      ]
-    },
-    {
-      "date": "2026-07-01",
-      "start_local": "2026-07-01T07:57",
-      "name": "Melbourne - Race Effort 4x2km",
-      "dist_km": 9.44,
-      "duration_s": 2495,
-      "avg_hr": 159,
-      "max_hr": 171,
-      "pace": 4.24,
-      "feel": 2,
-      "effort": 8.0,
-      "elevation_gain": 50.627098,
-      "avg_cadence": 178,
-      "interval_summary": [
-        "4x 8m7s 162bpm",
-        "3x 3m1s 146bpm",
-        "1x 7s 167bpm"
-      ],
-      "work_laps": [
-        {
-          "rep": 1,
-          "dist_km": 2.01,
-          "pace": 4.01,
-          "avg_hr": 156,
-          "max_hr": 166,
-          "avg_cadence": 183
-        },
-        {
-          "rep": 2,
-          "dist_km": 1.99,
-          "pace": 4.05,
-          "avg_hr": 164,
-          "max_hr": 169,
-          "avg_cadence": 182
-        },
-        {
-          "rep": 3,
-          "dist_km": 1.99,
-          "pace": 4.07,
-          "avg_hr": 165,
-          "max_hr": 169,
-          "avg_cadence": 183
-        },
-        {
-          "rep": 4,
-          "dist_km": 1.99,
-          "pace": 4.08,
-          "avg_hr": 166,
-          "max_hr": 170,
-          "avg_cadence": 180
-        }
-      ]
-    },
-    {
-      "date": "2026-07-01",
-      "start_local": "2026-07-01T07:23",
-      "name": "Cool Down",
-      "dist_km": 3.3,
-      "duration_s": 1104,
-      "avg_hr": 116,
-      "max_hr": 128,
-      "pace": 5.35,
-      "feel": 2,
-      "effort": 2.0,
-      "elevation_gain": 36.965622,
-      "avg_cadence": 168,
-      "interval_summary": [
-        "1x 29m11s 116bpm",
-        "3x 15s 96bpm",
-        "1x 44s 110bpm",
-        "1x 12s 110bpm",
-        "1x 57s 102bpm"
       ]
     }
   ]
