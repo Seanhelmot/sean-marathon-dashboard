@@ -1,24 +1,24 @@
 {
-  "generated_at": "2026-07-16T17:37:48+10:00",
+  "generated_at": "2026-07-17T09:14:06+10:00",
   "current_week": 10,
   "today": {
     "rhr": 41,
-    "hrv_7d_avg": 79,
+    "hrv_7d_avg": 78,
     "hrv_status": null,
-    "sleep_score": 84.0,
-    "sleep_hrs": 7.9,
-    "body_battery": 95,
+    "sleep_score": 78.0,
+    "sleep_hrs": 8.1,
+    "body_battery": 97,
     "vo2max_garmin": 53,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 43.9,
-    "atl": 46.0,
-    "tsb": -2.2
+    "ctl": 43.4,
+    "atl": 42.8,
+    "tsb": 0.5
   },
   "this_week_days": null,
   "weeks": [
     {
       "wk": 2,
-      "actual_km": 31.0,
+      "actual_km": 25.0,
       "partial": false,
       "quality": null,
       "days": {
@@ -39,15 +39,6 @@
           "effort": null,
           "decoupling_pct": null,
           "_main_dist": 10.02027
-        },
-        "2026-05-21": {
-          "dist_km": 6.0,
-          "avg_hr": 126,
-          "pace": 5.46,
-          "feel": null,
-          "effort": null,
-          "decoupling_pct": null,
-          "_main_dist": 6.0068
         }
       }
     },
@@ -422,8 +413,8 @@
           "dist_km": 8.0,
           "avg_hr": 116,
           "pace": 5.49,
-          "feel": 2,
-          "effort": 2.0,
+          "feel": null,
+          "effort": null,
           "decoupling_pct": null,
           "_main_dist": 8.048869999999999
         },
@@ -511,7 +502,7 @@
     },
     {
       "wk": 10,
-      "actual_km": 32.3,
+      "actual_km": 39.7,
       "partial": true,
       "quality": {
         "pace_min_per_km": 3.47,
@@ -519,6 +510,15 @@
         "work_intervals_only": true
       },
       "days": {
+        "2026-07-17": {
+          "dist_km": 7.4,
+          "avg_hr": 117,
+          "pace": 5.4,
+          "feel": 2,
+          "effort": 2.0,
+          "decoupling_pct": null,
+          "_main_dist": 7.39748
+        },
         "2026-07-16": {
           "dist_km": 8.0,
           "avg_hr": 117,
@@ -550,12 +550,6 @@
     }
   ],
   "sleep_hrv_14d": [
-    {
-      "date": "2026-07-03",
-      "score": 88.0,
-      "hrv": 84.0,
-      "rhr": 39
-    },
     {
       "date": "2026-07-04",
       "score": 87.0,
@@ -633,9 +627,37 @@
       "score": 84.0,
       "hrv": 84.0,
       "rhr": 41
+    },
+    {
+      "date": "2026-07-17",
+      "score": 78.0,
+      "hrv": 75.0,
+      "rhr": 41
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-07-17",
+      "start_local": "2026-07-17T07:41",
+      "name": "Easy + Strides 7km",
+      "dist_km": 7.4,
+      "duration_s": 2512,
+      "avg_hr": 117,
+      "max_hr": 129,
+      "pace": 5.4,
+      "feel": 2,
+      "effort": 2.0,
+      "elevation_gain": 32.463997,
+      "avg_cadence": 166,
+      "interval_summary": [
+        "1x 48m25s 117bpm",
+        "1x 85s 83bpm",
+        "1x 12s 81bpm",
+        "1x 3m30s 86bpm",
+        "2x 2m15s 94bpm",
+        "1x 15s 114bpm"
+      ]
+    },
     {
       "date": "2026-07-16",
       "start_local": "2026-07-16T07:23",
@@ -1076,23 +1098,6 @@
         "1x 98s 102bpm",
         "1x 38s 124bpm",
         "1x 7m11s 126bpm"
-      ]
-    },
-    {
-      "date": "2026-07-02",
-      "start_local": "2026-07-02T06:55",
-      "name": "Easy + Drills + Gym",
-      "dist_km": 8.05,
-      "duration_s": 2812,
-      "avg_hr": 116,
-      "max_hr": 127,
-      "pace": 5.49,
-      "feel": 2,
-      "effort": 2.0,
-      "elevation_gain": 35.23427,
-      "avg_cadence": 166,
-      "interval_summary": [
-        "1x 51m38s 116bpm"
       ]
     }
   ]
