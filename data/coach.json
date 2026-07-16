@@ -1,23 +1,23 @@
 {
-  "generated_at": "2026-07-15T23:33:02",
+  "generated_at": "2026-07-16T07:37:22",
   "athletes": [
     {
       "id": "i445042",
       "name": "Sean Helmot",
       "race": "Lakeside 10K",
       "race_date": "2026-07-26",
-      "days_to_race": 11,
+      "days_to_race": 10,
       "races": [
         {
           "name": "Lakeside 10K",
           "date": "2026-07-26",
-          "days_away": 11,
+          "days_away": 10,
           "predicted_time": "44:35"
         },
         {
           "name": "Melbourne Marathon",
           "date": "2026-10-11",
-          "days_away": 88,
+          "days_away": 87,
           "predicted_time": "3:25:09"
         }
       ],
@@ -40,39 +40,30 @@
       },
       "max_hr": 177,
       "health": {
-        "wellness_date": "2026-07-15",
-        "rhr": 39,
+        "wellness_date": "2026-07-16",
+        "rhr": 41,
         "rhr_7d_avg": 40.3,
-        "rhr_delta": -1.3,
-        "hrv_today": 85.0,
-        "hrv_7d_avg": 79,
-        "hrv_60d_baseline": 77.6,
-        "hrv_60d_sd": 6.9,
-        "hrv_60d_n": 62,
+        "rhr_delta": 0.7,
+        "hrv_today": 84.0,
+        "hrv_7d_avg": 78,
+        "hrv_60d_baseline": 77.4,
+        "hrv_60d_sd": 6.8,
+        "hrv_60d_n": 61,
         "hrv_trend": 7.7,
-        "sleep_score": 88.0,
-        "sleep_hrs": 8.8,
+        "sleep_score": 84.0,
+        "sleep_hrs": 7.9,
         "vo2max": 53.0,
         "weight": null
       },
       "fitness": {
-        "ctl": 44.3,
-        "atl": 49.4,
-        "tsb": -5.1,
-        "ctl_trend": 0.8,
-        "atl_trend": 1.2,
-        "tsb_trend": -0.4
+        "ctl": 43.9,
+        "atl": 46.0,
+        "tsb": -2.2,
+        "ctl_trend": 0.7,
+        "atl_trend": 0.8,
+        "tsb_trend": -0.1
       },
       "wellness_60d": [
-        {
-          "date": "2026-05-16",
-          "rhr": 40,
-          "hrv": 88.0,
-          "sleep_score": 83.0,
-          "sleep_hrs": 7.4,
-          "ctl": 34.1,
-          "atl": 32.7
-        },
         {
           "date": "2026-05-17",
           "rhr": 41,
@@ -621,6 +612,15 @@
           "sleep_hrs": 7.9,
           "ctl": 43.9,
           "atl": 46.0
+        },
+        {
+          "date": "2026-07-17",
+          "rhr": null,
+          "hrv": null,
+          "sleep_score": null,
+          "sleep_hrs": null,
+          "ctl": 43.7,
+          "atl": 44.8
         }
       ],
       "recent_activities": [
@@ -767,30 +767,6 @@
       ],
       "upcoming": [
         {
-          "id": 121517744,
-          "date": "2026-07-15",
-          "name": "Warm Up + Strides + Primers 4km",
-          "description": "- 3km 78.5-87.7% Pace\n\nStrides\n\n4x\n- 80mtr 95.3-100% Pace\n- 80mtr Walk\n\nRace Primers\n\n3x\n- 200mtr 93-98% HR\n- 60s Walk",
-          "type": "Run",
-          "distance_m": 4240.0
-        },
-        {
-          "id": 120079220,
-          "date": "2026-07-15",
-          "name": "Race Reps 5x1km HR",
-          "description": "Main set\n\nNear-maximal efforts, full 3min recovery.\n\n5x\n- 1km 93-98% HR\n- 2m walk",
-          "type": "Run",
-          "distance_m": 5000.0
-        },
-        {
-          "id": 117994427,
-          "date": "2026-07-15",
-          "name": "Cool Down 2km",
-          "description": "- 2km 78.5-87.7% Pace",
-          "type": "Run",
-          "distance_m": 2000.0
-        },
-        {
           "id": 121600996,
           "date": "2026-07-16",
           "name": "Recovery Run 8km",
@@ -853,6 +829,14 @@
           "description": "- 2km 78.5-87.7% Pace",
           "type": "Run",
           "distance_m": 2000.0
+        },
+        {
+          "id": 117994439,
+          "date": "2026-07-23",
+          "name": "Easy 5km HR",
+          "description": "- 5km 74-84% HR",
+          "type": "Run",
+          "distance_m": 5000.0
         }
       ],
       "flags": []
@@ -867,54 +851,45 @@
         {
           "name": "Gold Coast Marathon",
           "date": "2026-07-05",
-          "days_away": -10,
-          "predicted_time": "3:55:23"
+          "days_away": -11,
+          "predicted_time": "4:19:24"
         }
       ],
       "race_predictions": {
-        "5k": "24:32",
-        "10k": "51:09",
-        "half": "1:52:54",
-        "marathon": "3:55:23"
+        "5k": "27:02",
+        "10k": "56:23",
+        "half": "2:04:25",
+        "marathon": "4:19:24"
       },
-      "race_predictions_method": "threshold pace + VO2max",
+      "race_predictions_method": "threshold pace, adjusted for freshness",
       "training_philosophy": "HR-capped easy runs, explicit pace targets for quality. Joe Friel 7-zone system. LTHR 180, MaxHR 197.",
       "typical_week": {},
       "max_hr": 197,
       "health": {
-        "wellness_date": "2026-07-15",
-        "rhr": 60,
+        "wellness_date": "2026-07-16",
+        "rhr": 62,
         "rhr_7d_avg": 60.0,
-        "rhr_delta": 0.0,
-        "hrv_today": 31.0,
-        "hrv_7d_avg": 32,
+        "rhr_delta": 2.0,
+        "hrv_today": 30.0,
+        "hrv_7d_avg": 31,
         "hrv_60d_baseline": 29.6,
         "hrv_60d_sd": 2.9,
-        "hrv_60d_n": 59,
+        "hrv_60d_n": 58,
         "hrv_trend": -2.7,
-        "sleep_score": 76.0,
-        "sleep_hrs": 7.3,
-        "vo2max": 49.0,
+        "sleep_score": 78.0,
+        "sleep_hrs": 8.8,
+        "vo2max": null,
         "weight": null
       },
       "fitness": {
-        "ctl": 47.7,
-        "atl": 39.9,
-        "tsb": 7.7,
+        "ctl": 46.5,
+        "atl": 34.6,
+        "tsb": 11.9,
         "ctl_trend": -4.0,
-        "atl_trend": -19.2,
-        "tsb_trend": 15.2
+        "atl_trend": -17.4,
+        "tsb_trend": 13.4
       },
       "wellness_60d": [
-        {
-          "date": "2026-05-16",
-          "rhr": 64,
-          "hrv": 29.0,
-          "sleep_score": 76.0,
-          "sleep_hrs": 7.6,
-          "ctl": 45.7,
-          "atl": 36.3
-        },
         {
           "date": "2026-05-17",
           "rhr": 68,
@@ -1463,6 +1438,15 @@
           "sleep_hrs": 8.8,
           "ctl": 46.5,
           "atl": 34.6
+        },
+        {
+          "date": "2026-07-17",
+          "rhr": null,
+          "hrv": null,
+          "sleep_score": null,
+          "sleep_hrs": null,
+          "ctl": 46.0,
+          "atl": 33.2
         }
       ],
       "recent_activities": [
@@ -1538,22 +1522,6 @@
         }
       ],
       "upcoming": [
-        {
-          "id": 119052526,
-          "date": "2026-07-15",
-          "name": "Easy Run \u2014 40min",
-          "description": "Phase: Post-Marathon Recovery \u2014 Week 2\n\n- 40m Z1 HR\n\nStepping up 5 minutes from Monday. Heart rate first \u2014 slow down before you let it creep up. Coach Helmot.",
-          "type": "Run",
-          "distance_m": 0.0
-        },
-        {
-          "id": 122220057,
-          "date": "2026-07-15",
-          "name": "MSR Strength 2",
-          "description": "Overview\nCovers what Strength A does not -- your core, upper back, and calves. These are the muscles that hold your posture together in the final kilometres when everything wants to collapse forward. The upper back work is especially important: strong rhomboids and mid-traps keep your arm drive efficient and your chest open when you are fatigued.\n\nWhen to do it\nDo this on an easy day between your two hardest sessions of the week. It is core and upper body dominant so it will not affect your legs, making it the most flexible of the four sessions to place.\n\n---\n\nSingle-Leg Calf Raise -- 3x15 each leg\nStand near a wall for balance. Lift one foot slightly off the ground and rise up slowly onto the toes of your standing foot. Lower with control -- do not drop. If this is easy, do it from the edge of a step for a greater range of motion.\n\nSide Plank -- 3x30s each side\nLie on your side and prop yourself up on your forearm, elbow directly under your shoulder. Stack your feet or stagger them for balance. Lift your hips so your body forms a straight line from head to feet. Hold. If too hard, drop your bottom knee to the floor.\n\nBand Pull-Apart -- 3x15\nHold the band at chest height with both hands, arms straight and shoulder-width apart. Pull the band apart by squeezing your shoulder blades together until your arms form a T shape. Hold for 1 second at the end, then return slowly. Keep your elbows straight throughout.\n\nBanded Row -- 3x12 each side\nAnchor the band around a door handle or post at waist height. Hold one end, step back until there is tension, and stand tall. Pull your elbow straight back, squeezing your shoulder blade at the end. Return slowly. Complete all reps on one side before switching.\n\nSuperman -- 3x10\nLie face down with arms extended overhead. Simultaneously lift your arms, chest, and legs off the floor, squeezing your glutes and lower back. Hold for 2 seconds at the top, then lower slowly. Keep the movement controlled -- this is not about height, it is about tension.\n\nCoach Helmot",
-          "type": "WeightTraining",
-          "distance_m": 0.0
-        },
         {
           "id": 119052527,
           "date": "2026-07-17",
@@ -1634,49 +1602,40 @@
       "days_to_race": null,
       "races": [],
       "race_predictions": {
-        "5k": "21:05",
-        "10k": "43:58",
-        "half": "1:37:02",
-        "marathon": "3:22:18"
+        "5k": "20:23",
+        "10k": "42:30",
+        "half": "1:33:47",
+        "marathon": "3:15:31"
       },
-      "race_predictions_method": "threshold pace + VO2max",
+      "race_predictions_method": "threshold pace",
       "training_philosophy": "HR-capped easy runs. Joe Friel 7-zone system. LTHR 170, MaxHR 188. London Marathon 2023: 3:10 (4:27/km avg, 164 avg HR).",
       "typical_week": {},
       "max_hr": 188,
       "health": {
-        "wellness_date": "2026-07-15",
+        "wellness_date": "2026-07-16",
         "rhr": 47,
         "rhr_7d_avg": 46.0,
         "rhr_delta": 1.0,
-        "hrv_today": 74.0,
-        "hrv_7d_avg": 73,
-        "hrv_60d_baseline": 71.5,
+        "hrv_today": 69.0,
+        "hrv_7d_avg": 72,
+        "hrv_60d_baseline": 71.7,
         "hrv_60d_sd": 7.6,
-        "hrv_60d_n": 62,
+        "hrv_60d_n": 61,
         "hrv_trend": 4.3,
-        "sleep_score": 96.0,
-        "sleep_hrs": 7.7,
-        "vo2max": 55.0,
+        "sleep_score": 84.0,
+        "sleep_hrs": 7.5,
+        "vo2max": null,
         "weight": null
       },
       "fitness": {
-        "ctl": 42.9,
-        "atl": 55.0,
-        "tsb": -12.1,
-        "ctl_trend": 5.0,
-        "atl_trend": 26.5,
-        "tsb_trend": -21.5
+        "ctl": 41.9,
+        "atl": 47.6,
+        "tsb": -5.8,
+        "ctl_trend": 0.1,
+        "atl_trend": -3.8,
+        "tsb_trend": 3.9
       },
       "wellness_60d": [
-        {
-          "date": "2026-05-16",
-          "rhr": 48,
-          "hrv": 64.0,
-          "sleep_score": 76.0,
-          "sleep_hrs": 6.4,
-          "ctl": 39.6,
-          "atl": 43.4
-        },
         {
           "date": "2026-05-17",
           "rhr": 49,
@@ -2225,6 +2184,15 @@
           "sleep_hrs": 7.5,
           "ctl": 41.9,
           "atl": 47.6
+        },
+        {
+          "date": "2026-07-17",
+          "rhr": null,
+          "hrv": null,
+          "sleep_score": null,
+          "sleep_hrs": null,
+          "ctl": 40.9,
+          "atl": 41.3
         }
       ],
       "recent_activities": [
@@ -2371,30 +2339,6 @@
       ],
       "upcoming": [
         {
-          "id": 118476087,
-          "date": "2026-07-15",
-          "name": "Warm Up 3km HR",
-          "description": "Warm Up\nPress lap when ready\n- 3km 70-77% HR\n\nDrills & Strides\n3 x Knee High, 3 x Bum Kick, 10 x Leg Swings all directions, 20\" Plyo micro jumps on toes\n\n4x\n- 80mtr\n- 80mtr walk",
-          "type": "Run",
-          "distance_m": 3640.0
-        },
-        {
-          "id": 118476088,
-          "date": "2026-07-15",
-          "name": "Marathon Tempo 10km HR",
-          "description": "Main set\n\nMarathon specific phase. 10km sustained at marathon effort \u2014 Z4 HR throughout.\nThis is your race effort. Hold 86-90% HR and stay controlled \u2014 do not let it drift above 90%.\n\n- 10km 86-90% HR\n\n-- Coach Helmot",
-          "type": "Run",
-          "distance_m": 10000.0
-        },
-        {
-          "id": 118476089,
-          "date": "2026-07-15",
-          "name": "Cool Down 3km HR",
-          "description": "Cool Down\nPress lap when ready\n- 3km 70-77% HR",
-          "type": "Run",
-          "distance_m": 3000.0
-        },
-        {
           "id": 122218803,
           "date": "2026-07-16",
           "name": "MSR Mobility 2",
@@ -2481,6 +2425,22 @@
           "description": "Cool Down\nPress lap when ready\n- 5km 70-77% HR",
           "type": "Run",
           "distance_m": 5000.0
+        },
+        {
+          "id": 118476105,
+          "date": "2026-07-23",
+          "name": "Easy 8km HR",
+          "description": "- 8km 70-77% HR\n\n-- Coach Helmot",
+          "type": "Run",
+          "distance_m": 8000.0
+        },
+        {
+          "id": 122218812,
+          "date": "2026-07-23",
+          "name": "MSR Strength 2",
+          "description": "Overview\nCovers what Strength A does not -- your core, upper back, and calves. These are the muscles that hold your posture together in the final kilometres when everything wants to collapse forward. The upper back work is especially important: strong rhomboids and mid-traps keep your arm drive efficient and your chest open when you are fatigued.\n\nWhen to do it\nDo this on an easy day between your two hardest sessions of the week. It is core and upper body dominant so it will not affect your legs, making it the most flexible of the four sessions to place.\n\n---\n\nSingle-Leg Calf Raise -- 3x15 each leg\nStand near a wall for balance. Lift one foot slightly off the ground and rise up slowly onto the toes of your standing foot. Lower with control -- do not drop. If this is easy, do it from the edge of a step for a greater range of motion.\n\nSide Plank -- 3x30s each side\nLie on your side and prop yourself up on your forearm, elbow directly under your shoulder. Stack your feet or stagger them for balance. Lift your hips so your body forms a straight line from head to feet. Hold. If too hard, drop your bottom knee to the floor.\n\nBand Pull-Apart -- 3x15\nHold the band at chest height with both hands, arms straight and shoulder-width apart. Pull the band apart by squeezing your shoulder blades together until your arms form a T shape. Hold for 1 second at the end, then return slowly. Keep your elbows straight throughout.\n\nBanded Row -- 3x12 each side\nAnchor the band around a door handle or post at waist height. Hold one end, step back until there is tension, and stand tall. Pull your elbow straight back, squeezing your shoulder blade at the end. Return slowly. Complete all reps on one side before switching.\n\nSuperman -- 3x10\nLie face down with arms extended overhead. Simultaneously lift your arms, chest, and legs off the floor, squeezing your glutes and lower back. Hold for 2 seconds at the top, then lower slowly. Keep the movement controlled -- this is not about height, it is about tension.\n\nCoach Helmot",
+          "type": "WeightTraining",
+          "distance_m": 0.0
         }
       ],
       "flags": []
@@ -2493,49 +2453,40 @@
       "days_to_race": null,
       "races": [],
       "race_predictions": {
-        "5k": "20:52",
-        "10k": "43:32",
-        "half": "1:36:04",
-        "marathon": "3:20:18"
+        "5k": "19:59",
+        "10k": "41:40",
+        "half": "1:31:56",
+        "marathon": "3:11:41"
       },
-      "race_predictions_method": "threshold pace + VO2max",
+      "race_predictions_method": "threshold pace",
       "training_philosophy": "",
       "typical_week": {},
       "max_hr": 180,
       "health": {
-        "wellness_date": "2026-07-15",
+        "wellness_date": "2026-07-16",
         "rhr": 38,
-        "rhr_7d_avg": 38.3,
-        "rhr_delta": -0.3,
+        "rhr_7d_avg": 38.0,
+        "rhr_delta": 0.0,
         "hrv_today": 53.0,
-        "hrv_7d_avg": 53,
+        "hrv_7d_avg": 54,
         "hrv_60d_baseline": 45.9,
-        "hrv_60d_sd": 9.0,
-        "hrv_60d_n": 62,
+        "hrv_60d_sd": 9.1,
+        "hrv_60d_n": 61,
         "hrv_trend": -1.7,
-        "sleep_score": 53.0,
-        "sleep_hrs": 7.0,
-        "vo2max": 56.0,
-        "weight": 83.639
+        "sleep_score": 85.0,
+        "sleep_hrs": 7.5,
+        "vo2max": null,
+        "weight": 83.43
       },
       "fitness": {
-        "ctl": 52.6,
-        "atl": 63.2,
-        "tsb": -10.6,
-        "ctl_trend": 2.1,
-        "atl_trend": 3.0,
-        "tsb_trend": -0.9
+        "ctl": 52.0,
+        "atl": 58.6,
+        "tsb": -6.6,
+        "ctl_trend": 1.9,
+        "atl_trend": 1.5,
+        "tsb_trend": 0.3
       },
       "wellness_60d": [
-        {
-          "date": "2026-05-16",
-          "rhr": 40,
-          "hrv": 47.0,
-          "sleep_score": 81.0,
-          "sleep_hrs": 7.6,
-          "ctl": 47.4,
-          "atl": 57.7
-        },
         {
           "date": "2026-05-17",
           "rhr": 44,
@@ -3084,6 +3035,15 @@
           "sleep_hrs": 7.5,
           "ctl": 52.0,
           "atl": 58.6
+        },
+        {
+          "date": "2026-07-17",
+          "rhr": null,
+          "hrv": null,
+          "sleep_score": null,
+          "sleep_hrs": null,
+          "ctl": 53.2,
+          "atl": 64.0
         }
       ],
       "recent_activities": [
@@ -3187,22 +3147,6 @@
         }
       ],
       "upcoming": [
-        {
-          "id": 118465615,
-          "date": "2026-07-15",
-          "name": "Easy 8km HR",
-          "description": "- 8km 70-76% HR\n\n\u2014 Coach Helmot",
-          "type": "Run",
-          "distance_m": 8000.0
-        },
-        {
-          "id": 122218933,
-          "date": "2026-07-15",
-          "name": "MSR Strength 1",
-          "description": "Overview\nTargets the muscles that keep your running form intact when you are tired -- glutes, hip abductors, and single-leg stability. Weakness here shows up as knee drift, hip drop, and lower back pain in the back half of races. Twenty minutes once a week will make a measurable difference over a full campaign.\n\nWhen to do it\nDo this on a rest or easy day, with at least one day between this session and your next quality run or long run. Never the day before a hard effort.\n\n---\n\nGlute Bridge -- 3x15\nLie on your back with knees bent and feet flat on the floor, hip-width apart. Drive through your heels to lift your hips until your body forms a straight line from knees to shoulders. Squeeze your glutes at the top, hold for 1 second, then lower slowly.\n\nClamshell with Band -- 3x15 each side\nPlace the band just above your knees. Lie on your side with hips stacked, knees bent to 90 degrees. Keeping your feet together, rotate your top knee upward as far as you can without your hips rolling back. Lower with control. Keep your core braced throughout.\n\nLateral Band Walk -- 3x15 steps each direction\nPlace the band just above your ankles. Stand with feet hip-width apart and a slight bend in your knees. Step sideways, maintaining tension in the band at all times -- do not let your feet come together. Walk 15 steps one way, then return.\n\nBodyweight Squat -- 3x15\nStand with feet shoulder-width apart, toes turned out slightly. Sit back and down as if lowering onto a chair, keeping your chest tall and knees tracking over your toes. Lower until thighs are parallel to the floor (or as low as comfortable), then drive back up through your heels.\n\nBird Dog -- 3x10 each side\nStart on all fours with hands under shoulders and knees under hips. Slowly extend your right arm forward and left leg back simultaneously, keeping your back flat and hips level. Hold for 2 seconds, return, then repeat on the other side. Move slowly -- control is everything here.\n\nCoach Helmot",
-          "type": "WeightTraining",
-          "distance_m": 0.0
-        },
         {
           "id": 118465619,
           "date": "2026-07-16",
@@ -3314,6 +3258,22 @@
           "description": "Cool Down\nPress lap when ready\n- 3km 70-76% HR",
           "type": "Run",
           "distance_m": 3000.0
+        },
+        {
+          "id": 118465628,
+          "date": "2026-07-23",
+          "name": "Easy 10km HR",
+          "description": "- 10km 70-76% HR\n\n\u2014 Coach Helmot",
+          "type": "Run",
+          "distance_m": 10000.0
+        },
+        {
+          "id": 122218942,
+          "date": "2026-07-23",
+          "name": "MSR Strength 2",
+          "description": "Overview\nCovers what Strength A does not -- your core, upper back, and calves. These are the muscles that hold your posture together in the final kilometres when everything wants to collapse forward. The upper back work is especially important: strong rhomboids and mid-traps keep your arm drive efficient and your chest open when you are fatigued.\n\nWhen to do it\nDo this on an easy day between your two hardest sessions of the week. It is core and upper body dominant so it will not affect your legs, making it the most flexible of the four sessions to place.\n\n---\n\nSingle-Leg Calf Raise -- 3x15 each leg\nStand near a wall for balance. Lift one foot slightly off the ground and rise up slowly onto the toes of your standing foot. Lower with control -- do not drop. If this is easy, do it from the edge of a step for a greater range of motion.\n\nSide Plank -- 3x30s each side\nLie on your side and prop yourself up on your forearm, elbow directly under your shoulder. Stack your feet or stagger them for balance. Lift your hips so your body forms a straight line from head to feet. Hold. If too hard, drop your bottom knee to the floor.\n\nBand Pull-Apart -- 3x15\nHold the band at chest height with both hands, arms straight and shoulder-width apart. Pull the band apart by squeezing your shoulder blades together until your arms form a T shape. Hold for 1 second at the end, then return slowly. Keep your elbows straight throughout.\n\nBanded Row -- 3x12 each side\nAnchor the band around a door handle or post at waist height. Hold one end, step back until there is tension, and stand tall. Pull your elbow straight back, squeezing your shoulder blade at the end. Return slowly. Complete all reps on one side before switching.\n\nSuperman -- 3x10\nLie face down with arms extended overhead. Simultaneously lift your arms, chest, and legs off the floor, squeezing your glutes and lower back. Hold for 2 seconds at the top, then lower slowly. Keep the movement controlled -- this is not about height, it is about tension.\n\nCoach Helmot",
+          "type": "WeightTraining",
+          "distance_m": 0.0
         }
       ],
       "flags": []
@@ -3323,18 +3283,18 @@
       "name": "Rohan Cooper",
       "race": "Lakeside 10K",
       "race_date": "2026-07-26",
-      "days_to_race": 11,
+      "days_to_race": 10,
       "races": [
         {
           "name": "Lakeside 10K",
           "date": "2026-07-26",
-          "days_away": 11,
+          "days_away": 10,
           "predicted_time": "43:05"
         },
         {
           "name": "Melbourne Marathon",
           "date": "2026-09-20",
-          "days_away": 67,
+          "days_away": 66,
           "predicted_time": "3:18:14"
         }
       ],
@@ -3349,39 +3309,30 @@
       "typical_week": {},
       "max_hr": 170,
       "health": {
-        "wellness_date": "2026-07-15",
+        "wellness_date": "2026-07-16",
         "rhr": 41,
-        "rhr_7d_avg": 39.4,
-        "rhr_delta": 1.6,
-        "hrv_today": 51.0,
-        "hrv_7d_avg": 57,
-        "hrv_60d_baseline": 59.5,
-        "hrv_60d_sd": 6.0,
-        "hrv_60d_n": 62,
+        "rhr_7d_avg": 39.5,
+        "rhr_delta": 1.5,
+        "hrv_today": 50.0,
+        "hrv_7d_avg": 55,
+        "hrv_60d_baseline": 59.6,
+        "hrv_60d_sd": 6.1,
+        "hrv_60d_n": 61,
         "hrv_trend": 0.0,
-        "sleep_score": 71.0,
-        "sleep_hrs": 6.9,
+        "sleep_score": 78.0,
+        "sleep_hrs": 7.3,
         "vo2max": 58.0,
         "weight": null
       },
       "fitness": {
-        "ctl": 55.7,
-        "atl": 66.9,
-        "tsb": -11.2,
-        "ctl_trend": 2.2,
-        "atl_trend": 2.7,
-        "tsb_trend": -0.5
+        "ctl": 56.4,
+        "atl": 69.1,
+        "tsb": -12.8,
+        "ctl_trend": 3.2,
+        "atl_trend": 7.9,
+        "tsb_trend": -4.8
       },
       "wellness_60d": [
-        {
-          "date": "2026-05-16",
-          "rhr": 39,
-          "hrv": 58.0,
-          "sleep_score": 87.0,
-          "sleep_hrs": 8.8,
-          "ctl": 49.5,
-          "atl": 32.7
-        },
         {
           "date": "2026-05-17",
           "rhr": 37,
@@ -3930,6 +3881,15 @@
           "sleep_hrs": 7.3,
           "ctl": 56.4,
           "atl": 69.1
+        },
+        {
+          "date": "2026-07-17",
+          "rhr": null,
+          "hrv": null,
+          "sleep_score": null,
+          "sleep_hrs": null,
+          "ctl": 56.2,
+          "atl": 66.5
         }
       ],
       "recent_activities": [
@@ -4076,22 +4036,6 @@
       ],
       "upcoming": [
         {
-          "id": 118246140,
-          "date": "2026-07-15",
-          "name": "MLR 16km",
-          "description": "On tired legs from yesterday. HR cap Z1.\n\n- 16km Z1 HR",
-          "type": "Run",
-          "distance_m": 16000.0
-        },
-        {
-          "id": 122219453,
-          "date": "2026-07-15",
-          "name": "MSR Strength 1",
-          "description": "Overview\nTargets the muscles that keep your running form intact when you are tired -- glutes, hip abductors, and single-leg stability. Weakness here shows up as knee drift, hip drop, and lower back pain in the back half of races. Twenty minutes once a week will make a measurable difference over a full campaign.\n\nWhen to do it\nDo this on a rest or easy day, with at least one day between this session and your next quality run or long run. Never the day before a hard effort.\n\n---\n\nGlute Bridge -- 3x15\nLie on your back with knees bent and feet flat on the floor, hip-width apart. Drive through your heels to lift your hips until your body forms a straight line from knees to shoulders. Squeeze your glutes at the top, hold for 1 second, then lower slowly.\n\nClamshell with Band -- 3x15 each side\nPlace the band just above your knees. Lie on your side with hips stacked, knees bent to 90 degrees. Keeping your feet together, rotate your top knee upward as far as you can without your hips rolling back. Lower with control. Keep your core braced throughout.\n\nLateral Band Walk -- 3x15 steps each direction\nPlace the band just above your ankles. Stand with feet hip-width apart and a slight bend in your knees. Step sideways, maintaining tension in the band at all times -- do not let your feet come together. Walk 15 steps one way, then return.\n\nBodyweight Squat -- 3x15\nStand with feet shoulder-width apart, toes turned out slightly. Sit back and down as if lowering onto a chair, keeping your chest tall and knees tracking over your toes. Lower until thighs are parallel to the floor (or as low as comfortable), then drive back up through your heels.\n\nBird Dog -- 3x10 each side\nStart on all fours with hands under shoulders and knees under hips. Slowly extend your right arm forward and left leg back simultaneously, keeping your back flat and hips level. Hold for 2 seconds, return, then repeat on the other side. Move slowly -- control is everything here.\n\nCoach Helmot",
-          "type": "WeightTraining",
-          "distance_m": 0.0
-        },
-        {
           "id": 118246141,
           "date": "2026-07-16",
           "name": "Easy 10km",
@@ -4210,6 +4154,22 @@
           "description": "- 2km Z1 HR",
           "type": "Run",
           "distance_m": 2000.0
+        },
+        {
+          "id": 118246161,
+          "date": "2026-07-23",
+          "name": "Very Easy 4km",
+          "description": "- 4km Z1 HR",
+          "type": "Run",
+          "distance_m": 4000.0
+        },
+        {
+          "id": 122219463,
+          "date": "2026-07-23",
+          "name": "MSR Strength 2",
+          "description": "Overview\nCovers what Strength A does not -- your core, upper back, and calves. These are the muscles that hold your posture together in the final kilometres when everything wants to collapse forward. The upper back work is especially important: strong rhomboids and mid-traps keep your arm drive efficient and your chest open when you are fatigued.\n\nWhen to do it\nDo this on an easy day between your two hardest sessions of the week. It is core and upper body dominant so it will not affect your legs, making it the most flexible of the four sessions to place.\n\n---\n\nSingle-Leg Calf Raise -- 3x15 each leg\nStand near a wall for balance. Lift one foot slightly off the ground and rise up slowly onto the toes of your standing foot. Lower with control -- do not drop. If this is easy, do it from the edge of a step for a greater range of motion.\n\nSide Plank -- 3x30s each side\nLie on your side and prop yourself up on your forearm, elbow directly under your shoulder. Stack your feet or stagger them for balance. Lift your hips so your body forms a straight line from head to feet. Hold. If too hard, drop your bottom knee to the floor.\n\nBand Pull-Apart -- 3x15\nHold the band at chest height with both hands, arms straight and shoulder-width apart. Pull the band apart by squeezing your shoulder blades together until your arms form a T shape. Hold for 1 second at the end, then return slowly. Keep your elbows straight throughout.\n\nBanded Row -- 3x12 each side\nAnchor the band around a door handle or post at waist height. Hold one end, step back until there is tension, and stand tall. Pull your elbow straight back, squeezing your shoulder blade at the end. Return slowly. Complete all reps on one side before switching.\n\nSuperman -- 3x10\nLie face down with arms extended overhead. Simultaneously lift your arms, chest, and legs off the floor, squeezing your glutes and lower back. Hold for 2 seconds at the top, then lower slowly. Keep the movement controlled -- this is not about height, it is about tension.\n\nCoach Helmot",
+          "type": "WeightTraining",
+          "distance_m": 0.0
         }
       ],
       "flags": []
@@ -4219,27 +4179,27 @@
       "name": "Matt W",
       "race": "Lakeside 10K",
       "race_date": "2026-07-26",
-      "days_to_race": 11,
+      "days_to_race": 10,
       "races": [
         {
           "name": "Lakeside 10K",
           "date": "2026-07-26",
-          "days_away": 11,
-          "predicted_time": "46:20"
+          "days_away": 10,
+          "predicted_time": "47:01"
         }
       ],
       "race_predictions": {
-        "5k": "22:13",
-        "10k": "46:20",
-        "half": "1:42:14",
-        "marathon": "3:33:10"
+        "5k": "22:33",
+        "10k": "47:01",
+        "half": "1:43:46",
+        "marathon": "3:36:22"
       },
-      "race_predictions_method": "threshold pace",
+      "race_predictions_method": "threshold pace, adjusted for fatigue",
       "training_philosophy": "",
       "typical_week": {},
       "max_hr": 183,
       "health": {
-        "wellness_date": "2026-07-15",
+        "wellness_date": "2026-07-16",
         "rhr": null,
         "rhr_7d_avg": null,
         "rhr_delta": null,
@@ -4255,23 +4215,14 @@
         "weight": null
       },
       "fitness": {
-        "ctl": 39.1,
-        "atl": 59.0,
-        "tsb": -19.9,
-        "ctl_trend": 5.4,
-        "atl_trend": 17.7,
-        "tsb_trend": -12.3
+        "ctl": 40.0,
+        "atl": 61.5,
+        "tsb": -21.5,
+        "ctl_trend": 6.4,
+        "atl_trend": 22.1,
+        "tsb_trend": -15.6
       },
       "wellness_60d": [
-        {
-          "date": "2026-05-16",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": null,
-          "atl": null
-        },
         {
           "date": "2026-05-17",
           "rhr": null,
@@ -4809,8 +4760,8 @@
           "hrv": null,
           "sleep_score": null,
           "sleep_hrs": null,
-          "ctl": 39.1,
-          "atl": 59.0
+          "ctl": 38.9,
+          "atl": 58.2
         },
         {
           "date": "2026-07-16",
@@ -4818,11 +4769,34 @@
           "hrv": null,
           "sleep_score": null,
           "sleep_hrs": null,
-          "ctl": 38.7,
-          "atl": 54.3
+          "ctl": 40.0,
+          "atl": 61.5
+        },
+        {
+          "date": "2026-07-17",
+          "rhr": null,
+          "hrv": null,
+          "sleep_score": null,
+          "sleep_hrs": null,
+          "ctl": 39.6,
+          "atl": 56.5
         }
       ],
       "recent_activities": [
+        {
+          "date": "2026-07-16",
+          "name": "Run",
+          "type": "Run",
+          "dist_km": 8.0,
+          "duration_s": 2521,
+          "pace": 5.06,
+          "avg_hr": 132,
+          "max_hr": 143,
+          "feel": null,
+          "effort": null,
+          "ctl": 39.96356,
+          "atl": 61.49999
+        },
         {
           "date": "2026-07-15",
           "name": "Run",
@@ -4834,8 +4808,8 @@
           "max_hr": 140,
           "feel": 4,
           "effort": null,
-          "ctl": 39.067757,
-          "atl": 58.997074
+          "ctl": 38.926586,
+          "atl": 58.19834
         },
         {
           "date": "2026-07-15",
@@ -4848,8 +4822,8 @@
           "max_hr": 156,
           "feel": 4,
           "effort": null,
-          "ctl": 39.067757,
-          "atl": 58.997074
+          "ctl": 38.926586,
+          "atl": 58.19834
         },
         {
           "date": "2026-07-15",
@@ -4862,8 +4836,8 @@
           "max_hr": 127,
           "feel": 4,
           "effort": null,
-          "ctl": 39.067757,
-          "atl": 58.997074
+          "ctl": 38.926586,
+          "atl": 58.19834
         },
         {
           "date": "2026-07-13",
@@ -4948,47 +4922,9 @@
           "effort": null,
           "ctl": 33.91867,
           "atl": 45.90691
-        },
-        {
-          "date": "2026-07-06",
-          "name": "Run",
-          "type": "Run",
-          "dist_km": 6.9,
-          "duration_s": 2052,
-          "pace": 4.49,
-          "avg_hr": 142,
-          "max_hr": 150,
-          "feel": 3,
-          "effort": null,
-          "ctl": 33.91867,
-          "atl": 45.90691
         }
       ],
       "upcoming": [
-        {
-          "id": 119016773,
-          "date": "2026-07-15",
-          "name": "Warm Up 2km",
-          "description": "Warm Up\n\n- 2km Z1 HR\n\nDrills & Strides\n\n3 x Knee High, 3 x Bum Kick, 10 x Leg Swings all directions, 20\" Plyo micro jumps on toes\n\n4x\n- 60mtr\n- 60mtr Walk",
-          "type": "Run",
-          "distance_m": 2480.0
-        },
-        {
-          "id": 119016774,
-          "date": "2026-07-15",
-          "name": "Strong Progressive 14km",
-          "description": "Main Set\n\nBuild through each block. Block 4 earns its place -- don't skip ahead.\n\nBlock 1\n- 4km 5:25-5:45/km Pace\n\nBlock 2\n- 4km 5:15-5:30/km Pace\n\nBlock 3\n- 3km 4:50-4:57/km Pace\n\nBlock 4\n- 3km 4:38-4:44/km Pace",
-          "type": "Run",
-          "distance_m": 14000.0
-        },
-        {
-          "id": 119016775,
-          "date": "2026-07-15",
-          "name": "Cool Down 2km",
-          "description": "Cool Down\n\n- 2km Z1 HR",
-          "type": "Run",
-          "distance_m": 2000.0
-        },
         {
           "id": 119016776,
           "date": "2026-07-16",
@@ -5068,9 +5004,30 @@
           "description": "Overview\nTargets the muscles that keep your running form intact when you are tired -- glutes, hip abductors, and single-leg stability. Weakness here shows up as knee drift, hip drop, and lower back pain in the back half of races. Twenty minutes once a week will make a measurable difference over a full campaign.\n\nWhen to do it\nDo this on a rest or easy day, with at least one day between this session and your next quality run or long run. Never the day before a hard effort.\n\n---\n\nGlute Bridge -- 3x15\nLie on your back with knees bent and feet flat on the floor, hip-width apart. Drive through your heels to lift your hips until your body forms a straight line from knees to shoulders. Squeeze your glutes at the top, hold for 1 second, then lower slowly.\n\nClamshell with Band -- 3x15 each side\nPlace the band just above your knees. Lie on your side with hips stacked, knees bent to 90 degrees. Keeping your feet together, rotate your top knee upward as far as you can without your hips rolling back. Lower with control. Keep your core braced throughout.\n\nLateral Band Walk -- 3x15 steps each direction\nPlace the band just above your ankles. Stand with feet hip-width apart and a slight bend in your knees. Step sideways, maintaining tension in the band at all times -- do not let your feet come together. Walk 15 steps one way, then return.\n\nBodyweight Squat -- 3x15\nStand with feet shoulder-width apart, toes turned out slightly. Sit back and down as if lowering onto a chair, keeping your chest tall and knees tracking over your toes. Lower until thighs are parallel to the floor (or as low as comfortable), then drive back up through your heels.\n\nBird Dog -- 3x10 each side\nStart on all fours with hands under shoulders and knees under hips. Slowly extend your right arm forward and left leg back simultaneously, keeping your back flat and hips level. Hold for 2 seconds, return, then repeat on the other side. Move slowly -- control is everything here.\n\nCoach Helmot",
           "type": "WeightTraining",
           "distance_m": 0.0
+        },
+        {
+          "id": 119016786,
+          "date": "2026-07-23",
+          "name": "Easy 6km",
+          "description": "- 6km Z1 HR",
+          "type": "Run",
+          "distance_m": 6000.0
+        },
+        {
+          "id": 122219270,
+          "date": "2026-07-23",
+          "name": "MSR Mobility 2",
+          "description": "Overview\nFocuses on the calf-Achilles-foot complex and thoracic spine -- two areas runners consistently neglect until something goes wrong. Tight calves and stiff thoracic spine both reduce running economy and increase injury risk. The foot work with the spiky ball is particularly valuable if you carry any history of plantar fasciitis or Achilles tightness.\n\nWhen to do it\nDo this after an easy run during the week. Never skip this one if your calves or Achilles feel tight during a training block -- that tightness is the warning sign this session is designed to address.\n\n---\n\nCalf Roll -- 60s each leg  |  Foam roller\nSit on the floor with one calf resting on the roller. Lift yourself slightly on your hands so your weight presses into the roller. Roll slowly from ankle to just below the knee, rotating your leg slightly to cover the full calf.\n\nFoot Roll -- 60s each foot  |  Spiky ball\nStand with the spiky ball under the arch of one foot. Apply as much bodyweight as comfortable and roll slowly from heel to ball of foot, pausing on tender spots. Hold a wall for balance if needed.\n\nThoracic Roll -- 60s  |  Foam roller\nSit with the roller across your mid-back just below your shoulder blades. Support your head with hands behind your neck. Let your upper back extend gently over the roller and move it up a few centimetres at a time. Mid and upper back only -- not the lower back.\n\nCalf Stretch -- 2x45s each leg\nStand facing a wall with both hands on it. Step one foot back, keep that leg straight and press the heel firmly into the floor. Lean gently into the wall until you feel the stretch in the calf.\n\nSoleus Stretch -- 2x45s each leg\nSame position as the calf stretch but bend the back knee slightly while keeping the heel down. This targets the deeper calf muscle -- often tighter than the upper calf in runners and frequently missed.\n\nCoach Helmot",
+          "type": "Yoga",
+          "distance_m": 0.0
         }
       ],
-      "flags": []
+      "flags": [
+        {
+          "level": "amber",
+          "text": "High fatigue (TSB -21.5)"
+        }
+      ]
     },
     {
       "id": "i622855",
@@ -5080,49 +5037,40 @@
       "days_to_race": null,
       "races": [],
       "race_predictions": {
-        "5k": "20:55",
-        "10k": "43:36",
-        "half": "1:36:14",
-        "marathon": "3:20:38"
+        "5k": "19:59",
+        "10k": "41:40",
+        "half": "1:31:56",
+        "marathon": "3:11:41"
       },
-      "race_predictions_method": "threshold pace + VO2max",
+      "race_predictions_method": "threshold pace",
       "training_philosophy": "",
       "typical_week": {},
       "max_hr": null,
       "health": {
-        "wellness_date": "2026-07-15",
-        "rhr": 51,
-        "rhr_7d_avg": 51.6,
-        "rhr_delta": -0.6,
-        "hrv_today": 72.8,
+        "wellness_date": "2026-07-16",
+        "rhr": 50,
+        "rhr_7d_avg": 51.3,
+        "rhr_delta": -1.3,
+        "hrv_today": 84.5,
         "hrv_7d_avg": 66,
         "hrv_60d_baseline": null,
         "hrv_60d_sd": null,
         "hrv_60d_n": 6,
         "hrv_trend": 21.1,
         "sleep_score": null,
-        "sleep_hrs": 8.1,
-        "vo2max": 52.0,
+        "sleep_hrs": 6.2,
+        "vo2max": null,
         "weight": null
       },
       "fitness": {
-        "ctl": 25.8,
-        "atl": 31.2,
-        "tsb": -5.4,
-        "ctl_trend": 2.2,
-        "atl_trend": 9.4,
-        "tsb_trend": -7.2
+        "ctl": 26.6,
+        "atl": 34.9,
+        "tsb": -8.4,
+        "ctl_trend": 2.9,
+        "atl_trend": 12.0,
+        "tsb_trend": -9.2
       },
       "wellness_60d": [
-        {
-          "date": "2026-05-16",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 23.2,
-          "atl": 15.8
-        },
         {
           "date": "2026-05-17",
           "rhr": null,
@@ -5665,12 +5613,21 @@
         },
         {
           "date": "2026-07-16",
-          "rhr": null,
+          "rhr": 50,
           "hrv": 84.5,
           "sleep_score": null,
           "sleep_hrs": 6.2,
           "ctl": 26.6,
           "atl": 34.9
+        },
+        {
+          "date": "2026-07-17",
+          "rhr": null,
+          "hrv": null,
+          "sleep_score": null,
+          "sleep_hrs": null,
+          "ctl": 27.0,
+          "atl": 36.5
         }
       ],
       "recent_activities": [
@@ -5775,22 +5732,6 @@
       ],
       "upcoming": [
         {
-          "id": 119020955,
-          "date": "2026-07-15",
-          "name": "Easy 8km",
-          "description": "- 8km Z1 HR",
-          "type": "Run",
-          "distance_m": 8000.0
-        },
-        {
-          "id": 122220349,
-          "date": "2026-07-15",
-          "name": "MSR Strength 1",
-          "description": "Overview\nTargets the muscles that keep your running form intact when you are tired -- glutes, hip abductors, and single-leg stability. Weakness here shows up as knee drift, hip drop, and lower back pain in the back half of races. Twenty minutes once a week will make a measurable difference over a full campaign.\n\nWhen to do it\nDo this on a rest or easy day, with at least one day between this session and your next quality run or long run. Never the day before a hard effort.\n\n---\n\nGlute Bridge -- 3x15\nLie on your back with knees bent and feet flat on the floor, hip-width apart. Drive through your heels to lift your hips until your body forms a straight line from knees to shoulders. Squeeze your glutes at the top, hold for 1 second, then lower slowly.\n\nClamshell with Band -- 3x15 each side\nPlace the band just above your knees. Lie on your side with hips stacked, knees bent to 90 degrees. Keeping your feet together, rotate your top knee upward as far as you can without your hips rolling back. Lower with control. Keep your core braced throughout.\n\nLateral Band Walk -- 3x15 steps each direction\nPlace the band just above your ankles. Stand with feet hip-width apart and a slight bend in your knees. Step sideways, maintaining tension in the band at all times -- do not let your feet come together. Walk 15 steps one way, then return.\n\nBodyweight Squat -- 3x15\nStand with feet shoulder-width apart, toes turned out slightly. Sit back and down as if lowering onto a chair, keeping your chest tall and knees tracking over your toes. Lower until thighs are parallel to the floor (or as low as comfortable), then drive back up through your heels.\n\nBird Dog -- 3x10 each side\nStart on all fours with hands under shoulders and knees under hips. Slowly extend your right arm forward and left leg back simultaneously, keeping your back flat and hips level. Hold for 2 seconds, return, then repeat on the other side. Move slowly -- control is everything here.\n\nCoach Helmot",
-          "type": "WeightTraining",
-          "distance_m": 0.0
-        },
-        {
           "id": 122220351,
           "date": "2026-07-16",
           "name": "MSR Mobility 2",
@@ -5893,6 +5834,22 @@
           "description": "Overview\nTargets the muscles that keep your running form intact when you are tired -- glutes, hip abductors, and single-leg stability. Weakness here shows up as knee drift, hip drop, and lower back pain in the back half of races. Twenty minutes once a week will make a measurable difference over a full campaign.\n\nWhen to do it\nDo this on a rest or easy day, with at least one day between this session and your next quality run or long run. Never the day before a hard effort.\n\n---\n\nGlute Bridge -- 3x15\nLie on your back with knees bent and feet flat on the floor, hip-width apart. Drive through your heels to lift your hips until your body forms a straight line from knees to shoulders. Squeeze your glutes at the top, hold for 1 second, then lower slowly.\n\nClamshell with Band -- 3x15 each side\nPlace the band just above your knees. Lie on your side with hips stacked, knees bent to 90 degrees. Keeping your feet together, rotate your top knee upward as far as you can without your hips rolling back. Lower with control. Keep your core braced throughout.\n\nLateral Band Walk -- 3x15 steps each direction\nPlace the band just above your ankles. Stand with feet hip-width apart and a slight bend in your knees. Step sideways, maintaining tension in the band at all times -- do not let your feet come together. Walk 15 steps one way, then return.\n\nBodyweight Squat -- 3x15\nStand with feet shoulder-width apart, toes turned out slightly. Sit back and down as if lowering onto a chair, keeping your chest tall and knees tracking over your toes. Lower until thighs are parallel to the floor (or as low as comfortable), then drive back up through your heels.\n\nBird Dog -- 3x10 each side\nStart on all fours with hands under shoulders and knees under hips. Slowly extend your right arm forward and left leg back simultaneously, keeping your back flat and hips level. Hold for 2 seconds, return, then repeat on the other side. Move slowly -- control is everything here.\n\nCoach Helmot",
           "type": "WeightTraining",
           "distance_m": 0.0
+        },
+        {
+          "id": 119021004,
+          "date": "2026-07-23",
+          "name": "Very Easy 4km",
+          "description": "- 4km Z1 HR",
+          "type": "Run",
+          "distance_m": 4000.0
+        },
+        {
+          "id": 122220360,
+          "date": "2026-07-23",
+          "name": "MSR Mobility 2",
+          "description": "Overview\nFocuses on the calf-Achilles-foot complex and thoracic spine -- two areas runners consistently neglect until something goes wrong. Tight calves and stiff thoracic spine both reduce running economy and increase injury risk. The foot work with the spiky ball is particularly valuable if you carry any history of plantar fasciitis or Achilles tightness.\n\nWhen to do it\nDo this after an easy run during the week. Never skip this one if your calves or Achilles feel tight during a training block -- that tightness is the warning sign this session is designed to address.\n\n---\n\nCalf Roll -- 60s each leg  |  Foam roller\nSit on the floor with one calf resting on the roller. Lift yourself slightly on your hands so your weight presses into the roller. Roll slowly from ankle to just below the knee, rotating your leg slightly to cover the full calf.\n\nFoot Roll -- 60s each foot  |  Spiky ball\nStand with the spiky ball under the arch of one foot. Apply as much bodyweight as comfortable and roll slowly from heel to ball of foot, pausing on tender spots. Hold a wall for balance if needed.\n\nThoracic Roll -- 60s  |  Foam roller\nSit with the roller across your mid-back just below your shoulder blades. Support your head with hands behind your neck. Let your upper back extend gently over the roller and move it up a few centimetres at a time. Mid and upper back only -- not the lower back.\n\nCalf Stretch -- 2x45s each leg\nStand facing a wall with both hands on it. Step one foot back, keep that leg straight and press the heel firmly into the floor. Lean gently into the wall until you feel the stretch in the calf.\n\nSoleus Stretch -- 2x45s each leg\nSame position as the calf stretch but bend the back knee slightly while keeping the heel down. This targets the deeper calf muscle -- often tighter than the upper calf in runners and frequently missed.\n\nCoach Helmot",
+          "type": "Yoga",
+          "distance_m": 0.0
         }
       ],
       "flags": []
@@ -5915,10 +5872,10 @@
       "typical_week": {},
       "max_hr": null,
       "health": {
-        "wellness_date": "2026-07-15",
-        "rhr": 39,
-        "rhr_7d_avg": 41.9,
-        "rhr_delta": -2.9,
+        "wellness_date": "2026-07-16",
+        "rhr": 44,
+        "rhr_7d_avg": 42.0,
+        "rhr_delta": 2.0,
         "hrv_today": null,
         "hrv_7d_avg": null,
         "hrv_60d_baseline": null,
@@ -5926,28 +5883,19 @@
         "hrv_60d_n": 0,
         "hrv_trend": null,
         "sleep_score": null,
-        "sleep_hrs": 4.7,
+        "sleep_hrs": 6.8,
         "vo2max": null,
         "weight": null
       },
       "fitness": {
-        "ctl": 33.1,
-        "atl": 29.5,
-        "tsb": 3.7,
-        "ctl_trend": -1.1,
-        "atl_trend": 4.2,
-        "tsb_trend": -5.2
+        "ctl": 32.4,
+        "atl": 25.6,
+        "tsb": 6.8,
+        "ctl_trend": -1.0,
+        "atl_trend": 3.7,
+        "tsb_trend": -4.7
       },
       "wellness_60d": [
-        {
-          "date": "2026-05-16",
-          "rhr": 39,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": 7.7,
-          "ctl": 51.6,
-          "atl": 54.3
-        },
         {
           "date": "2026-05-17",
           "rhr": 43,
@@ -6496,6 +6444,15 @@
           "sleep_hrs": 6.8,
           "ctl": 32.4,
           "atl": 25.6
+        },
+        {
+          "date": "2026-07-17",
+          "rhr": null,
+          "hrv": null,
+          "sleep_score": null,
+          "sleep_hrs": null,
+          "ctl": 32.3,
+          "atl": 25.9
         }
       ],
       "recent_activities": [
@@ -6600,22 +6557,6 @@
       ],
       "upcoming": [
         {
-          "id": 120629433,
-          "date": "2026-07-15",
-          "name": "Easy (~6km)",
-          "description": "- 6km Z1-Z2 HR\n\n\u00bb Coach Helmot",
-          "type": "Run",
-          "distance_m": 6000.0
-        },
-        {
-          "id": 122222367,
-          "date": "2026-07-15",
-          "name": "MSR Strength 2",
-          "description": "Overview\nCovers what Strength 1 does not -- your core, upper back, and calves. These are the muscles that hold your posture together in the final kilometres when everything wants to collapse forward. The upper back work is especially important: strong rhomboids and mid-traps keep your arm drive efficient and your chest open when you are fatigued.\n\nWhen to do it\nDo this on an easy day between your two hardest sessions of the week. It is core and upper body dominant so it will not affect your legs, making it the most flexible of the four sessions to place.\n\n---\n\nSingle-Leg Calf Raise -- 3x15 each leg\nStand near a wall for balance. Lift one foot slightly off the ground and rise up slowly onto the toes of your standing foot. Lower with control -- do not drop. If this is easy, do it from the edge of a step for a greater range of motion.\n\nSide Plank -- 3x30s each side\nLie on your side and prop yourself up on your forearm, elbow directly under your shoulder. Stack your feet or stagger them for balance. Lift your hips so your body forms a straight line from head to feet. Hold. If too hard, drop your bottom knee to the floor.\n\nBand Pull-Apart -- 3x15\nHold the band at chest height with both hands, arms straight and shoulder-width apart. Pull the band apart by squeezing your shoulder blades together until your arms form a T shape. Hold for 1 second at the end, then return slowly. Keep your elbows straight throughout.\n\nBanded Row -- 3x12 each side\nAnchor the band around a door handle or post at waist height. Hold one end, step back until there is tension, and stand tall. Pull your elbow straight back, squeezing your shoulder blade at the end. Return slowly. Complete all reps on one side before switching.\n\nSuperman -- 3x10\nLie face down with arms extended overhead. Simultaneously lift your arms, chest, and legs off the floor, squeezing your glutes and lower back. Hold for 2 seconds at the top, then lower slowly. Keep the movement controlled -- this is not about height, it is about tension.\n\nCoach Helmot",
-          "type": "WeightTraining",
-          "distance_m": 0.0
-        },
-        {
           "id": 120629435,
           "date": "2026-07-16",
           "name": "-- REST",
@@ -6702,6 +6643,30 @@
           "description": "Overview\nCovers what Strength 1 does not -- your core, upper back, and calves. These are the muscles that hold your posture together in the final kilometres when everything wants to collapse forward. The upper back work is especially important: strong rhomboids and mid-traps keep your arm drive efficient and your chest open when you are fatigued.\n\nWhen to do it\nDo this on an easy day between your two hardest sessions of the week. It is core and upper body dominant so it will not affect your legs, making it the most flexible of the four sessions to place.\n\n---\n\nSingle-Leg Calf Raise -- 3x15 each leg\nStand near a wall for balance. Lift one foot slightly off the ground and rise up slowly onto the toes of your standing foot. Lower with control -- do not drop. If this is easy, do it from the edge of a step for a greater range of motion.\n\nSide Plank -- 3x30s each side\nLie on your side and prop yourself up on your forearm, elbow directly under your shoulder. Stack your feet or stagger them for balance. Lift your hips so your body forms a straight line from head to feet. Hold. If too hard, drop your bottom knee to the floor.\n\nBand Pull-Apart -- 3x15\nHold the band at chest height with both hands, arms straight and shoulder-width apart. Pull the band apart by squeezing your shoulder blades together until your arms form a T shape. Hold for 1 second at the end, then return slowly. Keep your elbows straight throughout.\n\nBanded Row -- 3x12 each side\nAnchor the band around a door handle or post at waist height. Hold one end, step back until there is tension, and stand tall. Pull your elbow straight back, squeezing your shoulder blade at the end. Return slowly. Complete all reps on one side before switching.\n\nSuperman -- 3x10\nLie face down with arms extended overhead. Simultaneously lift your arms, chest, and legs off the floor, squeezing your glutes and lower back. Hold for 2 seconds at the top, then lower slowly. Keep the movement controlled -- this is not about height, it is about tension.\n\nCoach Helmot",
           "type": "WeightTraining",
           "distance_m": 0.0
+        },
+        {
+          "id": 120630750,
+          "date": "2026-07-23",
+          "name": "Warm Up (~3km)",
+          "description": "Warm Up\nPress lap when ready\n- 3km Z1 HR\n\nDrills\n3 x Knee High, 3 x Bum Kick, 10 x Leg Swings each direction\n\n4x\n- 80mtr\n- 80mtr walk\n\nCoach Helmot",
+          "type": "Run",
+          "distance_m": 3640.0
+        },
+        {
+          "id": 120630751,
+          "date": "2026-07-23",
+          "name": "Tempo Intro \u2014 2\u00d71.5km Z3",
+          "description": "Main Set\n2x\n- 1.5km Z3 HR\n- 90s Z1 HR\n\nCoach Helmot",
+          "type": "Run",
+          "distance_m": 3000.0
+        },
+        {
+          "id": 120630753,
+          "date": "2026-07-23",
+          "name": "Cool Down (~2km)",
+          "description": "Cool Down\n- 2km Z1 HR\n\nCoach Helmot",
+          "type": "Run",
+          "distance_m": 2000.0
         }
       ],
       "flags": []
@@ -6711,18 +6676,18 @@
       "name": "Simon Walker",
       "race": "Lakeside 10K",
       "race_date": "2026-07-26",
-      "days_to_race": 11,
+      "days_to_race": 10,
       "races": [
         {
           "name": "Lakeside 10K",
           "date": "2026-07-26",
-          "days_away": 11,
+          "days_away": 10,
           "predicted_time": "46:35"
         },
         {
           "name": "Sydney Marathon",
           "date": "2026-08-30",
-          "days_away": 46,
+          "days_away": 45,
           "predicted_time": "3:34:22"
         }
       ],
@@ -6745,39 +6710,30 @@
       },
       "max_hr": 160,
       "health": {
-        "wellness_date": "2026-07-15",
-        "rhr": 43,
-        "rhr_7d_avg": 43.9,
-        "rhr_delta": -0.9,
+        "wellness_date": "2026-07-16",
+        "rhr": 44,
+        "rhr_7d_avg": 44.2,
+        "rhr_delta": -0.2,
         "hrv_today": null,
         "hrv_7d_avg": null,
         "hrv_60d_baseline": null,
         "hrv_60d_sd": null,
         "hrv_60d_n": 0,
         "hrv_trend": null,
-        "sleep_score": 87.0,
-        "sleep_hrs": 7.2,
+        "sleep_score": 88.0,
+        "sleep_hrs": 8.0,
         "vo2max": 54.0,
-        "weight": 76.44
+        "weight": 75.22
       },
       "fitness": {
-        "ctl": 56.9,
-        "atl": 78.7,
-        "tsb": -21.8,
-        "ctl_trend": 3.8,
-        "atl_trend": 4.7,
-        "tsb_trend": -0.9
+        "ctl": 57.4,
+        "atl": 78.4,
+        "tsb": -21.0,
+        "ctl_trend": 4.2,
+        "atl_trend": 7.0,
+        "tsb_trend": -2.8
       },
       "wellness_60d": [
-        {
-          "date": "2026-05-16",
-          "rhr": 47,
-          "hrv": null,
-          "sleep_score": 76.0,
-          "sleep_hrs": 9.1,
-          "ctl": 35.8,
-          "atl": 40.0
-        },
         {
           "date": "2026-05-17",
           "rhr": 44,
@@ -7324,11 +7280,34 @@
           "hrv": null,
           "sleep_score": 88.0,
           "sleep_hrs": 8.0,
-          "ctl": 56.2,
-          "atl": 71.7
+          "ctl": 57.4,
+          "atl": 78.4
+        },
+        {
+          "date": "2026-07-17",
+          "rhr": null,
+          "hrv": null,
+          "sleep_score": null,
+          "sleep_hrs": null,
+          "ctl": 56.6,
+          "atl": 71.4
         }
       ],
       "recent_activities": [
+        {
+          "date": "2026-07-16",
+          "name": "Melbourne - Easy 8km",
+          "type": "Run",
+          "dist_km": 8.0,
+          "duration_s": 2693,
+          "pace": 5.36,
+          "avg_hr": 114,
+          "max_hr": 125,
+          "feel": 3,
+          "effort": null,
+          "ctl": 57.364098,
+          "atl": 78.36751
+        },
         {
           "date": "2026-07-15",
           "name": "Melbourne - Cool Down 2km",
@@ -7426,47 +7405,9 @@
           "effort": null,
           "ctl": 54.128593,
           "atl": 74.4078
-        },
-        {
-          "date": "2026-07-09",
-          "name": "Melbourne - Easy -- 8km",
-          "type": "Run",
-          "dist_km": 8.4,
-          "duration_s": 2883,
-          "pace": 5.44,
-          "avg_hr": 116,
-          "max_hr": 148,
-          "feel": 3,
-          "effort": null,
-          "ctl": 53.16788,
-          "atl": 71.399124
         }
       ],
       "upcoming": [
-        {
-          "id": 119023875,
-          "date": "2026-07-15",
-          "name": "Warm Up 2km",
-          "description": "Warm Up\n\n- 2km Z1 HR\n\nDrills & Strides\n\n3 x Knee High, 3 x Bum Kick, 10 x Leg Swings all directions, 20\" Plyo micro jumps on toes\n\n4x\n- 60mtr\n- 60mtr Walk",
-          "type": "Run",
-          "distance_m": 2480.0
-        },
-        {
-          "id": 119023876,
-          "date": "2026-07-15",
-          "name": "3x4km @ MP",
-          "description": "Main Set\n\nLonger MP reps. Rep 3 is where the session is won -- hold form.\n\n3x\n- 4km 4:52-4:58/km Pace\n- 2m 5:35-5:50/km Pace",
-          "type": "Run",
-          "distance_m": 13051.6
-        },
-        {
-          "id": 119023878,
-          "date": "2026-07-15",
-          "name": "Cool Down 2km",
-          "description": "Cool Down\n\n- 2km Z1 HR",
-          "type": "Run",
-          "distance_m": 2000.0
-        },
         {
           "id": 119023873,
           "date": "2026-07-16",
@@ -7554,12 +7495,28 @@
           "description": "Overview\nTargets the muscles that keep your running form intact when you are tired -- glutes, hip abductors, and single-leg stability. Weakness here shows up as knee drift, hip drop, and lower back pain in the back half of races. Twenty minutes once a week will make a measurable difference over a full campaign.\n\nWhen to do it\nDo this on a rest or easy day, with at least one day between this session and your next quality run or long run. Never the day before a hard effort.\n\n---\n\nGlute Bridge -- 3x15\nLie on your back with knees bent and feet flat on the floor, hip-width apart. Drive through your heels to lift your hips until your body forms a straight line from knees to shoulders. Squeeze your glutes at the top, hold for 1 second, then lower slowly.\n\nClamshell with Band -- 3x15 each side\nPlace the band just above your knees. Lie on your side with hips stacked, knees bent to 90 degrees. Keeping your feet together, rotate your top knee upward as far as you can without your hips rolling back. Lower with control. Keep your core braced throughout.\n\nLateral Band Walk -- 3x15 steps each direction\nPlace the band just above your ankles. Stand with feet hip-width apart and a slight bend in your knees. Step sideways, maintaining tension in the band at all times -- do not let your feet come together. Walk 15 steps one way, then return.\n\nBodyweight Squat -- 3x15\nStand with feet shoulder-width apart, toes turned out slightly. Sit back and down as if lowering onto a chair, keeping your chest tall and knees tracking over your toes. Lower until thighs are parallel to the floor (or as low as comfortable), then drive back up through your heels.\n\nBird Dog -- 3x10 each side\nStart on all fours with hands under shoulders and knees under hips. Slowly extend your right arm forward and left leg back simultaneously, keeping your back flat and hips level. Hold for 2 seconds, return, then repeat on the other side. Move slowly -- control is everything here.\n\nCoach Helmot",
           "type": "WeightTraining",
           "distance_m": 0.0
+        },
+        {
+          "id": 119023889,
+          "date": "2026-07-23",
+          "name": "Easy 8km",
+          "description": "- 8km Z1 HR\n\nEasy. Race Sunday -- treat it as a training marker, not a target.\n\nCoach Helmot.",
+          "type": "Run",
+          "distance_m": 8000.0
+        },
+        {
+          "id": 122219712,
+          "date": "2026-07-23",
+          "name": "MSR Mobility 2",
+          "description": "Overview\nFocuses on the calf-Achilles-foot complex and thoracic spine -- two areas runners consistently neglect until something goes wrong. Tight calves and stiff thoracic spine both reduce running economy and increase injury risk. The foot work with the spiky ball is particularly valuable if you carry any history of plantar fasciitis or Achilles tightness.\n\nWhen to do it\nDo this after an easy run during the week. Never skip this one if your calves or Achilles feel tight during a training block -- that tightness is the warning sign this session is designed to address.\n\n---\n\nCalf Roll -- 60s each leg  |  Foam roller\nSit on the floor with one calf resting on the roller. Lift yourself slightly on your hands so your weight presses into the roller. Roll slowly from ankle to just below the knee, rotating your leg slightly to cover the full calf.\n\nFoot Roll -- 60s each foot  |  Spiky ball\nStand with the spiky ball under the arch of one foot. Apply as much bodyweight as comfortable and roll slowly from heel to ball of foot, pausing on tender spots. Hold a wall for balance if needed.\n\nThoracic Roll -- 60s  |  Foam roller\nSit with the roller across your mid-back just below your shoulder blades. Support your head with hands behind your neck. Let your upper back extend gently over the roller and move it up a few centimetres at a time. Mid and upper back only -- not the lower back.\n\nCalf Stretch -- 2x45s each leg\nStand facing a wall with both hands on it. Step one foot back, keep that leg straight and press the heel firmly into the floor. Lean gently into the wall until you feel the stretch in the calf.\n\nSoleus Stretch -- 2x45s each leg\nSame position as the calf stretch but bend the back knee slightly while keeping the heel down. This targets the deeper calf muscle -- often tighter than the upper calf in runners and frequently missed.\n\nCoach Helmot",
+          "type": "Yoga",
+          "distance_m": 0.0
         }
       ],
       "flags": [
         {
           "level": "amber",
-          "text": "High fatigue (TSB -21.8)"
+          "text": "High fatigue (TSB -21.0)"
         }
       ]
     },
@@ -7581,10 +7538,10 @@
       "typical_week": {},
       "max_hr": null,
       "health": {
-        "wellness_date": "2026-07-15",
-        "rhr": 43,
-        "rhr_7d_avg": 48.9,
-        "rhr_delta": -5.9,
+        "wellness_date": "2026-07-16",
+        "rhr": 49,
+        "rhr_7d_avg": 48.8,
+        "rhr_delta": 0.2,
         "hrv_today": null,
         "hrv_7d_avg": null,
         "hrv_60d_baseline": null,
@@ -7597,23 +7554,14 @@
         "weight": null
       },
       "fitness": {
-        "ctl": 46.8,
-        "atl": 61.0,
-        "tsb": -14.2,
-        "ctl_trend": 2.8,
-        "atl_trend": 2.0,
-        "tsb_trend": 0.8
+        "ctl": 46.3,
+        "atl": 56.0,
+        "tsb": -9.7,
+        "ctl_trend": 2.4,
+        "atl_trend": -0.2,
+        "tsb_trend": 2.6
       },
       "wellness_60d": [
-        {
-          "date": "2026-05-16",
-          "rhr": 51,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 27.3,
-          "atl": 17.2
-        },
         {
           "date": "2026-05-17",
           "rhr": 52,
@@ -8156,12 +8104,21 @@
         },
         {
           "date": "2026-07-16",
-          "rhr": 45,
+          "rhr": 49,
           "hrv": null,
           "sleep_score": null,
           "sleep_hrs": null,
           "ctl": 46.3,
           "atl": 56.0
+        },
+        {
+          "date": "2026-07-17",
+          "rhr": null,
+          "hrv": null,
+          "sleep_score": null,
+          "sleep_hrs": null,
+          "ctl": 46.7,
+          "atl": 57.3
         }
       ],
       "recent_activities": [
@@ -8308,22 +8265,6 @@
       ],
       "upcoming": [
         {
-          "id": 120613269,
-          "date": "2026-07-15",
-          "name": "Easy Run (~8km)",
-          "description": "- 8km Z1 HR",
-          "type": "Run",
-          "distance_m": 8000.0
-        },
-        {
-          "id": 122218582,
-          "date": "2026-07-15",
-          "name": "MSR Strength 1",
-          "description": "Overview\nTargets the muscles that keep your running form intact when you are tired -- glutes, hip abductors, and single-leg stability. Weakness here shows up as knee drift, hip drop, and lower back pain in the back half of races. Twenty minutes once a week will make a measurable difference over a full campaign.\n\nWhen to do it\nDo this on a rest or easy day, with at least one day between this session and your next quality run or long run. Never the day before a hard effort.\n\n---\n\nGlute Bridge -- 3x15\nLie on your back with knees bent and feet flat on the floor, hip-width apart. Drive through your heels to lift your hips until your body forms a straight line from knees to shoulders. Squeeze your glutes at the top, hold for 1 second, then lower slowly.\n\nClamshell with Band -- 3x15 each side\nPlace the band just above your knees. Lie on your side with hips stacked, knees bent to 90 degrees. Keeping your feet together, rotate your top knee upward as far as you can without your hips rolling back. Lower with control. Keep your core braced throughout.\n\nLateral Band Walk -- 3x15 steps each direction\nPlace the band just above your ankles. Stand with feet hip-width apart and a slight bend in your knees. Step sideways, maintaining tension in the band at all times -- do not let your feet come together. Walk 15 steps one way, then return.\n\nBodyweight Squat -- 3x15\nStand with feet shoulder-width apart, toes turned out slightly. Sit back and down as if lowering onto a chair, keeping your chest tall and knees tracking over your toes. Lower until thighs are parallel to the floor (or as low as comfortable), then drive back up through your heels.\n\nBird Dog -- 3x10 each side\nStart on all fours with hands under shoulders and knees under hips. Slowly extend your right arm forward and left leg back simultaneously, keeping your back flat and hips level. Hold for 2 seconds, return, then repeat on the other side. Move slowly -- control is everything here.\n\nCoach Helmot",
-          "type": "WeightTraining",
-          "distance_m": 0.0
-        },
-        {
           "id": 120613275,
           "date": "2026-07-16",
           "name": "Easy Run (~8km)",
@@ -8434,6 +8375,22 @@
           "description": "Overview\nTargets the muscles that keep your running form intact when you are tired -- glutes, hip abductors, and single-leg stability. Weakness here shows up as knee drift, hip drop, and lower back pain in the back half of races. Twenty minutes once a week will make a measurable difference over a full campaign.\n\nWhen to do it\nDo this on a rest or easy day, with at least one day between this session and your next quality run or long run. Never the day before a hard effort.\n\n---\n\nGlute Bridge -- 3x15\nLie on your back with knees bent and feet flat on the floor, hip-width apart. Drive through your heels to lift your hips until your body forms a straight line from knees to shoulders. Squeeze your glutes at the top, hold for 1 second, then lower slowly.\n\nClamshell with Band -- 3x15 each side\nPlace the band just above your knees. Lie on your side with hips stacked, knees bent to 90 degrees. Keeping your feet together, rotate your top knee upward as far as you can without your hips rolling back. Lower with control. Keep your core braced throughout.\n\nLateral Band Walk -- 3x15 steps each direction\nPlace the band just above your ankles. Stand with feet hip-width apart and a slight bend in your knees. Step sideways, maintaining tension in the band at all times -- do not let your feet come together. Walk 15 steps one way, then return.\n\nBodyweight Squat -- 3x15\nStand with feet shoulder-width apart, toes turned out slightly. Sit back and down as if lowering onto a chair, keeping your chest tall and knees tracking over your toes. Lower until thighs are parallel to the floor (or as low as comfortable), then drive back up through your heels.\n\nBird Dog -- 3x10 each side\nStart on all fours with hands under shoulders and knees under hips. Slowly extend your right arm forward and left leg back simultaneously, keeping your back flat and hips level. Hold for 2 seconds, return, then repeat on the other side. Move slowly -- control is everything here.\n\nCoach Helmot",
           "type": "WeightTraining",
           "distance_m": 0.0
+        },
+        {
+          "id": 120613282,
+          "date": "2026-07-23",
+          "name": "Easy Run (~8km)",
+          "description": "- 8km Z1 HR",
+          "type": "Run",
+          "distance_m": 8000.0
+        },
+        {
+          "id": 122218592,
+          "date": "2026-07-23",
+          "name": "MSR Mobility 2",
+          "description": "Overview\nFocuses on the calf-Achilles-foot complex and thoracic spine -- two areas runners consistently neglect until something goes wrong. Tight calves and stiff thoracic spine both reduce running economy and increase injury risk. The foot work with the spiky ball is particularly valuable if you carry any history of plantar fasciitis or Achilles tightness.\n\nWhen to do it\nDo this after an easy run during the week. Never skip this one if your calves or Achilles feel tight during a training block -- that tightness is the warning sign this session is designed to address.\n\n---\n\nCalf Roll -- 60s each leg  |  Foam roller\nSit on the floor with one calf resting on the roller. Lift yourself slightly on your hands so your weight presses into the roller. Roll slowly from ankle to just below the knee, rotating your leg slightly to cover the full calf.\n\nFoot Roll -- 60s each foot  |  Spiky ball\nStand with the spiky ball under the arch of one foot. Apply as much bodyweight as comfortable and roll slowly from heel to ball of foot, pausing on tender spots. Hold a wall for balance if needed.\n\nThoracic Roll -- 60s  |  Foam roller\nSit with the roller across your mid-back just below your shoulder blades. Support your head with hands behind your neck. Let your upper back extend gently over the roller and move it up a few centimetres at a time. Mid and upper back only -- not the lower back.\n\nCalf Stretch -- 2x45s each leg\nStand facing a wall with both hands on it. Step one foot back, keep that leg straight and press the heel firmly into the floor. Lean gently into the wall until you feel the stretch in the calf.\n\nSoleus Stretch -- 2x45s each leg\nSame position as the calf stretch but bend the back knee slightly while keeping the heel down. This targets the deeper calf muscle -- often tighter than the upper calf in runners and frequently missed.\n\nCoach Helmot",
+          "type": "Yoga",
+          "distance_m": 0.0
         }
       ],
       "flags": []
@@ -8456,7 +8413,7 @@
       "typical_week": {},
       "max_hr": null,
       "health": {
-        "wellness_date": "2026-07-15",
+        "wellness_date": "2026-07-16",
         "rhr": null,
         "rhr_7d_avg": null,
         "rhr_delta": null,
@@ -8472,23 +8429,14 @@
         "weight": null
       },
       "fitness": {
-        "ctl": 46.9,
-        "atl": 66.1,
-        "tsb": -19.2,
-        "ctl_trend": 4.2,
-        "atl_trend": 10.8,
-        "tsb_trend": -6.6
+        "ctl": 46.5,
+        "atl": 61.2,
+        "tsb": -14.7,
+        "ctl_trend": 3.4,
+        "atl_trend": 5.4,
+        "tsb_trend": -2.0
       },
       "wellness_60d": [
-        {
-          "date": "2026-05-16",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 34.6,
-          "atl": 20.9
-        },
         {
           "date": "2026-05-17",
           "rhr": null,
@@ -9037,6 +8985,15 @@
           "sleep_hrs": null,
           "ctl": 46.5,
           "atl": 61.2
+        },
+        {
+          "date": "2026-07-17",
+          "rhr": null,
+          "hrv": null,
+          "sleep_score": null,
+          "sleep_hrs": null,
+          "ctl": 45.4,
+          "atl": 53.1
         }
       ],
       "recent_activities": [
@@ -9183,38 +9140,6 @@
       ],
       "upcoming": [
         {
-          "id": 120624047,
-          "date": "2026-07-15",
-          "name": "4\u00d72km Threshold (~10km)",
-          "description": "Main Set\n\n4x\n- 2km Z4 HR\n- 500mtr Z1 HR\n\nFour controlled threshold blocks. HR should plateau in Z4 by rep 2. \u00bb Coach Helmot",
-          "type": "Run",
-          "distance_m": 10000.0
-        },
-        {
-          "id": 120624063,
-          "date": "2026-07-15",
-          "name": "Warm Up + Strides (~4km)",
-          "description": "Warm Up\n\nPress lap when ready\n- 3km Z1 HR\n\nDrills & Strides\n3 x Knee High, 3 x Bum Kick, 10 x Leg Swings all directions, 20\" Plyo micro jumps on toes\n\n4x\n- 80mtr\n- 80mtr walk",
-          "type": "Run",
-          "distance_m": 3640.0
-        },
-        {
-          "id": 120624077,
-          "date": "2026-07-15",
-          "name": "Cool Down (~3km)",
-          "description": "Cool Down\n\nPress lap when ready\n- 3km Z1 HR",
-          "type": "Run",
-          "distance_m": 3000.0
-        },
-        {
-          "id": 122219075,
-          "date": "2026-07-15",
-          "name": "MSR Mobility 2",
-          "description": "Overview\nFocuses on the calf-Achilles-foot complex and thoracic spine -- two areas runners consistently neglect until something goes wrong. Tight calves and stiff thoracic spine both reduce running economy and increase injury risk. The foot work with the spiky ball is particularly valuable if you carry any history of plantar fasciitis or Achilles tightness.\n\nWhen to do it\nDo this after an easy run during the week. Never skip this one if your calves or Achilles feel tight during a training block -- that tightness is the warning sign this session is designed to address.\n\n---\n\nCalf Roll -- 60s each leg  |  Foam roller\nSit on the floor with one calf resting on the roller. Lift yourself slightly on your hands so your weight presses into the roller. Roll slowly from ankle to just below the knee, rotating your leg slightly to cover the full calf.\n\nFoot Roll -- 60s each foot  |  Spiky ball\nStand with the spiky ball under the arch of one foot. Apply as much bodyweight as comfortable and roll slowly from heel to ball of foot, pausing on tender spots. Hold a wall for balance if needed.\n\nThoracic Roll -- 60s  |  Foam roller\nSit with the roller across your mid-back just below your shoulder blades. Support your head with hands behind your neck. Let your upper back extend gently over the roller and move it up a few centimetres at a time. Mid and upper back only -- not the lower back.\n\nCalf Stretch -- 2x45s each leg\nStand facing a wall with both hands on it. Step one foot back, keep that leg straight and press the heel firmly into the floor. Lean gently into the wall until you feel the stretch in the calf.\n\nSoleus Stretch -- 2x45s each leg\nSame position as the calf stretch but bend the back knee slightly while keeping the heel down. This targets the deeper calf muscle -- often tighter than the upper calf in runners and frequently missed.\n\nCoach Helmot",
-          "type": "Yoga",
-          "distance_m": 0.0
-        },
-        {
           "id": 120624080,
           "date": "2026-07-16",
           "name": "Easy Run (~10km)",
@@ -9309,6 +9234,22 @@
           "description": "Cool Down\n\nPress lap when ready\n- 3km Z1 HR",
           "type": "Run",
           "distance_m": 3000.0
+        },
+        {
+          "id": 120624094,
+          "date": "2026-07-23",
+          "name": "Easy Run (~10km)",
+          "description": "- 10km Z1 HR",
+          "type": "Run",
+          "distance_m": 10000.0
+        },
+        {
+          "id": 122219097,
+          "date": "2026-07-23",
+          "name": "MSR Strength 2",
+          "description": "Overview\nCovers what Strength A does not -- your core, upper back, and calves. These are the muscles that hold your posture together in the final kilometres when everything wants to collapse forward. The upper back work is especially important: strong rhomboids and mid-traps keep your arm drive efficient and your chest open when you are fatigued.\n\nWhen to do it\nDo this on an easy day between your two hardest sessions of the week. It is core and upper body dominant so it will not affect your legs, making it the most flexible of the four sessions to place.\n\n---\n\nSingle-Leg Calf Raise -- 3x15 each leg\nStand near a wall for balance. Lift one foot slightly off the ground and rise up slowly onto the toes of your standing foot. Lower with control -- do not drop. If this is easy, do it from the edge of a step for a greater range of motion.\n\nSide Plank -- 3x30s each side\nLie on your side and prop yourself up on your forearm, elbow directly under your shoulder. Stack your feet or stagger them for balance. Lift your hips so your body forms a straight line from head to feet. Hold. If too hard, drop your bottom knee to the floor.\n\nBand Pull-Apart -- 3x15\nHold the band at chest height with both hands, arms straight and shoulder-width apart. Pull the band apart by squeezing your shoulder blades together until your arms form a T shape. Hold for 1 second at the end, then return slowly. Keep your elbows straight throughout.\n\nBanded Row -- 3x12 each side\nAnchor the band around a door handle or post at waist height. Hold one end, step back until there is tension, and stand tall. Pull your elbow straight back, squeezing your shoulder blade at the end. Return slowly. Complete all reps on one side before switching.\n\nSuperman -- 3x10\nLie face down with arms extended overhead. Simultaneously lift your arms, chest, and legs off the floor, squeezing your glutes and lower back. Hold for 2 seconds at the top, then lower slowly. Keep the movement controlled -- this is not about height, it is about tension.\n\nCoach Helmot",
+          "type": "WeightTraining",
+          "distance_m": 0.0
         }
       ],
       "flags": []
@@ -9321,17 +9262,17 @@
       "days_to_race": null,
       "races": [],
       "race_predictions": {
-        "5k": "19:01",
-        "10k": "39:39",
-        "half": "1:27:31",
-        "marathon": "3:02:29"
+        "5k": "19:18",
+        "10k": "40:15",
+        "half": "1:28:50",
+        "marathon": "3:05:14"
       },
-      "race_predictions_method": "threshold pace",
+      "race_predictions_method": "threshold pace, adjusted for fatigue",
       "training_philosophy": "Pace-primary quality. LTHR 177, MaxHR 196. HM debut 1:27:25 (4:08/km, 174 avg HR). Strong threshold base \u2014 6x mile @ ~3:58/km. CV capacity 3:45-3:52/km.",
       "typical_week": {},
       "max_hr": 196,
       "health": {
-        "wellness_date": "2026-07-15",
+        "wellness_date": "2026-07-16",
         "rhr": null,
         "rhr_7d_avg": null,
         "rhr_delta": null,
@@ -9347,23 +9288,14 @@
         "weight": null
       },
       "fitness": {
-        "ctl": 16.6,
-        "atl": 31.0,
-        "tsb": -14.4,
-        "ctl_trend": 3.0,
-        "atl_trend": 8.1,
-        "tsb_trend": -5.0
+        "ctl": 19.0,
+        "atl": 42.8,
+        "tsb": -23.8,
+        "ctl_trend": 5.7,
+        "atl_trend": 22.9,
+        "tsb_trend": -17.2
       },
       "wellness_60d": [
-        {
-          "date": "2026-05-16",
-          "rhr": null,
-          "hrv": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
-          "ctl": 7.8,
-          "atl": 6.1
-        },
         {
           "date": "2026-05-17",
           "rhr": null,
@@ -9892,8 +9824,8 @@
           "hrv": null,
           "sleep_score": null,
           "sleep_hrs": null,
-          "ctl": 17.0,
-          "atl": 35.8
+          "ctl": 16.7,
+          "atl": 33.9
         },
         {
           "date": "2026-07-15",
@@ -9901,8 +9833,8 @@
           "hrv": null,
           "sleep_score": null,
           "sleep_hrs": null,
-          "ctl": 16.6,
-          "atl": 31.0
+          "ctl": 16.3,
+          "atl": 29.4
         },
         {
           "date": "2026-07-16",
@@ -9910,11 +9842,34 @@
           "hrv": null,
           "sleep_score": null,
           "sleep_hrs": null,
-          "ctl": 19.9,
-          "atl": 47.7
+          "ctl": 19.0,
+          "atl": 42.8
+        },
+        {
+          "date": "2026-07-17",
+          "rhr": null,
+          "hrv": null,
+          "sleep_score": null,
+          "sleep_hrs": null,
+          "ctl": 19.0,
+          "atl": 39.9
         }
       ],
       "recent_activities": [
+        {
+          "date": "2026-07-16",
+          "name": "Lunch Run",
+          "type": "Run",
+          "dist_km": 27.1,
+          "duration_s": 9023,
+          "pace": 5.32,
+          "avg_hr": 139,
+          "max_hr": 164,
+          "feel": null,
+          "effort": null,
+          "ctl": 18.98376,
+          "atl": 42.80164
+        },
         {
           "date": "2026-07-14",
           "name": "Melbourne - Cool Down 3km",
@@ -9926,8 +9881,8 @@
           "max_hr": 162,
           "feel": null,
           "effort": null,
-          "ctl": 17.031158,
-          "atl": 35.791233
+          "ctl": 16.701761,
+          "atl": 33.927525
         },
         {
           "date": "2026-07-14",
@@ -9940,8 +9895,8 @@
           "max_hr": 188,
           "feel": null,
           "effort": null,
-          "ctl": 17.031158,
-          "atl": 35.791233
+          "ctl": 16.701761,
+          "atl": 33.927525
         },
         {
           "date": "2026-07-14",
@@ -9954,8 +9909,8 @@
           "max_hr": 163,
           "feel": null,
           "effort": null,
-          "ctl": 17.031158,
-          "atl": 35.791233
+          "ctl": 16.701761,
+          "atl": 33.927525
         },
         {
           "date": "2026-07-13",
@@ -10040,31 +9995,9 @@
           "effort": null,
           "ctl": 14.250644,
           "atl": 30.532362
-        },
-        {
-          "date": "2026-07-06",
-          "name": "Warm Up",
-          "type": "Run",
-          "dist_km": 3.6,
-          "duration_s": 1196,
-          "pace": 5.28,
-          "avg_hr": null,
-          "max_hr": null,
-          "feel": null,
-          "effort": null,
-          "ctl": 14.250644,
-          "atl": 30.532362
         }
       ],
       "upcoming": [
-        {
-          "id": 122219581,
-          "date": "2026-07-15",
-          "name": "MSR Strength 2",
-          "description": "Overview\nCovers what Strength A does not -- your core, upper back, and calves. These are the muscles that hold your posture together in the final kilometres when everything wants to collapse forward. The upper back work is especially important: strong rhomboids and mid-traps keep your arm drive efficient and your chest open when you are fatigued.\n\nWhen to do it\nDo this on an easy day between your two hardest sessions of the week. It is core and upper body dominant so it will not affect your legs, making it the most flexible of the four sessions to place.\n\n---\n\nSingle-Leg Calf Raise -- 3x15 each leg\nStand near a wall for balance. Lift one foot slightly off the ground and rise up slowly onto the toes of your standing foot. Lower with control -- do not drop. If this is easy, do it from the edge of a step for a greater range of motion.\n\nSide Plank -- 3x30s each side\nLie on your side and prop yourself up on your forearm, elbow directly under your shoulder. Stack your feet or stagger them for balance. Lift your hips so your body forms a straight line from head to feet. Hold. If too hard, drop your bottom knee to the floor.\n\nBand Pull-Apart -- 3x15\nHold the band at chest height with both hands, arms straight and shoulder-width apart. Pull the band apart by squeezing your shoulder blades together until your arms form a T shape. Hold for 1 second at the end, then return slowly. Keep your elbows straight throughout.\n\nBanded Row -- 3x12 each side\nAnchor the band around a door handle or post at waist height. Hold one end, step back until there is tension, and stand tall. Pull your elbow straight back, squeezing your shoulder blade at the end. Return slowly. Complete all reps on one side before switching.\n\nSuperman -- 3x10\nLie face down with arms extended overhead. Simultaneously lift your arms, chest, and legs off the floor, squeezing your glutes and lower back. Hold for 2 seconds at the top, then lower slowly. Keep the movement controlled -- this is not about height, it is about tension.\n\nCoach Helmot",
-          "type": "WeightTraining",
-          "distance_m": 0.0
-        },
         {
           "id": 119625107,
           "date": "2026-07-16",
@@ -10160,9 +10093,22 @@
           "description": "Overview\nTargets the muscles that keep your running form intact when you are tired -- glutes, hip abductors, and single-leg stability. Weakness here shows up as knee drift, hip drop, and lower back pain in the back half of races. Twenty minutes once a week will make a measurable difference over a full campaign.\n\nWhen to do it\nDo this on a rest or easy day, with at least one day between this session and your next quality run or long run. Never the day before a hard effort.\n\n---\n\nGlute Bridge -- 3x15\nLie on your back with knees bent and feet flat on the floor, hip-width apart. Drive through your heels to lift your hips until your body forms a straight line from knees to shoulders. Squeeze your glutes at the top, hold for 1 second, then lower slowly.\n\nClamshell with Band -- 3x15 each side\nPlace the band just above your knees. Lie on your side with hips stacked, knees bent to 90 degrees. Keeping your feet together, rotate your top knee upward as far as you can without your hips rolling back. Lower with control. Keep your core braced throughout.\n\nLateral Band Walk -- 3x15 steps each direction\nPlace the band just above your ankles. Stand with feet hip-width apart and a slight bend in your knees. Step sideways, maintaining tension in the band at all times -- do not let your feet come together. Walk 15 steps one way, then return.\n\nBodyweight Squat -- 3x15\nStand with feet shoulder-width apart, toes turned out slightly. Sit back and down as if lowering onto a chair, keeping your chest tall and knees tracking over your toes. Lower until thighs are parallel to the floor (or as low as comfortable), then drive back up through your heels.\n\nBird Dog -- 3x10 each side\nStart on all fours with hands under shoulders and knees under hips. Slowly extend your right arm forward and left leg back simultaneously, keeping your back flat and hips level. Hold for 2 seconds, return, then repeat on the other side. Move slowly -- control is everything here.\n\nCoach Helmot",
           "type": "WeightTraining",
           "distance_m": 0.0
+        },
+        {
+          "id": 122219591,
+          "date": "2026-07-23",
+          "name": "MSR Mobility 2",
+          "description": "Overview\nFocuses on the calf-Achilles-foot complex and thoracic spine -- two areas runners consistently neglect until something goes wrong. Tight calves and stiff thoracic spine both reduce running economy and increase injury risk. The foot work with the spiky ball is particularly valuable if you carry any history of plantar fasciitis or Achilles tightness.\n\nWhen to do it\nDo this after an easy run during the week. Never skip this one if your calves or Achilles feel tight during a training block -- that tightness is the warning sign this session is designed to address.\n\n---\n\nCalf Roll -- 60s each leg  |  Foam roller\nSit on the floor with one calf resting on the roller. Lift yourself slightly on your hands so your weight presses into the roller. Roll slowly from ankle to just below the knee, rotating your leg slightly to cover the full calf.\n\nFoot Roll -- 60s each foot  |  Spiky ball\nStand with the spiky ball under the arch of one foot. Apply as much bodyweight as comfortable and roll slowly from heel to ball of foot, pausing on tender spots. Hold a wall for balance if needed.\n\nThoracic Roll -- 60s  |  Foam roller\nSit with the roller across your mid-back just below your shoulder blades. Support your head with hands behind your neck. Let your upper back extend gently over the roller and move it up a few centimetres at a time. Mid and upper back only -- not the lower back.\n\nCalf Stretch -- 2x45s each leg\nStand facing a wall with both hands on it. Step one foot back, keep that leg straight and press the heel firmly into the floor. Lean gently into the wall until you feel the stretch in the calf.\n\nSoleus Stretch -- 2x45s each leg\nSame position as the calf stretch but bend the back knee slightly while keeping the heel down. This targets the deeper calf muscle -- often tighter than the upper calf in runners and frequently missed.\n\nCoach Helmot",
+          "type": "Yoga",
+          "distance_m": 0.0
         }
       ],
-      "flags": []
+      "flags": [
+        {
+          "level": "amber",
+          "text": "High fatigue (TSB -23.8)"
+        }
+      ]
     },
     {
       "id": "i625671",
