@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-07-17T17:34:56+10:00",
+  "generated_at": "2026-07-18T08:34:29+10:00",
   "current_week": 10,
   "today": {
-    "rhr": 41,
-    "hrv_7d_avg": 78,
+    "rhr": 42,
+    "hrv_7d_avg": 79,
     "hrv_status": null,
-    "sleep_score": 78.0,
-    "sleep_hrs": 8.1,
-    "body_battery": 97,
-    "vo2max_garmin": 53,
+    "sleep_score": 71.0,
+    "sleep_hrs": 8.0,
+    "body_battery": 100,
+    "vo2max_garmin": null,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 43.4,
-    "atl": 42.8,
-    "tsb": 0.5
+    "ctl": 43.0,
+    "atl": 41.0,
+    "tsb": 2.0
   },
   "this_week_days": null,
   "weeks": [
@@ -404,8 +404,8 @@
           "dist_km": 12.0,
           "avg_hr": 124,
           "pace": 5.35,
-          "feel": 2,
-          "effort": 2.0,
+          "feel": null,
+          "effort": null,
           "decoupling_pct": null,
           "_main_dist": 12.0129
         },
@@ -551,12 +551,6 @@
   ],
   "sleep_hrv_14d": [
     {
-      "date": "2026-07-04",
-      "score": 87.0,
-      "hrv": 82.0,
-      "rhr": 40
-    },
-    {
       "date": "2026-07-05",
       "score": 76.0,
       "hrv": 79.0,
@@ -633,6 +627,12 @@
       "score": 78.0,
       "hrv": 75.0,
       "rhr": 41
+    },
+    {
+      "date": "2026-07-18",
+      "score": 71.0,
+      "hrv": 82.0,
+      "rhr": 42
     }
   ],
   "recent_activities": [
@@ -1076,28 +1076,6 @@
       "avg_cadence": 170,
       "interval_summary": [
         "1x 54m33s 126bpm"
-      ]
-    },
-    {
-      "date": "2026-07-03",
-      "start_local": "2026-07-03T08:06",
-      "name": "Easy + Pt Ormond",
-      "dist_km": 12.01,
-      "duration_s": 4025,
-      "avg_hr": 124,
-      "max_hr": 135,
-      "pace": 5.35,
-      "feel": 2,
-      "effort": 2.0,
-      "elevation_gain": 57.69153,
-      "avg_cadence": 168,
-      "interval_summary": [
-        "1x 58m55s 124bpm",
-        "6x 16s 103bpm",
-        "6x 73s 105bpm",
-        "1x 98s 102bpm",
-        "1x 38s 124bpm",
-        "1x 7m11s 126bpm"
       ]
     }
   ]
