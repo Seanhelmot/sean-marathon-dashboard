@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-18T08:34:29+10:00",
+  "generated_at": "2026-07-18T17:10:41+10:00",
   "current_week": 10,
   "today": {
     "rhr": 42,
@@ -8,11 +8,11 @@
     "sleep_score": 71.0,
     "sleep_hrs": 8.0,
     "body_battery": 100,
-    "vo2max_garmin": null,
+    "vo2max_garmin": 53,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 43.0,
-    "atl": 41.0,
-    "tsb": 2.0
+    "ctl": 42.8,
+    "atl": 39.8,
+    "tsb": 3.0
   },
   "this_week_days": null,
   "weeks": [
@@ -502,7 +502,7 @@
     },
     {
       "wk": 10,
-      "actual_km": 39.7,
+      "actual_km": 45.7,
       "partial": true,
       "quality": {
         "pace_min_per_km": 3.47,
@@ -510,6 +510,15 @@
         "work_intervals_only": true
       },
       "days": {
+        "2026-07-18": {
+          "dist_km": 6.0,
+          "avg_hr": 108,
+          "pace": 5.48,
+          "feel": 3,
+          "effort": 3.0,
+          "decoupling_pct": null,
+          "_main_dist": 0.43095
+        },
         "2026-07-17": {
           "dist_km": 7.4,
           "avg_hr": 117,
@@ -636,6 +645,40 @@
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-07-18",
+      "start_local": "2026-07-18T08:59",
+      "name": "Melbourne Running",
+      "dist_km": 0.43,
+      "duration_s": 150,
+      "avg_hr": 108,
+      "max_hr": 119,
+      "pace": 5.48,
+      "feel": 2,
+      "effort": 2.0,
+      "elevation_gain": 0.0,
+      "avg_cadence": 166,
+      "interval_summary": [
+        "1x 2m32s 107bpm"
+      ]
+    },
+    {
+      "date": "2026-07-18",
+      "start_local": "2026-07-18T07:49",
+      "name": "Easy Run 6km",
+      "dist_km": 5.61,
+      "duration_s": 1762,
+      "avg_hr": 126,
+      "max_hr": 136,
+      "pace": 5.14,
+      "feel": 3,
+      "effort": 3.0,
+      "elevation_gain": 49.70289,
+      "avg_cadence": 169,
+      "interval_summary": [
+        "1x 37m16s 125bpm"
+      ]
+    },
     {
       "date": "2026-07-17",
       "start_local": "2026-07-17T07:41",
