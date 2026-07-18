@@ -1,24 +1,24 @@
 {
-  "generated_at": "2026-07-18T17:10:41+10:00",
+  "generated_at": "2026-07-19T08:33:32+10:00",
   "current_week": 10,
   "today": {
-    "rhr": 42,
-    "hrv_7d_avg": 79,
+    "rhr": 40,
+    "hrv_7d_avg": 80,
     "hrv_status": null,
-    "sleep_score": 71.0,
-    "sleep_hrs": 8.0,
+    "sleep_score": 91.0,
+    "sleep_hrs": 7.7,
     "body_battery": 100,
-    "vo2max_garmin": 53,
+    "vo2max_garmin": null,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 42.8,
-    "atl": 39.8,
-    "tsb": 3.0
+    "ctl": 43.9,
+    "atl": 46.5,
+    "tsb": -2.6
   },
   "this_week_days": null,
   "weeks": [
     {
       "wk": 2,
-      "actual_km": 25.0,
+      "actual_km": 15.0,
       "partial": false,
       "quality": null,
       "days": {
@@ -30,15 +30,6 @@
           "effort": null,
           "decoupling_pct": null,
           "_main_dist": 15.01262
-        },
-        "2026-05-23": {
-          "dist_km": 10.0,
-          "avg_hr": 128,
-          "pace": 5.5,
-          "feel": null,
-          "effort": null,
-          "decoupling_pct": null,
-          "_main_dist": 10.02027
         }
       }
     },
@@ -395,8 +386,8 @@
           "dist_km": 8.2,
           "avg_hr": 127,
           "pace": 5.16,
-          "feel": 2,
-          "effort": 2.0,
+          "feel": null,
+          "effort": null,
           "decoupling_pct": null,
           "_main_dist": 8.174949999999999
         },
@@ -503,7 +494,7 @@
     {
       "wk": 10,
       "actual_km": 45.7,
-      "partial": true,
+      "partial": false,
       "quality": {
         "pace_min_per_km": 3.47,
         "avg_hr": 159,
@@ -559,12 +550,6 @@
     }
   ],
   "sleep_hrv_14d": [
-    {
-      "date": "2026-07-05",
-      "score": 76.0,
-      "hrv": 79.0,
-      "rhr": 40
-    },
     {
       "date": "2026-07-06",
       "score": 76.0,
@@ -641,7 +626,13 @@
       "date": "2026-07-18",
       "score": 71.0,
       "hrv": 82.0,
-      "rhr": 42
+      "rhr": 40
+    },
+    {
+      "date": "2026-07-19",
+      "score": 91.0,
+      "hrv": 82.0,
+      "rhr": 40
     }
   ],
   "recent_activities": [
@@ -1102,23 +1093,6 @@
           "max_hr": 157,
           "avg_cadence": 85
         }
-      ]
-    },
-    {
-      "date": "2026-07-04",
-      "start_local": "2026-07-04T07:31",
-      "name": "Easy",
-      "dist_km": 8.17,
-      "duration_s": 2585,
-      "avg_hr": 127,
-      "max_hr": 155,
-      "pace": 5.16,
-      "feel": 2,
-      "effort": 2.0,
-      "elevation_gain": 80.40797,
-      "avg_cadence": 170,
-      "interval_summary": [
-        "1x 54m33s 126bpm"
       ]
     }
   ]
