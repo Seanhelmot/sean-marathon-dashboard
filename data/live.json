@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-19T08:33:32+10:00",
+  "generated_at": "2026-07-19T17:51:43+10:00",
   "current_week": 10,
   "today": {
     "rhr": 40,
@@ -8,11 +8,11 @@
     "sleep_score": 91.0,
     "sleep_hrs": 7.7,
     "body_battery": 100,
-    "vo2max_garmin": null,
+    "vo2max_garmin": 53,
     "vo2max_note": "lab-tested 58.4 (2022)",
     "ctl": 43.9,
-    "atl": 46.5,
-    "tsb": -2.6
+    "atl": 46.4,
+    "tsb": -2.5
   },
   "this_week_days": null,
   "weeks": [
@@ -493,7 +493,7 @@
     },
     {
       "wk": 10,
-      "actual_km": 45.7,
+      "actual_km": 69.9,
       "partial": false,
       "quality": {
         "pace_min_per_km": 3.47,
@@ -501,6 +501,15 @@
         "work_intervals_only": true
       },
       "days": {
+        "2026-07-19": {
+          "dist_km": 24.2,
+          "avg_hr": 128,
+          "pace": 5.12,
+          "feel": 2,
+          "effort": 3.0,
+          "decoupling_pct": 16.3,
+          "_main_dist": 24.18443
+        },
         "2026-07-18": {
           "dist_km": 6.0,
           "avg_hr": 108,
@@ -636,6 +645,74 @@
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-07-19",
+      "start_local": "2026-07-19T07:37",
+      "name": "HR Progressive LR 24km",
+      "dist_km": 24.18,
+      "duration_s": 7551,
+      "avg_hr": 128,
+      "max_hr": 147,
+      "pace": 5.12,
+      "feel": 2,
+      "effort": 3.0,
+      "elevation_gain": 161.10263,
+      "avg_cadence": 168,
+      "decoupling_pct": 16.3,
+      "interval_summary": [
+        "1x 42m54s 120bpm",
+        "3x 21m10s 129bpm",
+        "1x 26m12s 135bpm",
+        "1x 53s 145bpm"
+      ],
+      "km_chunks": [
+        {
+          "label": "0.0-8.0km",
+          "dist_km": 8.0,
+          "elapsed": 2574,
+          "pace": 5.22,
+          "avg_hr": 120,
+          "max_hr": 131,
+          "avg_cadence": 83
+        },
+        {
+          "label": "8.0-12.0km",
+          "dist_km": 4.0,
+          "elapsed": 1253,
+          "pace": 5.13,
+          "avg_hr": 127,
+          "max_hr": 134,
+          "avg_cadence": 84
+        },
+        {
+          "label": "12.0-16.0km",
+          "dist_km": 4.0,
+          "elapsed": 1319,
+          "pace": 5.08,
+          "avg_hr": 129,
+          "max_hr": 135,
+          "avg_cadence": 84
+        },
+        {
+          "label": "16.0-20.0km",
+          "dist_km": 4.0,
+          "elapsed": 1238,
+          "pace": 5.09,
+          "avg_hr": 132,
+          "max_hr": 137,
+          "avg_cadence": 84
+        },
+        {
+          "label": "20.0-24.0km",
+          "dist_km": 4.0,
+          "elapsed": 1572,
+          "pace": 5.0,
+          "avg_hr": 135,
+          "max_hr": 147,
+          "avg_cadence": 85
+        }
+      ]
+    },
     {
       "date": "2026-07-18",
       "start_local": "2026-07-18T08:59",
