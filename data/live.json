@@ -1,38 +1,21 @@
 {
-  "generated_at": "2026-07-19T17:51:43+10:00",
-  "current_week": 10,
+  "generated_at": "2026-07-20T08:36:45+10:00",
+  "current_week": 11,
   "today": {
-    "rhr": 40,
-    "hrv_7d_avg": 80,
+    "rhr": 39,
+    "hrv_7d_avg": 82,
     "hrv_status": null,
-    "sleep_score": 91.0,
-    "sleep_hrs": 7.7,
+    "sleep_score": 85.0,
+    "sleep_hrs": 9.0,
     "body_battery": 100,
-    "vo2max_garmin": 53,
+    "vo2max_garmin": null,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 43.9,
-    "atl": 46.4,
-    "tsb": -2.5
+    "ctl": 42.9,
+    "atl": 40.2,
+    "tsb": 2.7
   },
   "this_week_days": null,
   "weeks": [
-    {
-      "wk": 2,
-      "actual_km": 15.0,
-      "partial": false,
-      "quality": null,
-      "days": {
-        "2026-05-24": {
-          "dist_km": 15.0,
-          "avg_hr": 130,
-          "pace": 5.37,
-          "feel": null,
-          "effort": null,
-          "decoupling_pct": null,
-          "_main_dist": 15.01262
-        }
-      }
-    },
     {
       "wk": 3,
       "actual_km": 74.1,
@@ -377,9 +360,9 @@
           "dist_km": 30.0,
           "avg_hr": 136,
           "pace": 5.09,
-          "feel": 2,
-          "effort": 8.0,
-          "decoupling_pct": 7.2,
+          "feel": null,
+          "effort": null,
+          "decoupling_pct": null,
           "_main_dist": 30.01868
         },
         "2026-07-04": {
@@ -560,12 +543,6 @@
   ],
   "sleep_hrv_14d": [
     {
-      "date": "2026-07-06",
-      "score": 76.0,
-      "hrv": 71.0,
-      "rhr": 41
-    },
-    {
       "date": "2026-07-07",
       "score": 88.0,
       "hrv": 81.0,
@@ -642,6 +619,12 @@
       "score": 91.0,
       "hrv": 82.0,
       "rhr": 40
+    },
+    {
+      "date": "2026-07-20",
+      "score": 85.0,
+      "hrv": 90.0,
+      "rhr": 39
     }
   ],
   "recent_activities": [
@@ -1141,35 +1124,6 @@
       "avg_cadence": 166,
       "interval_summary": [
         "1x 1h27m 122bpm"
-      ]
-    },
-    {
-      "date": "2026-07-05",
-      "start_local": "2026-07-05T07:06",
-      "name": "Yarra Boulevard LR 30km",
-      "dist_km": 30.02,
-      "duration_s": 9290,
-      "avg_hr": 136,
-      "max_hr": 157,
-      "pace": 5.09,
-      "feel": 2,
-      "effort": 8.0,
-      "elevation_gain": 420.48306,
-      "avg_cadence": 169,
-      "decoupling_pct": 7.2,
-      "interval_summary": [
-        "1x 2h47m 135bpm"
-      ],
-      "km_chunks": [
-        {
-          "label": "0.0-30.0km",
-          "dist_km": 30.02,
-          "elapsed": 10042,
-          "pace": 5.1,
-          "avg_hr": 135,
-          "max_hr": 157,
-          "avg_cadence": 85
-        }
       ]
     }
   ]
