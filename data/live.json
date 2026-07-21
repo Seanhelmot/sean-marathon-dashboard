@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-21T07:07:42+10:00",
+  "generated_at": "2026-07-21T12:33:27+10:00",
   "current_week": 11,
   "today": {
     "rhr": 39,
@@ -8,11 +8,11 @@
     "sleep_score": 85.0,
     "sleep_hrs": 7.3,
     "body_battery": 100,
-    "vo2max_garmin": null,
+    "vo2max_garmin": 53,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 42.5,
-    "atl": 38.7,
-    "tsb": 3.8
+    "ctl": 42.8,
+    "atl": 40.3,
+    "tsb": 2.5
   },
   "this_week_days": null,
   "weeks": [
@@ -539,6 +539,27 @@
           "_main_dist": 12.1861
         }
       }
+    },
+    {
+      "wk": 11,
+      "actual_km": 9.0,
+      "partial": true,
+      "quality": {
+        "pace_min_per_km": 4.0,
+        "avg_hr": 154,
+        "work_intervals_only": true
+      },
+      "days": {
+        "2026-07-21": {
+          "dist_km": 9.0,
+          "avg_hr": 129,
+          "pace": 5.4,
+          "feel": 2,
+          "effort": 2.0,
+          "decoupling_pct": null,
+          "_main_dist": 2.00995
+        }
+      }
     }
   ],
   "sleep_hrv_14d": [
@@ -628,6 +649,88 @@
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-07-21",
+      "start_local": "2026-07-21T07:02",
+      "name": "Melbourne Running",
+      "dist_km": 2.01,
+      "duration_s": 683,
+      "avg_hr": 129,
+      "max_hr": 135,
+      "pace": 5.4,
+      "feel": 2,
+      "effort": 3.0,
+      "elevation_gain": 25.620811,
+      "avg_cadence": 167,
+      "interval_summary": [
+        "1x 11m24s 129bpm"
+      ]
+    },
+    {
+      "date": "2026-07-21",
+      "start_local": "2026-07-21T06:37",
+      "name": "Easy Jog 6km HR",
+      "dist_km": 4.77,
+      "duration_s": 1258,
+      "avg_hr": 151,
+      "max_hr": 167,
+      "pace": 4.24,
+      "feel": 2,
+      "effort": 8.0,
+      "elevation_gain": 29.762884,
+      "avg_cadence": 175,
+      "interval_summary": [
+        "3x 5m58s 153bpm",
+        "2x 91s 136bpm",
+        "1x 3s 163bpm"
+      ],
+      "work_laps": [
+        {
+          "rep": 1,
+          "dist_km": 1.49,
+          "pace": 4.04,
+          "avg_hr": 146,
+          "max_hr": 158,
+          "avg_cadence": 184
+        },
+        {
+          "rep": 2,
+          "dist_km": 1.48,
+          "pace": 4.0,
+          "avg_hr": 157,
+          "max_hr": 165,
+          "avg_cadence": 185
+        },
+        {
+          "rep": 3,
+          "dist_km": 1.48,
+          "pace": 4.0,
+          "avg_hr": 160,
+          "max_hr": 167,
+          "avg_cadence": 185
+        }
+      ]
+    },
+    {
+      "date": "2026-07-21",
+      "start_local": "2026-07-21T06:19",
+      "name": "Melbourne Running",
+      "dist_km": 2.23,
+      "duration_s": 744,
+      "avg_hr": 111,
+      "max_hr": 122,
+      "pace": 5.34,
+      "feel": 2,
+      "effort": 2.0,
+      "elevation_gain": 20.080944,
+      "avg_cadence": 167,
+      "interval_summary": [
+        "1x 15m23s 111bpm",
+        "3x 15s 96bpm",
+        "1x 58s 99bpm",
+        "1x 35s 103bpm"
+      ]
+    },
     {
       "date": "2026-07-19",
       "start_local": "2026-07-19T07:37",
