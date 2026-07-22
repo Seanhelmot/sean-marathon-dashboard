@@ -1,30 +1,26 @@
 {
-  "generated_at": "2026-07-22T12:32:35+10:00",
+  "generated_at": "2026-07-23T07:01:39+10:00",
   "current_week": 11,
   "today": {
-    "rhr": 41,
-    "hrv_7d_avg": 86,
+    "rhr": 38,
+    "hrv_7d_avg": 87,
     "hrv_status": null,
-    "sleep_score": 89.0,
-    "sleep_hrs": 8.0,
+    "sleep_score": 93.0,
+    "sleep_hrs": 9.0,
     "body_battery": 100,
     "vo2max_garmin": null,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 43.1,
-    "atl": 42.2,
-    "tsb": 0.8
+    "ctl": 41.7,
+    "atl": 35.1,
+    "tsb": 6.6
   },
   "this_week_days": null,
   "weeks": [
     {
       "wk": 3,
-      "actual_km": 62.0,
+      "actual_km": 48.9,
       "partial": false,
-      "quality": {
-        "pace_min_per_km": 4.46,
-        "avg_hr": 158,
-        "work_intervals_only": false
-      },
+      "quality": null,
       "days": {
         "2026-05-31": {
           "dist_km": 8.0,
@@ -61,15 +57,6 @@
           "effort": null,
           "decoupling_pct": null,
           "_main_dist": 8.0603
-        },
-        "2026-05-27": {
-          "dist_km": 13.1,
-          "avg_hr": 137,
-          "pace": 6.06,
-          "feel": null,
-          "effort": null,
-          "decoupling_pct": null,
-          "_main_dist": 2.09396
         }
       }
     },
@@ -449,8 +436,8 @@
           "dist_km": 12.1,
           "avg_hr": 126,
           "pace": 5.56,
-          "feel": 2,
-          "effort": 2.0,
+          "feel": null,
+          "effort": null,
           "decoupling_pct": null,
           "_main_dist": 3.10214
         },
@@ -564,12 +551,6 @@
   ],
   "sleep_hrv_14d": [
     {
-      "date": "2026-07-09",
-      "score": 90.0,
-      "hrv": 81.0,
-      "rhr": 40
-    },
-    {
       "date": "2026-07-10",
       "score": 92.0,
       "hrv": 84.0,
@@ -646,6 +627,12 @@
       "score": 89.0,
       "hrv": 91.0,
       "rhr": 41
+    },
+    {
+      "date": "2026-07-23",
+      "score": 93.0,
+      "hrv": 93.0,
+      "rhr": 38
     }
   ],
   "recent_activities": [
@@ -686,7 +673,7 @@
     {
       "date": "2026-07-21",
       "start_local": "2026-07-21T06:37",
-      "name": "Easy Jog 6km HR",
+      "name": "Race Preview 3x1500m 4.5km",
       "dist_km": 4.77,
       "duration_s": 1258,
       "avg_hr": 151,
@@ -1169,64 +1156,6 @@
       "avg_cadence": 168,
       "interval_summary": [
         "1x 53m52s 119bpm"
-      ]
-    },
-    {
-      "date": "2026-07-08",
-      "start_local": "2026-07-08T08:07",
-      "name": "Warm Up + Strides",
-      "dist_km": 3.1,
-      "duration_s": 1104,
-      "avg_hr": 126,
-      "max_hr": 130,
-      "pace": 5.56,
-      "feel": 2,
-      "effort": 2.0,
-      "elevation_gain": 30.242239,
-      "avg_cadence": 165,
-      "interval_summary": [
-        "1x 18m26s 125bpm"
-      ]
-    },
-    {
-      "date": "2026-07-08",
-      "start_local": "2026-07-08T07:30",
-      "name": "Race Reps 5x1km",
-      "dist_km": 5.65,
-      "duration_s": 1643,
-      "avg_hr": 146,
-      "max_hr": 169,
-      "pace": 4.51,
-      "feel": 2,
-      "effort": 8.0,
-      "elevation_gain": 41.861317,
-      "avg_cadence": 165,
-      "interval_summary": [
-        "5x 3m51s 152bpm",
-        "4x 2m1s 131bpm",
-        "1x 3s 168bpm"
-      ]
-    },
-    {
-      "date": "2026-07-08",
-      "start_local": "2026-07-08T06:57",
-      "name": "Cool Down",
-      "dist_km": 3.44,
-      "duration_s": 1164,
-      "avg_hr": 114,
-      "max_hr": 125,
-      "pace": 5.38,
-      "feel": 2,
-      "effort": 2.0,
-      "elevation_gain": 33.59323,
-      "avg_cadence": 168,
-      "interval_summary": [
-        "1x 26m36s 115bpm",
-        "1x 69s 90bpm",
-        "2x 14s 99bpm",
-        "1x 50s 98bpm",
-        "1x 84s 92bpm",
-        "1x 18s 90bpm"
       ]
     }
   ]
