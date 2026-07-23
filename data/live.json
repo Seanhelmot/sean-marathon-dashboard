@@ -1,24 +1,24 @@
 {
-  "generated_at": "2026-07-23T12:37:05+10:00",
+  "generated_at": "2026-07-24T06:58:16+10:00",
   "current_week": 11,
   "today": {
-    "rhr": 38,
-    "hrv_7d_avg": 87,
+    "rhr": 39,
+    "hrv_7d_avg": 89,
     "hrv_status": null,
-    "sleep_score": 93.0,
-    "sleep_hrs": 9.0,
-    "body_battery": 100,
-    "vo2max_garmin": 53,
+    "sleep_score": null,
+    "sleep_hrs": null,
+    "body_battery": 80,
+    "vo2max_garmin": null,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 41.5,
-    "atl": 34.0,
-    "tsb": 7.5
+    "ctl": 41.0,
+    "atl": 32.0,
+    "tsb": 9.0
   },
   "this_week_days": null,
   "weeks": [
     {
       "wk": 3,
-      "actual_km": 48.9,
+      "actual_km": 40.8,
       "partial": false,
       "quality": null,
       "days": {
@@ -48,15 +48,6 @@
           "effort": null,
           "decoupling_pct": null,
           "_main_dist": 10.00198
-        },
-        "2026-05-28": {
-          "dist_km": 8.1,
-          "avg_hr": 134,
-          "pace": 5.39,
-          "feel": null,
-          "effort": null,
-          "decoupling_pct": null,
-          "_main_dist": 8.0603
         }
       }
     },
@@ -427,8 +418,8 @@
           "dist_km": 8.1,
           "avg_hr": 119,
           "pace": 5.39,
-          "feel": 2,
-          "effort": 3.0,
+          "feel": null,
+          "effort": null,
           "decoupling_pct": null,
           "_main_dist": 8.12144
         },
@@ -560,12 +551,6 @@
   ],
   "sleep_hrv_14d": [
     {
-      "date": "2026-07-10",
-      "score": 92.0,
-      "hrv": 84.0,
-      "rhr": 40
-    },
-    {
       "date": "2026-07-11",
       "score": 79.0,
       "hrv": 74.0,
@@ -642,6 +627,12 @@
       "score": 93.0,
       "hrv": 93.0,
       "rhr": 38
+    },
+    {
+      "date": "2026-07-24",
+      "score": null,
+      "hrv": null,
+      "rhr": 39
     }
   ],
   "recent_activities": [
@@ -1165,23 +1156,6 @@
         "1x 4m17s 100bpm",
         "1x 83s 102bpm",
         "1x 78s 122bpm"
-      ]
-    },
-    {
-      "date": "2026-07-09",
-      "start_local": "2026-07-09T06:58",
-      "name": "Easy + Drills + Gym",
-      "dist_km": 8.12,
-      "duration_s": 2754,
-      "avg_hr": 119,
-      "max_hr": 131,
-      "pace": 5.39,
-      "feel": 2,
-      "effort": 3.0,
-      "elevation_gain": 33.366425,
-      "avg_cadence": 168,
-      "interval_summary": [
-        "1x 53m52s 119bpm"
       ]
     }
   ]
