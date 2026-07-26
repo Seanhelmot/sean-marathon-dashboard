@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-26T06:44:23+10:00",
+  "generated_at": "2026-07-26T12:39:52+10:00",
   "current_week": 11,
   "today": {
     "rhr": 41,
@@ -8,11 +8,11 @@
     "sleep_score": 81.0,
     "sleep_hrs": 8.2,
     "body_battery": 97,
-    "vo2max_garmin": null,
+    "vo2max_garmin": 53,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 41.2,
-    "atl": 36.5,
-    "tsb": 4.8
+    "ctl": 41.3,
+    "atl": 36.9,
+    "tsb": 4.4
   },
   "this_week_days": null,
   "weeks": [
@@ -493,14 +493,23 @@
     },
     {
       "wk": 11,
-      "actual_km": 24.0,
+      "actual_km": 39.8,
       "partial": false,
       "quality": {
-        "pace_min_per_km": 4.0,
-        "avg_hr": 154,
+        "pace_min_per_km": 4.08,
+        "avg_hr": 166,
         "work_intervals_only": true
       },
       "days": {
+        "2026-07-26": {
+          "dist_km": 15.8,
+          "avg_hr": 95,
+          "pace": 6.26,
+          "feel": 3,
+          "effort": 1.0,
+          "decoupling_pct": null,
+          "_main_dist": 2.45153
+        },
         "2026-07-25": {
           "dist_km": 5.0,
           "avg_hr": 128,
@@ -627,6 +636,70 @@
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-07-26",
+      "start_local": "2026-07-26T09:20",
+      "name": "LAKESIDE 10K Cool Down 10m",
+      "dist_km": 2.45,
+      "duration_s": 947,
+      "avg_hr": 95,
+      "max_hr": 145,
+      "pace": 6.26,
+      "feel": 3,
+      "effort": 2.0,
+      "elevation_gain": 33.1951,
+      "avg_cadence": 145,
+      "interval_summary": [
+        "1x 48m31s 94bpm"
+      ]
+    },
+    {
+      "date": "2026-07-26",
+      "start_local": "2026-07-26T08:30",
+      "name": "LAKESIDE 10K Race FINAL",
+      "dist_km": 10.1,
+      "duration_s": 2504,
+      "avg_hr": 166,
+      "max_hr": 176,
+      "pace": 4.08,
+      "feel": 1,
+      "effort": 2.0,
+      "elevation_gain": 85.24245,
+      "avg_cadence": 179,
+      "interval_summary": [
+        "10x 4m9s 166bpm",
+        "1x 19s 176bpm"
+      ],
+      "work_laps": [
+        {
+          "rep": 1,
+          "dist_km": 10.08,
+          "pace": 4.08,
+          "avg_hr": 166,
+          "max_hr": 176,
+          "avg_cadence": 179
+        }
+      ]
+    },
+    {
+      "date": "2026-07-26",
+      "start_local": "2026-07-26T07:45",
+      "name": "LAKESIDE 10K Warm Up 15m",
+      "dist_km": 3.2,
+      "duration_s": 1111,
+      "avg_hr": 122,
+      "max_hr": 136,
+      "pace": 5.47,
+      "feel": 3,
+      "effort": 1.0,
+      "elevation_gain": 35.72541,
+      "avg_cadence": 165,
+      "interval_summary": [
+        "1x 27m50s 122bpm",
+        "1x 8s 103bpm",
+        "1x 2s 105bpm"
+      ]
+    },
     {
       "date": "2026-07-25",
       "start_local": "2026-07-25T08:00",
