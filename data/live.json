@@ -1,38 +1,21 @@
 {
-  "generated_at": "2026-07-26T12:39:52+10:00",
-  "current_week": 11,
+  "generated_at": "2026-07-27T06:53:24+10:00",
+  "current_week": 12,
   "today": {
-    "rhr": 41,
+    "rhr": 44,
     "hrv_7d_avg": 87,
     "hrv_status": null,
-    "sleep_score": 81.0,
-    "sleep_hrs": 8.2,
-    "body_battery": 97,
-    "vo2max_garmin": 53,
+    "sleep_score": null,
+    "sleep_hrs": null,
+    "body_battery": 57,
+    "vo2max_garmin": null,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 41.3,
-    "atl": 36.9,
-    "tsb": 4.4
+    "ctl": 40.3,
+    "atl": 32.0,
+    "tsb": 8.4
   },
   "this_week_days": null,
   "weeks": [
-    {
-      "wk": 3,
-      "actual_km": 8.0,
-      "partial": false,
-      "quality": null,
-      "days": {
-        "2026-05-31": {
-          "dist_km": 8.0,
-          "avg_hr": 123,
-          "pace": 5.45,
-          "feel": null,
-          "effort": null,
-          "decoupling_pct": null,
-          "_main_dist": 8.01143
-        }
-      }
-    },
     {
       "wk": 4,
       "actual_km": 78.4,
@@ -373,9 +356,9 @@
           "dist_km": 32.6,
           "avg_hr": 131,
           "pace": 5.53,
-          "feel": 3,
-          "effort": 8.0,
-          "decoupling_pct": -0.2,
+          "feel": null,
+          "effort": null,
+          "decoupling_pct": null,
           "_main_dist": 0.5925900000000001
         },
         "2026-07-11": {
@@ -551,12 +534,6 @@
   ],
   "sleep_hrv_14d": [
     {
-      "date": "2026-07-13",
-      "score": 65.0,
-      "hrv": 74.0,
-      "rhr": 41
-    },
-    {
       "date": "2026-07-14",
       "score": 82.0,
       "hrv": 77.0,
@@ -633,6 +610,12 @@
       "score": 81.0,
       "hrv": 82.0,
       "rhr": 41
+    },
+    {
+      "date": "2026-07-27",
+      "score": null,
+      "hrv": null,
+      "rhr": 44
     }
   ],
   "recent_activities": [
@@ -656,7 +639,7 @@
     {
       "date": "2026-07-26",
       "start_local": "2026-07-26T08:30",
-      "name": "LAKESIDE 10K Race FINAL",
+      "name": "Melbourne - LAKESIDE 10K Race FINAL",
       "dist_km": 10.1,
       "duration_s": 2504,
       "avg_hr": 166,
@@ -1092,108 +1075,6 @@
       "interval_summary": [
         "1x 27m2s 115bpm",
         "1x 1h 128bpm"
-      ]
-    },
-    {
-      "date": "2026-07-12",
-      "start_local": "2026-07-12T09:51",
-      "name": "Melbourne Running",
-      "dist_km": 0.59,
-      "duration_s": 209,
-      "avg_hr": 131,
-      "max_hr": 138,
-      "pace": 5.53,
-      "feel": 2,
-      "effort": 1.0,
-      "elevation_gain": 6.37172,
-      "avg_cadence": 162,
-      "interval_summary": [
-        "1x 4m54s 130bpm"
-      ]
-    },
-    {
-      "date": "2026-07-12",
-      "start_local": "2026-07-12T07:00",
-      "name": "Easy Long Run 32km HR",
-      "dist_km": 32.02,
-      "duration_s": 9593,
-      "avg_hr": 141,
-      "max_hr": 163,
-      "pace": 5.0,
-      "feel": 3,
-      "effort": 8.0,
-      "elevation_gain": 212.87617,
-      "avg_cadence": 170,
-      "decoupling_pct": -0.2,
-      "interval_summary": [
-        "1x 43m59s 132bpm",
-        "6x 20m45s 144bpm",
-        "1x 3s 160bpm"
-      ],
-      "km_chunks": [
-        {
-          "label": "0.0-8.0km",
-          "dist_km": 8.0,
-          "elapsed": 2639,
-          "pace": 5.13,
-          "avg_hr": 132,
-          "max_hr": 142,
-          "avg_cadence": 85
-        },
-        {
-          "label": "8.0-12.0km",
-          "dist_km": 4.0,
-          "elapsed": 1443,
-          "pace": 5.06,
-          "avg_hr": 134,
-          "max_hr": 142,
-          "avg_cadence": 85
-        },
-        {
-          "label": "12.0-16.0km",
-          "dist_km": 4.0,
-          "elapsed": 1226,
-          "pace": 5.06,
-          "avg_hr": 139,
-          "max_hr": 144,
-          "avg_cadence": 85
-        },
-        {
-          "label": "16.0-20.0km",
-          "dist_km": 4.0,
-          "elapsed": 1202,
-          "pace": 5.01,
-          "avg_hr": 143,
-          "max_hr": 147,
-          "avg_cadence": 85
-        },
-        {
-          "label": "20.0-24.0km",
-          "dist_km": 4.0,
-          "elapsed": 1335,
-          "pace": 4.54,
-          "avg_hr": 143,
-          "max_hr": 152,
-          "avg_cadence": 85
-        },
-        {
-          "label": "24.0-28.0km",
-          "dist_km": 4.0,
-          "elapsed": 1126,
-          "pace": 4.41,
-          "avg_hr": 151,
-          "max_hr": 157,
-          "avg_cadence": 86
-        },
-        {
-          "label": "28.0-32.0km",
-          "dist_km": 4.0,
-          "elapsed": 1135,
-          "pace": 4.44,
-          "avg_hr": 155,
-          "max_hr": 163,
-          "avg_cadence": 86
-        }
       ]
     }
   ]
