@@ -498,8 +498,9 @@ function buildSparkline(a) {
   const H = 28, PAD = 2;
   const n = raw.length;
 
-  // HRV range
-  const hrvVals = raw.map(d => d.hrv).filter(v => v != null);
+  // HRV range — prefer RMSSD, fall back to SDNN
+  const hrvKey = raw.some(d => d.hrv != null) ? 'hrv' : 'hrv_sdnn';
+  const hrvVals = raw.map(d => d[hrvKey]).filter(v => v != null);
   const rhrVals = raw.map(d => d.rhr).filter(v => v != null);
   if (!hrvVals.length || !rhrVals.length) return '';
 
@@ -523,7 +524,7 @@ function buildSparkline(a) {
   const shadeH  = (shadeY2 - shadeY1).toFixed(1);
 
   // Build polyline points
-  const hrvPts = raw.map((d,i) => d.hrv != null ? `${xp(i).toFixed(1)},${yHrv(d.hrv).toFixed(1)}` : null).filter(Boolean).join(' ');
+  const hrvPts = raw.map((d,i) => d[hrvKey] != null ? `${xp(i).toFixed(1)},${yHrv(d[hrvKey]).toFixed(1)}` : null).filter(Boolean).join(' ');
   const rhrPts = raw.map((d,i) => d.rhr != null ? `${xp(i).toFixed(1)},${yRhr(d.rhr).toFixed(1)}` : null).filter(Boolean).join(' ');
 
   // Date tick labels — start and end
