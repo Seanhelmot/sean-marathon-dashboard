@@ -67,7 +67,9 @@ ATHLETES = [
     {
         "id":    "i619779",
         "name":  "Drakes",
-        "races": [],
+        "races": [
+            {"name": "Melbourne Marathon", "date": "2026-10-11"},
+        ],
         "training_philosophy": "",
         "threshold_hr":  163,
         "max_hr":        180,
@@ -79,7 +81,7 @@ ATHLETES = [
         "name":  "Rohan Cooper",
         "races": [
             {"name": "Lakeside 10K",       "date": "2026-07-26"},
-            {"name": "Melbourne Marathon",  "date": "2026-09-20"},
+            {"name": "Geelong Marathon",    "date": "2026-09-27"},
         ],
         "training_philosophy": "",
         "threshold_hr":  162,
@@ -91,7 +93,8 @@ ATHLETES = [
         "id":    "i622562",
         "name":  "Matt W",
         "races": [
-            {"name": "Lakeside 10K", "date": "2026-07-26"},
+            {"name": "Lakeside 10K",      "date": "2026-07-26"},
+            {"name": "Melbourne Marathon", "date": "2026-10-11"},
         ],
         "training_philosophy": "",
         "threshold_hr":  165,
@@ -112,7 +115,11 @@ ATHLETES = [
     {
         "id":    "i624875",
         "name":  "Annette",
-        "races": [],
+        "races": [
+            {"name": "Run Prix",               "date": "2026-09-20"},
+            {"name": "Auckland Half Marathon", "date": "2026-11-01"},
+            {"name": "Tokyo Marathon",         "date": "2027-03-07"},
+        ],
         "training_philosophy": "",
         "threshold_hr":  None,
         "max_hr":        None,
@@ -143,7 +150,9 @@ ATHLETES = [
     {
         "id":    "i620541",
         "name":  "Brad P",
-        "races": [],
+        "races": [
+            {"name": "Melbourne Marathon", "date": "2026-10-11"},
+        ],
         "training_philosophy": "",
         "threshold_hr":  None,
         "max_hr":        None,
@@ -153,7 +162,9 @@ ATHLETES = [
     {
         "id":    "i624989",
         "name":  "Mark M",
-        "races": [],
+        "races": [
+            {"name": "Melbourne Marathon", "date": "2026-10-11"},
+        ],
         "training_philosophy": "",
         "threshold_hr":  None,
         "max_hr":        None,
@@ -163,21 +174,13 @@ ATHLETES = [
     {
         "id":    "i621545",
         "name":  "Sam",
-        "races": [],
+        "races": [
+            {"name": "Melbourne Marathon", "date": "2026-10-11"},
+        ],
         "training_philosophy": "Pace-primary quality. LTHR 177, MaxHR 196. HM debut 1:27:25 (4:08/km, 174 avg HR). Strong threshold base — 6x mile @ ~3:58/km. CV capacity 3:45-3:52/km.",
         "threshold_hr":  177,
         "max_hr":        196,
         "threshold_pace": "3:58",
-        "typical_week": {},
-    },
-    {
-        "id":    "i625671",
-        "name":  "Aidan Burrell",
-        "races": [],
-        "training_philosophy": "Inexperienced runner building base fitness. Conservative pacing, HR-capped easy runs. Focus on consistency and injury prevention.",
-        "threshold_hr":  None,
-        "max_hr":        None,
-        "threshold_pace": "4:50",
         "typical_week": {},
     },
 ]
@@ -239,13 +242,16 @@ def pull_athlete(a):
     today_w  = next((w for w in reversed(wellness) if w["id"] == str(TODAY)), None) or \
                (wellness[-1] if wellness else {})
 
-    rhr         = today_w.get("restingHR")
-    hrv_today   = today_w.get("hrv")
-    sleep_score = today_w.get("sleepScore")
-    sleep_secs  = today_w.get("sleepSecs")
-    sleep_hrs   = round(sleep_secs / 3600, 1) if sleep_secs else None
-    vo2max      = today_w.get("vo2max")
-    weight      = today_w.get("weight")
+    rhr          = today_w.get("restingHR")
+    hrv_today    = today_w.get("hrv")
+    hrv_sdnn_today = today_w.get("hrvSDNN")
+    sleep_score  = today_w.get("sleepScore")
+    sleep_secs   = today_w.get("sleepSecs")
+    sleep_hrs    = round(sleep_secs / 3600, 1) if sleep_secs else None
+    vo2max       = today_w.get("vo2max")
+    weight       = today_w.get("weight")
+    spo2         = round(today_w.get("spO2"), 1) if today_w.get("spO2") else None
+    steps        = today_w.get("steps")
     ctl         = today_w.get("ctl")
     atl         = today_w.get("atl")
     tsb         = round(ctl - atl, 1) if ctl and atl else None
@@ -264,12 +270,27 @@ def pull_athlete(a):
     rhr_7d    = round(sum(rhr_vals) / len(rhr_vals), 1) if rhr_vals else None
     rhr_delta = round(rhr - rhr_7d, 1) if rhr and rhr_7d else None
 
-    # HRV trend — last 3 vs prior 3
-    hrv_all = [w["hrv"] for w in wellness if w.get("hrv")]
+    # HRV trend — last 3 vs prior 3 (prefer RMSSD, fall back to SDNN)
+    hrv_all = [w["hrv"] or w.get("hrvSDNN") for w in wellness if w.get("hrv") or w.get("hrvSDNN")]
     hrv_trend = None
     if len(hrv_all) >= 6:
         avg = lambda arr: sum(arr) / len(arr)
         hrv_trend = round(avg(hrv_all[-3:]) - avg(hrv_all[-6:-3]), 1)
+
+    # SDNN 7-day avg and 60d baseline (for athletes without RMSSD)
+    sdnn_vals_7d = [w.get("hrvSDNN") for w in wellness[-7:] if w.get("hrvSDNN")]
+    hrv_sdnn_7d  = round(sum(sdnn_vals_7d) / len(sdnn_vals_7d), 1) if sdnn_vals_7d else None
+    sdnn_vals_60d = [w.get("hrvSDNN") for w in wellness if w.get("hrvSDNN")]
+    hrv_sdnn_baseline = None
+    if len(sdnn_vals_60d) >= 7:
+        _mu = sum(sdnn_vals_60d) / len(sdnn_vals_60d)
+        hrv_sdnn_baseline = round(_mu, 1)
+
+    # vo2max — use today's or most recent non-null in last 60d
+    if vo2max is None:
+        vo2max = next((w.get("vo2max") for w in reversed(wellness) if w.get("vo2max")), None)
+    if vo2max is not None:
+        vo2max = round(vo2max, 1)
 
     # Recent activities — last 14 days
     acts_raw = get(f"{aid}/activities", {
@@ -501,10 +522,15 @@ def pull_athlete(a):
             "hrv_60d_sd":       hrv_60d_sd,
             "hrv_60d_n":        len(hrv_60d_vals),
             "hrv_trend":        hrv_trend,
+            "hrv_sdnn_today":   hrv_sdnn_today,
+            "hrv_sdnn_7d_avg":  hrv_sdnn_7d,
+            "hrv_sdnn_baseline":hrv_sdnn_baseline,
             "sleep_score":      sleep_score,
             "sleep_hrs":        sleep_hrs,
             "vo2max":           vo2max,
             "weight":           weight,
+            "spo2":             spo2,
+            "steps":            steps,
         },
         "fitness": {
             "ctl":       round(ctl, 1) if ctl else None,
@@ -519,8 +545,12 @@ def pull_athlete(a):
                 "date":        w["id"],
                 "rhr":         w.get("restingHR"),
                 "hrv":         w.get("hrv"),
+                "hrv_sdnn":    w.get("hrvSDNN"),
                 "sleep_score": w.get("sleepScore"),
                 "sleep_hrs":   round(w["sleepSecs"] / 3600, 1) if w.get("sleepSecs") else None,
+                "spo2":        round(w["spO2"], 1) if w.get("spO2") else None,
+                "steps":       w.get("steps"),
+                "vo2max":      round(w["vo2max"], 1) if w.get("vo2max") else None,
                 "ctl":         round(w["ctl"], 1) if w.get("ctl") else None,
                 "atl":         round(w["atl"], 1) if w.get("atl") else None,
             }

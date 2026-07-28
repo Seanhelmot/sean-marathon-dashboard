@@ -270,8 +270,19 @@ function localDateStr(d) {
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
 
+function resolveHrv(h) {
+  // Prefer RMSSD; fall back to SDNN for athletes who only have Garmin HRV SDNN
+  if (h.hrv_today != null || h.hrv_7d_avg != null) return;
+  if (h.hrv_sdnn_today != null)    h.hrv_today        = h.hrv_sdnn_today;
+  if (h.hrv_sdnn_7d_avg != null)   h.hrv_7d_avg       = h.hrv_sdnn_7d_avg;
+  if (h.hrv_sdnn_baseline != null) h.hrv_60d_baseline  = h.hrv_sdnn_baseline;
+  // SDNN has no SD stored — use a fixed ±8 so gauge bands still render
+  if (h.hrv_60d_sd == null && h.hrv_sdnn_baseline != null) h.hrv_60d_sd = 8;
+}
+
 function buildCommentary(a) {
   const h   = a.health  || {};
+  resolveHrv(h);
   const fit = a.fitness || {};
   const acts = a.recent_activities || [];
   const tsb  = fit.tsb;
