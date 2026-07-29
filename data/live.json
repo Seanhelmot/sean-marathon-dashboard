@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-07-29T07:03:27+10:00",
+  "generated_at": "2026-07-29T12:31:07+10:00",
   "current_week": 12,
   "today": {
     "rhr": 40,
-    "hrv_7d_avg": 83,
+    "hrv_7d_avg": 84,
     "hrv_status": null,
-    "sleep_score": null,
-    "sleep_hrs": null,
+    "sleep_score": 86.0,
+    "sleep_hrs": 8.3,
     "body_battery": 100,
     "vo2max_garmin": null,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 40.9,
-    "atl": 37.7,
-    "tsb": 3.3
+    "ctl": 40.6,
+    "atl": 35.5,
+    "tsb": 5.0
   },
   "this_week_days": null,
   "weeks": [
@@ -524,10 +524,23 @@
     },
     {
       "wk": 12,
-      "actual_km": 8.0,
+      "actual_km": 17.1,
       "partial": true,
-      "quality": null,
+      "quality": {
+        "pace_min_per_km": 5.46,
+        "avg_hr": 115,
+        "work_intervals_only": false
+      },
       "days": {
+        "2026-07-29": {
+          "dist_km": 9.1,
+          "avg_hr": 115,
+          "pace": 5.46,
+          "feel": 2,
+          "effort": 2.0,
+          "decoupling_pct": null,
+          "_main_dist": 9.06697
+        },
         "2026-07-28": {
           "dist_km": 8.0,
           "avg_hr": 120,
@@ -621,12 +634,30 @@
     },
     {
       "date": "2026-07-29",
-      "score": null,
-      "hrv": null,
+      "score": 86.0,
+      "hrv": 90.0,
       "rhr": 40
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-07-29",
+      "start_local": "2026-07-29T06:58",
+      "name": "Light Threshold 3x1600m 5km HR",
+      "dist_km": 9.07,
+      "duration_s": 3139,
+      "avg_hr": 115,
+      "max_hr": 124,
+      "pace": 5.46,
+      "feel": 2,
+      "effort": 2.0,
+      "elevation_gain": 37.36733,
+      "avg_cadence": 167,
+      "interval_summary": [
+        "1x 35m35s 112bpm",
+        "1x 25m8s 118bpm"
+      ]
+    },
     {
       "date": "2026-07-28",
       "start_local": "2026-07-28T11:45",
