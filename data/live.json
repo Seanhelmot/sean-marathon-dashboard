@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-31T07:03:20+10:00",
+  "generated_at": "2026-07-31T12:41:52+10:00",
   "current_week": 12,
   "today": {
     "rhr": 38,
@@ -8,11 +8,11 @@
     "sleep_score": 86.0,
     "sleep_hrs": 7.4,
     "body_battery": 100,
-    "vo2max_garmin": null,
+    "vo2max_garmin": 53,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 39.7,
-    "atl": 32.8,
-    "tsb": 6.8
+    "ctl": 39.4,
+    "atl": 31.1,
+    "tsb": 8.3
   },
   "this_week_days": null,
   "weeks": [
@@ -502,7 +502,7 @@
     },
     {
       "wk": 12,
-      "actual_km": 29.1,
+      "actual_km": 38.1,
       "partial": true,
       "quality": {
         "pace_min_per_km": 5.46,
@@ -510,6 +510,15 @@
         "work_intervals_only": false
       },
       "days": {
+        "2026-07-31": {
+          "dist_km": 9.0,
+          "avg_hr": 120,
+          "pace": 5.2,
+          "feel": 3,
+          "effort": 2.0,
+          "decoupling_pct": null,
+          "_main_dist": 9.01466
+        },
         "2026-07-30": {
           "dist_km": 12.0,
           "avg_hr": 118,
@@ -627,6 +636,23 @@
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-07-31",
+      "start_local": "2026-07-31T07:27",
+      "name": "Easy + Strides 8km Pace",
+      "dist_km": 9.01,
+      "duration_s": 2888,
+      "avg_hr": 120,
+      "max_hr": 132,
+      "pace": 5.2,
+      "feel": 3,
+      "effort": 2.0,
+      "elevation_gain": 32.699642,
+      "avg_cadence": 169,
+      "interval_summary": [
+        "1x 57m 120bpm"
+      ]
+    },
     {
       "date": "2026-07-30",
       "start_local": "2026-07-30T06:56",
