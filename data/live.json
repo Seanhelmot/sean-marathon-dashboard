@@ -1,24 +1,24 @@
 {
-  "generated_at": "2026-07-31T12:41:52+10:00",
+  "generated_at": "2026-08-01T06:59:58+10:00",
   "current_week": 12,
   "today": {
-    "rhr": 38,
+    "rhr": 39,
     "hrv_7d_avg": 83,
     "hrv_status": null,
-    "sleep_score": 86.0,
-    "sleep_hrs": 7.4,
+    "sleep_score": 93.0,
+    "sleep_hrs": 8.5,
     "body_battery": 100,
-    "vo2max_garmin": 53,
+    "vo2max_garmin": null,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 39.4,
-    "atl": 31.1,
-    "tsb": 8.3
+    "ctl": 39.1,
+    "atl": 30.7,
+    "tsb": 8.4
   },
   "this_week_days": null,
   "weeks": [
     {
       "wk": 4,
-      "actual_km": 41.9,
+      "actual_km": 32.9,
       "partial": false,
       "quality": null,
       "days": {
@@ -39,15 +39,6 @@
           "effort": null,
           "decoupling_pct": null,
           "_main_dist": 25.690150000000003
-        },
-        "2026-06-05": {
-          "dist_km": 9.0,
-          "avg_hr": 127,
-          "pace": 5.34,
-          "feel": null,
-          "effort": null,
-          "decoupling_pct": null,
-          "_main_dist": 9.022129999999999
         }
       }
     },
@@ -409,8 +400,8 @@
           "dist_km": 7.4,
           "avg_hr": 117,
           "pace": 5.4,
-          "feel": 2,
-          "effort": 2.0,
+          "feel": null,
+          "effort": null,
           "decoupling_pct": null,
           "_main_dist": 7.39748
         },
@@ -551,12 +542,6 @@
   ],
   "sleep_hrv_14d": [
     {
-      "date": "2026-07-18",
-      "score": 71.0,
-      "hrv": 82.0,
-      "rhr": 40
-    },
-    {
       "date": "2026-07-19",
       "score": 91.0,
       "hrv": 82.0,
@@ -633,6 +618,12 @@
       "score": 86.0,
       "hrv": 89.0,
       "rhr": 38
+    },
+    {
+      "date": "2026-08-01",
+      "score": 93.0,
+      "hrv": 81.0,
+      "rhr": 39
     }
   ],
   "recent_activities": [
@@ -1004,28 +995,6 @@
       "avg_cadence": 169,
       "interval_summary": [
         "1x 37m16s 125bpm"
-      ]
-    },
-    {
-      "date": "2026-07-17",
-      "start_local": "2026-07-17T07:41",
-      "name": "Easy + Strides 7km",
-      "dist_km": 7.4,
-      "duration_s": 2512,
-      "avg_hr": 117,
-      "max_hr": 129,
-      "pace": 5.4,
-      "feel": 2,
-      "effort": 2.0,
-      "elevation_gain": 32.463997,
-      "avg_cadence": 166,
-      "interval_summary": [
-        "1x 48m25s 117bpm",
-        "1x 85s 83bpm",
-        "1x 12s 81bpm",
-        "1x 3m30s 86bpm",
-        "2x 2m15s 94bpm",
-        "1x 15s 114bpm"
       ]
     }
   ]
