@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-02T06:45:04+10:00",
+  "generated_at": "2026-08-02T12:39:06+10:00",
   "current_week": 12,
   "today": {
     "rhr": 39,
@@ -8,11 +8,11 @@
     "sleep_score": 86.0,
     "sleep_hrs": 7.6,
     "body_battery": 100,
-    "vo2max_garmin": null,
+    "vo2max_garmin": 54,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 41.9,
-    "atl": 47.9,
-    "tsb": -5.9
+    "ctl": 41.5,
+    "atl": 45.4,
+    "tsb": -3.9
   },
   "this_week_days": null,
   "weeks": [
@@ -484,7 +484,7 @@
     },
     {
       "wk": 12,
-      "actual_km": 44.2,
+      "actual_km": 74.3,
       "partial": false,
       "quality": {
         "pace_min_per_km": 5.46,
@@ -492,6 +492,15 @@
         "work_intervals_only": false
       },
       "days": {
+        "2026-08-02": {
+          "dist_km": 30.1,
+          "avg_hr": 141,
+          "pace": 4.59,
+          "feel": 3,
+          "effort": 2.0,
+          "decoupling_pct": 8.0,
+          "_main_dist": 29.49734
+        },
         "2026-08-01": {
           "dist_km": 6.1,
           "avg_hr": 126,
@@ -627,6 +636,52 @@
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-08-02",
+      "start_local": "2026-08-02T08:06",
+      "name": "Easy Long Run 28km Pace",
+      "dist_km": 29.5,
+      "duration_s": 8829,
+      "avg_hr": 141,
+      "max_hr": 158,
+      "pace": 4.59,
+      "feel": 3,
+      "effort": 7.0,
+      "elevation_gain": 290.80255,
+      "avg_cadence": 170,
+      "decoupling_pct": 8.0,
+      "interval_summary": [
+        "1x 2h39m 140bpm"
+      ],
+      "km_chunks": [
+        {
+          "label": "0.0-29.5km",
+          "dist_km": 29.5,
+          "elapsed": 9568,
+          "pace": 5.0,
+          "avg_hr": 140,
+          "max_hr": 158,
+          "avg_cadence": 85
+        }
+      ]
+    },
+    {
+      "date": "2026-08-02",
+      "start_local": "2026-08-02T07:52",
+      "name": "Melbourne Running",
+      "dist_km": 0.58,
+      "duration_s": 189,
+      "avg_hr": 100,
+      "max_hr": 119,
+      "pace": 5.28,
+      "feel": 3,
+      "effort": 2.0,
+      "elevation_gain": 9.027033,
+      "avg_cadence": 164,
+      "interval_summary": [
+        "1x 6m34s 99bpm"
+      ]
+    },
     {
       "date": "2026-08-01",
       "start_local": "2026-08-01T08:18",
