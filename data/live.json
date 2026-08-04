@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-04T06:58:39+10:00",
+  "generated_at": "2026-08-04T12:24:53+10:00",
   "current_week": 13,
   "today": {
     "rhr": 40,
@@ -7,12 +7,12 @@
     "hrv_status": null,
     "sleep_score": 96.0,
     "sleep_hrs": 7.8,
-    "body_battery": 100,
-    "vo2max_garmin": null,
+    "body_battery": null,
+    "vo2max_garmin": 54,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 40.7,
-    "atl": 40.3,
-    "tsb": 0.3
+    "ctl": 40.5,
+    "atl": 39.5,
+    "tsb": 1.0
   },
   "this_week_days": null,
   "weeks": [
@@ -530,6 +530,23 @@
           "_main_dist": 8.02688
         }
       }
+    },
+    {
+      "wk": 13,
+      "actual_km": 10.2,
+      "partial": true,
+      "quality": null,
+      "days": {
+        "2026-08-04": {
+          "dist_km": 10.2,
+          "avg_hr": 129,
+          "pace": 5.18,
+          "feel": 2,
+          "effort": 4.0,
+          "decoupling_pct": null,
+          "_main_dist": 10.24329
+        }
+      }
     }
   ],
   "sleep_hrv_14d": [
@@ -619,6 +636,23 @@
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-08-04",
+      "start_local": "2026-08-04T07:08",
+      "name": "Easy + Drills + S&C 10km HR",
+      "dist_km": 10.24,
+      "duration_s": 3261,
+      "avg_hr": 129,
+      "max_hr": 152,
+      "pace": 5.18,
+      "feel": 2,
+      "effort": 4.0,
+      "elevation_gain": 132.3722,
+      "avg_cadence": 167,
+      "interval_summary": [
+        "1x 59m39s 128bpm"
+      ]
+    },
     {
       "date": "2026-08-02",
       "start_local": "2026-08-02T08:06",
