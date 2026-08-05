@@ -1,30 +1,26 @@
 {
-  "generated_at": "2026-08-05T12:24:39+10:00",
+  "generated_at": "2026-08-06T07:04:59+10:00",
   "current_week": 13,
   "today": {
-    "rhr": 39,
-    "hrv_7d_avg": 83,
+    "rhr": 40,
+    "hrv_7d_avg": 84,
     "hrv_status": null,
-    "sleep_score": 83.0,
-    "sleep_hrs": 8.4,
-    "body_battery": 100,
-    "vo2max_garmin": 54,
+    "sleep_score": null,
+    "sleep_hrs": null,
+    "body_battery": null,
+    "vo2max_garmin": null,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 41.9,
-    "atl": 47.6,
-    "tsb": -5.7
+    "ctl": 41.8,
+    "atl": 46.3,
+    "tsb": -4.5
   },
   "this_week_days": null,
   "weeks": [
     {
       "wk": 5,
-      "actual_km": 70.5,
+      "actual_km": 54.4,
       "partial": false,
-      "quality": {
-        "pace_min_per_km": 4.3,
-        "avg_hr": 157,
-        "work_intervals_only": false
-      },
+      "quality": null,
       "days": {
         "2026-06-14": {
           "dist_km": 28.2,
@@ -61,15 +57,6 @@
           "effort": null,
           "decoupling_pct": null,
           "_main_dist": 8.99452
-        },
-        "2026-06-10": {
-          "dist_km": 16.2,
-          "avg_hr": 132,
-          "pace": 6.04,
-          "feel": null,
-          "effort": null,
-          "decoupling_pct": null,
-          "_main_dist": 2.55241
         }
       }
     },
@@ -440,8 +427,8 @@
           "dist_km": 5.0,
           "avg_hr": 113,
           "pace": 5.41,
-          "feel": 2,
-          "effort": 2.0,
+          "feel": null,
+          "effort": null,
           "decoupling_pct": null,
           "_main_dist": 5.01188
         },
@@ -555,12 +542,6 @@
   ],
   "sleep_hrv_14d": [
     {
-      "date": "2026-07-23",
-      "score": 93.0,
-      "hrv": 93.0,
-      "rhr": 38
-    },
-    {
       "date": "2026-07-24",
       "score": 90.0,
       "hrv": 84.0,
@@ -637,6 +618,12 @@
       "score": 83.0,
       "hrv": 86.0,
       "rhr": 39
+    },
+    {
+      "date": "2026-08-06",
+      "score": null,
+      "hrv": null,
+      "rhr": 40
     }
   ],
   "recent_activities": [
@@ -978,23 +965,6 @@
       "avg_cadence": 167,
       "interval_summary": [
         "1x 28m59s 119bpm"
-      ]
-    },
-    {
-      "date": "2026-07-22",
-      "start_local": "2026-07-22T07:00",
-      "name": "Warm Up + Strides 2km",
-      "dist_km": 5.01,
-      "duration_s": 1710,
-      "avg_hr": 113,
-      "max_hr": 122,
-      "pace": 5.41,
-      "feel": 2,
-      "effort": 2.0,
-      "elevation_gain": 22.529562,
-      "avg_cadence": 165,
-      "interval_summary": [
-        "1x 29m33s 113bpm"
       ]
     }
   ]
