@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-08-06T07:04:59+10:00",
+  "generated_at": "2026-08-06T12:27:08+10:00",
   "current_week": 13,
   "today": {
     "rhr": 40,
-    "hrv_7d_avg": 84,
+    "hrv_7d_avg": 85,
     "hrv_status": null,
-    "sleep_score": null,
-    "sleep_hrs": null,
+    "sleep_score": 90.0,
+    "sleep_hrs": 7.5,
     "body_battery": null,
-    "vo2max_garmin": null,
+    "vo2max_garmin": 54,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 41.8,
-    "atl": 46.3,
-    "tsb": -4.5
+    "ctl": 41.7,
+    "atl": 45.6,
+    "tsb": -3.9
   },
   "this_week_days": null,
   "weeks": [
@@ -511,7 +511,7 @@
     },
     {
       "wk": 13,
-      "actual_km": 28.8,
+      "actual_km": 38.8,
       "partial": true,
       "quality": {
         "pace_min_per_km": 4.19,
@@ -519,6 +519,15 @@
         "work_intervals_only": true
       },
       "days": {
+        "2026-08-06": {
+          "dist_km": 10.0,
+          "avg_hr": 122,
+          "pace": 5.28,
+          "feel": 2,
+          "effort": 2.0,
+          "decoupling_pct": null,
+          "_main_dist": 10.01146
+        },
         "2026-08-05": {
           "dist_km": 18.5,
           "avg_hr": 134,
@@ -621,12 +630,30 @@
     },
     {
       "date": "2026-08-06",
-      "score": null,
-      "hrv": null,
+      "score": 90.0,
+      "hrv": 91.0,
       "rhr": 40
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-08-06",
+      "start_local": "2026-08-06T06:42",
+      "name": "Recovery Run 8km HR",
+      "dist_km": 10.01,
+      "duration_s": 3279,
+      "avg_hr": 122,
+      "max_hr": 141,
+      "pace": 5.28,
+      "feel": 2,
+      "effort": 2.0,
+      "elevation_gain": 56.542084,
+      "avg_cadence": 167,
+      "interval_summary": [
+        "1x 35m54s 117bpm",
+        "1x 22m59s 127bpm"
+      ]
+    },
     {
       "date": "2026-08-05",
       "start_local": "2026-08-05T09:01",
