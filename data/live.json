@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-08T06:37:11+10:00",
+  "generated_at": "2026-08-08T11:27:05+10:00",
   "current_week": 13,
   "today": {
     "rhr": 39,
@@ -8,11 +8,11 @@
     "sleep_score": 92.0,
     "sleep_hrs": 8.3,
     "body_battery": null,
-    "vo2max_garmin": null,
+    "vo2max_garmin": 54,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 41.7,
-    "atl": 44.4,
-    "tsb": -2.8
+    "ctl": 41.5,
+    "atl": 43.6,
+    "tsb": -2.1
   },
   "this_week_days": null,
   "weeks": [
@@ -493,7 +493,7 @@
     },
     {
       "wk": 13,
-      "actual_km": 48.8,
+      "actual_km": 57.0,
       "partial": true,
       "quality": {
         "pace_min_per_km": 4.19,
@@ -501,6 +501,15 @@
         "work_intervals_only": true
       },
       "days": {
+        "2026-08-08": {
+          "dist_km": 8.2,
+          "avg_hr": 128,
+          "pace": 5.07,
+          "feel": 2,
+          "effort": 6.0,
+          "decoupling_pct": null,
+          "_main_dist": 8.16612
+        },
         "2026-08-07": {
           "dist_km": 10.1,
           "avg_hr": null,
@@ -627,6 +636,24 @@
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-08-08",
+      "start_local": "2026-08-08T07:39",
+      "name": "Easy Run 8km HR",
+      "dist_km": 8.17,
+      "duration_s": 2509,
+      "avg_hr": 128,
+      "max_hr": 159,
+      "pace": 5.07,
+      "feel": 2,
+      "effort": 6.0,
+      "elevation_gain": 74.309746,
+      "avg_cadence": 168,
+      "interval_summary": [
+        "1x 20m44s 112bpm",
+        "1x 24m27s 139bpm"
+      ]
+    },
     {
       "date": "2026-08-07",
       "start_local": "2026-08-07T08:08",
