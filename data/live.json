@@ -1,24 +1,24 @@
 {
-  "generated_at": "2026-08-08T11:27:05+10:00",
+  "generated_at": "2026-08-09T06:23:41+10:00",
   "current_week": 13,
   "today": {
     "rhr": 39,
     "hrv_7d_avg": 85,
     "hrv_status": null,
-    "sleep_score": 92.0,
-    "sleep_hrs": 8.3,
+    "sleep_score": 82.0,
+    "sleep_hrs": 8.6,
     "body_battery": null,
-    "vo2max_garmin": 54,
+    "vo2max_garmin": null,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 41.5,
-    "atl": 43.6,
-    "tsb": -2.1
+    "ctl": 44.7,
+    "atl": 61.3,
+    "tsb": -16.6
   },
   "this_week_days": null,
   "weeks": [
     {
       "wk": 5,
-      "actual_km": 36.2,
+      "actual_km": 28.2,
       "partial": false,
       "quality": null,
       "days": {
@@ -30,15 +30,6 @@
           "effort": null,
           "decoupling_pct": null,
           "_main_dist": 28.00839
-        },
-        "2026-06-13": {
-          "dist_km": 8.0,
-          "avg_hr": 129,
-          "pace": 5.18,
-          "feel": null,
-          "effort": null,
-          "decoupling_pct": null,
-          "_main_dist": 8.01322
         }
       }
     },
@@ -391,8 +382,8 @@
           "dist_km": 5.0,
           "avg_hr": 128,
           "pace": 5.23,
-          "feel": 2,
-          "effort": 2.0,
+          "feel": null,
+          "effort": null,
           "decoupling_pct": null,
           "_main_dist": 5.004989999999999
         },
@@ -494,7 +485,7 @@
     {
       "wk": 13,
       "actual_km": 57.0,
-      "partial": true,
+      "partial": false,
       "quality": {
         "pace_min_per_km": 4.19,
         "avg_hr": 157,
@@ -550,12 +541,6 @@
     }
   ],
   "sleep_hrv_14d": [
-    {
-      "date": "2026-07-26",
-      "score": 81.0,
-      "hrv": 82.0,
-      "rhr": 41
-    },
     {
       "date": "2026-07-27",
       "score": 80.0,
@@ -632,6 +617,12 @@
       "date": "2026-08-08",
       "score": 92.0,
       "hrv": 90.0,
+      "rhr": 39
+    },
+    {
+      "date": "2026-08-09",
+      "score": 82.0,
+      "hrv": 83.0,
       "rhr": 39
     }
   ],
@@ -1007,23 +998,6 @@
         "1x 27m50s 122bpm",
         "1x 8s 103bpm",
         "1x 2s 105bpm"
-      ]
-    },
-    {
-      "date": "2026-07-25",
-      "start_local": "2026-07-25T08:00",
-      "name": "Melbourne Running",
-      "dist_km": 5.0,
-      "duration_s": 1616,
-      "avg_hr": 128,
-      "max_hr": 144,
-      "pace": 5.23,
-      "feel": 2,
-      "effort": 2.0,
-      "elevation_gain": 49.2819,
-      "avg_cadence": 167,
-      "interval_summary": [
-        "1x 26m59s 128bpm"
       ]
     }
   ]
