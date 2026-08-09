@@ -1,38 +1,21 @@
 {
-  "generated_at": "2026-08-09T11:39:39+10:00",
-  "current_week": 13,
+  "generated_at": "2026-08-10T06:27:50+10:00",
+  "current_week": 14,
   "today": {
-    "rhr": 39,
-    "hrv_7d_avg": 85,
+    "rhr": 40,
+    "hrv_7d_avg": 87,
     "hrv_status": null,
-    "sleep_score": 82.0,
-    "sleep_hrs": 8.6,
+    "sleep_score": 84.0,
+    "sleep_hrs": 8.4,
     "body_battery": null,
-    "vo2max_garmin": 54,
+    "vo2max_garmin": null,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 44.5,
-    "atl": 60.1,
-    "tsb": -15.6
+    "ctl": 43.4,
+    "atl": 52.1,
+    "tsb": -8.6
   },
   "this_week_days": null,
   "weeks": [
-    {
-      "wk": 5,
-      "actual_km": 28.2,
-      "partial": false,
-      "quality": null,
-      "days": {
-        "2026-06-14": {
-          "dist_km": 28.2,
-          "avg_hr": 141,
-          "pace": 5.01,
-          "feel": null,
-          "effort": null,
-          "decoupling_pct": null,
-          "_main_dist": 28.00839
-        }
-      }
-    },
     {
       "wk": 6,
       "actual_km": 87.4,
@@ -366,15 +349,15 @@
       "quality": {
         "pace_min_per_km": 4.08,
         "avg_hr": 166,
-        "work_intervals_only": true
+        "work_intervals_only": false
       },
       "days": {
         "2026-07-26": {
           "dist_km": 15.8,
           "avg_hr": 95,
           "pace": 6.26,
-          "feel": 3,
-          "effort": 1.0,
+          "feel": null,
+          "effort": null,
           "decoupling_pct": null,
           "_main_dist": 2.45153
         },
@@ -551,12 +534,6 @@
   ],
   "sleep_hrv_14d": [
     {
-      "date": "2026-07-27",
-      "score": 80.0,
-      "hrv": 84.0,
-      "rhr": 40
-    },
-    {
       "date": "2026-07-28",
       "score": 86.0,
       "hrv": 80.0,
@@ -633,6 +610,12 @@
       "score": 82.0,
       "hrv": 83.0,
       "rhr": 39
+    },
+    {
+      "date": "2026-08-10",
+      "score": 84.0,
+      "hrv": 93.0,
+      "rhr": 40
     }
   ],
   "recent_activities": [
@@ -1035,70 +1018,6 @@
       "interval_summary": [
         "1x 18m19s 114bpm",
         "1x 37m41s 122bpm"
-      ]
-    },
-    {
-      "date": "2026-07-26",
-      "start_local": "2026-07-26T09:20",
-      "name": "LAKESIDE 10K Cool Down 10m",
-      "dist_km": 2.45,
-      "duration_s": 947,
-      "avg_hr": 95,
-      "max_hr": 145,
-      "pace": 6.26,
-      "feel": 3,
-      "effort": 2.0,
-      "elevation_gain": 33.1951,
-      "avg_cadence": 145,
-      "interval_summary": [
-        "1x 48m31s 94bpm"
-      ]
-    },
-    {
-      "date": "2026-07-26",
-      "start_local": "2026-07-26T08:30",
-      "name": "Melbourne - LAKESIDE 10K Race FINAL",
-      "dist_km": 10.1,
-      "duration_s": 2504,
-      "avg_hr": 166,
-      "max_hr": 176,
-      "pace": 4.08,
-      "feel": 1,
-      "effort": 2.0,
-      "elevation_gain": 85.24245,
-      "avg_cadence": 179,
-      "interval_summary": [
-        "10x 4m9s 166bpm",
-        "1x 19s 176bpm"
-      ],
-      "work_laps": [
-        {
-          "rep": 1,
-          "dist_km": 10.08,
-          "pace": 4.08,
-          "avg_hr": 166,
-          "max_hr": 176,
-          "avg_cadence": 179
-        }
-      ]
-    },
-    {
-      "date": "2026-07-26",
-      "start_local": "2026-07-26T07:45",
-      "name": "LAKESIDE 10K Warm Up 15m",
-      "dist_km": 3.2,
-      "duration_s": 1111,
-      "avg_hr": 122,
-      "max_hr": 136,
-      "pace": 5.47,
-      "feel": 3,
-      "effort": 1.0,
-      "elevation_gain": 35.72541,
-      "avg_cadence": 165,
-      "interval_summary": [
-        "1x 27m50s 122bpm",
-        "1x 8s 103bpm",
-        "1x 2s 105bpm"
       ]
     }
   ]
