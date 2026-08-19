@@ -1,13 +1,14 @@
+import os
 import requests, json
 from datetime import date
 
-AUTH = ('API_KEY', '6123b5w739ctaytjstmw7kmn6')
+AUTH = ('API_KEY', os.environ['INTERVALS_API_KEY'].strip())
 BASE = 'https://intervals.icu/api/v1/athlete'
 
 athletes = [
-    ('i620570', 'Chess'),
-    ('i619779', 'Drakes'),
-    ('i620736', 'Rohan Cooper'),
+    ('i620570', 'CCr'),
+    ('i619779', 'CDr'),
+    ('i620736', 'RCo'),
 ]
 
 for aid, label in athletes:

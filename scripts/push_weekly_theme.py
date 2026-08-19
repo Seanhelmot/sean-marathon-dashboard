@@ -10,15 +10,15 @@ Usage (manual override):
 """
 import requests, os, sys
 
-AUTH = ('API_KEY', os.environ.get('INTERVALS_API_KEY', '6123b5w739ctaytjstmw7kmn6'))
+AUTH = ('API_KEY', os.environ['INTERVALS_API_KEY'].strip())
 BASE = 'https://intervals.icu/api/v1/athlete'
 
 ATHLETES = [
-    'i445042',  # Sean Helmot
-    'i620475',  # Stacey Harfield
-    'i620570',  # Chess
-    'i619779',  # Drakes
-    'i620736',  # Rohan Cooper
+    'i445042',  # SHe
+    'i620475',  # SHa
+    'i620570',  # CCr
+    'i619779',  # CDr
+    'i620736',  # RCo
     'i625671',  # Aidan Burrell
 ]
 

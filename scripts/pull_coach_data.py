@@ -14,7 +14,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).parent.parent
 OUT_FILE  = REPO_ROOT / "data" / "coach.json"
 
-API_KEY = os.environ.get("INTERVALS_API_KEY", "6123b5w739ctaytjstmw7kmn6").strip()
+API_KEY = os.environ['INTERVALS_API_KEY'].strip()
 AUTH    = ("API_KEY", API_KEY)
 BASE    = "https://intervals.icu/api/v1/athlete"
 
@@ -23,7 +23,7 @@ BASE    = "https://intervals.icu/api/v1/athlete"
 ATHLETES = [
     {
         "id":    "i445042",
-        "name":  "Sean Helmot",
+        "name":  "SHe",
         "races": [
             {"name": "Lakeside 10K",      "date": "2026-07-26"},
             {"name": "Melbourne Marathon", "date": "2026-10-11"},
@@ -44,7 +44,7 @@ ATHLETES = [
     },
     {
         "id":    "i620475",
-        "name":  "Stacey Harfield",
+        "name":  "SHa",
         "races": [
             {"name": "Gold Coast Marathon", "date": "2026-07-05"},
         ],
@@ -56,7 +56,7 @@ ATHLETES = [
     },
     {
         "id":    "i620570",
-        "name":  "Chess",
+        "name":  "CCr",
         "races": [],
         "training_philosophy": "HR-capped easy runs. Joe Friel 7-zone system. LTHR 170, MaxHR 188. London Marathon 2023: 3:10 (4:27/km avg, 164 avg HR).",
         "threshold_hr":  170,
@@ -66,7 +66,7 @@ ATHLETES = [
     },
     {
         "id":    "i619779",
-        "name":  "Drakes",
+        "name":  "CDr",
         "races": [
             {"name": "Melbourne Marathon", "date": "2026-10-11"},
         ],
@@ -78,7 +78,7 @@ ATHLETES = [
     },
     {
         "id":    "i620736",
-        "name":  "Rohan Cooper",
+        "name":  "RCo",
         "races": [
             {"name": "Lakeside 10K",       "date": "2026-07-26"},
             {"name": "Geelong Marathon",    "date": "2026-09-27"},
@@ -91,7 +91,7 @@ ATHLETES = [
     },
     {
         "id":    "i622562",
-        "name":  "Matt W",
+        "name":  "MWa",
         "races": [
             {"name": "Lakeside 10K",      "date": "2026-07-26"},
             {"name": "Melbourne Marathon", "date": "2026-10-11"},
@@ -104,7 +104,7 @@ ATHLETES = [
     },
     {
         "id":    "i622855",
-        "name":  "Tim L",
+        "name":  "TLa",
         "races": [],
         "training_philosophy": "",
         "threshold_hr":  None,
@@ -114,7 +114,7 @@ ATHLETES = [
     },
     {
         "id":    "i624875",
-        "name":  "Annette",
+        "name":  "ALa",
         "races": [
             {"name": "Run Prix",               "date": "2026-09-20"},
             {"name": "Auckland Half Marathon", "date": "2026-11-01"},
@@ -128,7 +128,7 @@ ATHLETES = [
     },
     {
         "id":    "i621769",
-        "name":  "Simon Walker",
+        "name":  "SWa",
         "races": [
             {"name": "Lakeside 10K",     "date": "2026-07-26"},
             {"name": "Sydney Marathon",  "date": "2026-08-30"},
@@ -149,7 +149,7 @@ ATHLETES = [
     },
     {
         "id":    "i620541",
-        "name":  "Brad P",
+        "name":  "BPe",
         "races": [
             {"name": "Melbourne Marathon", "date": "2026-10-11"},
         ],
@@ -161,7 +161,7 @@ ATHLETES = [
     },
     {
         "id":    "i624989",
-        "name":  "Mark M",
+        "name":  "MMa",
         "races": [
             {"name": "Melbourne Marathon", "date": "2026-10-11"},
         ],
@@ -173,7 +173,7 @@ ATHLETES = [
     },
     {
         "id":    "i621545",
-        "name":  "Sam",
+        "name":  "SMa",
         "races": [
             {"name": "Melbourne Marathon", "date": "2026-10-11"},
         ],
