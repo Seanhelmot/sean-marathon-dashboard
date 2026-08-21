@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-08-21T06:23:00+10:00",
+  "generated_at": "2026-08-21T11:13:23+10:00",
   "current_week": 15,
   "today": {
-    "rhr": 39,
+    "rhr": 38,
     "hrv_7d_avg": 79,
     "hrv_status": null,
-    "sleep_score": null,
-    "sleep_hrs": null,
+    "sleep_score": 89.0,
+    "sleep_hrs": 8.2,
     "body_battery": null,
-    "vo2max_garmin": null,
+    "vo2max_garmin": 55,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 41.8,
-    "atl": 43.7,
-    "tsb": -1.9
+    "ctl": 41.7,
+    "atl": 43.3,
+    "tsb": -1.6
   },
   "this_week_days": null,
   "weeks": [
@@ -471,10 +471,19 @@
     },
     {
       "wk": 15,
-      "actual_km": 20.9,
+      "actual_km": 34.9,
       "partial": true,
       "quality": null,
       "days": {
+        "2026-08-21": {
+          "dist_km": 14.0,
+          "avg_hr": 144,
+          "pace": 4.46,
+          "feel": 2,
+          "effort": 7.0,
+          "decoupling_pct": null,
+          "_main_dist": 14.008629999999998
+        },
         "2026-08-20": {
           "dist_km": 10.5,
           "avg_hr": 119,
@@ -577,12 +586,32 @@
     },
     {
       "date": "2026-08-21",
-      "score": null,
-      "hrv": null,
-      "rhr": 39
+      "score": 89.0,
+      "hrv": 83.0,
+      "rhr": 38
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-08-21",
+      "start_local": "2026-08-21T07:35",
+      "name": "MP Session - Road",
+      "dist_km": 14.01,
+      "duration_s": 4005,
+      "avg_hr": 144,
+      "max_hr": 160,
+      "pace": 4.46,
+      "feel": 2,
+      "effort": 7.0,
+      "elevation_gain": 111.30701,
+      "avg_cadence": 173,
+      "interval_summary": [
+        "1x 16m10s 121bpm",
+        "8x 4m30s 150bpm",
+        "1x 14m33s 150bpm",
+        "1x 2s 155bpm"
+      ]
+    },
     {
       "date": "2026-08-20",
       "start_local": "2026-08-20T07:48",
