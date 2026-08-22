@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-08-22T06:21:24+10:00",
+  "generated_at": "2026-08-22T11:08:05+10:00",
   "current_week": 15,
   "today": {
-    "rhr": 41,
+    "rhr": 39,
     "hrv_7d_avg": 78,
     "hrv_status": null,
-    "sleep_score": null,
-    "sleep_hrs": null,
+    "sleep_score": 90.0,
+    "sleep_hrs": 9.2,
     "body_battery": null,
-    "vo2max_garmin": null,
+    "vo2max_garmin": 55,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 41.6,
-    "atl": 42.6,
-    "tsb": -1.0
+    "ctl": 42.0,
+    "atl": 44.9,
+    "tsb": -2.9
   },
   "this_week_days": null,
   "weeks": [
@@ -462,10 +462,19 @@
     },
     {
       "wk": 15,
-      "actual_km": 34.9,
+      "actual_km": 39.9,
       "partial": true,
       "quality": null,
       "days": {
+        "2026-08-22": {
+          "dist_km": 5.0,
+          "avg_hr": 121,
+          "pace": 5.35,
+          "feel": 3,
+          "effort": 2.0,
+          "decoupling_pct": null,
+          "_main_dist": 5.01145
+        },
         "2026-08-21": {
           "dist_km": 14.0,
           "avg_hr": 144,
@@ -577,12 +586,29 @@
     },
     {
       "date": "2026-08-22",
-      "score": null,
-      "hrv": null,
-      "rhr": 41
+      "score": 90.0,
+      "hrv": 79.0,
+      "rhr": 39
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-08-22",
+      "start_local": "2026-08-22T08:00",
+      "name": "Melbourne Running",
+      "dist_km": 5.01,
+      "duration_s": 1681,
+      "avg_hr": 121,
+      "max_hr": 135,
+      "pace": 5.35,
+      "feel": 3,
+      "effort": 2.0,
+      "elevation_gain": 45.841625,
+      "avg_cadence": 164,
+      "interval_summary": [
+        "1x 28m3s 121bpm"
+      ]
+    },
     {
       "date": "2026-08-21",
       "start_local": "2026-08-21T07:35",
