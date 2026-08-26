@@ -1,30 +1,26 @@
 {
-  "generated_at": "2026-08-26T11:13:47+10:00",
+  "generated_at": "2026-08-27T08:41:42+10:00",
   "current_week": 16,
   "today": {
-    "rhr": 40,
-    "hrv_7d_avg": 82,
+    "rhr": 41,
+    "hrv_7d_avg": 81,
     "hrv_status": null,
-    "sleep_score": 87.0,
-    "sleep_hrs": 8.6,
+    "sleep_score": 70.0,
+    "sleep_hrs": 7.5,
     "body_battery": null,
     "vo2max_garmin": null,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 45.1,
-    "atl": 59.0,
-    "tsb": -13.9
+    "ctl": 44.8,
+    "atl": 55.6,
+    "tsb": -10.8
   },
   "this_week_days": null,
   "weeks": [
     {
       "wk": 8,
-      "actual_km": 74.0,
+      "actual_km": 58.3,
       "partial": false,
-      "quality": {
-        "pace_min_per_km": 4.24,
-        "avg_hr": 159,
-        "work_intervals_only": false
-      },
+      "quality": null,
       "days": {
         "2026-07-05": {
           "dist_km": 30.0,
@@ -61,15 +57,6 @@
           "effort": null,
           "decoupling_pct": null,
           "_main_dist": 8.048869999999999
-        },
-        "2026-07-01": {
-          "dist_km": 15.7,
-          "avg_hr": 134,
-          "pace": 5.47,
-          "feel": null,
-          "effort": null,
-          "decoupling_pct": null,
-          "_main_dist": 3.01674
         }
       }
     },
@@ -418,8 +405,8 @@
           "dist_km": 7.0,
           "avg_hr": null,
           "pace": null,
-          "feel": 3,
-          "effort": 2.0,
+          "feel": null,
+          "effort": null,
           "decoupling_pct": null,
           "_main_dist": 3.0
         }
@@ -480,10 +467,23 @@
     },
     {
       "wk": 16,
-      "actual_km": 10.0,
+      "actual_km": 14.4,
       "partial": true,
-      "quality": null,
+      "quality": {
+        "pace_min_per_km": 4.2,
+        "avg_hr": 137,
+        "work_intervals_only": true
+      },
       "days": {
+        "2026-08-26": {
+          "dist_km": 4.4,
+          "avg_hr": 127,
+          "pace": 4.37,
+          "feel": 2,
+          "effort": 2.0,
+          "decoupling_pct": null,
+          "_main_dist": 1.02812
+        },
         "2026-08-25": {
           "dist_km": 10.0,
           "avg_hr": 118,
@@ -497,12 +497,6 @@
     }
   ],
   "sleep_hrv_14d": [
-    {
-      "date": "2026-08-13",
-      "score": 82.0,
-      "hrv": 73.0,
-      "rhr": 41
-    },
     {
       "date": "2026-08-14",
       "score": 93.0,
@@ -580,9 +574,63 @@
       "score": 87.0,
       "hrv": 78.0,
       "rhr": 40
+    },
+    {
+      "date": "2026-08-27",
+      "score": 70.0,
+      "hrv": 78.0,
+      "rhr": 41
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-08-26",
+      "start_local": "2026-08-26T18:25",
+      "name": "Melbourne - Threshold 4x3km 12km HR",
+      "dist_km": 1.03,
+      "duration_s": 285,
+      "avg_hr": 127,
+      "max_hr": 148,
+      "pace": 4.37,
+      "feel": 5,
+      "effort": 10.0,
+      "elevation_gain": 3.829032,
+      "avg_cadence": 174,
+      "interval_summary": [
+        "1x 8m25s 126bpm"
+      ],
+      "work_laps": [
+        {
+          "rep": 1,
+          "dist_km": 0.77,
+          "pace": 4.2,
+          "avg_hr": 137,
+          "max_hr": 148,
+          "avg_cadence": 180
+        }
+      ]
+    },
+    {
+      "date": "2026-08-26",
+      "start_local": "2026-08-26T17:59",
+      "name": "Warm Up + Strides 3km Pace",
+      "dist_km": 3.36,
+      "duration_s": 1073,
+      "avg_hr": 115,
+      "max_hr": 127,
+      "pace": 5.2,
+      "feel": 2,
+      "effort": 2.0,
+      "elevation_gain": 40.536976,
+      "avg_cadence": 165,
+      "interval_summary": [
+        "1x 18m47s 116bpm",
+        "2x 18s 90bpm",
+        "1x 61s 96bpm",
+        "1x 1m46s 89bpm",
+        "1x 87s 92bpm"
+      ]
+    },
     {
       "date": "2026-08-25",
       "start_local": "2026-08-25T13:30",
@@ -773,37 +821,6 @@
       "avg_cadence": 167,
       "interval_summary": [
         "1x 41m57s 121bpm"
-      ]
-    },
-    {
-      "date": "2026-08-12",
-      "start_local": "2026-08-12T19:24",
-      "name": "Running",
-      "dist_km": 3.0,
-      "duration_s": 0,
-      "avg_hr": null,
-      "max_hr": null,
-      "pace": null,
-      "feel": null,
-      "effort": null,
-      "elevation_gain": null,
-      "avg_cadence": null
-    },
-    {
-      "date": "2026-08-12",
-      "start_local": "2026-08-12T18:04",
-      "name": "Warm Up + Strides 3km Pace",
-      "dist_km": 4.04,
-      "duration_s": 1473,
-      "avg_hr": 110,
-      "max_hr": 121,
-      "pace": 6.04,
-      "feel": 3,
-      "effort": 2.0,
-      "elevation_gain": 18.654457,
-      "avg_cadence": 163,
-      "interval_summary": [
-        "1x 25m52s 110bpm"
       ]
     }
   ]
