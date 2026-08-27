@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-27T08:41:42+10:00",
+  "generated_at": "2026-08-27T17:24:57+10:00",
   "current_week": 16,
   "today": {
     "rhr": 41,
@@ -8,11 +8,11 @@
     "sleep_score": 70.0,
     "sleep_hrs": 7.5,
     "body_battery": null,
-    "vo2max_garmin": null,
+    "vo2max_garmin": 55,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 44.8,
-    "atl": 55.6,
-    "tsb": -10.8
+    "ctl": 43.7,
+    "atl": 51.0,
+    "tsb": -7.3
   },
   "this_week_days": null,
   "weeks": [
@@ -467,14 +467,23 @@
     },
     {
       "wk": 16,
-      "actual_km": 14.4,
+      "actual_km": 34.5,
       "partial": true,
       "quality": {
-        "pace_min_per_km": 4.2,
-        "avg_hr": 137,
+        "pace_min_per_km": 4.14,
+        "avg_hr": 159,
         "work_intervals_only": true
       },
       "days": {
+        "2026-08-27": {
+          "dist_km": 20.1,
+          "avg_hr": 125,
+          "pace": 5.37,
+          "feel": 2,
+          "effort": 2.0,
+          "decoupling_pct": null,
+          "_main_dist": 3.6055900000000003
+        },
         "2026-08-26": {
           "dist_km": 4.4,
           "avg_hr": 127,
@@ -583,6 +592,128 @@
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-08-27",
+      "start_local": "2026-08-27T08:46",
+      "name": "Melbourne Running",
+      "dist_km": 3.61,
+      "duration_s": 1216,
+      "avg_hr": 125,
+      "max_hr": 135,
+      "pace": 5.37,
+      "feel": 2,
+      "effort": 2.0,
+      "elevation_gain": 21.484852,
+      "avg_cadence": 167,
+      "interval_summary": [
+        "1x 25m58s 125bpm"
+      ]
+    },
+    {
+      "date": "2026-08-27",
+      "start_local": "2026-08-27T07:42",
+      "name": "Melbourne - Threshold 4x3km 12km HR",
+      "dist_km": 12.99,
+      "duration_s": 3401,
+      "avg_hr": 158,
+      "max_hr": 168,
+      "pace": 4.22,
+      "feel": 2,
+      "effort": 8.0,
+      "elevation_gain": 101.97092,
+      "avg_cadence": 178,
+      "interval_summary": [
+        "4x 12m39s 158bpm",
+        "3x 2m1s 147bpm",
+        "1x 3s 167bpm"
+      ],
+      "work_laps": [
+        {
+          "rep": 1,
+          "dist_km": 3.01,
+          "pace": 4.17,
+          "avg_hr": 151,
+          "max_hr": 160,
+          "avg_cadence": 180
+        },
+        {
+          "rep": 2,
+          "dist_km": 0.51,
+          "pace": 4.06,
+          "avg_hr": 150,
+          "max_hr": 158,
+          "avg_cadence": 184
+        },
+        {
+          "rep": 3,
+          "dist_km": 0.35,
+          "pace": 4.16,
+          "avg_hr": 159,
+          "max_hr": 160,
+          "avg_cadence": 181
+        },
+        {
+          "rep": 4,
+          "dist_km": 2.09,
+          "pace": 4.11,
+          "avg_hr": 161,
+          "max_hr": 164,
+          "avg_cadence": 180
+        },
+        {
+          "rep": 5,
+          "dist_km": 1.6,
+          "pace": 4.12,
+          "avg_hr": 160,
+          "max_hr": 165,
+          "avg_cadence": 180
+        },
+        {
+          "rep": 6,
+          "dist_km": 0.15,
+          "pace": 4.09,
+          "avg_hr": 163,
+          "max_hr": 164,
+          "avg_cadence": 177
+        },
+        {
+          "rep": 7,
+          "dist_km": 1.09,
+          "pace": 4.18,
+          "avg_hr": 164,
+          "max_hr": 167,
+          "avg_cadence": 178
+        },
+        {
+          "rep": 8,
+          "dist_km": 2.98,
+          "pace": 4.14,
+          "avg_hr": 164,
+          "max_hr": 168,
+          "avg_cadence": 178
+        }
+      ]
+    },
+    {
+      "date": "2026-08-27",
+      "start_local": "2026-08-27T07:14",
+      "name": "Melbourne Running",
+      "dist_km": 3.47,
+      "duration_s": 1136,
+      "avg_hr": 117,
+      "max_hr": 129,
+      "pace": 5.27,
+      "feel": 2,
+      "effort": 2.0,
+      "elevation_gain": 8.631941,
+      "avg_cadence": 167,
+      "interval_summary": [
+        "1x 20m28s 118bpm",
+        "2x 69s 92bpm",
+        "3x 11s 86bpm",
+        "1x 80s 88bpm"
+      ]
+    },
     {
       "date": "2026-08-26",
       "start_local": "2026-08-26T18:25",
