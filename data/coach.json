@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-29T02:35:14",
+  "generated_at": "2026-08-29T05:26:44",
   "athletes": [
     {
       "id": "i445042",
@@ -2177,7 +2177,7 @@
         "vo2max": 56.0,
         "weight": null,
         "spo2": null,
-        "steps": 1475
+        "steps": 4384
       },
       "fitness": {
         "ctl": 47.9,
@@ -2976,7 +2976,7 @@
           "sleep_score": 94.0,
           "sleep_hrs": 7.8,
           "spo2": null,
-          "steps": 1475,
+          "steps": 4384,
           "vo2max": null,
           "ctl": 47.9,
           "atl": 32.7
@@ -4241,7 +4241,7 @@
         "vo2max": 58.0,
         "weight": null,
         "spo2": null,
-        "steps": 35931
+        "steps": 35958
       },
       "fitness": {
         "ctl": 55.7,
@@ -5040,7 +5040,7 @@
           "sleep_score": 77.0,
           "sleep_hrs": 7.5,
           "spo2": null,
-          "steps": 35931,
+          "steps": 35958,
           "vo2max": 58.0,
           "ctl": 55.7,
           "atl": 74.3
@@ -5065,7 +5065,7 @@
           "name": "Melbourne - PEAK LR 38km with MP Insertions",
           "type": "Run",
           "dist_km": 38.0,
-          "duration_s": 10820,
+          "duration_s": 10823,
           "pace": 4.44,
           "avg_hr": 141,
           "max_hr": 158,
@@ -8606,7 +8606,7 @@
         "vo2max": 55.0,
         "weight": null,
         "spo2": null,
-        "steps": 6755
+        "steps": 10560
       },
       "fitness": {
         "ctl": 43.8,
@@ -9405,7 +9405,7 @@
           "sleep_score": 82.0,
           "sleep_hrs": 7.2,
           "spo2": null,
-          "steps": 6755,
+          "steps": 10560,
           "vo2max": 55.0,
           "ctl": 43.8,
           "atl": 31.5
@@ -9630,9 +9630,9 @@
       "max_hr": null,
       "health": {
         "wellness_date": "2026-08-29",
-        "rhr": null,
-        "rhr_7d_avg": 45.8,
-        "rhr_delta": null,
+        "rhr": 58,
+        "rhr_7d_avg": 47.8,
+        "rhr_delta": 10.2,
         "hrv_today": null,
         "hrv_7d_avg": null,
         "hrv_60d_baseline": null,
@@ -9647,7 +9647,7 @@
         "vo2max": 57.0,
         "weight": null,
         "spo2": null,
-        "steps": null
+        "steps": 10641
       },
       "fitness": {
         "ctl": 44.6,
@@ -10440,14 +10440,14 @@
         },
         {
           "date": "2026-08-29",
-          "rhr": null,
+          "rhr": 58,
           "hrv": null,
           "hrv_sdnn": null,
           "sleep_score": null,
           "sleep_hrs": null,
           "spo2": null,
-          "steps": null,
-          "vo2max": null,
+          "steps": 10641,
+          "vo2max": 57.0,
           "ctl": 44.6,
           "atl": 48.3
         },
@@ -10721,7 +10721,12 @@
           "distance_m": 0.0
         }
       ],
-      "flags": []
+      "flags": [
+        {
+          "level": "red",
+          "text": "RHR +10.2bpm above 7d avg"
+        }
+      ]
     },
     {
       "id": "i624989",
