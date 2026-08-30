@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-30T08:15:05+10:00",
+  "generated_at": "2026-08-30T13:46:53+10:00",
   "current_week": 16,
   "today": {
     "rhr": 39,
@@ -8,11 +8,11 @@
     "sleep_score": 89.0,
     "sleep_hrs": 7.9,
     "body_battery": null,
-    "vo2max_garmin": null,
+    "vo2max_garmin": 55,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 44.9,
-    "atl": 55.9,
-    "tsb": -11.0
+    "ctl": 45.2,
+    "atl": 57.7,
+    "tsb": -12.5
   },
   "this_week_days": null,
   "weeks": [
@@ -440,7 +440,7 @@
     },
     {
       "wk": 16,
-      "actual_km": 52.5,
+      "actual_km": 81.4,
       "partial": false,
       "quality": {
         "pace_min_per_km": 4.14,
@@ -448,6 +448,15 @@
         "work_intervals_only": true
       },
       "days": {
+        "2026-08-30": {
+          "dist_km": 28.9,
+          "avg_hr": 138,
+          "pace": 5.05,
+          "feel": 2,
+          "effort": 2.0,
+          "decoupling_pct": 4.2,
+          "_main_dist": 28.93919
+        },
         "2026-08-29": {
           "dist_km": 8.0,
           "avg_hr": 114,
@@ -583,6 +592,289 @@
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-08-30",
+      "start_local": "2026-08-30T06:38",
+      "name": "Easy Long Run 28km — Segmented HR",
+      "dist_km": 28.94,
+      "duration_s": 8827,
+      "avg_hr": 138,
+      "max_hr": 157,
+      "pace": 5.05,
+      "feel": 2,
+      "effort": 2.0,
+      "elevation_gain": 162.68246,
+      "avg_cadence": 169,
+      "decoupling_pct": 4.2,
+      "interval_summary": [
+        "27x 5m4s 138bpm",
+        "1x 8m2s 122bpm",
+        "1x 8m18s 141bpm"
+      ],
+      "km_chunks": [
+        {
+          "label": "0.0-1.0km",
+          "dist_km": 1.0,
+          "elapsed": 355,
+          "pace": 5.54,
+          "avg_hr": 114,
+          "max_hr": 120,
+          "avg_cadence": 82
+        },
+        {
+          "label": "1.0-2.0km",
+          "dist_km": 1.0,
+          "elapsed": 335,
+          "pace": 5.35,
+          "avg_hr": 122,
+          "max_hr": 125,
+          "avg_cadence": 83
+        },
+        {
+          "label": "2.0-3.0km",
+          "dist_km": 1.0,
+          "elapsed": 327,
+          "pace": 5.26,
+          "avg_hr": 124,
+          "max_hr": 128,
+          "avg_cadence": 83
+        },
+        {
+          "label": "3.0-4.0km",
+          "dist_km": 1.0,
+          "elapsed": 482,
+          "pace": 5.3,
+          "avg_hr": 122,
+          "max_hr": 129,
+          "avg_cadence": 82
+        },
+        {
+          "label": "4.0-5.0km",
+          "dist_km": 1.0,
+          "elapsed": 324,
+          "pace": 5.24,
+          "avg_hr": 127,
+          "max_hr": 133,
+          "avg_cadence": 83
+        },
+        {
+          "label": "5.0-6.0km",
+          "dist_km": 1.0,
+          "elapsed": 317,
+          "pace": 5.17,
+          "avg_hr": 131,
+          "max_hr": 136,
+          "avg_cadence": 83
+        },
+        {
+          "label": "6.0-7.0km",
+          "dist_km": 1.0,
+          "elapsed": 305,
+          "pace": 5.05,
+          "avg_hr": 131,
+          "max_hr": 136,
+          "avg_cadence": 85
+        },
+        {
+          "label": "7.0-8.0km",
+          "dist_km": 1.0,
+          "elapsed": 304,
+          "pace": 5.04,
+          "avg_hr": 133,
+          "max_hr": 138,
+          "avg_cadence": 85
+        },
+        {
+          "label": "8.0-9.0km",
+          "dist_km": 1.0,
+          "elapsed": 305,
+          "pace": 5.06,
+          "avg_hr": 137,
+          "max_hr": 144,
+          "avg_cadence": 84
+        },
+        {
+          "label": "9.0-10.0km",
+          "dist_km": 1.0,
+          "elapsed": 303,
+          "pace": 5.02,
+          "avg_hr": 135,
+          "max_hr": 139,
+          "avg_cadence": 85
+        },
+        {
+          "label": "10.0-11.0km",
+          "dist_km": 1.0,
+          "elapsed": 305,
+          "pace": 5.05,
+          "avg_hr": 140,
+          "max_hr": 145,
+          "avg_cadence": 85
+        },
+        {
+          "label": "11.0-12.0km",
+          "dist_km": 1.0,
+          "elapsed": 296,
+          "pace": 4.56,
+          "avg_hr": 136,
+          "max_hr": 145,
+          "avg_cadence": 85
+        },
+        {
+          "label": "12.0-13.0km",
+          "dist_km": 1.0,
+          "elapsed": 298,
+          "pace": 4.58,
+          "avg_hr": 137,
+          "max_hr": 141,
+          "avg_cadence": 85
+        },
+        {
+          "label": "13.0-14.0km",
+          "dist_km": 1.0,
+          "elapsed": 304,
+          "pace": 5.04,
+          "avg_hr": 141,
+          "max_hr": 149,
+          "avg_cadence": 85
+        },
+        {
+          "label": "14.0-15.0km",
+          "dist_km": 1.0,
+          "elapsed": 298,
+          "pace": 4.58,
+          "avg_hr": 137,
+          "max_hr": 146,
+          "avg_cadence": 85
+        },
+        {
+          "label": "15.0-16.0km",
+          "dist_km": 1.0,
+          "elapsed": 296,
+          "pace": 4.57,
+          "avg_hr": 145,
+          "max_hr": 149,
+          "avg_cadence": 85
+        },
+        {
+          "label": "16.0-17.0km",
+          "dist_km": 1.0,
+          "elapsed": 304,
+          "pace": 5.04,
+          "avg_hr": 143,
+          "max_hr": 148,
+          "avg_cadence": 85
+        },
+        {
+          "label": "17.0-18.0km",
+          "dist_km": 1.0,
+          "elapsed": 298,
+          "pace": 4.58,
+          "avg_hr": 141,
+          "max_hr": 145,
+          "avg_cadence": 85
+        },
+        {
+          "label": "18.0-19.0km",
+          "dist_km": 1.0,
+          "elapsed": 300,
+          "pace": 5.0,
+          "avg_hr": 143,
+          "max_hr": 151,
+          "avg_cadence": 85
+        },
+        {
+          "label": "19.0-20.0km",
+          "dist_km": 1.0,
+          "elapsed": 296,
+          "pace": 4.56,
+          "avg_hr": 143,
+          "max_hr": 149,
+          "avg_cadence": 85
+        },
+        {
+          "label": "20.0-21.0km",
+          "dist_km": 1.0,
+          "elapsed": 297,
+          "pace": 4.57,
+          "avg_hr": 145,
+          "max_hr": 149,
+          "avg_cadence": 86
+        },
+        {
+          "label": "21.0-22.0km",
+          "dist_km": 1.0,
+          "elapsed": 300,
+          "pace": 5.0,
+          "avg_hr": 148,
+          "max_hr": 152,
+          "avg_cadence": 86
+        },
+        {
+          "label": "22.0-23.0km",
+          "dist_km": 1.0,
+          "elapsed": 289,
+          "pace": 4.49,
+          "avg_hr": 145,
+          "max_hr": 151,
+          "avg_cadence": 86
+        },
+        {
+          "label": "23.0-24.0km",
+          "dist_km": 1.0,
+          "elapsed": 292,
+          "pace": 4.52,
+          "avg_hr": 145,
+          "max_hr": 150,
+          "avg_cadence": 86
+        },
+        {
+          "label": "24.0-25.0km",
+          "dist_km": 1.0,
+          "elapsed": 292,
+          "pace": 4.52,
+          "avg_hr": 147,
+          "max_hr": 150,
+          "avg_cadence": 85
+        },
+        {
+          "label": "25.0-26.0km",
+          "dist_km": 1.0,
+          "elapsed": 293,
+          "pace": 4.52,
+          "avg_hr": 144,
+          "max_hr": 151,
+          "avg_cadence": 86
+        },
+        {
+          "label": "26.0-27.0km",
+          "dist_km": 1.0,
+          "elapsed": 288,
+          "pace": 4.49,
+          "avg_hr": 151,
+          "max_hr": 157,
+          "avg_cadence": 86
+        },
+        {
+          "label": "27.0-28.0km",
+          "dist_km": 1.0,
+          "elapsed": 297,
+          "pace": 4.56,
+          "avg_hr": 150,
+          "max_hr": 156,
+          "avg_cadence": 85
+        },
+        {
+          "label": "28.0-28.9km",
+          "dist_km": 0.94,
+          "elapsed": 498,
+          "pace": 5.02,
+          "avg_hr": 141,
+          "max_hr": 151,
+          "avg_cadence": 83
+        }
+      ]
+    },
     {
       "date": "2026-08-29",
       "start_local": "2026-08-29T10:37",
