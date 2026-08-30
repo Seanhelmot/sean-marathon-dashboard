@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-30T02:33:10",
+  "generated_at": "2026-08-30T03:23:06",
   "athletes": [
     {
       "id": "i445042",
@@ -4265,7 +4265,7 @@
         "vo2max": 58.0,
         "weight": null,
         "spo2": null,
-        "steps": 6506
+        "steps": 8790
       },
       "fitness": {
         "ctl": 54.9,
@@ -5064,7 +5064,7 @@
           "sleep_score": 86.0,
           "sleep_hrs": 8.8,
           "spo2": null,
-          "steps": 6506,
+          "steps": 8790,
           "vo2max": 58.0,
           "ctl": 54.9,
           "atl": 67.1
@@ -8582,22 +8582,22 @@
           "name": "Lakeside 10K",
           "date": "2026-07-26",
           "days_away": -35,
-          "predicted_time": "45:39"
+          "predicted_time": "45:53"
         },
         {
           "name": "Sydney Marathon",
           "date": "2026-08-30",
           "days_away": 0,
-          "predicted_time": "3:30:04"
+          "predicted_time": "3:31:07"
         }
       ],
       "race_predictions": {
-        "5k": "21:54",
-        "10k": "45:39",
-        "half": "1:40:45",
-        "marathon": "3:30:04"
+        "5k": "22:00",
+        "10k": "45:53",
+        "half": "1:41:15",
+        "marathon": "3:31:07"
       },
-      "race_predictions_method": "threshold pace + VO2max, adjusted for freshness",
+      "race_predictions_method": "threshold pace + VO2max",
       "training_philosophy": "Triathlon background. Runs 5 days/week. HR-capped easy running, threshold work 1-2x/week. Strong aerobic base from multi-sport history.",
       "typical_week": {
         "Mon": "Rest",
@@ -8611,9 +8611,9 @@
       "max_hr": 160,
       "health": {
         "wellness_date": "2026-08-30",
-        "rhr": 48,
-        "rhr_7d_avg": 45.7,
-        "rhr_delta": 2.3,
+        "rhr": 45,
+        "rhr_7d_avg": 45.2,
+        "rhr_delta": -0.2,
         "hrv_today": null,
         "hrv_7d_avg": null,
         "hrv_60d_baseline": null,
@@ -8628,15 +8628,15 @@
         "vo2max": 55.0,
         "weight": null,
         "spo2": null,
-        "steps": 26
+        "steps": 43860
       },
       "fitness": {
-        "ctl": 42.8,
-        "atl": 27.3,
-        "tsb": 15.5,
-        "ctl_trend": -4.5,
-        "atl_trend": -18.5,
-        "tsb_trend": 13.9
+        "ctl": 50.3,
+        "atl": 69.6,
+        "tsb": -19.4,
+        "ctl_trend": 3.0,
+        "atl_trend": 23.9,
+        "tsb_trend": -21.0
       },
       "wellness_60d": [
         {
@@ -9421,16 +9421,16 @@
         },
         {
           "date": "2026-08-30",
-          "rhr": 48,
+          "rhr": 45,
           "hrv": null,
           "hrv_sdnn": null,
           "sleep_score": null,
           "sleep_hrs": null,
           "spo2": null,
-          "steps": 26,
-          "vo2max": null,
-          "ctl": 42.8,
-          "atl": 27.3
+          "steps": 43860,
+          "vo2max": 55.0,
+          "ctl": 50.3,
+          "atl": 69.6
         },
         {
           "date": "2026-08-31",
@@ -9442,11 +9442,25 @@
           "spo2": null,
           "steps": null,
           "vo2max": null,
-          "ctl": 41.8,
-          "atl": 23.7
+          "ctl": 49.1,
+          "atl": 60.4
         }
       ],
       "recent_activities": [
+        {
+          "date": "2026-08-30",
+          "name": "Sydney Running",
+          "type": "Run",
+          "dist_km": 42.7,
+          "duration_s": 12351,
+          "pace": 4.48,
+          "avg_hr": 142,
+          "max_hr": 160,
+          "feel": null,
+          "effort": null,
+          "ctl": 50.294006,
+          "atl": 69.64546
+        },
         {
           "date": "2026-08-29",
           "name": "Sydney Running",
@@ -9558,20 +9572,6 @@
           "effort": null,
           "ctl": 47.32652,
           "atl": 45.77003
-        },
-        {
-          "date": "2026-08-22",
-          "name": "Melbourne - Easy 6km",
-          "type": "Run",
-          "dist_km": 6.4,
-          "duration_s": 2227,
-          "pace": 5.53,
-          "avg_hr": 112,
-          "max_hr": 134,
-          "feel": 3,
-          "effort": null,
-          "ctl": 47.11753,
-          "atl": 44.199066
         }
       ],
       "upcoming": [
