@@ -1,38 +1,21 @@
 {
-  "generated_at": "2026-08-30T13:46:53+10:00",
-  "current_week": 16,
+  "generated_at": "2026-08-31T08:21:26+10:00",
+  "current_week": 17,
   "today": {
-    "rhr": 39,
+    "rhr": 38,
     "hrv_7d_avg": 82,
     "hrv_status": null,
-    "sleep_score": 89.0,
-    "sleep_hrs": 7.9,
+    "sleep_score": 81.0,
+    "sleep_hrs": 8.1,
     "body_battery": null,
-    "vo2max_garmin": 55,
+    "vo2max_garmin": null,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 45.2,
-    "atl": 57.7,
-    "tsb": -12.5
+    "ctl": 44.2,
+    "atl": 50.1,
+    "tsb": -5.9
   },
   "this_week_days": null,
   "weeks": [
-    {
-      "wk": 8,
-      "actual_km": 30.0,
-      "partial": false,
-      "quality": null,
-      "days": {
-        "2026-07-05": {
-          "dist_km": 30.0,
-          "avg_hr": 136,
-          "pace": 5.09,
-          "feel": null,
-          "effort": null,
-          "decoupling_pct": null,
-          "_main_dist": 30.01868
-        }
-      }
-    },
     {
       "wk": 9,
       "actual_km": 81.0,
@@ -360,9 +343,9 @@
           "dist_km": 25.5,
           "avg_hr": 140,
           "pace": 4.58,
-          "feel": 3,
-          "effort": 2.0,
-          "decoupling_pct": 14.4,
+          "feel": null,
+          "effort": null,
+          "decoupling_pct": null,
           "_main_dist": 24.00742
         },
         "2026-08-14": {
@@ -507,12 +490,6 @@
   ],
   "sleep_hrv_14d": [
     {
-      "date": "2026-08-17",
-      "score": 84.0,
-      "hrv": 81.0,
-      "rhr": 40
-    },
-    {
       "date": "2026-08-18",
       "score": 82.0,
       "hrv": 75.0,
@@ -589,6 +566,12 @@
       "score": 89.0,
       "hrv": 88.0,
       "rhr": 39
+    },
+    {
+      "date": "2026-08-31",
+      "score": 81.0,
+      "hrv": 83.0,
+      "rhr": 38
     }
   ],
   "recent_activities": [
@@ -1213,61 +1196,6 @@
       "avg_cadence": 166,
       "interval_summary": [
         "1x 58m19s 128bpm"
-      ]
-    },
-    {
-      "date": "2026-08-16",
-      "start_local": "2026-08-16T08:04",
-      "name": "Yarra Blvd Long Run 34km Pace (3k)",
-      "dist_km": 24.01,
-      "duration_s": 7156,
-      "avg_hr": 140,
-      "max_hr": 164,
-      "pace": 4.58,
-      "feel": 3,
-      "effort": 10.0,
-      "elevation_gain": 166.91643,
-      "avg_cadence": 171,
-      "decoupling_pct": 14.4,
-      "interval_summary": [
-        "2x 1h9m 140bpm"
-      ],
-      "km_chunks": [
-        {
-          "label": "0.0-12.4km",
-          "dist_km": 12.43,
-          "elapsed": 4115,
-          "pace": 5.03,
-          "avg_hr": 137,
-          "max_hr": 148,
-          "avg_cadence": 85
-        },
-        {
-          "label": "12.4-24.0km",
-          "dist_km": 11.57,
-          "elapsed": 4238,
-          "pace": 4.53,
-          "avg_hr": 142,
-          "max_hr": 164,
-          "avg_cadence": 86
-        }
-      ]
-    },
-    {
-      "date": "2026-08-16",
-      "start_local": "2026-08-16T07:51",
-      "name": "Melbourne Running",
-      "dist_km": 1.51,
-      "duration_s": 507,
-      "avg_hr": 130,
-      "max_hr": 143,
-      "pace": 5.35,
-      "feel": 3,
-      "effort": 2.0,
-      "elevation_gain": 12.43618,
-      "avg_cadence": 168,
-      "interval_summary": [
-        "1x 12m49s 129bpm"
       ]
     }
   ]
