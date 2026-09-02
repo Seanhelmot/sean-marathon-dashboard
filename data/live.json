@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-02T08:21:16+10:00",
+  "generated_at": "2026-09-02T13:00:31+10:00",
   "current_week": 17,
   "today": {
     "rhr": 40,
@@ -8,11 +8,11 @@
     "sleep_score": 86.0,
     "sleep_hrs": 8.5,
     "body_battery": null,
-    "vo2max_garmin": null,
+    "vo2max_garmin": 55,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 46.5,
-    "atl": 61.6,
-    "tsb": -15.1
+    "ctl": 46.0,
+    "atl": 59.2,
+    "tsb": -13.2
   },
   "this_week_days": null,
   "weeks": [
@@ -480,10 +480,23 @@
     },
     {
       "wk": 17,
-      "actual_km": 12.0,
+      "actual_km": 34.4,
       "partial": true,
-      "quality": null,
+      "quality": {
+        "pace_min_per_km": 4.29,
+        "avg_hr": 158,
+        "work_intervals_only": true
+      },
       "days": {
+        "2026-09-02": {
+          "dist_km": 22.3,
+          "avg_hr": 128,
+          "pace": 6.04,
+          "feel": 2,
+          "effort": 2.0,
+          "decoupling_pct": null,
+          "_main_dist": 3.02344
+        },
         "2026-09-01": {
           "dist_km": 12.0,
           "avg_hr": 124,
@@ -583,6 +596,88 @@
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-09-02",
+      "start_local": "2026-09-02T09:07",
+      "name": "Warm Up + Strides 3km Pace",
+      "dist_km": 3.02,
+      "duration_s": 1102,
+      "avg_hr": 128,
+      "max_hr": 132,
+      "pace": 6.04,
+      "feel": 3,
+      "effort": 4.0,
+      "elevation_gain": 31.393507,
+      "avg_cadence": 162,
+      "interval_summary": [
+        "1x 18m24s 128bpm"
+      ]
+    },
+    {
+      "date": "2026-09-02",
+      "start_local": "2026-09-02T07:48",
+      "name": "MP-sandwich 3x5km Pace",
+      "dist_km": 15.92,
+      "duration_s": 4310,
+      "avg_hr": 157,
+      "max_hr": 169,
+      "pace": 4.31,
+      "feel": 2,
+      "effort": 8.0,
+      "elevation_gain": 106.842545,
+      "avg_cadence": 175,
+      "interval_summary": [
+        "3x 21m56s 158bpm",
+        "2x 3m1s 145bpm",
+        "1x 2s 166bpm"
+      ],
+      "work_laps": [
+        {
+          "rep": 1,
+          "dist_km": 5.02,
+          "pace": 4.29,
+          "avg_hr": 148,
+          "max_hr": 157,
+          "avg_cadence": 176
+        },
+        {
+          "rep": 2,
+          "dist_km": 4.98,
+          "pace": 4.14,
+          "avg_hr": 164,
+          "max_hr": 169,
+          "avg_cadence": 178
+        },
+        {
+          "rep": 3,
+          "dist_km": 4.92,
+          "pace": 4.29,
+          "avg_hr": 163,
+          "max_hr": 167,
+          "avg_cadence": 176
+        }
+      ]
+    },
+    {
+      "date": "2026-09-02",
+      "start_local": "2026-09-02T07:19",
+      "name": "Cool Down 3km Pace",
+      "dist_km": 3.43,
+      "duration_s": 1136,
+      "avg_hr": 117,
+      "max_hr": 125,
+      "pace": 5.32,
+      "feel": 2,
+      "effort": 2.0,
+      "elevation_gain": 32.48854,
+      "avg_cadence": 165,
+      "interval_summary": [
+        "1x 22m38s 118bpm",
+        "3x 13s 88bpm",
+        "2x 50s 94bpm",
+        "1x 86s 90bpm"
+      ]
+    },
     {
       "date": "2026-09-01",
       "start_local": "2026-09-01T05:58",
