@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-04T08:12:44+10:00",
+  "generated_at": "2026-09-04T13:01:43+10:00",
   "current_week": 17,
   "today": {
     "rhr": 40,
@@ -8,11 +8,11 @@
     "sleep_score": 87.0,
     "sleep_hrs": 8.5,
     "body_battery": null,
-    "vo2max_garmin": null,
+    "vo2max_garmin": 55,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 46.1,
-    "atl": 56.6,
-    "tsb": -10.5
+    "ctl": 45.4,
+    "atl": 52.9,
+    "tsb": -7.4
   },
   "this_week_days": null,
   "weeks": [
@@ -462,7 +462,7 @@
     },
     {
       "wk": 17,
-      "actual_km": 42.4,
+      "actual_km": 54.4,
       "partial": true,
       "quality": {
         "pace_min_per_km": 4.29,
@@ -470,6 +470,15 @@
         "work_intervals_only": true
       },
       "days": {
+        "2026-09-04": {
+          "dist_km": 12.0,
+          "avg_hr": 124,
+          "pace": 5.33,
+          "feel": 3,
+          "effort": 2.0,
+          "decoupling_pct": null,
+          "_main_dist": 12.02175
+        },
         "2026-09-03": {
           "dist_km": 8.0,
           "avg_hr": 115,
@@ -587,6 +596,23 @@
     }
   ],
   "recent_activities": [
+    {
+      "date": "2026-09-04",
+      "start_local": "2026-09-04T06:57",
+      "name": "Easy + Strides 12km Pace",
+      "dist_km": 12.02,
+      "duration_s": 4004,
+      "avg_hr": 124,
+      "max_hr": 138,
+      "pace": 5.33,
+      "feel": 3,
+      "effort": 2.0,
+      "elevation_gain": 67.99656,
+      "avg_cadence": 166,
+      "interval_summary": [
+        "1x 1h9m 124bpm"
+      ]
+    },
     {
       "date": "2026-09-03",
       "start_local": "2026-09-03T07:10",
