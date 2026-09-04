@@ -1,24 +1,24 @@
 {
-  "generated_at": "2026-09-04T13:01:43+10:00",
+  "generated_at": "2026-09-05T08:04:22+10:00",
   "current_week": 17,
   "today": {
     "rhr": 40,
-    "hrv_7d_avg": 81,
+    "hrv_7d_avg": 79,
     "hrv_status": null,
     "sleep_score": 87.0,
-    "sleep_hrs": 8.5,
+    "sleep_hrs": 9.1,
     "body_battery": null,
-    "vo2max_garmin": 55,
+    "vo2max_garmin": null,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 45.4,
-    "atl": 52.9,
-    "tsb": -7.4
+    "ctl": 45.3,
+    "atl": 50.9,
+    "tsb": -5.6
   },
   "this_week_days": null,
   "weeks": [
     {
       "wk": 9,
-      "actual_km": 48.6,
+      "actual_km": 38.6,
       "partial": false,
       "quality": null,
       "days": {
@@ -39,15 +39,6 @@
           "effort": null,
           "decoupling_pct": null,
           "_main_dist": 6.0096099999999995
-        },
-        "2026-07-10": {
-          "dist_km": 10.0,
-          "avg_hr": 118,
-          "pace": 5.31,
-          "feel": null,
-          "effort": null,
-          "decoupling_pct": null,
-          "_main_dist": 10.00467
         }
       }
     },
@@ -369,8 +360,8 @@
           "dist_km": 14.0,
           "avg_hr": 144,
           "pace": 4.46,
-          "feel": 2,
-          "effort": 7.0,
+          "feel": null,
+          "effort": null,
           "decoupling_pct": null,
           "_main_dist": 14.008629999999998
         },
@@ -511,12 +502,6 @@
   ],
   "sleep_hrv_14d": [
     {
-      "date": "2026-08-22",
-      "score": 90.0,
-      "hrv": 79.0,
-      "rhr": 39
-    },
-    {
       "date": "2026-08-23",
       "score": 85.0,
       "hrv": 80.0,
@@ -592,6 +577,12 @@
       "date": "2026-09-04",
       "score": 87.0,
       "hrv": 78.0,
+      "rhr": 40
+    },
+    {
+      "date": "2026-09-05",
+      "score": 87.0,
+      "hrv": 72.0,
       "rhr": 40
     }
   ],
@@ -1296,26 +1287,6 @@
       "avg_cadence": 164,
       "interval_summary": [
         "1x 28m3s 121bpm"
-      ]
-    },
-    {
-      "date": "2026-08-21",
-      "start_local": "2026-08-21T07:35",
-      "name": "MP Session - Road",
-      "dist_km": 14.01,
-      "duration_s": 4005,
-      "avg_hr": 144,
-      "max_hr": 160,
-      "pace": 4.46,
-      "feel": 2,
-      "effort": 7.0,
-      "elevation_gain": 111.30701,
-      "avg_cadence": 173,
-      "interval_summary": [
-        "1x 16m10s 121bpm",
-        "8x 4m30s 150bpm",
-        "1x 14m33s 150bpm",
-        "1x 2s 155bpm"
       ]
     }
   ]
