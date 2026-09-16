@@ -1,24 +1,24 @@
 {
-  "generated_at": "2026-09-16T13:27:22+10:00",
+  "generated_at": "2026-09-17T08:36:41+10:00",
   "current_week": 19,
   "today": {
-    "rhr": 40,
-    "hrv_7d_avg": 81,
+    "rhr": 43,
+    "hrv_7d_avg": 76,
     "hrv_status": null,
-    "sleep_score": 68.0,
-    "sleep_hrs": 8.6,
+    "sleep_score": 66.0,
+    "sleep_hrs": 7.2,
     "body_battery": null,
     "vo2max_garmin": null,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 40.8,
-    "atl": 39.3,
-    "tsb": 1.5
+    "ctl": 38.1,
+    "atl": 26.9,
+    "tsb": 11.2
   },
   "this_week_days": null,
   "weeks": [
     {
       "wk": 11,
-      "actual_km": 30.8,
+      "actual_km": 25.8,
       "partial": false,
       "quality": {
         "pace_min_per_km": 4.08,
@@ -52,15 +52,6 @@
           "effort": null,
           "decoupling_pct": null,
           "_main_dist": 5.010260000000001
-        },
-        "2026-07-22": {
-          "dist_km": 5.0,
-          "avg_hr": 113,
-          "pace": 5.41,
-          "feel": null,
-          "effort": null,
-          "decoupling_pct": null,
-          "_main_dist": 5.01188
         }
       }
     },
@@ -355,9 +346,9 @@
       "actual_km": 67.1,
       "partial": false,
       "quality": {
-        "pace_min_per_km": 4.29,
-        "avg_hr": 158,
-        "work_intervals_only": true
+        "pace_min_per_km": 4.31,
+        "avg_hr": 157,
+        "work_intervals_only": false
       },
       "days": {
         "2026-09-06": {
@@ -400,8 +391,8 @@
           "dist_km": 22.3,
           "avg_hr": 128,
           "pace": 6.04,
-          "feel": 2,
-          "effort": 2.0,
+          "feel": null,
+          "effort": null,
           "decoupling_pct": null,
           "_main_dist": 3.02344
         },
@@ -418,12 +409,6 @@
     }
   ],
   "sleep_hrv_14d": [
-    {
-      "date": "2026-09-03",
-      "score": 65.0,
-      "hrv": 65.0,
-      "rhr": 39
-    },
     {
       "date": "2026-09-04",
       "score": 87.0,
@@ -501,6 +486,12 @@
       "score": 68.0,
       "hrv": 83.0,
       "rhr": 40
+    },
+    {
+      "date": "2026-09-17",
+      "score": 66.0,
+      "hrv": 66.0,
+      "rhr": 43
     }
   ],
   "recent_activities": [
@@ -572,88 +563,6 @@
       "avg_cadence": 165,
       "interval_summary": [
         "1x 56m1s 114bpm"
-      ]
-    },
-    {
-      "date": "2026-09-02",
-      "start_local": "2026-09-02T09:07",
-      "name": "Warm Up + Strides 3km Pace",
-      "dist_km": 3.02,
-      "duration_s": 1102,
-      "avg_hr": 128,
-      "max_hr": 132,
-      "pace": 6.04,
-      "feel": 3,
-      "effort": 4.0,
-      "elevation_gain": 31.393507,
-      "avg_cadence": 162,
-      "interval_summary": [
-        "1x 18m24s 128bpm"
-      ]
-    },
-    {
-      "date": "2026-09-02",
-      "start_local": "2026-09-02T07:48",
-      "name": "MP-sandwich 3x5km Pace",
-      "dist_km": 15.92,
-      "duration_s": 4310,
-      "avg_hr": 157,
-      "max_hr": 169,
-      "pace": 4.31,
-      "feel": 2,
-      "effort": 8.0,
-      "elevation_gain": 106.842545,
-      "avg_cadence": 175,
-      "interval_summary": [
-        "3x 21m56s 158bpm",
-        "2x 3m1s 145bpm",
-        "1x 2s 166bpm"
-      ],
-      "work_laps": [
-        {
-          "rep": 1,
-          "dist_km": 5.02,
-          "pace": 4.29,
-          "avg_hr": 148,
-          "max_hr": 157,
-          "avg_cadence": 176
-        },
-        {
-          "rep": 2,
-          "dist_km": 4.98,
-          "pace": 4.14,
-          "avg_hr": 164,
-          "max_hr": 169,
-          "avg_cadence": 178
-        },
-        {
-          "rep": 3,
-          "dist_km": 4.92,
-          "pace": 4.29,
-          "avg_hr": 163,
-          "max_hr": 167,
-          "avg_cadence": 176
-        }
-      ]
-    },
-    {
-      "date": "2026-09-02",
-      "start_local": "2026-09-02T07:19",
-      "name": "Cool Down 3km Pace",
-      "dist_km": 3.43,
-      "duration_s": 1136,
-      "avg_hr": 117,
-      "max_hr": 125,
-      "pace": 5.32,
-      "feel": 2,
-      "effort": 2.0,
-      "elevation_gain": 32.48854,
-      "avg_cadence": 165,
-      "interval_summary": [
-        "1x 22m38s 118bpm",
-        "3x 13s 88bpm",
-        "2x 50s 94bpm",
-        "1x 86s 90bpm"
       ]
     }
   ]
