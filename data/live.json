@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-09-18T13:18:59+10:00",
+  "generated_at": "2026-09-19T08:14:14+10:00",
   "current_week": 19,
   "today": {
     "rhr": 41,
-    "hrv_7d_avg": 74,
+    "hrv_7d_avg": 72,
     "hrv_status": null,
-    "sleep_score": 68.0,
-    "sleep_hrs": 8.4,
+    "sleep_score": 89.0,
+    "sleep_hrs": 8.0,
     "body_battery": null,
     "vo2max_garmin": null,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 39.2,
-    "atl": 34.4,
-    "tsb": 4.8
+    "ctl": 39.1,
+    "atl": 34.9,
+    "tsb": 4.3
   },
   "this_week_days": null,
   "weeks": [
@@ -364,8 +364,8 @@
           "dist_km": 12.0,
           "avg_hr": 124,
           "pace": 5.33,
-          "feel": 3,
-          "effort": 2.0,
+          "feel": null,
+          "effort": null,
           "decoupling_pct": null,
           "_main_dist": 12.02175
         },
@@ -400,12 +400,6 @@
     }
   ],
   "sleep_hrv_14d": [
-    {
-      "date": "2026-09-05",
-      "score": 87.0,
-      "hrv": 72.0,
-      "rhr": 40
-    },
     {
       "date": "2026-09-06",
       "score": 83.0,
@@ -483,6 +477,12 @@
       "score": 68.0,
       "hrv": 65.0,
       "rhr": 41
+    },
+    {
+      "date": "2026-09-19",
+      "score": 89.0,
+      "hrv": 74.0,
+      "rhr": 41
     }
   ],
   "recent_activities": [
@@ -520,23 +520,6 @@
       "interval_summary": [
         "1x 41m58s 117bpm",
         "1x 15m22s 126bpm"
-      ]
-    },
-    {
-      "date": "2026-09-04",
-      "start_local": "2026-09-04T06:57",
-      "name": "Easy + Strides 12km Pace",
-      "dist_km": 12.02,
-      "duration_s": 4004,
-      "avg_hr": 124,
-      "max_hr": 138,
-      "pace": 5.33,
-      "feel": 3,
-      "effort": 2.0,
-      "elevation_gain": 67.99656,
-      "avg_cadence": 166,
-      "interval_summary": [
-        "1x 1h9m 124bpm"
       ]
     }
   ]
