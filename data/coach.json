@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-11T03:44:21",
+  "generated_at": "2026-10-11T23:18:22",
   "athletes": [
     {
       "id": "i445042",
@@ -42,14 +42,14 @@
       "health": {
         "wellness_date": "2026-10-11",
         "rhr": 42,
-        "rhr_7d_avg": 40.8,
-        "rhr_delta": 1.2,
+        "rhr_7d_avg": 40.7,
+        "rhr_delta": 1.3,
         "hrv_today": 77.0,
-        "hrv_7d_avg": 79,
-        "hrv_60d_baseline": 78.4,
+        "hrv_7d_avg": 80,
+        "hrv_60d_baseline": 78.5,
         "hrv_60d_sd": 8.5,
-        "hrv_60d_n": 53,
-        "hrv_trend": 2.7,
+        "hrv_60d_n": 54,
+        "hrv_trend": 1.7,
         "hrv_sdnn_today": null,
         "hrv_sdnn_7d_avg": null,
         "hrv_sdnn_baseline": null,
@@ -58,7 +58,7 @@
         "vo2max": 49.0,
         "weight": null,
         "spo2": null,
-        "steps": 2181
+        "steps": 8033
       },
       "fitness": {
         "ctl": 47.1,
@@ -857,23 +857,23 @@
           "sleep_score": 85.0,
           "sleep_hrs": 6.8,
           "spo2": null,
-          "steps": 2181,
+          "steps": 8033,
           "vo2max": null,
           "ctl": 47.1,
           "atl": 62.7
         },
         {
           "date": "2026-10-12",
-          "rhr": null,
-          "hrv": null,
+          "rhr": 40,
+          "hrv": 85.0,
           "hrv_sdnn": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
+          "sleep_score": 93.0,
+          "sleep_hrs": 8.1,
           "spo2": null,
-          "steps": null,
+          "steps": 1582,
           "vo2max": null,
-          "ctl": 46.9,
-          "atl": 59.6
+          "ctl": 46.5,
+          "atl": 57.6
         }
       ],
       "recent_activities": [],
@@ -956,14 +956,14 @@
       "health": {
         "wellness_date": "2026-10-11",
         "rhr": 62,
-        "rhr_7d_avg": 59.7,
-        "rhr_delta": 2.3,
+        "rhr_7d_avg": 59.9,
+        "rhr_delta": 2.1,
         "hrv_today": 22.0,
-        "hrv_7d_avg": 27,
-        "hrv_60d_baseline": 25.6,
+        "hrv_7d_avg": 28,
+        "hrv_60d_baseline": 25.7,
         "hrv_60d_sd": 5.2,
-        "hrv_60d_n": 61,
-        "hrv_trend": -2.0,
+        "hrv_60d_n": 62,
+        "hrv_trend": -4.0,
         "hrv_sdnn_today": null,
         "hrv_sdnn_7d_avg": null,
         "hrv_sdnn_baseline": null,
@@ -972,7 +972,7 @@
         "vo2max": 48.0,
         "weight": null,
         "spo2": null,
-        "steps": 43664
+        "steps": 48596
       },
       "fitness": {
         "ctl": 60.2,
@@ -1771,20 +1771,20 @@
           "sleep_score": 67.0,
           "sleep_hrs": 6.9,
           "spo2": null,
-          "steps": 43664,
+          "steps": 48596,
           "vo2max": 48.0,
           "ctl": 60.2,
           "atl": 93.7
         },
         {
           "date": "2026-10-12",
-          "rhr": null,
-          "hrv": null,
+          "rhr": 61,
+          "hrv": 31.0,
           "hrv_sdnn": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
+          "sleep_score": 74.0,
+          "sleep_hrs": 7.4,
           "spo2": null,
-          "steps": null,
+          "steps": 32,
           "vo2max": null,
           "ctl": 58.8,
           "atl": 81.3
@@ -2011,6 +2011,10 @@
       "flags": [
         {
           "level": "amber",
+          "text": "HRV dropping -4.0ms (3d trend)"
+        },
+        {
+          "level": "amber",
           "text": "High fatigue (TSB -33.5)"
         }
       ]
@@ -2035,14 +2039,14 @@
       "health": {
         "wellness_date": "2026-10-11",
         "rhr": 47,
-        "rhr_7d_avg": 50.0,
-        "rhr_delta": -3.0,
+        "rhr_7d_avg": 49.7,
+        "rhr_delta": -2.7,
         "hrv_today": 77.0,
-        "hrv_7d_avg": 64,
+        "hrv_7d_avg": 65,
         "hrv_60d_baseline": 68.8,
         "hrv_60d_sd": 8.4,
-        "hrv_60d_n": 59,
-        "hrv_trend": -5.7,
+        "hrv_60d_n": 60,
+        "hrv_trend": 5.0,
         "hrv_sdnn_today": null,
         "hrv_sdnn_7d_avg": null,
         "hrv_sdnn_baseline": null,
@@ -2051,7 +2055,7 @@
         "vo2max": 55.0,
         "weight": null,
         "spo2": null,
-        "steps": 17442
+        "steps": 19964
       },
       "fitness": {
         "ctl": 33.9,
@@ -2850,20 +2854,20 @@
           "sleep_score": 86.0,
           "sleep_hrs": 10.3,
           "spo2": null,
-          "steps": 17442,
+          "steps": 19964,
           "vo2max": 55.0,
           "ctl": 33.9,
           "atl": 31.8
         },
         {
           "date": "2026-10-12",
-          "rhr": null,
-          "hrv": null,
+          "rhr": 48,
+          "hrv": 69.0,
           "hrv_sdnn": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
+          "sleep_score": 91.0,
+          "sleep_hrs": 10.1,
           "spo2": null,
-          "steps": null,
+          "steps": 91,
           "vo2max": null,
           "ctl": 33.9,
           "atl": 32.3
@@ -3085,12 +3089,7 @@
           "distance_m": 0.0
         }
       ],
-      "flags": [
-        {
-          "level": "amber",
-          "text": "HRV dropping -5.7ms (3d trend)"
-        }
-      ]
+      "flags": []
     },
     {
       "id": "i619779",
@@ -3118,15 +3117,15 @@
       "max_hr": 180,
       "health": {
         "wellness_date": "2026-10-11",
-        "rhr": 43,
-        "rhr_7d_avg": 44.2,
-        "rhr_delta": -1.2,
+        "rhr": 42,
+        "rhr_7d_avg": 43.4,
+        "rhr_delta": -1.4,
         "hrv_today": 34.0,
-        "hrv_7d_avg": 30,
+        "hrv_7d_avg": 32,
         "hrv_60d_baseline": 37.9,
-        "hrv_60d_sd": 9.2,
-        "hrv_60d_n": 61,
-        "hrv_trend": 1.3,
+        "hrv_60d_sd": 9.1,
+        "hrv_60d_n": 62,
+        "hrv_trend": 7.7,
         "hrv_sdnn_today": null,
         "hrv_sdnn_7d_avg": null,
         "hrv_sdnn_baseline": null,
@@ -3135,15 +3134,15 @@
         "vo2max": 57.0,
         "weight": null,
         "spo2": null,
-        "steps": 7059
+        "steps": 13512
       },
       "fitness": {
-        "ctl": 17.0,
-        "atl": 1.7,
-        "tsb": 15.3,
-        "ctl_trend": -2.8,
-        "atl_trend": 0.2,
-        "tsb_trend": -3.0
+        "ctl": 16.7,
+        "atl": 0.5,
+        "tsb": 16.2,
+        "ctl_trend": -3.0,
+        "atl_trend": -0.9,
+        "tsb_trend": -2.1
       },
       "wellness_60d": [
         {
@@ -3923,34 +3922,34 @@
           "spo2": null,
           "steps": 19331,
           "vo2max": null,
-          "ctl": 17.4,
-          "atl": 1.9
+          "ctl": 17.1,
+          "atl": 0.6
         },
         {
           "date": "2026-10-11",
-          "rhr": 43,
+          "rhr": 42,
           "hrv": 34.0,
           "hrv_sdnn": null,
           "sleep_score": 60.0,
           "sleep_hrs": 5.7,
           "spo2": null,
-          "steps": 7059,
+          "steps": 13512,
           "vo2max": null,
-          "ctl": 17.0,
-          "atl": 1.7
+          "ctl": 16.7,
+          "atl": 0.5
         },
         {
           "date": "2026-10-12",
-          "rhr": null,
-          "hrv": null,
+          "rhr": 40,
+          "hrv": 42.0,
           "hrv_sdnn": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
+          "sleep_score": 81.0,
+          "sleep_hrs": 8.9,
           "spo2": null,
-          "steps": null,
+          "steps": 3094,
           "vo2max": null,
-          "ctl": 16.6,
-          "atl": 1.5
+          "ctl": 16.3,
+          "atl": 0.5
         }
       ],
       "recent_activities": [],
@@ -3999,14 +3998,14 @@
       "health": {
         "wellness_date": "2026-10-11",
         "rhr": 38,
-        "rhr_7d_avg": 39.3,
-        "rhr_delta": -1.3,
+        "rhr_7d_avg": 39.1,
+        "rhr_delta": -1.1,
         "hrv_today": 73.0,
-        "hrv_7d_avg": 60,
-        "hrv_60d_baseline": 59.6,
-        "hrv_60d_sd": 6.8,
-        "hrv_60d_n": 61,
-        "hrv_trend": 3.0,
+        "hrv_7d_avg": 62,
+        "hrv_60d_baseline": 59.8,
+        "hrv_60d_sd": 7.0,
+        "hrv_60d_n": 62,
+        "hrv_trend": 17.3,
         "hrv_sdnn_today": null,
         "hrv_sdnn_7d_avg": null,
         "hrv_sdnn_baseline": null,
@@ -4015,7 +4014,7 @@
         "vo2max": 58.0,
         "weight": null,
         "spo2": null,
-        "steps": 18732
+        "steps": 19967
       },
       "fitness": {
         "ctl": 41.6,
@@ -4814,20 +4813,20 @@
           "sleep_score": 94.0,
           "sleep_hrs": 8.8,
           "spo2": null,
-          "steps": 18732,
+          "steps": 19967,
           "vo2max": 58.0,
           "ctl": 41.6,
           "atl": 35.3
         },
         {
           "date": "2026-10-12",
-          "rhr": null,
-          "hrv": null,
+          "rhr": 38,
+          "hrv": 74.0,
           "hrv_sdnn": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
+          "sleep_score": 87.0,
+          "sleep_hrs": 7.8,
           "spo2": null,
-          "steps": null,
+          "steps": 2839,
           "vo2max": null,
           "ctl": 40.7,
           "atl": 30.6
@@ -6890,7 +6889,7 @@
           "sleep_score": null,
           "sleep_hrs": null,
           "spo2": null,
-          "steps": null,
+          "steps": 12376,
           "vo2max": null,
           "ctl": 22.4,
           "atl": 31.3
@@ -7171,14 +7170,14 @@
       "health": {
         "wellness_date": "2026-10-11",
         "rhr": 38,
-        "rhr_7d_avg": 37.0,
-        "rhr_delta": 1.0,
+        "rhr_7d_avg": 37.1,
+        "rhr_delta": 0.9,
         "hrv_today": 69.0,
-        "hrv_7d_avg": 62,
-        "hrv_60d_baseline": 62.1,
+        "hrv_7d_avg": 63,
+        "hrv_60d_baseline": 62.3,
         "hrv_60d_sd": 7.4,
-        "hrv_60d_n": 35,
-        "hrv_trend": 3.3,
+        "hrv_60d_n": 36,
+        "hrv_trend": 6.0,
         "hrv_sdnn_today": null,
         "hrv_sdnn_7d_avg": null,
         "hrv_sdnn_baseline": null,
@@ -7187,7 +7186,7 @@
         "vo2max": 57.0,
         "weight": null,
         "spo2": null,
-        "steps": 30117
+        "steps": 31649
       },
       "fitness": {
         "ctl": 43.6,
@@ -7986,20 +7985,20 @@
           "sleep_score": 85.0,
           "sleep_hrs": 8.7,
           "spo2": null,
-          "steps": 30117,
+          "steps": 31649,
           "vo2max": 57.0,
           "ctl": 43.6,
           "atl": 62.1
         },
         {
           "date": "2026-10-12",
-          "rhr": null,
-          "hrv": null,
+          "rhr": 38,
+          "hrv": 70.0,
           "hrv_sdnn": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
+          "sleep_score": 65.0,
+          "sleep_hrs": 6.9,
           "spo2": null,
-          "steps": null,
+          "steps": 4891,
           "vo2max": null,
           "ctl": 42.6,
           "atl": 53.9
@@ -8238,8 +8237,8 @@
       "health": {
         "wellness_date": "2026-10-11",
         "rhr": 48,
-        "rhr_7d_avg": 45.8,
-        "rhr_delta": 2.2,
+        "rhr_7d_avg": 46.7,
+        "rhr_delta": 1.3,
         "hrv_today": null,
         "hrv_7d_avg": null,
         "hrv_60d_baseline": null,
@@ -8254,7 +8253,7 @@
         "vo2max": 55.0,
         "weight": null,
         "spo2": null,
-        "steps": 41601
+        "steps": 44547
       },
       "fitness": {
         "ctl": 44.8,
@@ -9053,20 +9052,20 @@
           "sleep_score": null,
           "sleep_hrs": null,
           "spo2": null,
-          "steps": 41601,
+          "steps": 44547,
           "vo2max": 55.0,
           "ctl": 44.8,
           "atl": 64.7
         },
         {
           "date": "2026-10-12",
-          "rhr": null,
+          "rhr": 52,
           "hrv": null,
           "hrv_sdnn": null,
           "sleep_score": null,
           "sleep_hrs": null,
           "spo2": null,
-          "steps": null,
+          "steps": 16,
           "vo2max": null,
           "ctl": 43.8,
           "atl": 56.1
@@ -9303,7 +9302,7 @@
         "vo2max": 58.0,
         "weight": null,
         "spo2": null,
-        "steps": 45547
+        "steps": 48128
       },
       "fitness": {
         "ctl": 47.1,
@@ -10102,7 +10101,7 @@
           "sleep_score": null,
           "sleep_hrs": null,
           "spo2": null,
-          "steps": 45547,
+          "steps": 48128,
           "vo2max": 58.0,
           "ctl": 47.1,
           "atl": 55.1
