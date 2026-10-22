@@ -1,30 +1,26 @@
 {
-  "generated_at": "2026-10-22T14:23:21+10:00",
+  "generated_at": "2026-10-23T09:55:59+10:00",
   "current_week": 24,
   "today": {
-    "rhr": 39,
+    "rhr": 40,
     "hrv_7d_avg": 82,
     "hrv_status": null,
-    "sleep_score": 88.0,
-    "sleep_hrs": 8.2,
+    "sleep_score": 91.0,
+    "sleep_hrs": 7.9,
     "body_battery": 100,
     "vo2max_garmin": 49,
     "vo2max_note": "lab-tested 58.4 (2022)",
-    "ctl": 52.0,
-    "atl": 67.7,
-    "tsb": -15.7
+    "ctl": 51.0,
+    "atl": 59.8,
+    "tsb": -8.8
   },
   "this_week_days": null,
   "weeks": [
     {
       "wk": 16,
-      "actual_km": 67.0,
+      "actual_km": 46.9,
       "partial": false,
-      "quality": {
-        "pace_min_per_km": 4.22,
-        "avg_hr": 158,
-        "work_intervals_only": false
-      },
+      "quality": null,
       "days": {
         "2026-08-30": {
           "dist_km": 28.9,
@@ -52,15 +48,6 @@
           "effort": null,
           "decoupling_pct": null,
           "_main_dist": 5.3
-        },
-        "2026-08-27": {
-          "dist_km": 20.1,
-          "avg_hr": 125,
-          "pace": 5.37,
-          "feel": null,
-          "effort": null,
-          "decoupling_pct": null,
-          "_main_dist": 3.6055900000000003
         }
       }
     },
@@ -132,12 +119,6 @@
     }
   ],
   "sleep_hrv_14d": [
-    {
-      "date": "2026-10-09",
-      "score": 92.0,
-      "hrv": 81.0,
-      "rhr": 40
-    },
     {
       "date": "2026-10-10",
       "score": null,
@@ -215,7 +196,49 @@
       "score": 88.0,
       "hrv": 87.0,
       "rhr": 39
+    },
+    {
+      "date": "2026-10-23",
+      "score": 91.0,
+      "hrv": 85.0,
+      "rhr": 40
     }
   ],
-  "recent_activities": []
+  "recent_activities": [
+    {
+      "date": "2026-10-23",
+      "start_local": "2026-10-23T07:29",
+      "name": "Melbourne Running",
+      "dist_km": 1.95,
+      "duration_s": 825,
+      "avg_hr": 121,
+      "max_hr": 151,
+      "pace": 7.03,
+      "feel": 3,
+      "effort": 3.0,
+      "elevation_gain": 12.484837,
+      "avg_cadence": 148,
+      "interval_summary": [
+        "5x 2m 119bpm",
+        "1x 1s 112bpm"
+      ]
+    },
+    {
+      "date": "2026-10-23",
+      "start_local": "2026-10-23T06:57",
+      "name": "Melbourne Running",
+      "dist_km": 0.17,
+      "duration_s": 61,
+      "avg_hr": 99,
+      "max_hr": 111,
+      "pace": 6.07,
+      "feel": 3,
+      "effort": 2.0,
+      "elevation_gain": 0.0,
+      "avg_cadence": 162,
+      "interval_summary": [
+        "1x 14m25s 98bpm"
+      ]
+    }
+  ]
 }
