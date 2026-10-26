@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-26T02:59:51",
+  "generated_at": "2026-10-26T23:27:03",
   "athletes": [
     {
       "id": "i445042",
@@ -42,14 +42,14 @@
       "health": {
         "wellness_date": "2026-10-26",
         "rhr": 40,
-        "rhr_7d_avg": 40.2,
-        "rhr_delta": -0.2,
+        "rhr_7d_avg": 39.9,
+        "rhr_delta": 0.1,
         "hrv_today": 95.0,
-        "hrv_7d_avg": 82,
-        "hrv_60d_baseline": 78.8,
-        "hrv_60d_sd": 9.4,
-        "hrv_60d_n": 53,
-        "hrv_trend": -12.3,
+        "hrv_7d_avg": 83,
+        "hrv_60d_baseline": 79.1,
+        "hrv_60d_sd": 9.5,
+        "hrv_60d_n": 54,
+        "hrv_trend": 12.7,
         "hrv_sdnn_today": null,
         "hrv_sdnn_7d_avg": null,
         "hrv_sdnn_baseline": null,
@@ -58,15 +58,15 @@
         "vo2max": 49.0,
         "weight": null,
         "spo2": null,
-        "steps": 3342
+        "steps": 6433
       },
       "fitness": {
-        "ctl": 51.2,
-        "atl": 56.8,
-        "tsb": -5.6,
-        "ctl_trend": -0.1,
-        "atl_trend": -14.6,
-        "tsb_trend": 14.5
+        "ctl": 51.9,
+        "atl": 60.5,
+        "tsb": -8.6,
+        "ctl_trend": 0.6,
+        "atl_trend": -10.9,
+        "tsb_trend": 11.5
       },
       "wellness_60d": [
         {
@@ -857,23 +857,23 @@
           "sleep_score": 85.0,
           "sleep_hrs": 8.5,
           "spo2": null,
-          "steps": 3342,
+          "steps": 6433,
           "vo2max": null,
-          "ctl": 51.2,
-          "atl": 56.8
+          "ctl": 51.9,
+          "atl": 60.5
         },
         {
           "date": "2026-10-27",
-          "rhr": null,
-          "hrv": null,
+          "rhr": 38,
+          "hrv": 92.0,
           "hrv_sdnn": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
+          "sleep_score": 88.0,
+          "sleep_hrs": 7.8,
           "spo2": null,
-          "steps": null,
+          "steps": 964,
           "vo2max": null,
-          "ctl": 50.0,
-          "atl": 49.3
+          "ctl": 52.6,
+          "atl": 63.5
         }
       ],
       "recent_activities": [
@@ -921,12 +921,7 @@
         }
       ],
       "upcoming": [],
-      "flags": [
-        {
-          "level": "red",
-          "text": "HRV dropping -12.3ms (3d trend)"
-        }
-      ]
+      "flags": []
     },
     {
       "id": "i620475",
@@ -939,47 +934,47 @@
           "name": "Gold Coast Marathon",
           "date": "2026-07-05",
           "days_away": -113,
-          "predicted_time": "3:52:35"
+          "predicted_time": "3:53:45"
         }
       ],
       "race_predictions": {
-        "5k": "24:14",
-        "10k": "50:33",
-        "half": "1:51:33",
-        "marathon": "3:52:35"
+        "5k": "24:22",
+        "10k": "50:48",
+        "half": "1:52:06",
+        "marathon": "3:53:45"
       },
-      "race_predictions_method": "threshold pace + VO2max, adjusted for freshness",
+      "race_predictions_method": "threshold pace + VO2max",
       "training_philosophy": "HR-capped easy runs, explicit pace targets for quality. Joe Friel 7-zone system. LTHR 180, MaxHR 197.",
       "typical_week": {},
       "max_hr": 197,
       "health": {
         "wellness_date": "2026-10-26",
-        "rhr": null,
-        "rhr_7d_avg": 64.8,
-        "rhr_delta": null,
-        "hrv_today": null,
+        "rhr": 64,
+        "rhr_7d_avg": 64.7,
+        "rhr_delta": -0.7,
+        "hrv_today": 24.0,
         "hrv_7d_avg": 23,
-        "hrv_60d_baseline": 27.4,
-        "hrv_60d_sd": 8.0,
-        "hrv_60d_n": 60,
-        "hrv_trend": -3.3,
+        "hrv_60d_baseline": 27.3,
+        "hrv_60d_sd": 7.9,
+        "hrv_60d_n": 61,
+        "hrv_trend": -2.0,
         "hrv_sdnn_today": null,
         "hrv_sdnn_7d_avg": null,
         "hrv_sdnn_baseline": null,
-        "sleep_score": null,
-        "sleep_hrs": null,
+        "sleep_score": 72.0,
+        "sleep_hrs": 8.1,
         "vo2max": 48.0,
         "weight": null,
         "spo2": null,
-        "steps": null
+        "steps": 20022
       },
       "fitness": {
-        "ctl": 55.5,
-        "atl": 45.0,
-        "tsb": 10.4,
-        "ctl_trend": -3.1,
-        "atl_trend": -20.6,
-        "tsb_trend": 17.5
+        "ctl": 56.4,
+        "atl": 50.2,
+        "tsb": 6.2,
+        "ctl_trend": -2.1,
+        "atl_trend": -15.4,
+        "tsb_trend": 13.3
       },
       "wellness_60d": [
         {
@@ -1757,23 +1752,23 @@
           "sleep_score": 39.0,
           "sleep_hrs": 6.1,
           "spo2": null,
-          "steps": 21724,
+          "steps": 28928,
           "vo2max": null,
           "ctl": 56.8,
           "atl": 52.0
         },
         {
           "date": "2026-10-26",
-          "rhr": null,
-          "hrv": null,
+          "rhr": 64,
+          "hrv": 24.0,
           "hrv_sdnn": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
+          "sleep_score": 72.0,
+          "sleep_hrs": 8.1,
           "spo2": null,
-          "steps": null,
-          "vo2max": null,
-          "ctl": 55.5,
-          "atl": 45.0
+          "steps": 20022,
+          "vo2max": 48.0,
+          "ctl": 56.4,
+          "atl": 50.2
         },
         {
           "date": "2026-10-27",
@@ -1785,11 +1780,25 @@
           "spo2": null,
           "steps": null,
           "vo2max": null,
-          "ctl": 55.1,
-          "atl": 44.5
+          "ctl": 56.0,
+          "atl": 49.0
         }
       ],
       "recent_activities": [
+        {
+          "date": "2026-10-26",
+          "name": "Los Angeles Running",
+          "type": "Run",
+          "dist_km": 11.3,
+          "duration_s": 4587,
+          "pace": 6.5,
+          "avg_hr": 130,
+          "max_hr": 153,
+          "feel": 3,
+          "effort": null,
+          "ctl": 56.389503,
+          "atl": 50.226624
+        },
         {
           "date": "2026-10-24",
           "name": "Melbourne Running",
@@ -1975,8 +1984,8 @@
       "health": {
         "wellness_date": "2026-10-26",
         "rhr": 47,
-        "rhr_7d_avg": 44.7,
-        "rhr_delta": 2.3,
+        "rhr_7d_avg": 45.1,
+        "rhr_delta": 1.9,
         "hrv_today": 63.0,
         "hrv_7d_avg": 82,
         "hrv_60d_baseline": 70.2,
@@ -1991,7 +2000,7 @@
         "vo2max": 55.0,
         "weight": null,
         "spo2": null,
-        "steps": 219
+        "steps": 16512
       },
       "fitness": {
         "ctl": 25.9,
@@ -2790,14 +2799,14 @@
           "sleep_score": 86.0,
           "sleep_hrs": 8.0,
           "spo2": null,
-          "steps": 219,
+          "steps": 16512,
           "vo2max": null,
           "ctl": 25.9,
           "atl": 9.7
         },
         {
           "date": "2026-10-27",
-          "rhr": null,
+          "rhr": 48,
           "hrv": null,
           "hrv_sdnn": null,
           "sleep_score": null,
@@ -2863,15 +2872,15 @@
       "max_hr": 180,
       "health": {
         "wellness_date": "2026-10-26",
-        "rhr": 46,
-        "rhr_7d_avg": 42.5,
-        "rhr_delta": 3.5,
+        "rhr": 40,
+        "rhr_7d_avg": 41.3,
+        "rhr_delta": -1.3,
         "hrv_today": 30.0,
-        "hrv_7d_avg": 34,
-        "hrv_60d_baseline": 36.6,
+        "hrv_7d_avg": 35,
+        "hrv_60d_baseline": 36.8,
         "hrv_60d_sd": 9.0,
-        "hrv_60d_n": 61,
-        "hrv_trend": -2.0,
+        "hrv_60d_n": 62,
+        "hrv_trend": 5.3,
         "hrv_sdnn_today": null,
         "hrv_sdnn_7d_avg": null,
         "hrv_sdnn_baseline": null,
@@ -2880,7 +2889,7 @@
         "vo2max": 56.0,
         "weight": null,
         "spo2": null,
-        "steps": 260
+        "steps": 9519
       },
       "fitness": {
         "ctl": 12.1,
@@ -3673,26 +3682,26 @@
         },
         {
           "date": "2026-10-26",
-          "rhr": 46,
+          "rhr": 40,
           "hrv": 30.0,
           "hrv_sdnn": null,
           "sleep_score": 62.0,
           "sleep_hrs": 6.7,
           "spo2": null,
-          "steps": 260,
+          "steps": 9519,
           "vo2max": null,
           "ctl": 12.1,
           "atl": 0.4
         },
         {
           "date": "2026-10-27",
-          "rhr": null,
-          "hrv": null,
+          "rhr": 40,
+          "hrv": 44.0,
           "hrv_sdnn": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
+          "sleep_score": 84.0,
+          "sleep_hrs": 8.8,
           "spo2": null,
-          "steps": null,
+          "steps": 5397,
           "vo2max": null,
           "ctl": 11.8,
           "atl": 0.3
@@ -3700,12 +3709,7 @@
       ],
       "recent_activities": [],
       "upcoming": [],
-      "flags": [
-        {
-          "level": "amber",
-          "text": "RHR +3.5bpm above 7d avg"
-        }
-      ]
+      "flags": []
     },
     {
       "id": "i620736",
@@ -3740,14 +3744,14 @@
       "health": {
         "wellness_date": "2026-10-26",
         "rhr": 37,
-        "rhr_7d_avg": 37.2,
-        "rhr_delta": -0.2,
+        "rhr_7d_avg": 37.3,
+        "rhr_delta": -0.3,
         "hrv_today": 81.0,
-        "hrv_7d_avg": 74,
-        "hrv_60d_baseline": 63.0,
-        "hrv_60d_sd": 7.7,
-        "hrv_60d_n": 61,
-        "hrv_trend": 5.3,
+        "hrv_7d_avg": 73,
+        "hrv_60d_baseline": 63.1,
+        "hrv_60d_sd": 7.6,
+        "hrv_60d_n": 62,
+        "hrv_trend": 3.0,
         "hrv_sdnn_today": null,
         "hrv_sdnn_7d_avg": null,
         "hrv_sdnn_baseline": null,
@@ -3756,15 +3760,15 @@
         "vo2max": 58.0,
         "weight": null,
         "spo2": null,
-        "steps": 5162
+        "steps": 7943
       },
       "fitness": {
-        "ctl": 44.8,
-        "atl": 53.4,
-        "tsb": -8.6,
-        "ctl_trend": 2.8,
-        "atl_trend": 12.5,
-        "tsb_trend": -9.7
+        "ctl": 43.3,
+        "atl": 45.6,
+        "tsb": -2.4,
+        "ctl_trend": 1.3,
+        "atl_trend": 4.8,
+        "tsb_trend": -3.5
       },
       "wellness_60d": [
         {
@@ -4544,8 +4548,8 @@
           "spo2": null,
           "steps": 24069,
           "vo2max": 58.0,
-          "ctl": 45.9,
-          "atl": 61.6
+          "ctl": 44.3,
+          "atl": 52.6
         },
         {
           "date": "2026-10-26",
@@ -4555,26 +4559,68 @@
           "sleep_score": 82.0,
           "sleep_hrs": 7.5,
           "spo2": null,
-          "steps": 5162,
+          "steps": 7943,
           "vo2max": null,
-          "ctl": 44.8,
-          "atl": 53.4
+          "ctl": 43.3,
+          "atl": 45.6
         },
         {
           "date": "2026-10-27",
-          "rhr": null,
-          "hrv": null,
+          "rhr": 38,
+          "hrv": 65.0,
           "hrv_sdnn": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
+          "sleep_score": 76.0,
+          "sleep_hrs": 7.1,
           "spo2": null,
-          "steps": null,
-          "vo2max": null,
-          "ctl": 45.8,
-          "atl": 57.8
+          "steps": 16499,
+          "vo2max": 58.0,
+          "ctl": 44.4,
+          "atl": 51.7
         }
       ],
       "recent_activities": [
+        {
+          "date": "2026-10-27",
+          "name": "Melbourne - Cool Down 3km",
+          "type": "Run",
+          "dist_km": 3.0,
+          "duration_s": 964,
+          "pace": 5.21,
+          "avg_hr": 126,
+          "max_hr": 132,
+          "feel": 3,
+          "effort": null,
+          "ctl": 44.39683,
+          "atl": 51.679127
+        },
+        {
+          "date": "2026-10-27",
+          "name": "Melbourne - Threshold 3x3km",
+          "type": "Run",
+          "dist_km": 10.1,
+          "duration_s": 2628,
+          "pace": 4.19,
+          "avg_hr": 149,
+          "max_hr": 157,
+          "feel": 3,
+          "effort": null,
+          "ctl": 44.39683,
+          "atl": 51.679127
+        },
+        {
+          "date": "2026-10-27",
+          "name": "Melbourne - Warm Up 3km",
+          "type": "Run",
+          "dist_km": 3.6,
+          "duration_s": 1300,
+          "pace": 5.57,
+          "avg_hr": 115,
+          "max_hr": 137,
+          "feel": 3,
+          "effort": null,
+          "ctl": 44.39683,
+          "atl": 51.679127
+        },
         {
           "date": "2026-10-25",
           "name": "Melbourne Running",
@@ -4586,8 +4632,8 @@
           "max_hr": 144,
           "feel": 3,
           "effort": null,
-          "ctl": 45.89301,
-          "atl": 61.56883
+          "ctl": 44.316612,
+          "atl": 52.649647
         },
         {
           "date": "2026-10-24",
@@ -4658,48 +4704,6 @@
           "effort": null,
           "ctl": 42.425827,
           "atl": 42.877747
-        },
-        {
-          "date": "2026-10-21",
-          "name": "Melbourne - Easy 10km",
-          "type": "Run",
-          "dist_km": 10.0,
-          "duration_s": 3259,
-          "pace": 5.25,
-          "avg_hr": 122,
-          "max_hr": 132,
-          "feel": 3,
-          "effort": null,
-          "ctl": 42.773422,
-          "atl": 45.16245
-        },
-        {
-          "date": "2026-10-20",
-          "name": "Melbourne - Cool Down 2km",
-          "type": "Run",
-          "dist_km": 2.0,
-          "duration_s": 660,
-          "pace": 5.27,
-          "avg_hr": 139,
-          "max_hr": 145,
-          "feel": 3,
-          "effort": null,
-          "ctl": 42.84025,
-          "atl": 45.95522
-        },
-        {
-          "date": "2026-10-20",
-          "name": "Melbourne - CV 6x1km",
-          "type": "Run",
-          "dist_km": 7.1,
-          "duration_s": 1788,
-          "pace": 4.1,
-          "avg_hr": 156,
-          "max_hr": 165,
-          "feel": 3,
-          "effort": null,
-          "ctl": 42.84025,
-          "atl": 45.95522
         }
       ],
       "upcoming": [
@@ -4803,14 +4807,14 @@
           "name": "Melbourne Marathon",
           "date": "2026-10-11",
           "days_away": -15,
-          "predicted_time": "3:29:54"
+          "predicted_time": "3:29:56"
         }
       ],
       "race_predictions": {
-        "5k": "21:52",
+        "5k": "21:53",
         "10k": "45:37",
-        "half": "1:40:40",
-        "marathon": "3:29:54"
+        "half": "1:40:41",
+        "marathon": "3:29:56"
       },
       "race_predictions_method": "threshold pace + VO2max, adjusted for freshness",
       "training_philosophy": "",
@@ -4818,24 +4822,24 @@
       "max_hr": 183,
       "health": {
         "wellness_date": "2026-10-26",
-        "rhr": null,
-        "rhr_7d_avg": 48.8,
-        "rhr_delta": null,
+        "rhr": 48,
+        "rhr_7d_avg": 48.6,
+        "rhr_delta": -0.6,
         "hrv_today": null,
         "hrv_7d_avg": null,
         "hrv_60d_baseline": null,
         "hrv_60d_sd": null,
         "hrv_60d_n": 0,
-        "hrv_trend": null,
-        "hrv_sdnn_today": null,
-        "hrv_sdnn_7d_avg": 67.0,
+        "hrv_trend": 3.3,
+        "hrv_sdnn_today": 47.0,
+        "hrv_sdnn_7d_avg": 63.0,
         "hrv_sdnn_baseline": null,
         "sleep_score": null,
         "sleep_hrs": null,
-        "vo2max": 57.1,
+        "vo2max": 56.7,
         "weight": null,
-        "spo2": null,
-        "steps": null
+        "spo2": 98.1,
+        "steps": 13208
       },
       "fitness": {
         "ctl": 33.3,
@@ -5628,14 +5632,14 @@
         },
         {
           "date": "2026-10-26",
-          "rhr": null,
+          "rhr": 48,
           "hrv": null,
-          "hrv_sdnn": null,
+          "hrv_sdnn": 47.0,
           "sleep_score": null,
           "sleep_hrs": null,
-          "spo2": null,
-          "steps": null,
-          "vo2max": null,
+          "spo2": 98.1,
+          "steps": 13208,
+          "vo2max": 56.7,
           "ctl": 33.3,
           "atl": 11.3
         },
@@ -5649,8 +5653,8 @@
           "spo2": null,
           "steps": null,
           "vo2max": null,
-          "ctl": 33.1,
-          "atl": 13.4
+          "ctl": 33.4,
+          "atl": 14.8
         }
       ],
       "recent_activities": [
@@ -6772,14 +6776,14 @@
       "health": {
         "wellness_date": "2026-10-26",
         "rhr": 36,
-        "rhr_7d_avg": 36.8,
-        "rhr_delta": -0.8,
+        "rhr_7d_avg": 36.6,
+        "rhr_delta": -0.6,
         "hrv_today": 63.0,
         "hrv_7d_avg": 66,
-        "hrv_60d_baseline": 63.2,
+        "hrv_60d_baseline": 63.3,
         "hrv_60d_sd": 7.5,
-        "hrv_60d_n": 50,
-        "hrv_trend": 2.7,
+        "hrv_60d_n": 51,
+        "hrv_trend": -8.3,
         "hrv_sdnn_today": null,
         "hrv_sdnn_7d_avg": null,
         "hrv_sdnn_baseline": null,
@@ -6788,7 +6792,7 @@
         "vo2max": 57.0,
         "weight": null,
         "spo2": null,
-        "steps": 6205
+        "steps": 8752
       },
       "fitness": {
         "ctl": 41.9,
@@ -7587,18 +7591,18 @@
           "sleep_score": 84.0,
           "sleep_hrs": 7.2,
           "spo2": null,
-          "steps": 6205,
+          "steps": 8752,
           "vo2max": null,
           "ctl": 41.9,
           "atl": 38.8
         },
         {
           "date": "2026-10-27",
-          "rhr": null,
-          "hrv": null,
+          "rhr": 35,
+          "hrv": 67.0,
           "hrv_sdnn": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
+          "sleep_score": 81.0,
+          "sleep_hrs": 7.3,
           "spo2": null,
           "steps": null,
           "vo2max": null,
@@ -7607,6 +7611,34 @@
         }
       ],
       "recent_activities": [
+        {
+          "date": "2026-10-27",
+          "name": "Geelong - Race Sharpener \u2014 3\u00d71km",
+          "type": "Run",
+          "dist_km": 3.7,
+          "duration_s": 1149,
+          "pace": 5.1,
+          "avg_hr": 137,
+          "max_hr": 146,
+          "feel": 2,
+          "effort": null,
+          "ctl": 42.03794,
+          "atl": 40.030033
+        },
+        {
+          "date": "2026-10-27",
+          "name": "Geelong - Warm Up (~2km)",
+          "type": "Run",
+          "dist_km": 2.6,
+          "duration_s": 1014,
+          "pace": 6.23,
+          "avg_hr": 112,
+          "max_hr": 129,
+          "feel": 3,
+          "effort": null,
+          "ctl": 42.03794,
+          "atl": 40.030033
+        },
         {
           "date": "2026-10-25",
           "name": "Torquay - LR \u2014 16km (Rolling)",
@@ -7704,20 +7736,6 @@
           "effort": null,
           "ctl": 44.26223,
           "atl": 54.16509
-        },
-        {
-          "date": "2026-10-18",
-          "name": "Torquay - Easy (~4km)",
-          "type": "Run",
-          "dist_km": 4.0,
-          "duration_s": 1439,
-          "pace": 5.59,
-          "avg_hr": 107,
-          "max_hr": 118,
-          "feel": 2,
-          "effort": null,
-          "ctl": 44.767666,
-          "atl": 57.59868
         }
       ],
       "upcoming": [
@@ -7802,7 +7820,12 @@
           "distance_m": 0.0
         }
       ],
-      "flags": []
+      "flags": [
+        {
+          "level": "red",
+          "text": "HRV dropping -8.3ms (3d trend)"
+        }
+      ]
     },
     {
       "id": "i621769",
@@ -7845,8 +7868,8 @@
       "health": {
         "wellness_date": "2026-10-26",
         "rhr": 43,
-        "rhr_7d_avg": 44.8,
-        "rhr_delta": -1.8,
+        "rhr_7d_avg": 44.6,
+        "rhr_delta": -1.6,
         "hrv_today": null,
         "hrv_7d_avg": null,
         "hrv_60d_baseline": null,
@@ -7861,15 +7884,15 @@
         "vo2max": 55.0,
         "weight": 75.599,
         "spo2": null,
-        "steps": 39
+        "steps": 7082
       },
       "fitness": {
-        "ctl": 37.5,
-        "atl": 30.2,
-        "tsb": 7.4,
-        "ctl_trend": -1.0,
-        "atl_trend": 2.8,
-        "tsb_trend": -3.8
+        "ctl": 36.8,
+        "atl": 27.9,
+        "tsb": 8.8,
+        "ctl_trend": -1.8,
+        "atl_trend": 0.6,
+        "tsb_trend": -2.4
       },
       "wellness_60d": [
         {
@@ -8649,8 +8672,8 @@
           "spo2": null,
           "steps": 18718,
           "vo2max": 55.0,
-          "ctl": 38.4,
-          "atl": 34.8
+          "ctl": 37.7,
+          "atl": 30.4
         },
         {
           "date": "2026-10-26",
@@ -8660,23 +8683,23 @@
           "sleep_score": 72.0,
           "sleep_hrs": 8.4,
           "spo2": null,
-          "steps": 39,
+          "steps": 7082,
           "vo2max": null,
-          "ctl": 37.5,
-          "atl": 30.2
+          "ctl": 36.8,
+          "atl": 27.9
         },
         {
           "date": "2026-10-27",
-          "rhr": null,
+          "rhr": 43,
           "hrv": null,
           "hrv_sdnn": null,
-          "sleep_score": null,
-          "sleep_hrs": null,
+          "sleep_score": 80.0,
+          "sleep_hrs": 6.5,
           "spo2": null,
-          "steps": null,
+          "steps": 802,
           "vo2max": null,
-          "ctl": 37.1,
-          "atl": 28.8
+          "ctl": 37.8,
+          "atl": 34.7
         }
       ],
       "recent_activities": [
@@ -8691,8 +8714,8 @@
           "max_hr": 131,
           "feel": 2,
           "effort": null,
-          "ctl": 38.44028,
-          "atl": 34.782444
+          "ctl": 37.663845,
+          "atl": 30.389414
         },
         {
           "date": "2026-10-24",
@@ -8749,20 +8772,6 @@
           "effort": null,
           "ctl": 38.93307,
           "atl": 30.916338
-        },
-        {
-          "date": "2026-10-18",
-          "name": "Melbourne - Easy 6km (Optional)",
-          "type": "Run",
-          "dist_km": 7.8,
-          "duration_s": 2850,
-          "pace": 6.07,
-          "avg_hr": 108,
-          "max_hr": 118,
-          "feel": 3,
-          "effort": null,
-          "ctl": 39.499386,
-          "atl": 30.499846
         }
       ],
       "upcoming": [
@@ -10767,12 +10776,12 @@
         "steps": null
       },
       "fitness": {
-        "ctl": 25.4,
-        "atl": 14.7,
-        "tsb": 10.7,
-        "ctl_trend": -3.7,
-        "atl_trend": -14.9,
-        "tsb_trend": 11.1
+        "ctl": 24.6,
+        "atl": 10.9,
+        "tsb": 13.8,
+        "ctl_trend": -4.5,
+        "atl_trend": -18.7,
+        "tsb_trend": 14.2
       },
       "wellness_60d": [
         {
@@ -11552,8 +11561,8 @@
           "spo2": null,
           "steps": null,
           "vo2max": null,
-          "ctl": 26.0,
-          "atl": 16.9
+          "ctl": 25.2,
+          "atl": 12.5
         },
         {
           "date": "2026-10-26",
@@ -11565,8 +11574,8 @@
           "spo2": null,
           "steps": null,
           "vo2max": null,
-          "ctl": 25.4,
-          "atl": 14.7
+          "ctl": 24.6,
+          "atl": 10.9
         },
         {
           "date": "2026-10-27",
@@ -11578,8 +11587,8 @@
           "spo2": null,
           "steps": null,
           "vo2max": null,
-          "ctl": 25.3,
-          "atl": 15.6
+          "ctl": 24.6,
+          "atl": 12.3
         }
       ],
       "recent_activities": [
